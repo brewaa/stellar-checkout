@@ -1,0 +1,310 @@
+/* STELLAR CHECKOUT */
+
+.stellar_checkout_container {
+    height: 98vh;
+}
+
+.stellar_checkout {
+	border: .0625rem solid #eee;
+	border-radius: .2rem;
+    position: relative;
+
+    float: left;
+    width: 100%;
+    height: 100%;
+}
+
+.stellar_checkout_overlay {
+    background-image: url('../i/stellar-rocket@2x.png');
+    background-position-x: 50%;
+    background-position-y: 50%;
+    background-size: 50%;
+    background-repeat: no-repeat;
+    background-color: #fff;
+    height: 100%;
+    position: absolute;
+    transition: .4s;
+    top: 0;
+    width: 100%;
+}
+
+.stellar_checkout_error {
+    position: absolute;
+    height: 100%;
+    transition: .4s;
+    top: 0;
+    width: 100%;
+    background: rgba(0, 0, 0, .76);
+}
+
+.stellar_checkout_error .inner {
+    background: #fff;
+    border-radius: .2rem;
+    border: .125rem solid #f80000;
+    color: #f80000;
+    display: flex;
+    height: 12rem;
+    margin-top: -4rem;
+    padding: .8rem;
+    position: absolute;
+    transition: .4s;
+    top: 48%;
+    width: 92%;
+    margin-left: 4%;
+}
+
+.stellar_checkout_error > div {
+    
+}
+
+.stellar_checkout_error .friendbot {
+    width: 16%;
+}
+
+.stellar_checkout_error .error_message {
+    display: flex;
+    align-items: center;
+    justify-items: center;
+}
+
+.stellar_checkout_error .close {
+    position: absolute;
+    top: .6rem;
+    right: 1.2rem;
+}
+
+.stellar_checkout_overlay.loaded {
+    opacity: 0;
+    transform: scale3d(0, 0, 0);
+}
+
+.stellar_checkout .header {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    font-family: monospace, monospace;
+    justify-content: center;
+    padding: .8rem;
+}
+
+.stellar_checkout .header .alt {
+    display: none;
+    width: 100%;
+}
+
+.stellar_checkout .header.progress .alt > div {
+    flex-basis: 50%;
+    align-items: center;
+    display: flex;
+    font-family: monospace, monospace;
+    justify-content: center;
+}
+
+.stellar_checkout .header .qr_wrap,
+.stellar_checkout .header .status {
+}
+
+.stellar_checkout .header.progress .alt {
+    display: flex;
+}
+
+    @media screen and (min-device-width: 640px) {
+        .stellar_checkout .header {
+            flex-direction: row;
+        }
+        .stellar_checkout .header .logo {
+            flex-basis: 33%;
+        }
+        .stellar_checkout .header .alt {
+            flex-grow: 1;
+            width: auto;
+        }
+        .stellar_checkout .header .alt > div {
+            flex-basis: 50%;
+        }
+    }
+
+
+.stellar_checkout .header .status {
+    background: #f8f8f8;
+    margin: .8rem .8rem .8rem 0;
+    text-transform: uppercase;
+    transition: .4s;
+}
+
+.stellar_checkout .header .status > span {
+    line-height: 1.6;
+    width: 50%;
+}
+
+.stellar_checkout .logo .rocket {
+    background: #fff;
+    border: .0625rem solid #eee;
+    border-radius: .4rem;
+    font-family: monospace, monospace;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: .4rem;
+    width: 5.6rem;
+}
+
+.stellar_checkout .logo .app_name {
+    display: block;
+    padding: .4rem;
+    text-transform: uppercase;
+    font-weight: bold;
+    font-family: monospace, monospace;
+}
+
+
+.stellar_checkout_form {
+    display: none;
+}
+
+.stellar_checkout_form.loaded {
+    display: block;
+}
+
+
+
+.stellar_checkout .transaction_info {
+    line-height: 1.2;
+    color: #a0a0a0;
+    font-family: monospace, monospace;
+    font-size: .9rem;
+    padding: 0 .4rem;
+}
+
+.stellar_checkout .field {
+	padding: .8rem .4rem;
+    position: relative;
+	text-align: left;
+}
+
+.stellar_checkout .spinner {
+    position: absolute;
+    top: 30%;
+    right: 4.6rem;
+}
+
+.stellar_checkout .field label {
+	display: block;
+    width: 100%;
+    text-transform: uppercase;
+    color: #a0a0a0;
+    font-size: .8rem;
+    padding: .4rem .2rem;
+}
+
+.stellar_checkout .field .txtwrap {
+	background: #f8f8f8;
+    border: .0625rem solid #eee;
+    border-radius: .2rem;
+    color: #000;
+    font-family: monospace, monospace;
+    height: 4rem;
+    position: relative;
+    width: 100%;
+}
+
+.stellar_checkout .field .txtwrap textarea {
+    overflow: hidden;
+    resize: none;
+}
+
+.stellar_checkout .field .currency {
+	border-left: .0625rem solid #ddd;
+    color: #a0a0a0;
+	display: block;
+    height: 100%;
+    line-height: 2.6;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 0;
+    width: 4rem;
+}
+
+.stellar_checkout .field .txtwrap--input {
+	height: 2.8rem;
+}
+
+.stellar_checkout .field .txt {
+	background: transparent;
+	border: 0;
+	font-family: monospace, monospace;
+	font-size: 1.25rem;
+    height: 100%;
+    outline: 0;
+    padding: .6rem .4rem;
+    width: 100%;
+}
+
+.stellar_checkout .button_row {
+	padding: .8rem .4rem;
+}
+
+.stellar_checkout .button_row button {
+	background: #08b5e5;
+    border-color: #08b5e5;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    min-height: 28px;
+    line-height: 26px;
+    outline: none;
+    overflow: hidden;
+    padding: .4rem .8rem;
+    text-align: center;
+    text-overflow: ellipsis;
+    transition: .4s;
+    white-space: nowrap;
+    width: 100%;
+}
+
+
+.stellar_checkout button[disabled],
+.stellar_checkout button:disabled {
+    opacity: 0.5;
+}
+
+.stellar_checkout .field .error {
+    border: 0.0625rem solid #f80000;
+    border-radius: .2rem;
+}
+
+.stellar_checkout .field .valid {
+    border: 0.0625rem solid #05ff05;
+    border-radius: .2rem;
+}
+
+.stellar_checkout .field .error_msg {
+    border-radius: .4rem;
+    padding: .4rem .4rem;
+    position: absolute;;
+    transition: all .3s cubic-bezier(0.68, -0.55, 0.265, 1.55);;
+    top: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+.stellar_checkout .field .error .error_msg {
+    color: #f80000;
+    top: 2.55rem;
+}
+
+.stellar_checkout .stellar_checkout_warning {
+    border: .125rem solid #f80000;
+    border-radius: .2rem;
+    padding: .8rem;
+    color: #f80000;
+    line-height: 1.2;
+    margin-top: .4rem;
+}
+
+.stellar_checkout_hidden {
+    display: none!important;
+}
