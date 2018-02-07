@@ -1,10 +1,6 @@
 # StellarCheckout
 
-A javascript plugin that allows web sites to accept payments via the Stellar blockchain.
-
-This project aims to make it easier for web masters to integrate their web site with the Stellar.org blockchain and accept payments in lumens.
-
-StellarCheckout is ideal for any site that has a shopping cart and it can also be used as a standalone payment form.
+A javascript plugin that integrates web sites with the Stellar.org blockchain so merchants can accept payments in lumens.
 
 ## Installation
 
