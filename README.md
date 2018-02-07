@@ -13,9 +13,9 @@ npm i -save stellar-checkout
 ```
 
 ## Integration
-1. Copy and paste the StellarCheckout Drop-in UI initialization code into a page on your web site.
+1. Copy and paste the StellarCheckout Drop-in UI initialization code into a page on your web site
 2. Configure the initialization code with your API key, amount and redirect URL (or custom javascript via the onSubmit callback)
-3. Direct customers to the StellarCheckout page yyou just created
+3. Direct customers to the StellarCheckout page you just created
 
 
 ## Create an API key
@@ -28,15 +28,15 @@ npm i -save stellar-checkout
 
 ```javascript
 {
-  apiKey: {   // Generate an API key @ https://stellarcheckout.azurewebsites.net/
+  apiKey: {     // Generate an API key @ https://stellarcheckout.azurewebsites.net/
     type: String,
     required: true
-  }
+  },
   currency: {		// DefaultValue: USD; ["AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "ZAR"],
   	type: String,
   	required: false
   },
-  destinationKey: {	// The merchan's PublicKey/AccountID
+  destinationKey: {	// The merchant's PublicKey/AccountID
   	type: String,
   	required: true
   },
@@ -44,15 +44,15 @@ npm i -save stellar-checkout
   	type: String,
   	required: false
   },
-  memo: {			 // A field to record additional data related to an order. E.g. OrderID, UserID
+  memo: {		// A field to record additional data related to a payment. E.g. OrderID, UserID
   	type: String,
   	required: false
   },
-  onSubmit: {		// Submit handler executed after a successfuly transaction with access to error and payment data
+  onSubmit: {		// Submit handler executed after a completing a transaction. Has access to error and payment data
   	type: function,
   	required: false
   },
-  redirectUrl: {	// The URL to redirect the user after a succesfully completed transaction
+  redirectUrl: {	// The URL to redirect the user to after a succesfully completed transaction
   	type: String,
   	required: false
   },
