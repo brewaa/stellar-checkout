@@ -3,7 +3,7 @@ import formatter from './formatter';
 import stellarSdkHelper from './stellarsdk.helper';
 import ui from './ui';
 import * as utils from './utils';
-
+ 
 var _isCurrencySupported = false;
 var _isStellarSdkLoaded = false;
 var _isValidDestinationKey = false;
