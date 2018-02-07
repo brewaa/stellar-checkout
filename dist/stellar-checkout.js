@@ -866,9 +866,7 @@ module.exports = Buffer
 		INFO: 'INFO',
 		WARNING: 'WARNING'
 	},
-	STELLAR_CHECKOUT_API_URL: 'https://stellarcheckout.azurewebsites.net/api',
 	STELLAR_CHECKOUT_API_TICKER_URL: 'https://stellarcheckout.azurewebsites.net/api/tickers/stellar',
-	STELLAR_CHECKOUT_API_PAGINGTOKEN_URL: 'https://stellarcheckout.azurewebsites.net/api/tokens/pagingtoken',
 	STELLAR_SDK_URL: 'https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/0.8.0/stellar-sdk.js',
 	SUBMIT_BUTTON_STATE: {
 		DISABLED: 'DISABLED',
@@ -1731,7 +1729,7 @@ function loadStellarSdk(callback) {
 	}
 	var script = document.createElement('script');
 	script.src = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].STELLAR_SDK_URL;
-	// script.async = true;
+	script.async = true;
 
 	script.onload = function() {
 		callback.call();
@@ -1745,116 +1743,38 @@ function loadStellarSdk(callback) {
 };
 
 function verifyTransaction(transactionDto, payment) {
-	
-	// console.log('dto.amount    :' + transactionDto.amount.toString());
-	// console.log('payment.amount:' + payment.amount.toString());
-	// console.log('dto.publicKey :' + transactionDto.publicKey.toString());
-	// console.log('payment.from  :' + payment.from.toString());
-
 	var amountIsEqual = transactionDto.amount === payment.amount;
-
-	// console.log('amountIsEqual:' + amountIsEqual.toString());
-
 	var publicKeyIsEqual = transactionDto.publicKey === payment.from;
-
-	// console.log('publicKeyIsEqual:' + publicKeyIsEqual.toString());
-
 	var result = amountIsEqual && publicKeyIsEqual;
-
-	// console.log(result);
-
 	return result;
 }
 
 function receiveTransaction(transactionDto, callback) {
-	
 	var networkUri = setNetwork(transactionDto);
 	var server = new StellarSdk.Server(networkUri);
 	var accountId = transactionDto.destinationKey;
+	var payments = server
+		.payments()
+		.forAccount(accountId)
+		.cursor('now');
 
-	// Create an API call to query payments involving the account.
-	var payments = server.payments().forAccount(accountId);
-
-	// todo: save lastToken with public key to our service
-
-	// If some payments have already been handled, start the results from the
-	// last seen payment. (See below in `handlePayment` where it gets saved.)
-	var lastToken;
-
-	loadLastPagingToken(transactionDto)
-	.then(function(response) {
-		if (response) {
-			console.log(response);
-			var data = JSON.parse(response);
-			if (data.pagingToken) {
-				console.log(data.pagingToken);
-				lastToken = data.pagingToken;
-			}
-		}
-
-		if (lastToken) {
-			console.log(lastToken);
-			payments.cursor(lastToken);
-		}
-
-		// `stream` will send each recorded payment, one by one, then keep the
-		// connection open and continue to send you new payments as they occur.
-		var closeStream = payments.stream({
-		  onmessage: function(payment) {
-		    // Record the paging token so we can start from here next time.
-		    savePagingToken(transactionDto, payment.paging_token);
-
-		    // The payments stream includes both sent and received payments. We only want to process received payments here.
-		    if (payment.to !== accountId) {
-		      return;
-		    }
-
-		    // In Stellar’s API, Lumens are referred to as the “native” type. Other asset types have more detailed information.
-		    var asset = (payment.asset_type === 'native') ? 'lumens' : payment.asset_code + ':' + payment.asset_issuer;
-
-		    console.log(payment);
-
-		    // Verify the transaction
-		    var result = verifyTransaction(transactionDto, payment);
-		    if (result) {
-		    	callback.call(this, null, payment);	
-		    	closeStream();
-		    }
-		  },
-
-		  onerror: function(error) {
-		    console.error('Error in payment stream');
-		  }
-
-		});
-
+	var closeStream = payments.stream({
+	  onmessage: function(payment) {
+	    if (payment.to !== accountId) {
+	      return;
+	    }
+	    var asset = (payment.asset_type === 'native') ? 'lumens' : payment.asset_code + ':' + payment.asset_issuer;
+	    var result = verifyTransaction(transactionDto, payment);
+	    if (result) {
+	    	callback.call(this, null, payment);	
+	    	closeStream();
+	    }
+	  },
+	  onerror: function(error) {
+	    console.error('Error in payment stream');
+	  }
 	});
-
 }
-
-	// todo:
-
-	function savePagingToken(dto, token) {
-	  // In most cases, you should save this to a local database or file so that you can load it next time you stream new payments.
-	  //localStorage.setItem('lastPagingToken', token);
-	  __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* httpRequest */]('POST', __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].STELLAR_CHECKOUT_API_PAGINGTOKEN_URL, { apiKey: dto.apiKey, publicKey: dto.destinationKey, pagingToken: token })
-	  .then(function(response) {
-	  	console.log('lastPagingToken saved');
-	  	if (response) {
-				var data = JSON.parse(response);
-				if (data.pagingToken) {
-					console.log(data.pagingToken);
-				}
-			}
-	  });
-	}
-
-	function loadLastPagingToken(dto) {
-	  // Get the last paging token from a local database or file
-		//var lastPagingToken; //localStorage.getItem('lastPagingToken');
-		return __WEBPACK_IMPORTED_MODULE_1__utils__["b" /* httpRequest */]('GET', __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].STELLAR_CHECKOUT_API_PAGINGTOKEN_URL, { apiKey: dto.apiKey, publicKey: dto.destinationKey });
-		//return lastPagingToken;
-	}
 
 function setNetwork(transactionDto) {
 	var networkUri;
@@ -1868,7 +1788,7 @@ function setNetwork(transactionDto) {
 	return networkUri;
 }
 
-function submitTransaction(transactionDto) { // todo: asset
+function submitTransaction(transactionDto) {
 
 	var networkUri = setNetwork(transactionDto);
 
@@ -2488,7 +2408,7 @@ exports = module.exports = __webpack_require__(20)(false);
 
 
 // module
-exports.push([module.i, "/* STELLAR CHECKOUT */\r\n\r\n.stellar_checkout_container {\r\n    height: 98vh;\r\n}\r\n\r\n.stellar_checkout {\r\n\tborder: .0625rem solid #eee;\r\n\tborder-radius: .2rem;\r\n    position: relative;\r\n\r\n    float: left;\r\n    width: 100%;\r\n    height: 100%;\r\n}\r\n\r\n.stellar_checkout_overlay {\r\n    background-image: url(" + escape(__webpack_require__(8)) + ");\r\n    background-position-x: 50%;\r\n    background-position-y: 50%;\r\n    background-size: 50%;\r\n    background-repeat: no-repeat;\r\n    background-color: #fff;\r\n    height: 100%;\r\n    position: absolute;\r\n    transition: .4s;\r\n    top: 0; \r\n    width: 100%;\r\n}\r\n\r\n.stellar_checkout_error {\r\n    position: absolute;\r\n    height: 100%;\r\n    transition: .4s;\r\n    top: 0;\r\n    width: 100%;\r\n    background: rgba(0, 0, 0, .76);\r\n}\r\n\r\n.stellar_checkout_error .inner {\r\n    background: #fff;\r\n    border-radius: .2rem;\r\n    border: .125rem solid #f80000;\r\n    color: #f80000;\r\n    display: flex;\r\n    height: 12rem;\r\n    margin-top: -4rem;\r\n    padding: .8rem;\r\n    position: absolute;\r\n    transition: .4s;\r\n    top: 48%;\r\n    width: 92%;\r\n    margin-left: 4%;\r\n}\r\n\r\n.stellar_checkout_error > div {\r\n    \r\n}\r\n\r\n.stellar_checkout_error .friendbot {\r\n    width: 16%;\r\n}\r\n\r\n.stellar_checkout_error .error_message {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-items: center;\r\n}\r\n\r\n.stellar_checkout_error .close {\r\n    position: absolute;\r\n    top: .6rem;\r\n    right: 1.2rem;\r\n}\r\n\r\n.stellar_checkout_overlay.loaded {\r\n    opacity: 0;\r\n    transform: scale3d(0, 0, 0);\r\n}\r\n\r\n.stellar_checkout .header {\r\n    align-items: center;\r\n    display: flex;\r\n    flex-direction: column;\r\n    font-family: monospace, monospace;\r\n    justify-content: center;\r\n    padding: .8rem;\r\n}\r\n\r\n.stellar_checkout .header .alt {\r\n    display: none;\r\n    width: 100%;\r\n}\r\n\r\n.stellar_checkout .header.progress .alt > div {\r\n    flex-basis: 50%;\r\n    align-items: center;\r\n    display: flex;\r\n    font-family: monospace, monospace;\r\n    justify-content: center;\r\n}\r\n\r\n.stellar_checkout .header .qr_wrap,\r\n.stellar_checkout .header .status {\r\n}\r\n\r\n.stellar_checkout .header.progress .alt {\r\n    display: flex;\r\n}\r\n\r\n    @media screen and (min-device-width: 640px) {\r\n        .stellar_checkout .header {\r\n            flex-direction: row;\r\n        }\r\n        .stellar_checkout .header .logo {\r\n            flex-basis: 33%;\r\n        }\r\n        .stellar_checkout .header .alt {\r\n            flex-grow: 1;\r\n            width: auto;\r\n        }\r\n        .stellar_checkout .header .alt > div {\r\n            flex-basis: 50%;\r\n        }\r\n    }\r\n\r\n\r\n.stellar_checkout .header .status {\r\n    background: #f8f8f8;\r\n    margin: .8rem .8rem .8rem 0;\r\n    text-transform: uppercase;\r\n    transition: .4s;\r\n}\r\n\r\n.stellar_checkout .header .status > span {\r\n    line-height: 1.6;\r\n    width: 50%;\r\n}\r\n\r\n.stellar_checkout .logo .rocket {\r\n    background: #fff;\r\n    border: .0625rem solid #eee;\r\n    border-radius: .4rem;\r\n    font-family: monospace, monospace;\r\n    font-weight: bold;\r\n    text-transform: uppercase;\r\n    padding: .4rem;\r\n    width: 5.6rem;\r\n}\r\n\r\n.stellar_checkout .logo .app_name {\r\n    display: block;\r\n    padding: .4rem;\r\n    text-transform: uppercase;\r\n    font-weight: bold;\r\n    font-family: monospace, monospace;\r\n}\r\n\r\n\r\n.stellar_checkout_form {\r\n    display: none;\r\n}\r\n\r\n.stellar_checkout_form.loaded {\r\n    display: block;\r\n}\r\n\r\n\r\n\r\n.stellar_checkout .transaction_info {\r\n    line-height: 1.2;\r\n    color: #a0a0a0;\r\n    font-family: monospace, monospace;\r\n    font-size: .9rem;\r\n    padding: 0 .4rem;\r\n}\r\n\r\n.stellar_checkout .field {\r\n\tpadding: .8rem .4rem;\r\n    position: relative;\r\n\ttext-align: left;\r\n}\r\n\r\n.stellar_checkout .spinner {\r\n    position: absolute;\r\n    top: 30%;\r\n    right: 4.6rem;\r\n}\r\n\r\n.stellar_checkout .field label {\r\n\tdisplay: block;\r\n    width: 100%;\r\n    text-transform: uppercase;\r\n    color: #a0a0a0;\r\n    font-size: .8rem;\r\n    padding: .4rem .2rem;\r\n}\r\n\r\n.stellar_checkout .field .txtwrap {\r\n\tbackground: #f8f8f8;\r\n    border: .0625rem solid #eee;\r\n    border-radius: .2rem;\r\n    color: #000;\r\n    font-family: monospace, monospace;\r\n    height: 4rem;\r\n    position: relative;\r\n    width: 100%;\r\n}\r\n\r\n.stellar_checkout .field .txtwrap textarea {\r\n    overflow: hidden;\r\n    resize: none;\r\n}\r\n\r\n.stellar_checkout .field .currency {\r\n\tborder-left: .0625rem solid #ddd;\r\n    color: #a0a0a0;\r\n\tdisplay: block;\r\n    height: 100%;\r\n    line-height: 2.6;\r\n    position: absolute;\r\n    right: 0;\r\n    text-align: center;\r\n    top: 0;\r\n    width: 4rem;\r\n}\r\n\r\n.stellar_checkout .field .txtwrap--input {\r\n\theight: 2.8rem;\r\n}\r\n\r\n.stellar_checkout .field .txt {\r\n\tbackground: transparent;\r\n\tborder: 0;\r\n\tfont-family: monospace, monospace;\r\n\tfont-size: 1.25rem;\r\n    height: 100%;\r\n    outline: 0;\r\n    padding: .6rem .4rem;\r\n    width: 100%;\r\n}\r\n\r\n.stellar_checkout .button_row {\r\n\tpadding: .8rem .4rem;\r\n}\r\n\r\n.stellar_checkout .button_row button {\r\n\tbackground: #08b5e5;\r\n    border-color: #08b5e5;\r\n    border-radius: 3px;\r\n    border-style: solid;\r\n    border-width: 1px;\r\n    color: #fff;\r\n    font-size: 14px;\r\n    font-weight: 600;\r\n    min-height: 28px;\r\n    line-height: 26px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    padding: .4rem .8rem;\r\n    text-align: center;\r\n    text-overflow: ellipsis;\r\n    transition: .4s;\r\n    white-space: nowrap;\r\n    width: 100%;\r\n}\r\n\r\n\r\n.stellar_checkout button[disabled],\r\n.stellar_checkout button:disabled {\r\n    opacity: 0.5;\r\n}\r\n\r\n.stellar_checkout .field .error {\r\n    border: 0.0625rem solid #f80000;\r\n    border-radius: .2rem;\r\n}\r\n\r\n.stellar_checkout .field .valid {\r\n    border: 0.0625rem solid #05ff05;\r\n    border-radius: .2rem;\r\n}\r\n\r\n.stellar_checkout .field .error_msg {\r\n    border-radius: .4rem;\r\n    padding: .4rem .4rem;\r\n    position: absolute;;\r\n    transition: all .3s cubic-bezier(0.68, -0.55, 0.265, 1.55);;\r\n    top: 0;\r\n    width: 100%;\r\n    z-index: -1;\r\n}\r\n\r\n.stellar_checkout .field .error .error_msg {\r\n    color: #f80000;\r\n    top: 2.55rem;\r\n}\r\n\r\n.stellar_checkout .stellar_checkout_warning {\r\n    border: .125rem solid #f80000;\r\n    border-radius: .2rem;\r\n    padding: .8rem;\r\n    color: #f80000;\r\n    line-height: 1.2;\r\n    margin-top: .4rem;\r\n}\r\n\r\n.stellar_checkout_hidden {\r\n    display: none!important;\r\n}\r\n", ""]);
+exports.push([module.i, "/* STELLAR CHECKOUT */\r\n\r\n.stellar_checkout_container {\r\n    height: 98vh;\r\n}\r\n\r\n.stellar_checkout {\r\n\tborder: .0625rem solid #eee;\r\n\tborder-radius: .2rem;\r\n    position: relative;\r\n\r\n    float: left;\r\n    width: 100%;\r\n    height: 100%;\r\n}\r\n\r\n.stellar_checkout_overlay {\r\n    background-image: url(" + escape(__webpack_require__(8)) + ");\r\n    background-position-x: 50%;\r\n    background-position-y: 50%;\r\n    background-size: 50%;\r\n    background-repeat: no-repeat;\r\n    background-color: #fff;\r\n    height: 100%;\r\n    position: absolute;\r\n    transition: .4s;\r\n    top: 0;\r\n    width: 100%;\r\n}\r\n\r\n.stellar_checkout_error {\r\n    position: absolute;\r\n    height: 100%;\r\n    transition: .4s;\r\n    top: 0;\r\n    width: 100%;\r\n    background: rgba(0, 0, 0, .76);\r\n}\r\n\r\n.stellar_checkout_error .inner {\r\n    background: #fff;\r\n    border-radius: .2rem;\r\n    border: .125rem solid #f80000;\r\n    color: #f80000;\r\n    display: flex;\r\n    height: 12rem;\r\n    margin-top: -4rem;\r\n    padding: .8rem;\r\n    position: absolute;\r\n    transition: .4s;\r\n    top: 48%;\r\n    width: 92%;\r\n    margin-left: 4%;\r\n}\r\n\r\n.stellar_checkout_error > div {\r\n    \r\n}\r\n\r\n.stellar_checkout_error .friendbot {\r\n    width: 16%;\r\n}\r\n\r\n.stellar_checkout_error .error_message {\r\n    display: flex;\r\n    align-items: center;\r\n    justify-items: center;\r\n}\r\n\r\n.stellar_checkout_error .close {\r\n    position: absolute;\r\n    top: .6rem;\r\n    right: 1.2rem;\r\n}\r\n\r\n.stellar_checkout_overlay.loaded {\r\n    opacity: 0;\r\n    transform: scale3d(0, 0, 0);\r\n}\r\n\r\n.stellar_checkout .header {\r\n    align-items: center;\r\n    display: flex;\r\n    flex-direction: column;\r\n    font-family: monospace, monospace;\r\n    justify-content: center;\r\n    padding: .8rem;\r\n}\r\n\r\n.stellar_checkout .header .alt {\r\n    display: none;\r\n    width: 100%;\r\n}\r\n\r\n.stellar_checkout .header.progress .alt > div {\r\n    flex-basis: 50%;\r\n    align-items: center;\r\n    display: flex;\r\n    font-family: monospace, monospace;\r\n    justify-content: center;\r\n}\r\n\r\n.stellar_checkout .header .qr_wrap,\r\n.stellar_checkout .header .status {\r\n}\r\n\r\n.stellar_checkout .header.progress .alt {\r\n    display: flex;\r\n}\r\n\r\n    @media screen and (min-device-width: 640px) {\r\n        .stellar_checkout .header {\r\n            flex-direction: row;\r\n        }\r\n        .stellar_checkout .header .logo {\r\n            flex-basis: 33%;\r\n        }\r\n        .stellar_checkout .header .alt {\r\n            flex-grow: 1;\r\n            width: auto;\r\n        }\r\n        .stellar_checkout .header .alt > div {\r\n            flex-basis: 50%;\r\n        }\r\n    }\r\n\r\n\r\n.stellar_checkout .header .status {\r\n    background: #f8f8f8;\r\n    margin: .8rem .8rem .8rem 0;\r\n    text-transform: uppercase;\r\n    transition: .4s;\r\n}\r\n\r\n.stellar_checkout .header .status > span {\r\n    line-height: 1.6;\r\n    width: 50%;\r\n}\r\n\r\n.stellar_checkout .logo .rocket {\r\n    background: #fff;\r\n    border: .0625rem solid #eee;\r\n    border-radius: .4rem;\r\n    font-family: monospace, monospace;\r\n    font-weight: bold;\r\n    text-transform: uppercase;\r\n    padding: .4rem;\r\n    width: 5.6rem;\r\n}\r\n\r\n.stellar_checkout .logo .app_name {\r\n    display: block;\r\n    padding: .4rem;\r\n    text-transform: uppercase;\r\n    font-weight: bold;\r\n    font-family: monospace, monospace;\r\n}\r\n\r\n\r\n.stellar_checkout_form {\r\n    display: none;\r\n}\r\n\r\n.stellar_checkout_form.loaded {\r\n    display: block;\r\n}\r\n\r\n\r\n\r\n.stellar_checkout .transaction_info {\r\n    line-height: 1.2;\r\n    color: #a0a0a0;\r\n    font-family: monospace, monospace;\r\n    font-size: .9rem;\r\n    padding: 0 .4rem;\r\n}\r\n\r\n.stellar_checkout .field {\r\n\tpadding: .8rem .4rem;\r\n    position: relative;\r\n\ttext-align: left;\r\n}\r\n\r\n.stellar_checkout .spinner {\r\n    position: absolute;\r\n    top: 30%;\r\n    right: 4.6rem;\r\n}\r\n\r\n.stellar_checkout .field label {\r\n\tdisplay: block;\r\n    width: 100%;\r\n    text-transform: uppercase;\r\n    color: #a0a0a0;\r\n    font-size: .8rem;\r\n    padding: .4rem .2rem;\r\n}\r\n\r\n.stellar_checkout .field .txtwrap {\r\n\tbackground: #f8f8f8;\r\n    border: .0625rem solid #eee;\r\n    border-radius: .2rem;\r\n    color: #000;\r\n    font-family: monospace, monospace;\r\n    height: 4rem;\r\n    position: relative;\r\n    width: 100%;\r\n}\r\n\r\n.stellar_checkout .field .txtwrap textarea {\r\n    overflow: hidden;\r\n    resize: none;\r\n}\r\n\r\n.stellar_checkout .field .currency {\r\n\tborder-left: .0625rem solid #ddd;\r\n    color: #a0a0a0;\r\n\tdisplay: block;\r\n    height: 100%;\r\n    line-height: 2.6;\r\n    position: absolute;\r\n    right: 0;\r\n    text-align: center;\r\n    top: 0;\r\n    width: 4rem;\r\n}\r\n\r\n.stellar_checkout .field .txtwrap--input {\r\n\theight: 2.8rem;\r\n}\r\n\r\n.stellar_checkout .field .txt {\r\n\tbackground: transparent;\r\n\tborder: 0;\r\n\tfont-family: monospace, monospace;\r\n\tfont-size: 1.25rem;\r\n    height: 100%;\r\n    outline: 0;\r\n    padding: .6rem .4rem;\r\n    width: 100%;\r\n}\r\n\r\n.stellar_checkout .button_row {\r\n\tpadding: .8rem .4rem;\r\n}\r\n\r\n.stellar_checkout .button_row button {\r\n\tbackground: #08b5e5;\r\n    border-color: #08b5e5;\r\n    border-radius: 3px;\r\n    border-style: solid;\r\n    border-width: 1px;\r\n    color: #fff;\r\n    font-size: 14px;\r\n    font-weight: 600;\r\n    min-height: 28px;\r\n    line-height: 26px;\r\n    outline: none;\r\n    overflow: hidden;\r\n    padding: .4rem .8rem;\r\n    text-align: center;\r\n    text-overflow: ellipsis;\r\n    transition: .4s;\r\n    white-space: nowrap;\r\n    width: 100%;\r\n}\r\n\r\n\r\n.stellar_checkout button[disabled],\r\n.stellar_checkout button:disabled {\r\n    opacity: 0.5;\r\n}\r\n\r\n.stellar_checkout .field .error {\r\n    border: 0.0625rem solid #f80000;\r\n    border-radius: .2rem;\r\n}\r\n\r\n.stellar_checkout .field .valid {\r\n    border: 0.0625rem solid #05ff05;\r\n    border-radius: .2rem;\r\n}\r\n\r\n.stellar_checkout .field .error_msg {\r\n    border-radius: .4rem;\r\n    padding: .4rem .4rem;\r\n    position: absolute;;\r\n    transition: all .3s cubic-bezier(0.68, -0.55, 0.265, 1.55);;\r\n    top: 0;\r\n    width: 100%;\r\n    z-index: -1;\r\n}\r\n\r\n.stellar_checkout .field .error .error_msg {\r\n    color: #f80000;\r\n    top: 2.55rem;\r\n}\r\n\r\n.stellar_checkout .stellar_checkout_warning {\r\n    border: .125rem solid #f80000;\r\n    border-radius: .2rem;\r\n    padding: .8rem;\r\n    color: #f80000;\r\n    line-height: 1.2;\r\n    margin-top: .4rem;\r\n}\r\n\r\n.stellar_checkout_hidden {\r\n    display: none!important;\r\n}\r\n", ""]);
 
 // exports
 
@@ -5092,7 +5012,7 @@ module.exports = { prefix: 'fas', iconName: 'spinner', icon: [512, 512, [], "f11
 /* 27 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<div class=\"stellar_checkout\">\r\n\r\n\t<div class=\"header\">\r\n\t\t<div class=\"logo\">\r\n\t\t\t<img alt=\"\" class=\"rocket\" src=\"" + __webpack_require__(8) + "\" />\r\n\t\t\t<span class=\"app_name\">stellar checkout</span>\r\n\t\t</div>\r\n\t\t<div class=\"alt\">\r\n\t\t\t<div class=\"qr_wrap\">\r\n\t\t\t\t<canvas class=\"qrcode\"></canvas>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"status\">\r\n\t\t\t\t<span>Awaiting Payment</span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class=\"stellar_checkout_form\">\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutTotal\">Total</label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutTotal\" class=\"txt\" type=\"number\" required></input>\r\n\t\t\t\t<span class=\"currency\"></span>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutAmount\">Amount</label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutAmount\" class=\"txt\" type=\"text\" step=\"0.0000001\" autocomplete=\"off\" required></input>\r\n\t\t\t\t<span class=\"currency\">XLM</span>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t\t<span class=\"spinner\"><i class=\"fas fa-spinner fa-spin\"></i></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutPublicKey\">Public Key - <a class=\"toggle_keys\" href=\"#\">use private seed</a></label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutPublicKey\" class=\"txt\" type=\"text\" value=\"\" required></input>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field stellar_checkout_hidden\">\r\n\t\t\t<label for=\"stellarCheckoutPrivateSeed\">Private Seed - <a class=\"toggle_keys\" href=\"#\">use public key</a> - <a class=\"reveal_seed_link\" href=\"#\">reveal</a></label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutPrivateSeed\" class=\"txt\" type=\"password\" value=\"\" required></input>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"stellar_checkout_warning\">\r\n\t\t\t\tYour private seed should NEVER be exposed to a 3rd party, including web sites that use the StellarCheckout plugin. Only use your private seed to sign this transaction if you completely trust the host of this web site and understand the risks involved. \r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"button_row\">\r\n\t\t\t<button id=\"stellarCheckoutSubmitButton\" disabled>Enter payment info</button>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class=\"stellar_checkout_overlay\"></div>\r\n\r\n</div>";
+module.exports = "<div class=\"stellar_checkout\">\r\n\r\n\t<div class=\"header\">\r\n\t\t<div class=\"logo\">\r\n\t\t\t<img alt=\"\" class=\"rocket\" src=\"" + __webpack_require__(8) + "\" />\r\n\t\t\t<span class=\"app_name\">stellar checkout</span>\r\n\t\t</div>\r\n\t\t<div class=\"alt\">\r\n\t\t\t<div class=\"qr_wrap\">\r\n\t\t\t\t<canvas class=\"qrcode\"></canvas>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"status\">\r\n\t\t\t\t<span>Awaiting Payment</span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class=\"stellar_checkout_form\">\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutTotal\">Total</label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutTotal\" class=\"txt\" type=\"number\" required></input>\r\n\t\t\t\t<span class=\"currency\"></span>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutAmount\">Amount</label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutAmount\" class=\"txt\" type=\"text\" step=\"0.0000001\" autocomplete=\"off\" required></input>\r\n\t\t\t\t<span class=\"currency\">XLM</span>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t\t<span class=\"spinner\"><i class=\"fas fa-spinner fa-spin\"></i></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutPublicKey\">Public Key - <a class=\"toggle_keys\" href=\"#\">use private seed</a></label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutPublicKey\" class=\"txt\" type=\"text\" value=\"\" required></input>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field stellar_checkout_hidden\">\r\n\t\t\t<label for=\"stellarCheckoutPrivateSeed\">Private Seed - <a class=\"toggle_keys\" href=\"#\">use public key</a> - <a class=\"reveal_seed_link\" href=\"#\">reveal</a></label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutPrivateSeed\" class=\"txt\" type=\"password\" value=\"\" required></input>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"button_row\">\r\n\t\t\t<button id=\"stellarCheckoutSubmitButton\" disabled>Enter payment info</button>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class=\"stellar_checkout_overlay\"></div>\r\n\r\n</div>";
 
 /***/ }),
 /* 28 */

@@ -18,27 +18,15 @@ npm i -save stellar-checkout
 ## Integration
 1. Copy and paste the StellarCheckout Drop-in UI initialization code into a page on your web site
 2. Configure the initialization code with:
-   1. apiKey
-   2. amount
-   3. destinationKey (the merchant's PublicKey/AccountID)
-   4. redirectURL (or custom javascript via the onSubmit callback)
+   1. amount
+   2. destinationKey (the merchant's PublicKey/AccountID)
+   3. redirectURL (or custom javascript via the onSubmit callback)
 3. Direct customers to the StellarCheckout page you just created
-
-
-## Create an API key
-1. Go to https://stellarcheckout.azurewebsites.net/ and create a user account
-2. Browse to https://stellarcheckout.azurewebsites.net/manage/apikeys
-3. Create an API Key
-4. Copy the API key into the apiKey parameter of the Drop-in UI (see examples)
 
 ## Options
 
 ```javascript
 {
-  apiKey: {     // Generate an API key @ https://stellarcheckout.azurewebsites.net/
-    type: String,
-    required: true
-  },
   currency: {		// DefaultValue: USD; ["AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "ZAR"],
   	type: String,
   	required: false
@@ -86,7 +74,6 @@ The user is redirected automatically after a successful transaction.
 <script type="text/javascript" src="https://unpkg.com/stellar-checkout@1.0.0/stellar-checkout.min.js"></script>
 <script>
 StellarCheckout.ui.render('#elem', {
-  apiKey: 'YOUR_API_KEY',
   total: '10',
   env: 'production',
   destinationKey: 'GDLZR4NMRB6ZLZ7QTCQ3UVFVS53VBEJ3RSOZ56F4KINZVIS7DVOZ2V4W',
@@ -102,7 +89,6 @@ The next example submits a test transaction to test-net in AUD and makes use of 
 <script type="text/javascript" src="https://unpkg.com/stellar-checkout@1.0.0/stellar-checkout.min.js"></script>
 <script>
 StellarCheckout.ui.render('#elem', {
-  apiKey: 'YOUR_API_KEY',
   total: '249.99',
   currency: 'AUD',
   env: 'development',
@@ -122,7 +108,7 @@ StellarCheckout.ui.render('#elem', {
 ```
 
 ## Completing a transaction
-1. Visit a page containing the Drop-in UI (the UI must have an API Key, an amount AND a destinationKey)
+1. Visit a page containing the Drop-in UI (must include an amount, a destinationKey AND a redirectUrl OR onSubmit callback)
 2. Enter your Public Key
 3. Click Send payment to be taken to the confirmation page (don't close the page)
 4. Open your favourite lumens wallet and send a transaction containing the same details as listed on the confirmation page

@@ -25,9 +25,7 @@ export default {
 		INFO: 'INFO',
 		WARNING: 'WARNING'
 	},
-	STELLAR_CHECKOUT_API_URL: 'https://stellarcheckout.azurewebsites.net/api',
 	STELLAR_CHECKOUT_API_TICKER_URL: 'https://stellarcheckout.azurewebsites.net/api/tickers/stellar',
-	STELLAR_CHECKOUT_API_PAGINGTOKEN_URL: 'https://stellarcheckout.azurewebsites.net/api/tokens/pagingtoken',
 	STELLAR_SDK_URL: 'https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/0.8.0/stellar-sdk.js',
 	SUBMIT_BUTTON_STATE: {
 		DISABLED: 'DISABLED',
