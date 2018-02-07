@@ -59,9 +59,7 @@ npm i -save stellar-checkout
 ```
 
 ## Demo
-The demo is pretty basic in terms of layout but here it is:
-https://stellarcheckout.azurewebsites.net/example.html
-Looks best on mobile.
+https://brewaa.github.io/stellar-checkout/example.html
 
 ## Examples
 Here are some quick examples to get you started.
