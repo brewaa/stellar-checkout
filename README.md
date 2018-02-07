@@ -83,7 +83,7 @@ The following example requests a payment of 10 USD and submits the transaction i
 The user is redirected automatically after a successful transaction.
 ```html
 <div id="elem"></div>
-<script type="text/javascript" src="../dist/stellar-checkout.js"></script>
+<script type="text/javascript" src="https://unpkg.com/stellar-checkout@1.0.0/stellar-checkout.min.js"></script>
 <script>
 StellarCheckout.ui.render('#elem', {
   apiKey: 'YOUR_API_KEY',
@@ -99,7 +99,7 @@ StellarCheckout.ui.render('#elem', {
 The next example submits a test transaction to test-net in AUD and makes use of the onSubmit callback function.
 ```html
 <div id="elem"></div>
-<script type="text/javascript" src="../dist/stellar-checkout.js"></script>
+<script type="text/javascript" src="https://unpkg.com/stellar-checkout@1.0.0/stellar-checkout.min.js"></script>
 <script>
 StellarCheckout.ui.render('#elem', {
   apiKey: 'YOUR_API_KEY',
