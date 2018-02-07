@@ -7,37 +7,8 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-  	<div class="head"></div>
-  	<div class="container">
-  		<div class="margin"></div>
-  		<div class="main">
-  			<form id="form">
-	  			<div id="elem"></div>
-		  	</form>
-  		</div>
-  		<div class="sidebar"></div>
-  	</div>
-  	<div class="foot"></div>
-  	<script type="text/javascript" src="https://unpkg.com/stellar-checkout@1.0.0/stellar-checkout.min.js"></script>
-  	<script>
-	StellarCheckout.ui.render('#elem', {
-		total: '10',
-		currency: 'AUD',
-		env: 'development',
-		memo: 'test-transaction',
-		destinationKey: 'GB5L45CNNM5I56YYH3FBA7QXUZGJL5CYR2GG7PS5WLT5FK4NEHXEUH73',
-		// redirectUrl: '',
-		onSubmit: function(err, result) {
-			if (err) {
-				// handle error condition
-				console.log(error);
-				return;
-			}
-			// result contains transaction info
-			// manually submit the form 
-			console.log(result);
-		}
-	});
-	</script>
+  	<ul>
+  		<li><a href="example.html">example 1</a></li>
+  	</ul>
   </body>
 </html>
