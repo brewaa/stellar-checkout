@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stellar Checkout Example</title>
+    <style type="text/css">
+	    html {
+		    box-sizing: border-box; }
+
+		*, *:before, *:after {
+		    box-sizing: inherit; }
+
+		html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, output, ruby, section, summary, time, mark, audio, video {
+		  margin: 0;
+		  padding: 0;
+		  border: 0;
+		  font-size: 100%;
+		  font: inherit;
+		  vertical-align: baseline; }
+
+		/* HTML5 display-role reset for older browsers */
+
+		article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+		  display: block; }
+
+		body {
+		  line-height: 1; }
+
+		ol, ul {
+		  list-style: none; }
+
+		blockquote, q {
+		  quotes: none; }
+
+		blockquote {
+		  &:before, &:after {
+		    content: '';
+		    content: none; } }
+
+		q {
+		  &:before, &:after {
+		    content: '';
+		    content: none; } }
+
+		table {
+		    border-collapse: collapse;
+		    border-spacing: 0;
+		}
+		/* END RESET */
+
+		body {
+			text-align: center;
+		}
+
+		.head {
+			border: .0625rem solid #eee;
+			display: none;
+			height: 2.4rem;
+		}
+
+		.container {
+			
+		}
+
+		.container .margin {
+			background: #f8f8f8;
+			display: none;
+			flex-basis: 10rem;
+		}
+
+		.container .sidebar {
+			background: #f8f8f8;
+			display: none;
+			flex-basis: 20rem;
+		}
+
+		.container .main {
+			flex-grow: 1;
+			padding: .4rem;
+		}
+
+		@media screen and (min-device-width: 1200px) {
+			.head,
+			.foot,
+			.container .margin,
+			.container .sidebar {
+				display: block;
+			}
+			.container {
+				display: flex;
+				margin: auto;
+				width: 76rem;
+			}
+		}
+    </style>
+  </head>
+  <body>
+  	<div class="head"></div>
+  	<div class="container">
+  		<div class="margin"></div>
+  		<div class="main">
+  			<form id="form">
+	  			<div id="elem"></div>
+		  	</form>
+  		</div>
+  		<div class="sidebar"></div>
+  	</div>
+  	<div class="foot"></div>
+  	<script type="text/javascript" src="../dist/stellar-checkout.js"></script>
+  	<script>
+	StellarCheckout.ui.render('#elem', {
+		apiKey: '',
+		total: '10',
+		currency: 'AUD',
+		env: 'development',
+		memo: 'test-transaction',
+		destinationKey: 'GB5L45CNNM5I56YYH3FBA7QXUZGJL5CYR2GG7PS5WLT5FK4NEHXEUH73',
+		// redirectUrl: 'http://localhost/stellar-checkout/www',
+		onSubmit: function(err, result) {
+			if (err) {
+				// handle error condition
+				console.log(error);
+				return;
+			}
+			// result contains transaction info
+			// manually submit the form 
+			console.log(result);
+		}
+	});
+	console.log(StellarCheckout);
+	</script>
+  </body>
+</html>
