@@ -12,7 +12,7 @@ npm i -save stellar-checkout
 
 ## Integration
 1. Copy and paste the StellarCheckout Drop-in UI initialization code into a page on your web site
-2. Configure the initialization code with your API key, amount and redirect URL (or custom javascript via the onSubmit callback)
+2. Configure the initialization code with your API key, amount, destinationKey (the merchant's PublicKey/AccountID) and redirect URL (or custom javascript via the onSubmit callback)
 3. Direct customers to the StellarCheckout page you just created
 
 
@@ -107,6 +107,13 @@ StellarCheckout.ui.render('#elem', {
 });
 </script>
 ```
+
+## Completing a transaction
+1. Visit a page containing the Drop-in UI (the UI must have an API Key, an amount AND a destinationKey)
+2. Enter your Public Key
+3. Click Send payment
+4. Open your favourite lumens wallet and send a transaction containing the same details as listed on the confirmation page
+5. Wait for a response from StellarCheckout
 
 ## Tipjar
 
