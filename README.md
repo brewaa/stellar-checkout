@@ -12,7 +12,7 @@ npm i -save stellar-checkout
 
 ## CDN
 ```
-<script type="text/javascript" src="https://unpkg.com/stellar-checkout@1.0.0/stellar-checkout.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js"></script>
 ```
 
 ## Integration
