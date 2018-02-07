@@ -110,13 +110,12 @@
   	<script type="text/javascript" src="../dist/stellar-checkout.js"></script>
   	<script>
 	StellarCheckout.ui.render('#elem', {
-		apiKey: '',
 		total: '10',
 		currency: 'AUD',
 		env: 'development',
 		memo: 'test-transaction',
 		destinationKey: 'GB5L45CNNM5I56YYH3FBA7QXUZGJL5CYR2GG7PS5WLT5FK4NEHXEUH73',
-		// redirectUrl: 'http://localhost/stellar-checkout/www',
+		// redirectUrl: '',
 		onSubmit: function(err, result) {
 			if (err) {
 				// handle error condition
@@ -128,7 +127,6 @@
 			console.log(result);
 		}
 	});
-	console.log(StellarCheckout);
 	</script>
   </body>
 </html>
