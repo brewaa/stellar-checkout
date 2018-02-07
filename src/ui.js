@@ -7,6 +7,7 @@ import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner'
 import html from './assets/template.html';
 import progressTemplate from './assets/templates/progress.mustache.html';
 import errorTemplate from './assets/templates/error.mustache.html';
+import successTemplate from './assets/templates/success.mustache.html';
 import QRCode from 'qrcode';
 import * as utils from './utils';
 
@@ -152,6 +153,8 @@ function create(selector, options) {
 
 	_cmcClient = new CoinMarketCapClient(elems.amount.elem, options);
 
+	/* ---- */
+
 	elems.total.elem.addEventListener('blur', onValidateTotal);
 	elems.total.elem.addEventListener('input', onValidateTotal);
 
@@ -164,26 +167,29 @@ function create(selector, options) {
 	elems.publicKey.elem.addEventListener('blur', onValidatePublicKey);
 	elems.publicKey.elem.addEventListener('input', onValidatePublicKey);
 
+	constants.DTO.total = options.total;
+	constants.DTO.totalMin = options.totalMin;
+	constants.DTO.amount = _cmcClient.priceInLumens;
+	constants.DTO.currency = options.currency;
+	constants.DTO.destinationKey = options.destinationKey;
+	constants.DTO.privateSeed = elems.privateSeed.elem.value;
+	constants.DTO.publicKey = elems.publicKey.elem.value;
+
 	//todo: add a configuration check for options.total
 	var hasValidTotal = false;
-	if (options.total && options.total.length > 0) {
-		total.setAttribute('value', options.total);
-		total.setAttribute('disabled', 'disabled');
-		var currencyLabel = total.parentNode.querySelector('.currency').innerHTML = options.currency;
+	if (constants.DTO.total && constants.DTO.total.length > 0) {
+		elems.total.elem.setAttribute('value', constants.DTO.total);
+		if (!constants.DTO.totalMin) {
+			elems.total.elem.setAttribute('disabled', 'disabled');	
+		}
+		var currencyLabel = elems.total.elem.parentNode.querySelector('.currency').innerHTML = constants.DTO.currency;
 		hasValidTotal = true;
 		elems.total.elem.dispatchEvent(new Event('input'));
 	}
 
-	//todo: add a configuration check for options.currency
-	if (hasValidTotal && options.currency && typeof options.currency == "string" && options.currency !== '') {
+	if (hasValidTotal) {
 		_cmcClient.fetch();
 	}
-
-	constants.DTO.total = options.total;
-	constants.DTO.amount = _cmcClient.priceInLumens;
-	constants.DTO.destinationKey = options.destinationKey;
-	constants.DTO.privateSeed = elems.privateSeed.elem.value;
-	constants.DTO.publicKey = elems.publicKey.elem.value;
 
 	var toggleKeys = document.querySelectorAll('.toggle_keys');
 	for (var i = 0, len = toggleKeys.length; i < len; i++) {
@@ -277,7 +283,17 @@ function onValidatePublicKey(e) {
 };
 
 function onValidateTotal(e) {
-	constants.DTO.total = e.target.value;
+	var val = e.target.value;
+	if (constants.DTO.totalMin) {
+		if (val && val >= constants.DTO.total) {
+			constants.DTO.total = e.target.value;
+		} else {
+			e.target.value = constants.DTO.totalMin;
+			constants.DTO.total = constants.DTO.totalMin;
+		}
+	} else {
+		constants.DTO.total = e.target.value;
+	}
 	toggleValidationFeedback(e.target, validateTotal());
 	_cmcClient.fetch();
 };
@@ -320,13 +336,14 @@ function showError(error) {
 	errorPanel;	
 };
 
+function showSuccess(obj) {
+	var compiledHtml = successTemplate(obj);
+	elems.root.elem.appendChild(createElementFromHTML(compiledHtml));
+};
+
 function showProgressHtml() {
 	elems.formPanel.elem.classList.add(CSS_CLASS_HIDDEN);
 	elems.progressPanel.elem.classList.remove(CSS_CLASS_HIDDEN);
-};
-
-function toggleKeyFields() {
-
 };
 
 function toggleValidationFeedback(target, test) {
@@ -469,6 +486,7 @@ export default {
 	createSubmitHandler: createSubmitHandler,
 	setButtonState: setButtonState,
 	showError: showError,
+	showSuccess: showSuccess,
 	updateProgressHtml: updateProgressHtml,
 	validatePublicKey: validatePublicKey,
 	validateTransactionDto: validateTransactionDto

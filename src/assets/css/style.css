@@ -14,7 +14,8 @@
     height: 100%;
 }
 
-.stellar_checkout_overlay {
+.stellar_checkout_overlay,
+.stellar_checkout_success {
     background-image: url('../i/stellar-rocket@2x.png');
     background-position-x: 50%;
     background-position-y: 50%;
@@ -26,6 +27,29 @@
     transition: .4s;
     top: 0;
     width: 100%;
+}
+
+.stellar_checkout_overlay {
+    background-image: url('../i/stellar-rocket@2x.png');
+}
+
+.stellar_checkout_success {
+    background-position-y: 36%;
+}
+
+.stellar_checkout_success .message {
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    margin-left: -25%;
+    width: 50%;
+    font-weight: bold;
+    color: green;
+    font-family: monospace, monospace;
+    text-transform: uppercase;
+    font-size: 2.4rem;
+    height: 25%;
+    margin-top: -12.5%;
 }
 
 .stellar_checkout_error {

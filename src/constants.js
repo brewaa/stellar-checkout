@@ -14,7 +14,8 @@ export default {
 		memo: null,
 		privateSeed: null,
 		publicKey: null,
-		total: null
+		total: null,
+		totalMin: null
 	},
 	MODE: {
 		secure: true

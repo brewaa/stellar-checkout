@@ -55,6 +55,10 @@ npm i -save stellar-checkout
   total: {		// Order total in the currency specified
   	type: decimal,
   	required: true
+  },
+  totalMin: {    // Use totalMin to enable to "Total" field so customers can pay you more :) Must be used WITH "total"
+    type: decimal,
+    required: true
   }
 }
 ```

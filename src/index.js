@@ -18,6 +18,7 @@ export default {
 			this.options.destinationKey = opts.destinationKey;
 			this.options.redirectUrl = opts.redirectUrl;
 			this.options.total = opts.total;
+			this.options.totalMin = opts.totalMin;
 			this.options.onSubmit = opts.onSubmit;
 
 			var self = this,
@@ -29,10 +30,14 @@ export default {
 
 				var dto = stellarSdkHelper.createTransactionDto(self.options);
 
-				_isCurrencySupported = constants.CURRENCIES.indexOf(self.options.currency) !== -1;
-				if (!_isCurrencySupported) {
-					constants.CONFIG.error = true;
-					constants.CONFIG.message = 'Currency not supported. Allowed currencies: ' + constants.CURRENCIES.join(', ');
+				if (self.options.currency && typeof self.options.currency === 'string' && self.options.currency !== '') {
+					_isCurrencySupported = constants.CURRENCIES.indexOf(self.options.currency) !== -1;
+					if (!_isCurrencySupported) {
+						constants.CONFIG.error = true;
+						constants.CONFIG.message = 'Currency not supported. Allowed currencies: ' + constants.CURRENCIES.join(', ');
+					}	
+				} else {
+					self.options.currency = 'USD';
 				}
 
 				_isValidDestinationKey = ui.validatePublicKey(self.options.destinationKey);
@@ -53,6 +58,7 @@ export default {
 					}
 
 					if (!constants.MODE.secure) {
+
 						// Submit the transaction to the stellar network (using private seed)
 						var result = stellarSdkHelper
 						.submitTransaction(dto)
@@ -66,7 +72,12 @@ export default {
 							utils.redirectIfRedirectUrlConfigured(self.options, result);
 
 							// Call the onSubmit callback
-							self.options.onSubmit.call(this, null, result);
+							if (self.options.onSubmit && typeof self.options.onSubmit === 'function') {
+								self.options.onSubmit.call(this, null, result);	
+							}
+							else {
+								ui.showSuccess();
+							}
 						})
 						.catch(function(error) {
 							// Send the error back to the onSubmit call back (error-first)
@@ -74,9 +85,10 @@ export default {
 							console.log(error);
 							self.options.onSubmit.call(this, error);
 						});
-					} else {
-						ui.createProgressHtml(dto);
 
+					} else {
+
+						ui.createProgressHtml(dto);
 						// Watch for transactions sent to the destinationKey
 						stellarSdkHelper.receiveTransaction(dto, function(err, result) {
 							if (err) {
@@ -85,9 +97,16 @@ export default {
 							}
 							ui.updateProgressHtml(result);
 							utils.redirectIfRedirectUrlConfigured(self.options, result);
-							self.options.onSubmit.call(this, null, result);
+							if (self.options.onSubmit && typeof self.options.onSubmit === 'function') {
+								self.options.onSubmit.call(this, null, result);
+							}
+							else {
+								ui.showSuccess();
+							}
 						});
+
 					}
+					
 				});
 			});
 		}
