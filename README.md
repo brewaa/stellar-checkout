@@ -70,9 +70,11 @@ npm i -save stellar-checkout
 }
 ```
 
+## Demo
+https://stellarcheckout.azurewebsites.net/example.html
+
 ## Examples
 Here are some quick examples to get you started.
-
 
 ### simple configuration example
 The following example requests a payment of 10 USD and submits the transaction in lumens to the Stellar main network. 
