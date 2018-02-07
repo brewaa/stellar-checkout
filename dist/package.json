@@ -1,0 +1,22 @@
+{
+  "name": "stellar-checkout",
+  "version": "1.0.0",
+  "description": "A responsive Drop-in UI for submitting transactions to the Stellar.org blockchain",
+  "main": "stellar-checkout.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brewaa/stellar-checkout.git"
+  },
+  "keywords": [
+    "Stellar Lumens",
+    "Lumens",
+    "stellar.org",
+    "SBC"
+  ],
+  "author": "brewaa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brewaa/stellar-checkout/issues"
+  },
+  "homepage": "https://github.com/brewaa/stellar-checkout#readme"
+}
