@@ -13,16 +13,16 @@ npm i -save stellar-checkout
 ```
 
 ## Integration
-The plugin is intended to be used as part of a shopping cart checkout process. Stellar Lumens can be listed among other accepted payment methods on your web site.
-Integration typically involves setting up the StellarCheckout Drop-in UI in a dedicated web page. If a customer chooses Lumens as the payment method, you redirect them to the page that contains the Drop-in UI.
-StellarCheckout can then be configured to redirect to an appropriate page, such as an order summary page, after the user has completed their transaction.
-See below for simple integration examples.
+1. Copy and paste the StellarCheckout Drop-in UI initialization code into a page on your web site.
+2. Configure the initialization code with your API key, amount and redirect URL (or custom javascript via the onSubmit callback)
+3. Direct customers to the StellarCheckout page yyou just created
+
 
 ## Create an API key
 1. Go to https://stellarcheckout.azurewebsites.net/ and create a user account
 2. Browse to https://stellarcheckout.azurewebsites.net/manage/apikeys
 3. Create an API Key
-4. Copy the API key into the apiKey parameter used when initializing the Drop-in UI (see examples)
+4. Copy the API key into the apiKey parameter of the Drop-in UI (see examples)
 
 ## Options
 
