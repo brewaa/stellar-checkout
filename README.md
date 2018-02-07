@@ -124,6 +124,6 @@ StellarCheckout.ui.render('#elem', {
 4. Open your favourite lumens wallet and send a transaction containing the same details as listed on the confirmation page
 5. Wait for a response from StellarCheckout
 
-## Tipjar
+## Tip Jar
 
 XLM: GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI
