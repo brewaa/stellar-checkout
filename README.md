@@ -115,7 +115,7 @@ StellarCheckout.ui.render('#elem', {
 ## Completing a transaction
 1. Visit a page containing the Drop-in UI (the UI must have an API Key, an amount AND a destinationKey)
 2. Enter your Public Key
-3. Click Send payment
+3. Click Send payment to be taken to the confirmation page (don't close the page)
 4. Open your favourite lumens wallet and send a transaction containing the same details as listed on the confirmation page
 5. Wait for a response from StellarCheckout
 
