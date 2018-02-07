@@ -16,6 +16,7 @@ npm i -save stellar-checkout
 ```
 
 ## Integration
+1. Add a script reference to stellar-checkout.min.js (CDN or module import)
 1. Copy and paste the StellarCheckout Drop-in UI initialization code into a page on your web site
 2. Configure the initialization code with:
    1. amount
@@ -69,7 +70,7 @@ The following example requests a payment of 10 USD and submits the transaction i
 The user is redirected automatically after a successful transaction.
 ```html
 <div id="elem"></div>
-<script type="text/javascript" src="https://unpkg.com/stellar-checkout@1.0.0/stellar-checkout.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js"></script>
 <script>
 StellarCheckout.ui.render('#elem', {
   total: '10',
@@ -84,7 +85,7 @@ StellarCheckout.ui.render('#elem', {
 The next example submits a test transaction to test-net in AUD and makes use of the onSubmit callback function.
 ```html
 <div id="elem"></div>
-<script type="text/javascript" src="https://unpkg.com/stellar-checkout@1.0.0/stellar-checkout.min.js"></script>
+<script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js"></script>
 <script>
 StellarCheckout.ui.render('#elem', {
   total: '249.99',
