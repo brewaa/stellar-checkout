@@ -3,10 +3,6 @@ import formatter from './formatter';
 import stellarSdkHelper from './stellarsdk.helper';
 import ui from './ui';
 import * as utils from './utils';
- 
-var _isCurrencySupported = false;
-var _isStellarSdkLoaded = false;
-var _isValidDestinationKey = false;
 
 export default {
 	name: constants.APP_NAME,
@@ -14,11 +10,8 @@ export default {
 		render: function(selector, opts) {
 			this.selector = selector;
 			this.options = {};
-			this.options.amount = opts.amount;
-			this.options.apiKey = opts.apiKey;
 			this.options.currency = opts.currency;
 			this.options.elem = null;
-			this.options.endpointPagingTokenUrl = opts.endpointPagingTokenUrl || constants.STELLAR_CHECKOUT_API_PAGINGTOKEN_URL;
 			this.options.endpointTickerUrl = opts.endpointTickerUrl || constants.STELLAR_CHECKOUT_API_TICKER_URL;
 			this.options.env = opts.env || 'development';
 			this.options.memo = opts.memo;
@@ -27,7 +20,10 @@ export default {
 			this.options.total = opts.total;
 			this.options.onSubmit = opts.onSubmit;
 
-			var self = this;
+			var self = this,
+			_isCurrencySupported = false,
+			_isStellarSdkLoaded = false,
+			_isValidDestinationKey = false;
 
 			_isStellarSdkLoaded = stellarSdkHelper.loadStellarSdk(function() {
 
@@ -79,7 +75,6 @@ export default {
 							self.options.onSubmit.call(this, error);
 						});
 					} else {
-						// Show the awaiting transaction ui (display destinationKey, qr code and a progress indicator, possibly with a countdown timer in case price changes)
 						ui.createProgressHtml(dto);
 
 						// Watch for transactions sent to the destinationKey
