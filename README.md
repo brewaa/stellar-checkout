@@ -13,10 +13,10 @@ npm i -save stellar-checkout
 ## Integration
 1. Copy and paste the StellarCheckout Drop-in UI initialization code into a page on your web site
 2. Configure the initialization code with:
-  1. apiKey
-  2. amount
-  3. destinationKey (the merchant's PublicKey/AccountID)
-  4. redirectURL (or custom javascript via the onSubmit callback)
+   1. apiKey
+   2. amount
+   3. destinationKey (the merchant's PublicKey/AccountID)
+   4. redirectURL (or custom javascript via the onSubmit callback)
 3. Direct customers to the StellarCheckout page you just created
 
 
