@@ -10,6 +10,11 @@ StellarCheckout integrates e-commerce web sites with the Stellar.org blockchain 
 npm i -save stellar-checkout
 ```
 
+## CDN
+```
+<script type="text/javascript" src="https://unpkg.com/stellar-checkout@1.0.0/stellar-checkout.min.js"></script>
+```
+
 ## Integration
 1. Copy and paste the StellarCheckout Drop-in UI initialization code into a page on your web site
 2. Configure the initialization code with:
