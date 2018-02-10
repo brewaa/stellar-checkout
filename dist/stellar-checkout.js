@@ -146,8 +146,8 @@ exports.toSJIS = function toSJIS (kanji) {
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Version = __webpack_require__(10)
-var Regex = __webpack_require__(11)
+var Version = __webpack_require__(11)
+var Regex = __webpack_require__(12)
 
 /**
  * Numeric mode encodes data from the decimal digit set (0 - 9)
@@ -329,7 +329,7 @@ exports.from = function from (value, defaultValue) {
 
 
 
-var isArray = __webpack_require__(6)
+var isArray = __webpack_require__(5)
 
 function typedArraySupport () {
   // Can typed array instances be augmented?
@@ -888,33 +888,6 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAPoCAYAAABN
 
 /***/ }),
 /* 5 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
- *  Copyright 2011 Twitter, Inc.
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
-
-// This file is for use with Node.js. See dist/ for browser files.
-
-var Hogan = __webpack_require__(31);
-Hogan.Template = __webpack_require__(32).Template;
-Hogan.template = Hogan.Template;
-module.exports = Hogan;
-
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports) {
 
 var toString = {}.toString;
@@ -925,7 +898,7 @@ module.exports = Array.isArray || function (arr) {
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports) {
 
 exports.L = { bit: 1 }
@@ -981,6 +954,33 @@ exports.from = function from (value, defaultValue) {
 
 
 /***/ }),
+/* 7 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+ *  Copyright 2011 Twitter, Inc.
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+// This file is for use with Node.js. See dist/ for browser files.
+
+var Hogan = __webpack_require__(57);
+Hogan.Template = __webpack_require__(58).Template;
+Hogan.template = Hogan.Template;
+module.exports = Hogan;
+
+
+/***/ }),
 /* 8 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1005,9 +1005,42 @@ function ErrObject(msg, elem) {
 
 /***/ }),
 /* 9 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* unused harmony export redirect */
+/* harmony export (immutable) */ __webpack_exports__["b"] = useRedirectUrl;
+/* harmony export (immutable) */ __webpack_exports__["a"] = toQueryString;
+function redirect(url, qs) {
+	if (window) {
+		window.location.href = url + toQueryString(qs);	
+	}
+};
+
+function useRedirectUrl(options, result) {
+	if (options.redirectUrl) {
+		var qs = {
+			hash: result.hash ? result.hash : result.transaction_hash ? result.transaction_hash : '',
+			link: result._links.transaction.href
+		};
+		redirect(options.redirectUrl, qs);
+	}
+};
+
+function toQueryString(params) {
+	var s = '';
+	for (var p in params) {
+		s += s.length === 0 ? '?' : '&';
+		s += p + '=' + encodeURIComponent(params[p]);
+	}
+	return s;
+};
+
+/***/ }),
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var ECLevel = __webpack_require__(7)
+var ECLevel = __webpack_require__(6)
 
 var EC_BLOCKS_TABLE = [
 // L  M  Q  H
@@ -1145,14 +1178,14 @@ exports.getTotalCodewordsCount = function getTotalCodewordsCount (version, error
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Utils = __webpack_require__(0)
-var ECCode = __webpack_require__(9)
-var ECLevel = __webpack_require__(7)
+var ECCode = __webpack_require__(10)
+var ECLevel = __webpack_require__(6)
 var Mode = __webpack_require__(1)
-var isArray = __webpack_require__(6)
+var isArray = __webpack_require__(5)
 
 // Generator polynomial used to encode version information
 var G18 = (1 << 12) | (1 << 11) | (1 << 10) | (1 << 9) | (1 << 8) | (1 << 5) | (1 << 2) | (1 << 0)
@@ -1324,7 +1357,7 @@ exports.getEncodedBits = function getEncodedBits (version) {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, exports) {
 
 var numeric = '[0-9]+'
@@ -1361,7 +1394,7 @@ exports.testAlphanumeric = function testAlphanumeric (str) {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, exports) {
 
 function hex2rgba (hex) {
@@ -1460,39 +1493,6 @@ exports.qrToImageData = function qrToImageData (imgData, qr, opts) {
 
 
 /***/ }),
-/* 13 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* unused harmony export redirect */
-/* harmony export (immutable) */ __webpack_exports__["b"] = useRedirectUrl;
-/* harmony export (immutable) */ __webpack_exports__["a"] = toQueryString;
-function redirect(url, qs) {
-	if (window) {
-		window.location.href = url + toQueryString(qs);	
-	}
-};
-
-function useRedirectUrl(options, result) {
-	if (options.redirectUrl) {
-		var qs = {
-			hash: result.hash ? result.hash : result.transaction_hash ? result.transaction_hash : '',
-			link: result._links.transaction.href
-		};
-		redirect(options.redirectUrl, qs);
-	}
-};
-
-function toQueryString(params) {
-	var s = '';
-	for (var p in params) {
-		s += s.length === 0 ? '?' : '&';
-		s += p + '=' + encodeURIComponent(params[p]);
-	}
-	return s;
-};
-
-/***/ }),
 /* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1501,7 +1501,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stellarsdk_helper__ = __webpack_require__(15);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_url__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_url__ = __webpack_require__(9);
 
 
 
@@ -1753,20 +1753,14 @@ function verifyPayment(transactionDto, payment) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_css_style_css__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_css_style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__assets_css_style_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_i_FriendBot_favicon_svg__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__assets_i_FriendBot_favicon_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__assets_i_FriendBot_favicon_svg__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__assets_fonts__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__templates_template__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_qrcode__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_qrcode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_qrcode__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_error__ = __webpack_require__(8);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__services_coinmarketcap_client__ = __webpack_require__(60);
-
-
-
-
-// import fontawesome from '@fortawesome/fontawesome'
-// import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner'
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_coinmarketcap_client__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_error__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__assets_i_FriendBot_favicon_svg__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__assets_i_FriendBot_favicon_svg___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__assets_i_FriendBot_favicon_svg__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__assets_fonts__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_qrcode__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6_qrcode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6_qrcode__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__templates_template__ = __webpack_require__(54);
 
 
 
@@ -1775,10 +1769,6 @@ function verifyPayment(transactionDto, payment) {
 
 
 
-
-
-
-// fontawesome.library.add(faSpinner);
 
 var _cmcClient;
 
@@ -1840,7 +1830,7 @@ function create(selector, options) {
 
 	var targetElem = document.querySelector(selector);
 	if (!targetElem) {
-		console.log(Object(__WEBPACK_IMPORTED_MODULE_6__utils_error__["a" /* Err */])('selector not found', __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].MESSAGE_TYPE.ERROR));
+		console.log(Object(__WEBPACK_IMPORTED_MODULE_3__utils_error__["a" /* Err */])('selector not found', __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].MESSAGE_TYPE.ERROR));
 	}	
 
 	if (__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].CONFIG.error) {
@@ -1852,7 +1842,7 @@ function create(selector, options) {
 
 	targetElem.classList.add(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].CLASS.targetParent);
 	
-	targetElem.appendChild(createElementFromHTML(__WEBPACK_IMPORTED_MODULE_4__templates_template__["a" /* default */].main));
+	targetElem.appendChild(createElementFromHTML(__WEBPACK_IMPORTED_MODULE_7__templates_template__["a" /* default */].main));
 
 	var root = document.querySelector(elems.root.selector);
 	var header = document.querySelector(elems.header.selector);
@@ -1873,7 +1863,7 @@ function create(selector, options) {
 	elems.publicKey.elem = publicKey;
 	elems.submitButton.elem = submitButton;
 
-	_cmcClient = new __WEBPACK_IMPORTED_MODULE_7__services_coinmarketcap_client__["a" /* CoinMarketCapClient */](elems.amount.elem, options);
+	_cmcClient = new __WEBPACK_IMPORTED_MODULE_2__services_coinmarketcap_client__["a" /* CoinMarketCapClient */](elems.amount.elem, options);
 
 	/* ---- */
 
@@ -1949,7 +1939,7 @@ function create(selector, options) {
 };
 
 function createProgressHtml(dto) {
-	var compiledHtml = __WEBPACK_IMPORTED_MODULE_4__templates_template__["a" /* default */].progress(dto)
+	var compiledHtml = __WEBPACK_IMPORTED_MODULE_7__templates_template__["a" /* default */].progress(dto)
 	elems.root.elem.appendChild(createElementFromHTML(compiledHtml));
 
 	var progressPanel = document.querySelector(elems.progressPanel.selector);
@@ -1957,7 +1947,7 @@ function createProgressHtml(dto) {
 
 	var qrCodeCanvas = elems.root.elem.querySelector('.qrcode');
 
-	__WEBPACK_IMPORTED_MODULE_5_qrcode___default.a.toCanvas(qrCodeCanvas, dto.destinationKey, function (error) {
+	__WEBPACK_IMPORTED_MODULE_6_qrcode___default.a.toCanvas(qrCodeCanvas, dto.destinationKey, function (error) {
 		if (error) {
 			console.error(error);
 		}
@@ -2043,8 +2033,8 @@ function hideError() {
 };
 
 function showError(error) {
-	error.friendBotSvg = __WEBPACK_IMPORTED_MODULE_2__assets_i_FriendBot_favicon_svg___default.a;
-	var compiledHtml = __WEBPACK_IMPORTED_MODULE_4__templates_template__["a" /* default */].error(error);
+	error.friendBotSvg = __WEBPACK_IMPORTED_MODULE_4__assets_i_FriendBot_favicon_svg___default.a;
+	var compiledHtml = __WEBPACK_IMPORTED_MODULE_7__templates_template__["a" /* default */].error(error);
 	elems.root.elem.appendChild(createElementFromHTML(compiledHtml));
 	var errorPanel = document.querySelector(elems.errorPanel.selector);
 	elems.errorPanel.elem = errorPanel;
@@ -2054,7 +2044,7 @@ function showError(error) {
 };
 
 function showSuccess(obj) {
-	var compiledHtml = __WEBPACK_IMPORTED_MODULE_4__templates_template__["a" /* default */].success(obj);
+	var compiledHtml = __WEBPACK_IMPORTED_MODULE_7__templates_template__["a" /* default */].success(obj);
 	elems.root.elem.appendChild(createElementFromHTML(compiledHtml));
 };
 
@@ -2107,11 +2097,11 @@ function validateAmount() {
 	};
 	var amt = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.amount;
 	if (isNaN(amt)) {
-		result.errors.push(new __WEBPACK_IMPORTED_MODULE_6__utils_error__["b" /* ErrObject */]('amount is not a number', elems.amount));
+		result.errors.push(new __WEBPACK_IMPORTED_MODULE_3__utils_error__["b" /* ErrObject */]('amount is not a number', elems.amount));
 		result.result = false;
 	}
 	if (amt <= 0) {
-		result.errors.push(new __WEBPACK_IMPORTED_MODULE_6__utils_error__["b" /* ErrObject */]('amount must be greater than zero', elems.amount));
+		result.errors.push(new __WEBPACK_IMPORTED_MODULE_3__utils_error__["b" /* ErrObject */]('amount must be greater than zero', elems.amount));
 		result.result = false;
 	}
 	return result;
@@ -2124,7 +2114,7 @@ function validatePrivateSeed() {
 	};
 	var key = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.privateSeed;
 	if (!key || !window.StellarSdk.StrKey.isValidEd25519SecretSeed(key)) {
-		result.errors.push(new __WEBPACK_IMPORTED_MODULE_6__utils_error__["b" /* ErrObject */]('private seed is invalid', elems.privateSeed));
+		result.errors.push(new __WEBPACK_IMPORTED_MODULE_3__utils_error__["b" /* ErrObject */]('private seed is invalid', elems.privateSeed));
 		result.result = false;
 	}
 	return result;
@@ -2136,7 +2126,7 @@ function validatePublicKey(key) {
 		result: true
 	};
 	if (!key || !window.StellarSdk.StrKey.isValidEd25519PublicKey(key)) {
-		result.errors.push(new __WEBPACK_IMPORTED_MODULE_6__utils_error__["b" /* ErrObject */]('public key is invalid'));
+		result.errors.push(new __WEBPACK_IMPORTED_MODULE_3__utils_error__["b" /* ErrObject */]('public key is invalid'));
 		result.result = false;
 	}
 	return result;
@@ -2149,11 +2139,11 @@ function validateTotal() {
 	};
 	var total = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.total;
 	if (isNaN(total)) {
-		result.errors.push(new __WEBPACK_IMPORTED_MODULE_6__utils_error__["b" /* ErrObject */]('total is not a number', elems.total));
+		result.errors.push(new __WEBPACK_IMPORTED_MODULE_3__utils_error__["b" /* ErrObject */]('total is not a number', elems.total));
 		result.result = false;
 	}
 	if (total <= 0) {
-		result.errors.push(new __WEBPACK_IMPORTED_MODULE_6__utils_error__["b" /* ErrObject */]('total must be greater than zero', elems.total));
+		result.errors.push(new __WEBPACK_IMPORTED_MODULE_3__utils_error__["b" /* ErrObject */]('total must be greater than zero', elems.total));
 		result.result = false;
 	}
 	return result;
@@ -2857,27 +2847,217 @@ module.exports = function (css) {
 
 /***/ }),
 /* 23 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 104.667 139.234\" enable-background=\"new 0 0 104.667 139.234\" xml:space=\"preserve\"><rect x=\"51.43\" y=\"11.234\" fill=\"#269AC0\" width=\"2\" height=\"16\"></rect><g><path fill=\"#269AC0\" d=\"M52.846,12.83c-3.217,0-5.834-2.617-5.834-5.834s2.617-5.834,5.834-5.834s5.834,2.617,5.834,5.834 S56.063,12.83,52.846,12.83z M52.846,4.162c-1.562,0-2.834,1.271-2.834,2.834s1.271,2.834,2.834,2.834s2.834-1.271,2.834-2.834 S54.409,4.162,52.846,4.162z\"></path></g><path fill=\"#2BB5E2\" d=\"M51.865,123.922c-8.498,0-16.148-3.594-21.566-9.334c-0.633-0.669-0.924-1.365-1.445-2.092 c-0.859-1.199-1.425-0.887-1.425,0.626v2.739v5.123v2.738c0,1.513,0.562,3.444,1.433,4.392c0.526,0.572,0.926,1.123,1.535,1.652 c5.793,5.019,13.271,8.066,21.52,8.066c8.197,0,15.693-3.01,21.47-7.972c0.569-0.487,1.062-0.993,1.647-1.516 c0.965-0.865,1.396-2.975,1.396-4.476v-2.717v-5.166v-2.716c0-1.501-0.399-1.63-1.372-0.517c-0.588,0.674-1.174,1.322-1.77,1.947 C67.875,120.376,60.304,123.922,51.865,123.922\"></path><path fill=\"#269AC0\" d=\"M52.342,24.197c3.873,0,7.359,1.638,9.83,4.254c0.287,0.305,0.396,0.623,0.634,0.953 c0.393,0.547,0.625,0.404,0.625-0.285v-1.248v-2.335v-1.249c0-0.689-0.229-1.57-0.63-2.001c-0.239-0.261-0.409-0.513-0.688-0.753 c-2.641-2.288-6.043-3.678-9.803-3.678c-3.736,0-7.148,1.372-9.782,3.634c-0.257,0.222-0.84,0.452-1.107,0.69 c-0.439,0.395-0.991,1.355-0.991,2.04v1.238v2.354v1.239c0,0.683,0.541,0.741,0.984,0.233c0.268-0.307,0.711-0.603,0.982-0.887 C44.863,25.812,48.494,24.197,52.342,24.197\"></path><path fill=\"#269AC0\" d=\"M51.865,110.972c-8.498,0-16.148-3.595-21.566-9.333c-0.633-0.669-0.924-1.367-1.445-2.094 c-0.859-1.197-1.425-0.886-1.425,0.626v2.74v5.121v2.739c0,1.513,0.562,3.444,1.433,4.393c0.526,0.571,0.926,1.122,1.535,1.651 c5.793,5.02,13.271,8.066,21.52,8.066c8.197,0,15.693-3.01,21.47-7.972c0.569-0.486,1.062-0.992,1.647-1.516 c0.965-0.864,1.396-2.974,1.396-4.475v-2.718v-5.165v-2.717c0-1.501-0.399-1.63-1.372-0.516c-0.588,0.673-1.174,1.322-1.77,1.946 C67.875,107.426,60.304,110.972,51.865,110.972\"></path><path fill=\"#2BB5E2\" d=\"M5.096,71c0,26.142,21.193,47.333,47.334,47.333c26.143,0,47.334-21.191,47.334-47.333 c0-26.143-21.191-47.334-47.334-47.334C26.289,23.666,5.096,44.857,5.096,71\"></path><g><g><defs><path id=\"SVGID_1_\" d=\"M5.096,71c0,26.141,21.193,47.332,47.334,47.332c26.143,0,47.334-21.19,47.334-47.332 c0-26.143-21.191-47.334-47.334-47.334C26.289,23.667,5.096,44.857,5.096,71\"></path></defs><clipPath id=\"SVGID_2_\"><use xlink:href=\"#SVGID_1_\" overflow=\"visible\"></use></clipPath><g clip-path=\"url(#SVGID_2_)\"><g opacity=\"0.1\"><g><defs><rect id=\"SVGID_3_\" x=\"27.693\" y=\"18.833\" width=\"48.902\" height=\"104.5\"></rect></defs><clipPath id=\"SVGID_4_\"><use xlink:href=\"#SVGID_3_\" overflow=\"visible\"></use></clipPath><path clip-path=\"url(#SVGID_4_)\" fill=\"#FFFFFF\" d=\"M76.596,71.082c0,28.857-10.947,52.25-24.451,52.25 c-13.506,0-24.451-23.393-24.451-52.25c0-28.856,10.945-52.25,24.451-52.25C65.648,18.832,76.596,42.225,76.596,71.082\"></path></g></g><g><defs><path id=\"SVGID_5_\" d=\"M5.096,71c0,26.141,21.193,47.332,47.334,47.332c26.143,0,47.334-21.19,47.334-47.332 c0-26.143-21.191-47.334-47.334-47.334C26.289,23.667,5.096,44.857,5.096,71\"></path></defs><clipPath id=\"SVGID_6_\"><use xlink:href=\"#SVGID_5_\" overflow=\"visible\"></use></clipPath><g clip-path=\"url(#SVGID_6_)\"><g opacity=\"0.7\"><g><defs><rect id=\"SVGID_7_\" x=\"1.271\" y=\"45.234\" width=\"101.457\" height=\"66.096\"></rect></defs><clipPath id=\"SVGID_8_\"><use xlink:href=\"#SVGID_7_\" overflow=\"visible\"></use></clipPath><path clip-path=\"url(#SVGID_8_)\" fill=\"#269AC0\" d=\"M52.562,111.33c27-0.014,48.575-20.751,50.167-47.119 C89.453,52.17,71.5,45.234,52.499,45.234h-1c-19.334,0-36.952,6.936-50.228,18.977c1.592,26.368,23.463,46.896,50.228,46.908 \"></path></g></g></g><g opacity=\"0.1\" clip-path=\"url(#SVGID_6_)\"><g><g><defs><rect id=\"SVGID_9_\" x=\"39.43\" y=\"117.234\" width=\"24\" height=\"22\"></rect></defs><clipPath id=\"SVGID_10_\"><use xlink:href=\"#SVGID_9_\" overflow=\"visible\"></use></clipPath><rect x=\"39.43\" y=\"117.234\" clip-path=\"url(#SVGID_10_)\" fill=\"#ADDCE5\" width=\"24\" height=\"22\"></rect></g></g></g><path clip-path=\"url(#SVGID_6_)\" fill=\"#A6D5E3\" d=\"M53.145,108.498c27-0.014,48.422-20.419,50.015-46.787 C89.882,49.67,71.93,43.234,52.93,43.234h-1c-19.334,0-36.953,6.436-50.229,18.477c1.591,26.368,23.463,46.646,50.229,46.658\"></path><path clip-path=\"url(#SVGID_6_)\" fill=\"#223C43\" d=\"M39.75,72.498c0,4.144,1.566,7.5,3.5,7.5s3.5-3.356,3.5-7.5 c0-4.143-1.566-7.5-3.5-7.5S39.75,68.355,39.75,72.498\"></path><path clip-path=\"url(#SVGID_6_)\" fill=\"#223C43\" d=\"M57.75,72.498c0,4.144,1.566,7.5,3.5,7.5c1.935,0,3.5-3.356,3.5-7.5 c0-4.143-1.565-7.5-3.5-7.5C59.316,64.998,57.75,68.355,57.75,72.498\"></path><g opacity=\"0.2\" clip-path=\"url(#SVGID_6_)\"><g><g><defs><rect id=\"SVGID_11_\" x=\"14.336\" y=\"50.713\" width=\"17.662\" height=\"48.696\"></rect></defs><clipPath id=\"SVGID_12_\"><use xlink:href=\"#SVGID_11_\" overflow=\"visible\"></use></clipPath><path clip-path=\"url(#SVGID_12_)\" fill=\"#FFFFFF\" d=\"M31.998,99.409c-3.361-8.2-5.662-19.47-5.662-32.327 c0-5.827,0.473-11.329,1.301-16.368c-4.592,1.708-8.902,3.865-12.895,6.472c-0.264,3.203-0.406,6.505-0.406,9.896 c0,6.203,0.457,12.121,1.312,17.646C19.783,90.836,25.363,95.864,31.998,99.409\"></path></g></g></g></g></g></g></g></svg>"
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = CoinMarketCapClient;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_formatter__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_http__ = __webpack_require__(25);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_string__ = __webpack_require__(26);
+
+
+
+
+
+function CoinMarketCapClient(targetElem, options) {
+	this.targetElem = targetElem;
+	this.url = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].STELLAR_CHECKOUT_API_TICKER_URL,
+	this.options = options;
+	this.data = [];
+	this.priceInLumens = null;
+	this.spinner = targetElem.parentNode.querySelector('.spinner');
+}
+
+CoinMarketCapClient.prototype.fetch = function() {
+	var self = this;
+	self.showProgress();
+	return __WEBPACK_IMPORTED_MODULE_2__utils_http__["a" /* default */].request('GET', self.url, { convert: self.options.currency }, '', true)
+	.then(function(response) {
+		if (response) {
+			var data = JSON.parse(response);
+			if (data.length > 0) {
+				var lumenPrice = data[0]['price_' + __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.currency.toLowerCase()];
+				if (lumenPrice) {
+					self.priceInLumens = self.calcPriceInLumens(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.total, lumenPrice);
+					var formattedPrice = Object(__WEBPACK_IMPORTED_MODULE_3__utils_string__["a" /* replace */])(__WEBPACK_IMPORTED_MODULE_1__utils_formatter__["a" /* default */].format(__WEBPACK_IMPORTED_MODULE_1__utils_formatter__["a" /* default */].FORMATS.DECIMAL7, self.priceInLumens), ',', '');
+					self.targetElem.setAttribute('value', formattedPrice);
+					self.targetElem.setAttribute('disabled', 'disabled');
+					self.targetElem.dispatchEvent(new Event('input'));
+				}
+				self.data = data;
+			}
+			self.hideProgress();	
+		}
+		else {
+
+		}
+	});
+};
+
+CoinMarketCapClient.prototype.calcPriceInLumens = function(invoiceTotal, lumenPrice) {
+	return invoiceTotal / lumenPrice;
+};
+
+CoinMarketCapClient.prototype.hideProgress = function() {
+	this.spinner.classList.add(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].CLASS.hidden);
+};
+
+CoinMarketCapClient.prototype.showProgress = function() {
+	this.spinner.classList.remove(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].CLASS.hidden);
+};
 
 /***/ }),
 /* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome__ = __webpack_require__(25);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid_faSpinner__ = __webpack_require__(27);
+const FORMATS = {
+    CURRENCY: 'CURRENCY',
+    CURRENCY_NO_FRACTION: 'CURRENCY_NO_FRACTION',
+    DECIMAL: 'DECIMAL',
+    DECIMAL7: 'DECIMAL7',
+    DOUBLE: 'DOUBLE',
+    PERCENT: 'PERCENT'
+};
+
+var formatCurrency = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+});
+
+var formatCurrencyNoFraction = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0
+});
+
+var formatDecimal = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    minimumFractionDigits: 8,
+    maximumFractionDigits: 8
+});
+
+var formatDecimal7 = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 7
+});
+
+var formatDouble = new Intl.NumberFormat('en-US', {
+    style: 'decimal',
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+});
+
+function format(theFormat, num) {
+    if (theFormat) {
+        switch (theFormat) {
+            case FORMATS.CURRENCY:
+                return formatCurrency.format(num);
+            case FORMATS.CURRENCY_NO_FRACTION:
+                return formatCurrencyNoFraction.format(num);
+            case FORMATS.DECIMAL:
+                return formatDecimal.format(num);
+            case FORMATS.DECIMAL7:
+                return formatDecimal7.format(num);
+            case FORMATS.DOUBLE:
+                return formatDouble.format(num);
+            case FORMATS.PERCENT:
+                return formatDouble.format(num) + '%';
+            default:
+                break;
+        }
+    }
+    return num;
+}
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+    FORMATS: FORMATS,
+    format: format,
+    formatCurrency: formatCurrency,
+    formatCurrencyNoFraction: formatCurrencyNoFraction,
+    formatDecimal: formatDecimal,
+    formatDecimal7: formatDecimal7,
+    formatDouble: formatDouble
+});
+
+/***/ }),
+/* 25 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__url__ = __webpack_require__(9);
+
+
+/* harmony default export */ __webpack_exports__["a"] = ({
+
+	request: function httpRequest(method, url, params, body, accessToken) {
+		method = method || 'GET';
+		url = url || '';
+		params = params || '';
+		accessToken = accessToken;
+		return new Promise(function(resolve, reject) {
+			var xhr = new XMLHttpRequest();
+			xhr.addEventListener('load', function() {
+				if (xhr.readyState === 4 && xhr.status === 200) {
+					resolve(xhr.response);
+				}  else {
+					reject(Error(xhr.statusText));
+				}
+			});
+			xhr.addEventListener('error', function() {
+				reject(Error('http request failed (XHR error)'));						
+			});
+			if (typeof params === 'object') {
+				params = Object(__WEBPACK_IMPORTED_MODULE_0__url__["a" /* toQueryString */])(params);
+			}
+			xhr.open(method, url+params);
+			if (accessToken) {
+				xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);	
+			}
+			xhr.send(body || '');
+		}).catch(function(err) {
+			console.log(err);
+		})
+	}
+
+});
+
+/***/ }),
+/* 26 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = replace;
+function replace(text, search, replacement) {
+    return text.replace(new RegExp(search, 'g'), replacement);
+};
+
+/***/ }),
+/* 27 */
+/***/ (function(module, exports) {
+
+module.exports = "<svg version=\"1.1\" id=\"Layer_1\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" x=\"0px\" y=\"0px\" viewBox=\"0 0 104.667 139.234\" enable-background=\"new 0 0 104.667 139.234\" xml:space=\"preserve\"><rect x=\"51.43\" y=\"11.234\" fill=\"#269AC0\" width=\"2\" height=\"16\"></rect><g><path fill=\"#269AC0\" d=\"M52.846,12.83c-3.217,0-5.834-2.617-5.834-5.834s2.617-5.834,5.834-5.834s5.834,2.617,5.834,5.834 S56.063,12.83,52.846,12.83z M52.846,4.162c-1.562,0-2.834,1.271-2.834,2.834s1.271,2.834,2.834,2.834s2.834-1.271,2.834-2.834 S54.409,4.162,52.846,4.162z\"></path></g><path fill=\"#2BB5E2\" d=\"M51.865,123.922c-8.498,0-16.148-3.594-21.566-9.334c-0.633-0.669-0.924-1.365-1.445-2.092 c-0.859-1.199-1.425-0.887-1.425,0.626v2.739v5.123v2.738c0,1.513,0.562,3.444,1.433,4.392c0.526,0.572,0.926,1.123,1.535,1.652 c5.793,5.019,13.271,8.066,21.52,8.066c8.197,0,15.693-3.01,21.47-7.972c0.569-0.487,1.062-0.993,1.647-1.516 c0.965-0.865,1.396-2.975,1.396-4.476v-2.717v-5.166v-2.716c0-1.501-0.399-1.63-1.372-0.517c-0.588,0.674-1.174,1.322-1.77,1.947 C67.875,120.376,60.304,123.922,51.865,123.922\"></path><path fill=\"#269AC0\" d=\"M52.342,24.197c3.873,0,7.359,1.638,9.83,4.254c0.287,0.305,0.396,0.623,0.634,0.953 c0.393,0.547,0.625,0.404,0.625-0.285v-1.248v-2.335v-1.249c0-0.689-0.229-1.57-0.63-2.001c-0.239-0.261-0.409-0.513-0.688-0.753 c-2.641-2.288-6.043-3.678-9.803-3.678c-3.736,0-7.148,1.372-9.782,3.634c-0.257,0.222-0.84,0.452-1.107,0.69 c-0.439,0.395-0.991,1.355-0.991,2.04v1.238v2.354v1.239c0,0.683,0.541,0.741,0.984,0.233c0.268-0.307,0.711-0.603,0.982-0.887 C44.863,25.812,48.494,24.197,52.342,24.197\"></path><path fill=\"#269AC0\" d=\"M51.865,110.972c-8.498,0-16.148-3.595-21.566-9.333c-0.633-0.669-0.924-1.367-1.445-2.094 c-0.859-1.197-1.425-0.886-1.425,0.626v2.74v5.121v2.739c0,1.513,0.562,3.444,1.433,4.393c0.526,0.571,0.926,1.122,1.535,1.651 c5.793,5.02,13.271,8.066,21.52,8.066c8.197,0,15.693-3.01,21.47-7.972c0.569-0.486,1.062-0.992,1.647-1.516 c0.965-0.864,1.396-2.974,1.396-4.475v-2.718v-5.165v-2.717c0-1.501-0.399-1.63-1.372-0.516c-0.588,0.673-1.174,1.322-1.77,1.946 C67.875,107.426,60.304,110.972,51.865,110.972\"></path><path fill=\"#2BB5E2\" d=\"M5.096,71c0,26.142,21.193,47.333,47.334,47.333c26.143,0,47.334-21.191,47.334-47.333 c0-26.143-21.191-47.334-47.334-47.334C26.289,23.666,5.096,44.857,5.096,71\"></path><g><g><defs><path id=\"SVGID_1_\" d=\"M5.096,71c0,26.141,21.193,47.332,47.334,47.332c26.143,0,47.334-21.19,47.334-47.332 c0-26.143-21.191-47.334-47.334-47.334C26.289,23.667,5.096,44.857,5.096,71\"></path></defs><clipPath id=\"SVGID_2_\"><use xlink:href=\"#SVGID_1_\" overflow=\"visible\"></use></clipPath><g clip-path=\"url(#SVGID_2_)\"><g opacity=\"0.1\"><g><defs><rect id=\"SVGID_3_\" x=\"27.693\" y=\"18.833\" width=\"48.902\" height=\"104.5\"></rect></defs><clipPath id=\"SVGID_4_\"><use xlink:href=\"#SVGID_3_\" overflow=\"visible\"></use></clipPath><path clip-path=\"url(#SVGID_4_)\" fill=\"#FFFFFF\" d=\"M76.596,71.082c0,28.857-10.947,52.25-24.451,52.25 c-13.506,0-24.451-23.393-24.451-52.25c0-28.856,10.945-52.25,24.451-52.25C65.648,18.832,76.596,42.225,76.596,71.082\"></path></g></g><g><defs><path id=\"SVGID_5_\" d=\"M5.096,71c0,26.141,21.193,47.332,47.334,47.332c26.143,0,47.334-21.19,47.334-47.332 c0-26.143-21.191-47.334-47.334-47.334C26.289,23.667,5.096,44.857,5.096,71\"></path></defs><clipPath id=\"SVGID_6_\"><use xlink:href=\"#SVGID_5_\" overflow=\"visible\"></use></clipPath><g clip-path=\"url(#SVGID_6_)\"><g opacity=\"0.7\"><g><defs><rect id=\"SVGID_7_\" x=\"1.271\" y=\"45.234\" width=\"101.457\" height=\"66.096\"></rect></defs><clipPath id=\"SVGID_8_\"><use xlink:href=\"#SVGID_7_\" overflow=\"visible\"></use></clipPath><path clip-path=\"url(#SVGID_8_)\" fill=\"#269AC0\" d=\"M52.562,111.33c27-0.014,48.575-20.751,50.167-47.119 C89.453,52.17,71.5,45.234,52.499,45.234h-1c-19.334,0-36.952,6.936-50.228,18.977c1.592,26.368,23.463,46.896,50.228,46.908 \"></path></g></g></g><g opacity=\"0.1\" clip-path=\"url(#SVGID_6_)\"><g><g><defs><rect id=\"SVGID_9_\" x=\"39.43\" y=\"117.234\" width=\"24\" height=\"22\"></rect></defs><clipPath id=\"SVGID_10_\"><use xlink:href=\"#SVGID_9_\" overflow=\"visible\"></use></clipPath><rect x=\"39.43\" y=\"117.234\" clip-path=\"url(#SVGID_10_)\" fill=\"#ADDCE5\" width=\"24\" height=\"22\"></rect></g></g></g><path clip-path=\"url(#SVGID_6_)\" fill=\"#A6D5E3\" d=\"M53.145,108.498c27-0.014,48.422-20.419,50.015-46.787 C89.882,49.67,71.93,43.234,52.93,43.234h-1c-19.334,0-36.953,6.436-50.229,18.477c1.591,26.368,23.463,46.646,50.229,46.658\"></path><path clip-path=\"url(#SVGID_6_)\" fill=\"#223C43\" d=\"M39.75,72.498c0,4.144,1.566,7.5,3.5,7.5s3.5-3.356,3.5-7.5 c0-4.143-1.566-7.5-3.5-7.5S39.75,68.355,39.75,72.498\"></path><path clip-path=\"url(#SVGID_6_)\" fill=\"#223C43\" d=\"M57.75,72.498c0,4.144,1.566,7.5,3.5,7.5c1.935,0,3.5-3.356,3.5-7.5 c0-4.143-1.565-7.5-3.5-7.5C59.316,64.998,57.75,68.355,57.75,72.498\"></path><g opacity=\"0.2\" clip-path=\"url(#SVGID_6_)\"><g><g><defs><rect id=\"SVGID_11_\" x=\"14.336\" y=\"50.713\" width=\"17.662\" height=\"48.696\"></rect></defs><clipPath id=\"SVGID_12_\"><use xlink:href=\"#SVGID_11_\" overflow=\"visible\"></use></clipPath><path clip-path=\"url(#SVGID_12_)\" fill=\"#FFFFFF\" d=\"M31.998,99.409c-3.361-8.2-5.662-19.47-5.662-32.327 c0-5.827,0.473-11.329,1.301-16.368c-4.592,1.708-8.902,3.865-12.895,6.472c-0.264,3.203-0.406,6.505-0.406,9.896 c0,6.203,0.457,12.121,1.312,17.646C19.783,90.836,25.363,95.864,31.998,99.409\"></path></g></g></g></g></g></g></g></svg>"
+
+/***/ }),
+/* 28 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid_faSpinner__ = __webpack_require__(31);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid_faSpinner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid_faSpinner__);
 
 
 
 __WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome__["a" /* default */].library.add(__WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid_faSpinner___default.a);
 
-
-
 /***/ }),
-/* 25 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -4686,10 +4866,10 @@ var config = api$1.config;
 
 /* harmony default export */ __webpack_exports__["a"] = (api$1);
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(26)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(30)))
 
 /***/ }),
-/* 26 */
+/* 30 */
 /***/ (function(module, exports) {
 
 // shim for using process in browser
@@ -4879,877 +5059,19 @@ process.umask = function() { return 0; };
 
 
 /***/ }),
-/* 27 */
+/* 31 */
 /***/ (function(module, exports) {
 
 module.exports = { prefix: 'fas', iconName: 'spinner', icon: [512, 512, [], "f110", "M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"] };
 
 /***/ }),
-/* 28 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__error_mustache_html__ = __webpack_require__(29);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__error_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__error_mustache_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main_template_html__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main_template_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__main_template_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__progress_mustache_html__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__progress_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__progress_mustache_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__success_mustache_html__ = __webpack_require__(36);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__success_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__success_mustache_html__);
-
-
-
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-	error: __WEBPACK_IMPORTED_MODULE_0__error_mustache_html___default.a,
-	main: __WEBPACK_IMPORTED_MODULE_1__main_template_html___default.a,
-	progress: __WEBPACK_IMPORTED_MODULE_2__progress_mustache_html___default.a,
-	success: __WEBPACK_IMPORTED_MODULE_3__success_mustache_html___default.a
-});
-
-/***/ }),
-/* 29 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var result = __webpack_require__(30)
-var H = __webpack_require__(5);
-window.Hogan = H;
-module.exports = function() {
-var T = H.compile(result, {"tiny":true});
-return T.render.apply(T, arguments); };
-
-/***/ }),
-/* 30 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"stellar_checkout_error\">\r\n\t<div class=\"inner\">\r\n\t\t<div class=\"friendbot\">\r\n\t\t\t{{{friendBotSvg}}}\r\n\t\t</div>\r\n\t\t<div class=\"error_message\">\r\n\t\t\t<a class=\"close\" href=\"#\">close</a>\r\n\t\t\t<div class=\"message\">{{message}}\r\n\t\t\t\t{{data.extras.result_codes.transaction}}: \r\n\t\t\t\t{{#data.extras.result_codes.operations}}\r\n\t\t\t\t\t<span>{{.}}</span>\r\n\t\t\t\t{{/data.extras.result_codes.operations}}\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
-
-/***/ }),
-/* 31 */
-/***/ (function(module, exports, __webpack_require__) {
-
-/*
- *  Copyright 2011 Twitter, Inc.
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
-
-(function (Hogan) {
-  // Setup regex  assignments
-  // remove whitespace according to Mustache spec
-  var rIsWhitespace = /\S/,
-      rQuot = /\"/g,
-      rNewline =  /\n/g,
-      rCr = /\r/g,
-      rSlash = /\\/g,
-      rLineSep = /\u2028/,
-      rParagraphSep = /\u2029/;
-
-  Hogan.tags = {
-    '#': 1, '^': 2, '<': 3, '$': 4,
-    '/': 5, '!': 6, '>': 7, '=': 8, '_v': 9,
-    '{': 10, '&': 11, '_t': 12
-  };
-
-  Hogan.scan = function scan(text, delimiters) {
-    var len = text.length,
-        IN_TEXT = 0,
-        IN_TAG_TYPE = 1,
-        IN_TAG = 2,
-        state = IN_TEXT,
-        tagType = null,
-        tag = null,
-        buf = '',
-        tokens = [],
-        seenTag = false,
-        i = 0,
-        lineStart = 0,
-        otag = '{{',
-        ctag = '}}';
-
-    function addBuf() {
-      if (buf.length > 0) {
-        tokens.push({tag: '_t', text: new String(buf)});
-        buf = '';
-      }
-    }
-
-    function lineIsWhitespace() {
-      var isAllWhitespace = true;
-      for (var j = lineStart; j < tokens.length; j++) {
-        isAllWhitespace =
-          (Hogan.tags[tokens[j].tag] < Hogan.tags['_v']) ||
-          (tokens[j].tag == '_t' && tokens[j].text.match(rIsWhitespace) === null);
-        if (!isAllWhitespace) {
-          return false;
-        }
-      }
-
-      return isAllWhitespace;
-    }
-
-    function filterLine(haveSeenTag, noNewLine) {
-      addBuf();
-
-      if (haveSeenTag && lineIsWhitespace()) {
-        for (var j = lineStart, next; j < tokens.length; j++) {
-          if (tokens[j].text) {
-            if ((next = tokens[j+1]) && next.tag == '>') {
-              // set indent to token value
-              next.indent = tokens[j].text.toString()
-            }
-            tokens.splice(j, 1);
-          }
-        }
-      } else if (!noNewLine) {
-        tokens.push({tag:'\n'});
-      }
-
-      seenTag = false;
-      lineStart = tokens.length;
-    }
-
-    function changeDelimiters(text, index) {
-      var close = '=' + ctag,
-          closeIndex = text.indexOf(close, index),
-          delimiters = trim(
-            text.substring(text.indexOf('=', index) + 1, closeIndex)
-          ).split(' ');
-
-      otag = delimiters[0];
-      ctag = delimiters[delimiters.length - 1];
-
-      return closeIndex + close.length - 1;
-    }
-
-    if (delimiters) {
-      delimiters = delimiters.split(' ');
-      otag = delimiters[0];
-      ctag = delimiters[1];
-    }
-
-    for (i = 0; i < len; i++) {
-      if (state == IN_TEXT) {
-        if (tagChange(otag, text, i)) {
-          --i;
-          addBuf();
-          state = IN_TAG_TYPE;
-        } else {
-          if (text.charAt(i) == '\n') {
-            filterLine(seenTag);
-          } else {
-            buf += text.charAt(i);
-          }
-        }
-      } else if (state == IN_TAG_TYPE) {
-        i += otag.length - 1;
-        tag = Hogan.tags[text.charAt(i + 1)];
-        tagType = tag ? text.charAt(i + 1) : '_v';
-        if (tagType == '=') {
-          i = changeDelimiters(text, i);
-          state = IN_TEXT;
-        } else {
-          if (tag) {
-            i++;
-          }
-          state = IN_TAG;
-        }
-        seenTag = i;
-      } else {
-        if (tagChange(ctag, text, i)) {
-          tokens.push({tag: tagType, n: trim(buf), otag: otag, ctag: ctag,
-                       i: (tagType == '/') ? seenTag - otag.length : i + ctag.length});
-          buf = '';
-          i += ctag.length - 1;
-          state = IN_TEXT;
-          if (tagType == '{') {
-            if (ctag == '}}') {
-              i++;
-            } else {
-              cleanTripleStache(tokens[tokens.length - 1]);
-            }
-          }
-        } else {
-          buf += text.charAt(i);
-        }
-      }
-    }
-
-    filterLine(seenTag, true);
-
-    return tokens;
-  }
-
-  function cleanTripleStache(token) {
-    if (token.n.substr(token.n.length - 1) === '}') {
-      token.n = token.n.substring(0, token.n.length - 1);
-    }
-  }
-
-  function trim(s) {
-    if (s.trim) {
-      return s.trim();
-    }
-
-    return s.replace(/^\s*|\s*$/g, '');
-  }
-
-  function tagChange(tag, text, index) {
-    if (text.charAt(index) != tag.charAt(0)) {
-      return false;
-    }
-
-    for (var i = 1, l = tag.length; i < l; i++) {
-      if (text.charAt(index + i) != tag.charAt(i)) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  // the tags allowed inside super templates
-  var allowedInSuper = {'_t': true, '\n': true, '$': true, '/': true};
-
-  function buildTree(tokens, kind, stack, customTags) {
-    var instructions = [],
-        opener = null,
-        tail = null,
-        token = null;
-
-    tail = stack[stack.length - 1];
-
-    while (tokens.length > 0) {
-      token = tokens.shift();
-
-      if (tail && tail.tag == '<' && !(token.tag in allowedInSuper)) {
-        throw new Error('Illegal content in < super tag.');
-      }
-
-      if (Hogan.tags[token.tag] <= Hogan.tags['$'] || isOpener(token, customTags)) {
-        stack.push(token);
-        token.nodes = buildTree(tokens, token.tag, stack, customTags);
-      } else if (token.tag == '/') {
-        if (stack.length === 0) {
-          throw new Error('Closing tag without opener: /' + token.n);
-        }
-        opener = stack.pop();
-        if (token.n != opener.n && !isCloser(token.n, opener.n, customTags)) {
-          throw new Error('Nesting error: ' + opener.n + ' vs. ' + token.n);
-        }
-        opener.end = token.i;
-        return instructions;
-      } else if (token.tag == '\n') {
-        token.last = (tokens.length == 0) || (tokens[0].tag == '\n');
-      }
-
-      instructions.push(token);
-    }
-
-    if (stack.length > 0) {
-      throw new Error('missing closing tag: ' + stack.pop().n);
-    }
-
-    return instructions;
-  }
-
-  function isOpener(token, tags) {
-    for (var i = 0, l = tags.length; i < l; i++) {
-      if (tags[i].o == token.n) {
-        token.tag = '#';
-        return true;
-      }
-    }
-  }
-
-  function isCloser(close, open, tags) {
-    for (var i = 0, l = tags.length; i < l; i++) {
-      if (tags[i].c == close && tags[i].o == open) {
-        return true;
-      }
-    }
-  }
-
-  function stringifySubstitutions(obj) {
-    var items = [];
-    for (var key in obj) {
-      items.push('"' + esc(key) + '": function(c,p,t,i) {' + obj[key] + '}');
-    }
-    return "{ " + items.join(",") + " }";
-  }
-
-  function stringifyPartials(codeObj) {
-    var partials = [];
-    for (var key in codeObj.partials) {
-      partials.push('"' + esc(key) + '":{name:"' + esc(codeObj.partials[key].name) + '", ' + stringifyPartials(codeObj.partials[key]) + "}");
-    }
-    return "partials: {" + partials.join(",") + "}, subs: " + stringifySubstitutions(codeObj.subs);
-  }
-
-  Hogan.stringify = function(codeObj, text, options) {
-    return "{code: function (c,p,i) { " + Hogan.wrapMain(codeObj.code) + " }," + stringifyPartials(codeObj) +  "}";
-  }
-
-  var serialNo = 0;
-  Hogan.generate = function(tree, text, options) {
-    serialNo = 0;
-    var context = { code: '', subs: {}, partials: {} };
-    Hogan.walk(tree, context);
-
-    if (options.asString) {
-      return this.stringify(context, text, options);
-    }
-
-    return this.makeTemplate(context, text, options);
-  }
-
-  Hogan.wrapMain = function(code) {
-    return 'var t=this;t.b(i=i||"");' + code + 'return t.fl();';
-  }
-
-  Hogan.template = Hogan.Template;
-
-  Hogan.makeTemplate = function(codeObj, text, options) {
-    var template = this.makePartials(codeObj);
-    template.code = new Function('c', 'p', 'i', this.wrapMain(codeObj.code));
-    return new this.template(template, text, this, options);
-  }
-
-  Hogan.makePartials = function(codeObj) {
-    var key, template = {subs: {}, partials: codeObj.partials, name: codeObj.name};
-    for (key in template.partials) {
-      template.partials[key] = this.makePartials(template.partials[key]);
-    }
-    for (key in codeObj.subs) {
-      template.subs[key] = new Function('c', 'p', 't', 'i', codeObj.subs[key]);
-    }
-    return template;
-  }
-
-  function esc(s) {
-    return s.replace(rSlash, '\\\\')
-            .replace(rQuot, '\\\"')
-            .replace(rNewline, '\\n')
-            .replace(rCr, '\\r')
-            .replace(rLineSep, '\\u2028')
-            .replace(rParagraphSep, '\\u2029');
-  }
-
-  function chooseMethod(s) {
-    return (~s.indexOf('.')) ? 'd' : 'f';
-  }
-
-  function createPartial(node, context) {
-    var prefix = "<" + (context.prefix || "");
-    var sym = prefix + node.n + serialNo++;
-    context.partials[sym] = {name: node.n, partials: {}};
-    context.code += 't.b(t.rp("' +  esc(sym) + '",c,p,"' + (node.indent || '') + '"));';
-    return sym;
-  }
-
-  Hogan.codegen = {
-    '#': function(node, context) {
-      context.code += 'if(t.s(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,1),' +
-                      'c,p,0,' + node.i + ',' + node.end + ',"' + node.otag + " " + node.ctag + '")){' +
-                      't.rs(c,p,' + 'function(c,p,t){';
-      Hogan.walk(node.nodes, context);
-      context.code += '});c.pop();}';
-    },
-
-    '^': function(node, context) {
-      context.code += 'if(!t.s(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,1),c,p,1,0,0,"")){';
-      Hogan.walk(node.nodes, context);
-      context.code += '};';
-    },
-
-    '>': createPartial,
-    '<': function(node, context) {
-      var ctx = {partials: {}, code: '', subs: {}, inPartial: true};
-      Hogan.walk(node.nodes, ctx);
-      var template = context.partials[createPartial(node, context)];
-      template.subs = ctx.subs;
-      template.partials = ctx.partials;
-    },
-
-    '$': function(node, context) {
-      var ctx = {subs: {}, code: '', partials: context.partials, prefix: node.n};
-      Hogan.walk(node.nodes, ctx);
-      context.subs[node.n] = ctx.code;
-      if (!context.inPartial) {
-        context.code += 't.sub("' + esc(node.n) + '",c,p,i);';
-      }
-    },
-
-    '\n': function(node, context) {
-      context.code += write('"\\n"' + (node.last ? '' : ' + i'));
-    },
-
-    '_v': function(node, context) {
-      context.code += 't.b(t.v(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,0)));';
-    },
-
-    '_t': function(node, context) {
-      context.code += write('"' + esc(node.text) + '"');
-    },
-
-    '{': tripleStache,
-
-    '&': tripleStache
-  }
-
-  function tripleStache(node, context) {
-    context.code += 't.b(t.t(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,0)));';
-  }
-
-  function write(s) {
-    return 't.b(' + s + ');';
-  }
-
-  Hogan.walk = function(nodelist, context) {
-    var func;
-    for (var i = 0, l = nodelist.length; i < l; i++) {
-      func = Hogan.codegen[nodelist[i].tag];
-      func && func(nodelist[i], context);
-    }
-    return context;
-  }
-
-  Hogan.parse = function(tokens, text, options) {
-    options = options || {};
-    return buildTree(tokens, '', [], options.sectionTags || []);
-  }
-
-  Hogan.cache = {};
-
-  Hogan.cacheKey = function(text, options) {
-    return [text, !!options.asString, !!options.disableLambda, options.delimiters, !!options.modelGet].join('||');
-  }
-
-  Hogan.compile = function(text, options) {
-    options = options || {};
-    var key = Hogan.cacheKey(text, options);
-    var template = this.cache[key];
-
-    if (template) {
-      var partials = template.partials;
-      for (var name in partials) {
-        delete partials[name].instance;
-      }
-      return template;
-    }
-
-    template = this.generate(this.parse(this.scan(text, options.delimiters), text, options), text, options);
-    return this.cache[key] = template;
-  }
-})( true ? exports : Hogan);
-
-
-/***/ }),
 /* 32 */
 /***/ (function(module, exports, __webpack_require__) {
 
-/*
- *  Copyright 2011 Twitter, Inc.
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *  http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
-
-var Hogan = {};
-
-(function (Hogan) {
-  Hogan.Template = function (codeObj, text, compiler, options) {
-    codeObj = codeObj || {};
-    this.r = codeObj.code || this.r;
-    this.c = compiler;
-    this.options = options || {};
-    this.text = text || '';
-    this.partials = codeObj.partials || {};
-    this.subs = codeObj.subs || {};
-    this.buf = '';
-  }
-
-  Hogan.Template.prototype = {
-    // render: replaced by generated code.
-    r: function (context, partials, indent) { return ''; },
-
-    // variable escaping
-    v: hoganEscape,
-
-    // triple stache
-    t: coerceToString,
-
-    render: function render(context, partials, indent) {
-      return this.ri([context], partials || {}, indent);
-    },
-
-    // render internal -- a hook for overrides that catches partials too
-    ri: function (context, partials, indent) {
-      return this.r(context, partials, indent);
-    },
-
-    // ensurePartial
-    ep: function(symbol, partials) {
-      var partial = this.partials[symbol];
-
-      // check to see that if we've instantiated this partial before
-      var template = partials[partial.name];
-      if (partial.instance && partial.base == template) {
-        return partial.instance;
-      }
-
-      if (typeof template == 'string') {
-        if (!this.c) {
-          throw new Error("No compiler available.");
-        }
-        template = this.c.compile(template, this.options);
-      }
-
-      if (!template) {
-        return null;
-      }
-
-      // We use this to check whether the partials dictionary has changed
-      this.partials[symbol].base = template;
-
-      if (partial.subs) {
-        // Make sure we consider parent template now
-        if (!partials.stackText) partials.stackText = {};
-        for (key in partial.subs) {
-          if (!partials.stackText[key]) {
-            partials.stackText[key] = (this.activeSub !== undefined && partials.stackText[this.activeSub]) ? partials.stackText[this.activeSub] : this.text;
-          }
-        }
-        template = createSpecializedPartial(template, partial.subs, partial.partials,
-          this.stackSubs, this.stackPartials, partials.stackText);
-      }
-      this.partials[symbol].instance = template;
-
-      return template;
-    },
-
-    // tries to find a partial in the current scope and render it
-    rp: function(symbol, context, partials, indent) {
-      var partial = this.ep(symbol, partials);
-      if (!partial) {
-        return '';
-      }
-
-      return partial.ri(context, partials, indent);
-    },
-
-    // render a section
-    rs: function(context, partials, section) {
-      var tail = context[context.length - 1];
-
-      if (!isArray(tail)) {
-        section(context, partials, this);
-        return;
-      }
-
-      for (var i = 0; i < tail.length; i++) {
-        context.push(tail[i]);
-        section(context, partials, this);
-        context.pop();
-      }
-    },
-
-    // maybe start a section
-    s: function(val, ctx, partials, inverted, start, end, tags) {
-      var pass;
-
-      if (isArray(val) && val.length === 0) {
-        return false;
-      }
-
-      if (typeof val == 'function') {
-        val = this.ms(val, ctx, partials, inverted, start, end, tags);
-      }
-
-      pass = !!val;
-
-      if (!inverted && pass && ctx) {
-        ctx.push((typeof val == 'object') ? val : ctx[ctx.length - 1]);
-      }
-
-      return pass;
-    },
-
-    // find values with dotted names
-    d: function(key, ctx, partials, returnFound) {
-      var found,
-          names = key.split('.'),
-          val = this.f(names[0], ctx, partials, returnFound),
-          doModelGet = this.options.modelGet,
-          cx = null;
-
-      if (key === '.' && isArray(ctx[ctx.length - 2])) {
-        val = ctx[ctx.length - 1];
-      } else {
-        for (var i = 1; i < names.length; i++) {
-          found = findInScope(names[i], val, doModelGet);
-          if (found !== undefined) {
-            cx = val;
-            val = found;
-          } else {
-            val = '';
-          }
-        }
-      }
-
-      if (returnFound && !val) {
-        return false;
-      }
-
-      if (!returnFound && typeof val == 'function') {
-        ctx.push(cx);
-        val = this.mv(val, ctx, partials);
-        ctx.pop();
-      }
-
-      return val;
-    },
-
-    // find values with normal names
-    f: function(key, ctx, partials, returnFound) {
-      var val = false,
-          v = null,
-          found = false,
-          doModelGet = this.options.modelGet;
-
-      for (var i = ctx.length - 1; i >= 0; i--) {
-        v = ctx[i];
-        val = findInScope(key, v, doModelGet);
-        if (val !== undefined) {
-          found = true;
-          break;
-        }
-      }
-
-      if (!found) {
-        return (returnFound) ? false : "";
-      }
-
-      if (!returnFound && typeof val == 'function') {
-        val = this.mv(val, ctx, partials);
-      }
-
-      return val;
-    },
-
-    // higher order templates
-    ls: function(func, cx, partials, text, tags) {
-      var oldTags = this.options.delimiters;
-
-      this.options.delimiters = tags;
-      this.b(this.ct(coerceToString(func.call(cx, text)), cx, partials));
-      this.options.delimiters = oldTags;
-
-      return false;
-    },
-
-    // compile text
-    ct: function(text, cx, partials) {
-      if (this.options.disableLambda) {
-        throw new Error('Lambda features disabled.');
-      }
-      return this.c.compile(text, this.options).render(cx, partials);
-    },
-
-    // template result buffering
-    b: function(s) { this.buf += s; },
-
-    fl: function() { var r = this.buf; this.buf = ''; return r; },
-
-    // method replace section
-    ms: function(func, ctx, partials, inverted, start, end, tags) {
-      var textSource,
-          cx = ctx[ctx.length - 1],
-          result = func.call(cx);
-
-      if (typeof result == 'function') {
-        if (inverted) {
-          return true;
-        } else {
-          textSource = (this.activeSub && this.subsText && this.subsText[this.activeSub]) ? this.subsText[this.activeSub] : this.text;
-          return this.ls(result, cx, partials, textSource.substring(start, end), tags);
-        }
-      }
-
-      return result;
-    },
-
-    // method replace variable
-    mv: function(func, ctx, partials) {
-      var cx = ctx[ctx.length - 1];
-      var result = func.call(cx);
-
-      if (typeof result == 'function') {
-        return this.ct(coerceToString(result.call(cx)), cx, partials);
-      }
-
-      return result;
-    },
-
-    sub: function(name, context, partials, indent) {
-      var f = this.subs[name];
-      if (f) {
-        this.activeSub = name;
-        f(context, partials, this, indent);
-        this.activeSub = false;
-      }
-    }
-
-  };
-
-  //Find a key in an object
-  function findInScope(key, scope, doModelGet) {
-    var val;
-
-    if (scope && typeof scope == 'object') {
-
-      if (scope[key] !== undefined) {
-        val = scope[key];
-
-      // try lookup with get for backbone or similar model data
-      } else if (doModelGet && scope.get && typeof scope.get == 'function') {
-        val = scope.get(key);
-      }
-    }
-
-    return val;
-  }
-
-  function createSpecializedPartial(instance, subs, partials, stackSubs, stackPartials, stackText) {
-    function PartialTemplate() {};
-    PartialTemplate.prototype = instance;
-    function Substitutions() {};
-    Substitutions.prototype = instance.subs;
-    var key;
-    var partial = new PartialTemplate();
-    partial.subs = new Substitutions();
-    partial.subsText = {};  //hehe. substext.
-    partial.buf = '';
-
-    stackSubs = stackSubs || {};
-    partial.stackSubs = stackSubs;
-    partial.subsText = stackText;
-    for (key in subs) {
-      if (!stackSubs[key]) stackSubs[key] = subs[key];
-    }
-    for (key in stackSubs) {
-      partial.subs[key] = stackSubs[key];
-    }
-
-    stackPartials = stackPartials || {};
-    partial.stackPartials = stackPartials;
-    for (key in partials) {
-      if (!stackPartials[key]) stackPartials[key] = partials[key];
-    }
-    for (key in stackPartials) {
-      partial.partials[key] = stackPartials[key];
-    }
-
-    return partial;
-  }
-
-  var rAmp = /&/g,
-      rLt = /</g,
-      rGt = />/g,
-      rApos = /\'/g,
-      rQuot = /\"/g,
-      hChars = /[&<>\"\']/;
-
-  function coerceToString(val) {
-    return String((val === null || val === undefined) ? '' : val);
-  }
-
-  function hoganEscape(str) {
-    str = coerceToString(str);
-    return hChars.test(str) ?
-      str
-        .replace(rAmp, '&amp;')
-        .replace(rLt, '&lt;')
-        .replace(rGt, '&gt;')
-        .replace(rApos, '&#39;')
-        .replace(rQuot, '&quot;') :
-      str;
-  }
-
-  var isArray = Array.isArray || function(a) {
-    return Object.prototype.toString.call(a) === '[object Array]';
-  };
-
-})( true ? exports : Hogan);
-
-
-/***/ }),
-/* 33 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = "<div class=\"stellar_checkout\">\r\n\r\n\t<div class=\"header\">\r\n\t\t<div class=\"logo\">\r\n\t\t\t<img alt=\"\" class=\"rocket\" src=\"" + __webpack_require__(4) + "\" />\r\n\t\t\t<span class=\"app_name\">stellar checkout</span>\r\n\t\t</div>\r\n\t\t<div class=\"alt\">\r\n\t\t\t<div class=\"qr_wrap\">\r\n\t\t\t\t<canvas class=\"qrcode\"></canvas>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"status\">\r\n\t\t\t\t<span>Awaiting Payment</span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class=\"stellar_checkout_form\">\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutTotal\">Total</label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutTotal\" class=\"txt\" type=\"number\" required></input>\r\n\t\t\t\t<span class=\"currency\"></span>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutAmount\">Amount</label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutAmount\" class=\"txt\" type=\"text\" step=\"0.0000001\" autocomplete=\"off\" required></input>\r\n\t\t\t\t<span class=\"currency\">XLM</span>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t\t<span class=\"spinner\"><i class=\"fas fa-spinner fa-spin\"></i></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutPublicKey\">Public Key - <a class=\"toggle_keys\" href=\"#\">use private seed</a></label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutPublicKey\" class=\"txt\" type=\"text\" value=\"\" required></input>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field stellar_checkout_hidden\">\r\n\t\t\t<label for=\"stellarCheckoutPrivateSeed\">Private Seed - <a class=\"toggle_keys\" href=\"#\">use public key</a> - <a class=\"reveal_seed_link\" href=\"#\">reveal</a></label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutPrivateSeed\" class=\"txt\" type=\"password\" value=\"\" required></input>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"button_row\">\r\n\t\t\t<button id=\"stellarCheckoutSubmitButton\" disabled>Enter payment info</button>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class=\"stellar_checkout_overlay\"></div>\r\n\r\n</div>";
-
-/***/ }),
-/* 34 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var result = __webpack_require__(35)
-var H = __webpack_require__(5);
-window.Hogan = H;
-module.exports = function() {
-var T = H.compile(result, {"tiny":true});
-return T.render.apply(T, arguments); };
-
-/***/ }),
-/* 35 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"stellar_checkout_progress\">\r\n\t\r\n\t<div class=\"transaction_info\">Complete this transaction by sending a payment with the following information:</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmTo\">To</label>\r\n\t\t<div class=\"txtwrap\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmTo\" class=\"txt\" type=\"text\" autocomplete=\"off\" disabled>{{destinationKey}}</textarea>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmFrom\">From</label>\r\n\t\t<div class=\"txtwrap\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmFrom\" class=\"txt\" type=\"text\" autocomplete=\"off\" disabled>{{publicKey}}</textarea>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmAmount\">Amount</label>\r\n\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t<input id=\"stellarCheckoutConfirmAmount\" class=\"txt\" type=\"text\" value=\"{{amount}}\" step=\"0.0000001\" autocomplete=\"off\" disabled></input>\r\n\t\t\t<span class=\"currency\">XLM</span>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
-
-/***/ }),
-/* 36 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var result = __webpack_require__(37)
-var H = __webpack_require__(5);
-window.Hogan = H;
-module.exports = function() {
-var T = H.compile(result, {"tiny":true});
-return T.render.apply(T, arguments); };
-
-/***/ }),
-/* 37 */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"stellar_checkout_success\">\r\n<div class=\"message\">Payment received</div>\r\n</div>";
-
-/***/ }),
-/* 38 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var canPromise = __webpack_require__(39)
-var QRCode = __webpack_require__(42)
-var CanvasRenderer = __webpack_require__(58)
-var SvgRenderer = __webpack_require__(59)
+var canPromise = __webpack_require__(33)
+var QRCode = __webpack_require__(36)
+var CanvasRenderer = __webpack_require__(52)
+var SvgRenderer = __webpack_require__(53)
 
 function renderCanvas (renderFunc, canvas, text, opts, cb) {
   var args = [].slice.call(arguments, 1)
@@ -5823,13 +5145,13 @@ exports.toString = renderCanvas.bind(null, function (data, _, opts) {
 
 
 /***/ }),
-/* 39 */
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-var G = __webpack_require__(40)
+var G = __webpack_require__(34)
 
 module.exports = function() {
   return (
@@ -5840,7 +5162,7 @@ module.exports = function() {
 
 
 /***/ }),
-/* 40 */
+/* 34 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5849,10 +5171,10 @@ module.exports = (typeof self === 'object' && self.self === self && self) ||
   (typeof global === 'object' && global.global === global && global) ||
   this
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(41)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(35)))
 
 /***/ }),
-/* 41 */
+/* 35 */
 /***/ (function(module, exports) {
 
 var g;
@@ -5879,24 +5201,24 @@ module.exports = g;
 
 
 /***/ }),
-/* 42 */
+/* 36 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Buffer = __webpack_require__(2)
 var Utils = __webpack_require__(0)
-var ECLevel = __webpack_require__(7)
-var BitBuffer = __webpack_require__(43)
-var BitMatrix = __webpack_require__(44)
-var AlignmentPattern = __webpack_require__(45)
-var FinderPattern = __webpack_require__(46)
-var MaskPattern = __webpack_require__(47)
-var ECCode = __webpack_require__(9)
-var ReedSolomonEncoder = __webpack_require__(48)
-var Version = __webpack_require__(10)
-var FormatInfo = __webpack_require__(51)
+var ECLevel = __webpack_require__(6)
+var BitBuffer = __webpack_require__(37)
+var BitMatrix = __webpack_require__(38)
+var AlignmentPattern = __webpack_require__(39)
+var FinderPattern = __webpack_require__(40)
+var MaskPattern = __webpack_require__(41)
+var ECCode = __webpack_require__(10)
+var ReedSolomonEncoder = __webpack_require__(42)
+var Version = __webpack_require__(11)
+var FormatInfo = __webpack_require__(45)
 var Mode = __webpack_require__(1)
-var Segments = __webpack_require__(52)
-var isArray = __webpack_require__(6)
+var Segments = __webpack_require__(46)
+var isArray = __webpack_require__(5)
 
 /**
  * QRCode for JavaScript
@@ -6384,7 +5706,7 @@ exports.create = function create (data, options) {
 
 
 /***/ }),
-/* 43 */
+/* 37 */
 /***/ (function(module, exports) {
 
 function BitBuffer () {
@@ -6427,7 +5749,7 @@ module.exports = BitBuffer
 
 
 /***/ }),
-/* 44 */
+/* 38 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Buffer = __webpack_require__(2)
@@ -6502,7 +5824,7 @@ module.exports = BitMatrix
 
 
 /***/ }),
-/* 45 */
+/* 39 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -6591,7 +5913,7 @@ exports.getPositions = function getPositions (version) {
 
 
 /***/ }),
-/* 46 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var getSymbolSize = __webpack_require__(0).getSymbolSize
@@ -6619,7 +5941,7 @@ exports.getPositions = function getPositions (version) {
 
 
 /***/ }),
-/* 47 */
+/* 41 */
 /***/ (function(module, exports) {
 
 /**
@@ -6859,11 +6181,11 @@ exports.getBestMask = function getBestMask (data, setupFormatFunc) {
 
 
 /***/ }),
-/* 48 */
+/* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Buffer = __webpack_require__(2)
-var Polynomial = __webpack_require__(49)
+var Polynomial = __webpack_require__(43)
 
 function ReedSolomonEncoder (degree) {
   this.genPoly = undefined
@@ -6924,11 +6246,11 @@ module.exports = ReedSolomonEncoder
 
 
 /***/ }),
-/* 49 */
+/* 43 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Buffer = __webpack_require__(2)
-var GF = __webpack_require__(50)
+var GF = __webpack_require__(44)
 
 /**
  * Multiplies two polynomials inside Galois Field
@@ -6994,7 +6316,7 @@ exports.generateECPolynomial = function generateECPolynomial (degree) {
 
 
 /***/ }),
-/* 50 */
+/* 44 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Buffer = __webpack_require__(2)
@@ -7072,7 +6394,7 @@ exports.mul = function mul (x, y) {
 
 
 /***/ }),
-/* 51 */
+/* 45 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Utils = __webpack_require__(0)
@@ -7107,17 +6429,17 @@ exports.getEncodedBits = function getEncodedBits (errorCorrectionLevel, mask) {
 
 
 /***/ }),
-/* 52 */
+/* 46 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Mode = __webpack_require__(1)
-var NumericData = __webpack_require__(53)
-var AlphanumericData = __webpack_require__(54)
-var ByteData = __webpack_require__(55)
-var KanjiData = __webpack_require__(56)
-var Regex = __webpack_require__(11)
+var NumericData = __webpack_require__(47)
+var AlphanumericData = __webpack_require__(48)
+var ByteData = __webpack_require__(49)
+var KanjiData = __webpack_require__(50)
+var Regex = __webpack_require__(12)
 var Utils = __webpack_require__(0)
-var dijkstra = __webpack_require__(57)
+var dijkstra = __webpack_require__(51)
 
 /**
  * Returns UTF8 byte length
@@ -7443,7 +6765,7 @@ exports.rawSplit = function rawSplit (data) {
 
 
 /***/ }),
-/* 53 */
+/* 47 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Mode = __webpack_require__(1)
@@ -7492,7 +6814,7 @@ module.exports = NumericData
 
 
 /***/ }),
-/* 54 */
+/* 48 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Mode = __webpack_require__(1)
@@ -7557,7 +6879,7 @@ module.exports = AlphanumericData
 
 
 /***/ }),
-/* 55 */
+/* 49 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Buffer = __webpack_require__(2)
@@ -7590,7 +6912,7 @@ module.exports = ByteData
 
 
 /***/ }),
-/* 56 */
+/* 50 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Mode = __webpack_require__(1)
@@ -7650,7 +6972,7 @@ module.exports = KanjiData
 
 
 /***/ }),
-/* 57 */
+/* 51 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7822,10 +7144,10 @@ if (true) {
 
 
 /***/ }),
-/* 58 */
+/* 52 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Utils = __webpack_require__(12)
+var Utils = __webpack_require__(13)
 
 function clearCanvas (ctx, canvas, size) {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -7891,10 +7213,10 @@ exports.renderToDataURL = function renderToDataURL (qrData, canvas, options) {
 
 
 /***/ }),
-/* 59 */
+/* 53 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Utils = __webpack_require__(12)
+var Utils = __webpack_require__(13)
 
 function getColorAttrib (color, attrib) {
   var alpha = color.a / 255
@@ -7978,197 +7300,862 @@ exports.render = function render (qrData, options, cb) {
 
 
 /***/ }),
-/* 60 */
+/* 54 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = CoinMarketCapClient;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_formatter__ = __webpack_require__(61);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_http__ = __webpack_require__(62);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_string__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__error_mustache_html__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__error_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__error_mustache_html__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main_template_html__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main_template_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__main_template_html__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__progress_mustache_html__ = __webpack_require__(60);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__progress_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__progress_mustache_html__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__success_mustache_html__ = __webpack_require__(62);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__success_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__success_mustache_html__);
 
-// import {faSpinner} from '../assets/fonts';
 
 
 
 
-function CoinMarketCapClient(targetElem, options) {
-	this.targetElem = targetElem;
-	this.url = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].STELLAR_CHECKOUT_API_TICKER_URL,
-	this.options = options;
-	this.data = [];
-	this.priceInLumens = null;
-	this.spinner = targetElem.parentNode.querySelector('.spinner');
-}
+/* harmony default export */ __webpack_exports__["a"] = ({
+	error: __WEBPACK_IMPORTED_MODULE_0__error_mustache_html___default.a,
+	main: __WEBPACK_IMPORTED_MODULE_1__main_template_html___default.a,
+	progress: __WEBPACK_IMPORTED_MODULE_2__progress_mustache_html___default.a,
+	success: __WEBPACK_IMPORTED_MODULE_3__success_mustache_html___default.a
+});
 
-CoinMarketCapClient.prototype.fetch = function() {
-	var self = this;
-	self.showProgress();
-	return __WEBPACK_IMPORTED_MODULE_2__utils_http__["a" /* default */].request('GET', self.url, { convert: self.options.currency }, '', true)
-	.then(function(response) {
-		if (response) {
-			var data = JSON.parse(response);
-			if (data.length > 0) {
-				var lumenPrice = data[0]['price_' + __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.currency.toLowerCase()];
-				if (lumenPrice) {
-					self.priceInLumens = self.calcPriceInLumens(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.total, lumenPrice);
-					var formattedPrice = Object(__WEBPACK_IMPORTED_MODULE_3__utils_string__["a" /* replace */])(__WEBPACK_IMPORTED_MODULE_1__utils_formatter__["a" /* default */].format(__WEBPACK_IMPORTED_MODULE_1__utils_formatter__["a" /* default */].FORMATS.DECIMAL7, self.priceInLumens), ',', '');
-					self.targetElem.setAttribute('value', formattedPrice);
-					self.targetElem.setAttribute('disabled', 'disabled');
-					self.targetElem.dispatchEvent(new Event('input'));
-				}
-				self.data = data;
-			}
-			self.hideProgress();	
-		}
-		else {
+/***/ }),
+/* 55 */
+/***/ (function(module, exports, __webpack_require__) {
 
-		}
-	});
-};
+var result = __webpack_require__(56)
+var H = __webpack_require__(7);
+window.Hogan = H;
+module.exports = function() {
+var T = H.compile(result, {"tiny":true});
+return T.render.apply(T, arguments); };
 
-CoinMarketCapClient.prototype.calcPriceInLumens = function(invoiceTotal, lumenPrice) {
-	return invoiceTotal / lumenPrice;
-};
+/***/ }),
+/* 56 */
+/***/ (function(module, exports) {
 
-CoinMarketCapClient.prototype.hideProgress = function() {
-	this.spinner.classList.add(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].CLASS.hidden);
-};
+module.exports = "<div class=\"stellar_checkout_error\">\r\n\t<div class=\"inner\">\r\n\t\t<div class=\"friendbot\">\r\n\t\t\t{{{friendBotSvg}}}\r\n\t\t</div>\r\n\t\t<div class=\"error_message\">\r\n\t\t\t<a class=\"close\" href=\"#\">close</a>\r\n\t\t\t<div class=\"message\">{{message}}\r\n\t\t\t\t{{data.extras.result_codes.transaction}}: \r\n\t\t\t\t{{#data.extras.result_codes.operations}}\r\n\t\t\t\t\t<span>{{.}}</span>\r\n\t\t\t\t{{/data.extras.result_codes.operations}}\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
 
-CoinMarketCapClient.prototype.showProgress = function() {
-	this.spinner.classList.remove(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].CLASS.hidden);
-};
+/***/ }),
+/* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+ *  Copyright 2011 Twitter, Inc.
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+(function (Hogan) {
+  // Setup regex  assignments
+  // remove whitespace according to Mustache spec
+  var rIsWhitespace = /\S/,
+      rQuot = /\"/g,
+      rNewline =  /\n/g,
+      rCr = /\r/g,
+      rSlash = /\\/g,
+      rLineSep = /\u2028/,
+      rParagraphSep = /\u2029/;
+
+  Hogan.tags = {
+    '#': 1, '^': 2, '<': 3, '$': 4,
+    '/': 5, '!': 6, '>': 7, '=': 8, '_v': 9,
+    '{': 10, '&': 11, '_t': 12
+  };
+
+  Hogan.scan = function scan(text, delimiters) {
+    var len = text.length,
+        IN_TEXT = 0,
+        IN_TAG_TYPE = 1,
+        IN_TAG = 2,
+        state = IN_TEXT,
+        tagType = null,
+        tag = null,
+        buf = '',
+        tokens = [],
+        seenTag = false,
+        i = 0,
+        lineStart = 0,
+        otag = '{{',
+        ctag = '}}';
+
+    function addBuf() {
+      if (buf.length > 0) {
+        tokens.push({tag: '_t', text: new String(buf)});
+        buf = '';
+      }
+    }
+
+    function lineIsWhitespace() {
+      var isAllWhitespace = true;
+      for (var j = lineStart; j < tokens.length; j++) {
+        isAllWhitespace =
+          (Hogan.tags[tokens[j].tag] < Hogan.tags['_v']) ||
+          (tokens[j].tag == '_t' && tokens[j].text.match(rIsWhitespace) === null);
+        if (!isAllWhitespace) {
+          return false;
+        }
+      }
+
+      return isAllWhitespace;
+    }
+
+    function filterLine(haveSeenTag, noNewLine) {
+      addBuf();
+
+      if (haveSeenTag && lineIsWhitespace()) {
+        for (var j = lineStart, next; j < tokens.length; j++) {
+          if (tokens[j].text) {
+            if ((next = tokens[j+1]) && next.tag == '>') {
+              // set indent to token value
+              next.indent = tokens[j].text.toString()
+            }
+            tokens.splice(j, 1);
+          }
+        }
+      } else if (!noNewLine) {
+        tokens.push({tag:'\n'});
+      }
+
+      seenTag = false;
+      lineStart = tokens.length;
+    }
+
+    function changeDelimiters(text, index) {
+      var close = '=' + ctag,
+          closeIndex = text.indexOf(close, index),
+          delimiters = trim(
+            text.substring(text.indexOf('=', index) + 1, closeIndex)
+          ).split(' ');
+
+      otag = delimiters[0];
+      ctag = delimiters[delimiters.length - 1];
+
+      return closeIndex + close.length - 1;
+    }
+
+    if (delimiters) {
+      delimiters = delimiters.split(' ');
+      otag = delimiters[0];
+      ctag = delimiters[1];
+    }
+
+    for (i = 0; i < len; i++) {
+      if (state == IN_TEXT) {
+        if (tagChange(otag, text, i)) {
+          --i;
+          addBuf();
+          state = IN_TAG_TYPE;
+        } else {
+          if (text.charAt(i) == '\n') {
+            filterLine(seenTag);
+          } else {
+            buf += text.charAt(i);
+          }
+        }
+      } else if (state == IN_TAG_TYPE) {
+        i += otag.length - 1;
+        tag = Hogan.tags[text.charAt(i + 1)];
+        tagType = tag ? text.charAt(i + 1) : '_v';
+        if (tagType == '=') {
+          i = changeDelimiters(text, i);
+          state = IN_TEXT;
+        } else {
+          if (tag) {
+            i++;
+          }
+          state = IN_TAG;
+        }
+        seenTag = i;
+      } else {
+        if (tagChange(ctag, text, i)) {
+          tokens.push({tag: tagType, n: trim(buf), otag: otag, ctag: ctag,
+                       i: (tagType == '/') ? seenTag - otag.length : i + ctag.length});
+          buf = '';
+          i += ctag.length - 1;
+          state = IN_TEXT;
+          if (tagType == '{') {
+            if (ctag == '}}') {
+              i++;
+            } else {
+              cleanTripleStache(tokens[tokens.length - 1]);
+            }
+          }
+        } else {
+          buf += text.charAt(i);
+        }
+      }
+    }
+
+    filterLine(seenTag, true);
+
+    return tokens;
+  }
+
+  function cleanTripleStache(token) {
+    if (token.n.substr(token.n.length - 1) === '}') {
+      token.n = token.n.substring(0, token.n.length - 1);
+    }
+  }
+
+  function trim(s) {
+    if (s.trim) {
+      return s.trim();
+    }
+
+    return s.replace(/^\s*|\s*$/g, '');
+  }
+
+  function tagChange(tag, text, index) {
+    if (text.charAt(index) != tag.charAt(0)) {
+      return false;
+    }
+
+    for (var i = 1, l = tag.length; i < l; i++) {
+      if (text.charAt(index + i) != tag.charAt(i)) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  // the tags allowed inside super templates
+  var allowedInSuper = {'_t': true, '\n': true, '$': true, '/': true};
+
+  function buildTree(tokens, kind, stack, customTags) {
+    var instructions = [],
+        opener = null,
+        tail = null,
+        token = null;
+
+    tail = stack[stack.length - 1];
+
+    while (tokens.length > 0) {
+      token = tokens.shift();
+
+      if (tail && tail.tag == '<' && !(token.tag in allowedInSuper)) {
+        throw new Error('Illegal content in < super tag.');
+      }
+
+      if (Hogan.tags[token.tag] <= Hogan.tags['$'] || isOpener(token, customTags)) {
+        stack.push(token);
+        token.nodes = buildTree(tokens, token.tag, stack, customTags);
+      } else if (token.tag == '/') {
+        if (stack.length === 0) {
+          throw new Error('Closing tag without opener: /' + token.n);
+        }
+        opener = stack.pop();
+        if (token.n != opener.n && !isCloser(token.n, opener.n, customTags)) {
+          throw new Error('Nesting error: ' + opener.n + ' vs. ' + token.n);
+        }
+        opener.end = token.i;
+        return instructions;
+      } else if (token.tag == '\n') {
+        token.last = (tokens.length == 0) || (tokens[0].tag == '\n');
+      }
+
+      instructions.push(token);
+    }
+
+    if (stack.length > 0) {
+      throw new Error('missing closing tag: ' + stack.pop().n);
+    }
+
+    return instructions;
+  }
+
+  function isOpener(token, tags) {
+    for (var i = 0, l = tags.length; i < l; i++) {
+      if (tags[i].o == token.n) {
+        token.tag = '#';
+        return true;
+      }
+    }
+  }
+
+  function isCloser(close, open, tags) {
+    for (var i = 0, l = tags.length; i < l; i++) {
+      if (tags[i].c == close && tags[i].o == open) {
+        return true;
+      }
+    }
+  }
+
+  function stringifySubstitutions(obj) {
+    var items = [];
+    for (var key in obj) {
+      items.push('"' + esc(key) + '": function(c,p,t,i) {' + obj[key] + '}');
+    }
+    return "{ " + items.join(",") + " }";
+  }
+
+  function stringifyPartials(codeObj) {
+    var partials = [];
+    for (var key in codeObj.partials) {
+      partials.push('"' + esc(key) + '":{name:"' + esc(codeObj.partials[key].name) + '", ' + stringifyPartials(codeObj.partials[key]) + "}");
+    }
+    return "partials: {" + partials.join(",") + "}, subs: " + stringifySubstitutions(codeObj.subs);
+  }
+
+  Hogan.stringify = function(codeObj, text, options) {
+    return "{code: function (c,p,i) { " + Hogan.wrapMain(codeObj.code) + " }," + stringifyPartials(codeObj) +  "}";
+  }
+
+  var serialNo = 0;
+  Hogan.generate = function(tree, text, options) {
+    serialNo = 0;
+    var context = { code: '', subs: {}, partials: {} };
+    Hogan.walk(tree, context);
+
+    if (options.asString) {
+      return this.stringify(context, text, options);
+    }
+
+    return this.makeTemplate(context, text, options);
+  }
+
+  Hogan.wrapMain = function(code) {
+    return 'var t=this;t.b(i=i||"");' + code + 'return t.fl();';
+  }
+
+  Hogan.template = Hogan.Template;
+
+  Hogan.makeTemplate = function(codeObj, text, options) {
+    var template = this.makePartials(codeObj);
+    template.code = new Function('c', 'p', 'i', this.wrapMain(codeObj.code));
+    return new this.template(template, text, this, options);
+  }
+
+  Hogan.makePartials = function(codeObj) {
+    var key, template = {subs: {}, partials: codeObj.partials, name: codeObj.name};
+    for (key in template.partials) {
+      template.partials[key] = this.makePartials(template.partials[key]);
+    }
+    for (key in codeObj.subs) {
+      template.subs[key] = new Function('c', 'p', 't', 'i', codeObj.subs[key]);
+    }
+    return template;
+  }
+
+  function esc(s) {
+    return s.replace(rSlash, '\\\\')
+            .replace(rQuot, '\\\"')
+            .replace(rNewline, '\\n')
+            .replace(rCr, '\\r')
+            .replace(rLineSep, '\\u2028')
+            .replace(rParagraphSep, '\\u2029');
+  }
+
+  function chooseMethod(s) {
+    return (~s.indexOf('.')) ? 'd' : 'f';
+  }
+
+  function createPartial(node, context) {
+    var prefix = "<" + (context.prefix || "");
+    var sym = prefix + node.n + serialNo++;
+    context.partials[sym] = {name: node.n, partials: {}};
+    context.code += 't.b(t.rp("' +  esc(sym) + '",c,p,"' + (node.indent || '') + '"));';
+    return sym;
+  }
+
+  Hogan.codegen = {
+    '#': function(node, context) {
+      context.code += 'if(t.s(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,1),' +
+                      'c,p,0,' + node.i + ',' + node.end + ',"' + node.otag + " " + node.ctag + '")){' +
+                      't.rs(c,p,' + 'function(c,p,t){';
+      Hogan.walk(node.nodes, context);
+      context.code += '});c.pop();}';
+    },
+
+    '^': function(node, context) {
+      context.code += 'if(!t.s(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,1),c,p,1,0,0,"")){';
+      Hogan.walk(node.nodes, context);
+      context.code += '};';
+    },
+
+    '>': createPartial,
+    '<': function(node, context) {
+      var ctx = {partials: {}, code: '', subs: {}, inPartial: true};
+      Hogan.walk(node.nodes, ctx);
+      var template = context.partials[createPartial(node, context)];
+      template.subs = ctx.subs;
+      template.partials = ctx.partials;
+    },
+
+    '$': function(node, context) {
+      var ctx = {subs: {}, code: '', partials: context.partials, prefix: node.n};
+      Hogan.walk(node.nodes, ctx);
+      context.subs[node.n] = ctx.code;
+      if (!context.inPartial) {
+        context.code += 't.sub("' + esc(node.n) + '",c,p,i);';
+      }
+    },
+
+    '\n': function(node, context) {
+      context.code += write('"\\n"' + (node.last ? '' : ' + i'));
+    },
+
+    '_v': function(node, context) {
+      context.code += 't.b(t.v(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,0)));';
+    },
+
+    '_t': function(node, context) {
+      context.code += write('"' + esc(node.text) + '"');
+    },
+
+    '{': tripleStache,
+
+    '&': tripleStache
+  }
+
+  function tripleStache(node, context) {
+    context.code += 't.b(t.t(t.' + chooseMethod(node.n) + '("' + esc(node.n) + '",c,p,0)));';
+  }
+
+  function write(s) {
+    return 't.b(' + s + ');';
+  }
+
+  Hogan.walk = function(nodelist, context) {
+    var func;
+    for (var i = 0, l = nodelist.length; i < l; i++) {
+      func = Hogan.codegen[nodelist[i].tag];
+      func && func(nodelist[i], context);
+    }
+    return context;
+  }
+
+  Hogan.parse = function(tokens, text, options) {
+    options = options || {};
+    return buildTree(tokens, '', [], options.sectionTags || []);
+  }
+
+  Hogan.cache = {};
+
+  Hogan.cacheKey = function(text, options) {
+    return [text, !!options.asString, !!options.disableLambda, options.delimiters, !!options.modelGet].join('||');
+  }
+
+  Hogan.compile = function(text, options) {
+    options = options || {};
+    var key = Hogan.cacheKey(text, options);
+    var template = this.cache[key];
+
+    if (template) {
+      var partials = template.partials;
+      for (var name in partials) {
+        delete partials[name].instance;
+      }
+      return template;
+    }
+
+    template = this.generate(this.parse(this.scan(text, options.delimiters), text, options), text, options);
+    return this.cache[key] = template;
+  }
+})( true ? exports : Hogan);
+
+
+/***/ }),
+/* 58 */
+/***/ (function(module, exports, __webpack_require__) {
+
+/*
+ *  Copyright 2011 Twitter, Inc.
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *  http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+var Hogan = {};
+
+(function (Hogan) {
+  Hogan.Template = function (codeObj, text, compiler, options) {
+    codeObj = codeObj || {};
+    this.r = codeObj.code || this.r;
+    this.c = compiler;
+    this.options = options || {};
+    this.text = text || '';
+    this.partials = codeObj.partials || {};
+    this.subs = codeObj.subs || {};
+    this.buf = '';
+  }
+
+  Hogan.Template.prototype = {
+    // render: replaced by generated code.
+    r: function (context, partials, indent) { return ''; },
+
+    // variable escaping
+    v: hoganEscape,
+
+    // triple stache
+    t: coerceToString,
+
+    render: function render(context, partials, indent) {
+      return this.ri([context], partials || {}, indent);
+    },
+
+    // render internal -- a hook for overrides that catches partials too
+    ri: function (context, partials, indent) {
+      return this.r(context, partials, indent);
+    },
+
+    // ensurePartial
+    ep: function(symbol, partials) {
+      var partial = this.partials[symbol];
+
+      // check to see that if we've instantiated this partial before
+      var template = partials[partial.name];
+      if (partial.instance && partial.base == template) {
+        return partial.instance;
+      }
+
+      if (typeof template == 'string') {
+        if (!this.c) {
+          throw new Error("No compiler available.");
+        }
+        template = this.c.compile(template, this.options);
+      }
+
+      if (!template) {
+        return null;
+      }
+
+      // We use this to check whether the partials dictionary has changed
+      this.partials[symbol].base = template;
+
+      if (partial.subs) {
+        // Make sure we consider parent template now
+        if (!partials.stackText) partials.stackText = {};
+        for (key in partial.subs) {
+          if (!partials.stackText[key]) {
+            partials.stackText[key] = (this.activeSub !== undefined && partials.stackText[this.activeSub]) ? partials.stackText[this.activeSub] : this.text;
+          }
+        }
+        template = createSpecializedPartial(template, partial.subs, partial.partials,
+          this.stackSubs, this.stackPartials, partials.stackText);
+      }
+      this.partials[symbol].instance = template;
+
+      return template;
+    },
+
+    // tries to find a partial in the current scope and render it
+    rp: function(symbol, context, partials, indent) {
+      var partial = this.ep(symbol, partials);
+      if (!partial) {
+        return '';
+      }
+
+      return partial.ri(context, partials, indent);
+    },
+
+    // render a section
+    rs: function(context, partials, section) {
+      var tail = context[context.length - 1];
+
+      if (!isArray(tail)) {
+        section(context, partials, this);
+        return;
+      }
+
+      for (var i = 0; i < tail.length; i++) {
+        context.push(tail[i]);
+        section(context, partials, this);
+        context.pop();
+      }
+    },
+
+    // maybe start a section
+    s: function(val, ctx, partials, inverted, start, end, tags) {
+      var pass;
+
+      if (isArray(val) && val.length === 0) {
+        return false;
+      }
+
+      if (typeof val == 'function') {
+        val = this.ms(val, ctx, partials, inverted, start, end, tags);
+      }
+
+      pass = !!val;
+
+      if (!inverted && pass && ctx) {
+        ctx.push((typeof val == 'object') ? val : ctx[ctx.length - 1]);
+      }
+
+      return pass;
+    },
+
+    // find values with dotted names
+    d: function(key, ctx, partials, returnFound) {
+      var found,
+          names = key.split('.'),
+          val = this.f(names[0], ctx, partials, returnFound),
+          doModelGet = this.options.modelGet,
+          cx = null;
+
+      if (key === '.' && isArray(ctx[ctx.length - 2])) {
+        val = ctx[ctx.length - 1];
+      } else {
+        for (var i = 1; i < names.length; i++) {
+          found = findInScope(names[i], val, doModelGet);
+          if (found !== undefined) {
+            cx = val;
+            val = found;
+          } else {
+            val = '';
+          }
+        }
+      }
+
+      if (returnFound && !val) {
+        return false;
+      }
+
+      if (!returnFound && typeof val == 'function') {
+        ctx.push(cx);
+        val = this.mv(val, ctx, partials);
+        ctx.pop();
+      }
+
+      return val;
+    },
+
+    // find values with normal names
+    f: function(key, ctx, partials, returnFound) {
+      var val = false,
+          v = null,
+          found = false,
+          doModelGet = this.options.modelGet;
+
+      for (var i = ctx.length - 1; i >= 0; i--) {
+        v = ctx[i];
+        val = findInScope(key, v, doModelGet);
+        if (val !== undefined) {
+          found = true;
+          break;
+        }
+      }
+
+      if (!found) {
+        return (returnFound) ? false : "";
+      }
+
+      if (!returnFound && typeof val == 'function') {
+        val = this.mv(val, ctx, partials);
+      }
+
+      return val;
+    },
+
+    // higher order templates
+    ls: function(func, cx, partials, text, tags) {
+      var oldTags = this.options.delimiters;
+
+      this.options.delimiters = tags;
+      this.b(this.ct(coerceToString(func.call(cx, text)), cx, partials));
+      this.options.delimiters = oldTags;
+
+      return false;
+    },
+
+    // compile text
+    ct: function(text, cx, partials) {
+      if (this.options.disableLambda) {
+        throw new Error('Lambda features disabled.');
+      }
+      return this.c.compile(text, this.options).render(cx, partials);
+    },
+
+    // template result buffering
+    b: function(s) { this.buf += s; },
+
+    fl: function() { var r = this.buf; this.buf = ''; return r; },
+
+    // method replace section
+    ms: function(func, ctx, partials, inverted, start, end, tags) {
+      var textSource,
+          cx = ctx[ctx.length - 1],
+          result = func.call(cx);
+
+      if (typeof result == 'function') {
+        if (inverted) {
+          return true;
+        } else {
+          textSource = (this.activeSub && this.subsText && this.subsText[this.activeSub]) ? this.subsText[this.activeSub] : this.text;
+          return this.ls(result, cx, partials, textSource.substring(start, end), tags);
+        }
+      }
+
+      return result;
+    },
+
+    // method replace variable
+    mv: function(func, ctx, partials) {
+      var cx = ctx[ctx.length - 1];
+      var result = func.call(cx);
+
+      if (typeof result == 'function') {
+        return this.ct(coerceToString(result.call(cx)), cx, partials);
+      }
+
+      return result;
+    },
+
+    sub: function(name, context, partials, indent) {
+      var f = this.subs[name];
+      if (f) {
+        this.activeSub = name;
+        f(context, partials, this, indent);
+        this.activeSub = false;
+      }
+    }
+
+  };
+
+  //Find a key in an object
+  function findInScope(key, scope, doModelGet) {
+    var val;
+
+    if (scope && typeof scope == 'object') {
+
+      if (scope[key] !== undefined) {
+        val = scope[key];
+
+      // try lookup with get for backbone or similar model data
+      } else if (doModelGet && scope.get && typeof scope.get == 'function') {
+        val = scope.get(key);
+      }
+    }
+
+    return val;
+  }
+
+  function createSpecializedPartial(instance, subs, partials, stackSubs, stackPartials, stackText) {
+    function PartialTemplate() {};
+    PartialTemplate.prototype = instance;
+    function Substitutions() {};
+    Substitutions.prototype = instance.subs;
+    var key;
+    var partial = new PartialTemplate();
+    partial.subs = new Substitutions();
+    partial.subsText = {};  //hehe. substext.
+    partial.buf = '';
+
+    stackSubs = stackSubs || {};
+    partial.stackSubs = stackSubs;
+    partial.subsText = stackText;
+    for (key in subs) {
+      if (!stackSubs[key]) stackSubs[key] = subs[key];
+    }
+    for (key in stackSubs) {
+      partial.subs[key] = stackSubs[key];
+    }
+
+    stackPartials = stackPartials || {};
+    partial.stackPartials = stackPartials;
+    for (key in partials) {
+      if (!stackPartials[key]) stackPartials[key] = partials[key];
+    }
+    for (key in stackPartials) {
+      partial.partials[key] = stackPartials[key];
+    }
+
+    return partial;
+  }
+
+  var rAmp = /&/g,
+      rLt = /</g,
+      rGt = />/g,
+      rApos = /\'/g,
+      rQuot = /\"/g,
+      hChars = /[&<>\"\']/;
+
+  function coerceToString(val) {
+    return String((val === null || val === undefined) ? '' : val);
+  }
+
+  function hoganEscape(str) {
+    str = coerceToString(str);
+    return hChars.test(str) ?
+      str
+        .replace(rAmp, '&amp;')
+        .replace(rLt, '&lt;')
+        .replace(rGt, '&gt;')
+        .replace(rApos, '&#39;')
+        .replace(rQuot, '&quot;') :
+      str;
+  }
+
+  var isArray = Array.isArray || function(a) {
+    return Object.prototype.toString.call(a) === '[object Array]';
+  };
+
+})( true ? exports : Hogan);
+
+
+/***/ }),
+/* 59 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = "<div class=\"stellar_checkout\">\r\n\r\n\t<div class=\"header\">\r\n\t\t<div class=\"logo\">\r\n\t\t\t<img alt=\"\" class=\"rocket\" src=\"" + __webpack_require__(4) + "\" />\r\n\t\t\t<span class=\"app_name\">stellar checkout</span>\r\n\t\t</div>\r\n\t\t<div class=\"alt\">\r\n\t\t\t<div class=\"qr_wrap\">\r\n\t\t\t\t<canvas class=\"qrcode\"></canvas>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"status\">\r\n\t\t\t\t<span>Awaiting Payment</span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class=\"stellar_checkout_form\">\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutTotal\">Total</label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutTotal\" class=\"txt\" type=\"number\" required></input>\r\n\t\t\t\t<span class=\"currency\"></span>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutAmount\">Amount</label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutAmount\" class=\"txt\" type=\"text\" step=\"0.0000001\" autocomplete=\"off\" required></input>\r\n\t\t\t\t<span class=\"currency\">XLM</span>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t\t<span class=\"spinner\"><i class=\"fas fa-spinner fa-spin\"></i></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutPublicKey\">Public Key - <a class=\"toggle_keys\" href=\"#\">use private seed</a></label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutPublicKey\" class=\"txt\" type=\"text\" value=\"\" required></input>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field stellar_checkout_hidden\">\r\n\t\t\t<label for=\"stellarCheckoutPrivateSeed\">Private Seed - <a class=\"toggle_keys\" href=\"#\">use public key</a> - <a class=\"reveal_seed_link\" href=\"#\">reveal</a></label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutPrivateSeed\" class=\"txt\" type=\"password\" value=\"\" required></input>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"button_row\">\r\n\t\t\t<button id=\"stellarCheckoutSubmitButton\" disabled>Enter payment info</button>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class=\"stellar_checkout_overlay\"></div>\r\n\r\n</div>";
+
+/***/ }),
+/* 60 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var result = __webpack_require__(61)
+var H = __webpack_require__(7);
+window.Hogan = H;
+module.exports = function() {
+var T = H.compile(result, {"tiny":true});
+return T.render.apply(T, arguments); };
 
 /***/ }),
 /* 61 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-const FORMATS = {
-    CURRENCY: 'CURRENCY',
-    CURRENCY_NO_FRACTION: 'CURRENCY_NO_FRACTION',
-    DECIMAL: 'DECIMAL',
-    DECIMAL7: 'DECIMAL7',
-    DOUBLE: 'DOUBLE',
-    PERCENT: 'PERCENT'
-};
-
-var formatCurrency = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-});
-
-var formatCurrencyNoFraction = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0
-});
-
-var formatDecimal = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
-    minimumFractionDigits: 8,
-    maximumFractionDigits: 8
-});
-
-var formatDecimal7 = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 7
-});
-
-var formatDouble = new Intl.NumberFormat('en-US', {
-    style: 'decimal',
-    minimumFractionDigits: 2,
-    maximumFractionDigits: 2
-});
-
-function format(theFormat, num) {
-    if (theFormat) {
-        switch (theFormat) {
-            case FORMATS.CURRENCY:
-                return formatCurrency.format(num);
-            case FORMATS.CURRENCY_NO_FRACTION:
-                return formatCurrencyNoFraction.format(num);
-            case FORMATS.DECIMAL:
-                return formatDecimal.format(num);
-            case FORMATS.DECIMAL7:
-                return formatDecimal7.format(num);
-            case FORMATS.DOUBLE:
-                return formatDouble.format(num);
-            case FORMATS.PERCENT:
-                return formatDouble.format(num) + '%';
-            default:
-                break;
-        }
-    }
-    return num;
-}
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-    FORMATS: FORMATS,
-    format: format,
-    formatCurrency: formatCurrency,
-    formatCurrencyNoFraction: formatCurrencyNoFraction,
-    formatDecimal: formatDecimal,
-    formatDecimal7: formatDecimal7,
-    formatDouble: formatDouble
-});
+module.exports = "<div class=\"stellar_checkout_progress\">\r\n\t\r\n\t<div class=\"transaction_info\">Complete this transaction by sending a payment with the following information:</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmTo\">To</label>\r\n\t\t<div class=\"txtwrap\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmTo\" class=\"txt\" type=\"text\" autocomplete=\"off\" disabled>{{destinationKey}}</textarea>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmFrom\">From</label>\r\n\t\t<div class=\"txtwrap\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmFrom\" class=\"txt\" type=\"text\" autocomplete=\"off\" disabled>{{publicKey}}</textarea>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmAmount\">Amount</label>\r\n\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t<input id=\"stellarCheckoutConfirmAmount\" class=\"txt\" type=\"text\" value=\"{{amount}}\" step=\"0.0000001\" autocomplete=\"off\" disabled></input>\r\n\t\t\t<span class=\"currency\">XLM</span>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
 
 /***/ }),
 /* 62 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__url__ = __webpack_require__(13);
-
-
-/* harmony default export */ __webpack_exports__["a"] = ({
-
-	request: function httpRequest(method, url, params, body, accessToken) {
-		method = method || 'GET';
-		url = url || '';
-		params = params || '';
-		accessToken = accessToken;
-		return new Promise(function(resolve, reject) {
-			var xhr = new XMLHttpRequest();
-			xhr.addEventListener('load', function() {
-				if (xhr.readyState === 4 && xhr.status === 200) {
-					resolve(xhr.response);
-				}  else {
-					reject(Error(xhr.statusText));
-				}
-			});
-			xhr.addEventListener('error', function() {
-				reject(Error('http request failed (XHR error)'));						
-			});
-			if (typeof params === 'object') {
-				params = Object(__WEBPACK_IMPORTED_MODULE_0__url__["a" /* toQueryString */])(params);
-			}
-			xhr.open(method, url+params);
-			if (accessToken) {
-				xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);	
-			}
-			xhr.send(body || '');
-		}).catch(function(err) {
-			console.log(err);
-		})
-	}
-
-});
+var result = __webpack_require__(63)
+var H = __webpack_require__(7);
+window.Hogan = H;
+module.exports = function() {
+var T = H.compile(result, {"tiny":true});
+return T.render.apply(T, arguments); };
 
 /***/ }),
 /* 63 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = replace;
-function replace(text, search, replacement) {
-    return text.replace(new RegExp(search, 'g'), replacement);
-};
+module.exports = "<div class=\"stellar_checkout_success\">\r\n<div class=\"message\">Payment received</div>\r\n</div>";
 
 /***/ })
 /******/ ])["default"];
