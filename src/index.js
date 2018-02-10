@@ -17,7 +17,6 @@ export default {
 			this.options.destinationKey = opts.destinationKey;
 			this.options.redirectUrl = opts.redirectUrl;
 			this.options.total = opts.total;
-			this.options.totalMin = opts.totalMin;
 			this.options.onSubmit = opts.onSubmit;
 
 			var self = this,

@@ -116,22 +116,20 @@ function create(selector, options) {
 	elems.publicKey.elem.addEventListener('blur', onValidatePublicKey);
 	elems.publicKey.elem.addEventListener('input', onValidatePublicKey);
 
-	constants.DTO.total = options.total;
-	constants.DTO.totalMin = options.totalMin;
-	constants.DTO.amount = _cmcClient.priceInLumens;
-	constants.DTO.currency = options.currency;
-	constants.DTO.destinationKey = options.destinationKey;
-	constants.DTO.privateSeed = elems.privateSeed.elem.value;
-	constants.DTO.publicKey = elems.publicKey.elem.value;
+	constants.DTO.payment.total = options.total;
+	constants.DTO.payment.amount = _cmcClient.priceInLumens;
+	constants.DTO.invoice.currency = options.currency;
+	constants.DTO.payment.to = options.destinationKey;
+	constants.DTO.privateSeed = elems.privateSeed.elem.value; // todo:
+	constants.DTO.payment.from = elems.publicKey.elem.value;
 
 	//todo: add a configuration check for options.total
 	var hasValidTotal = false;
-	if (constants.DTO.total && constants.DTO.total.length > 0) {
-		elems.total.elem.setAttribute('value', constants.DTO.total);
-		if (!constants.DTO.totalMin) {
-			elems.total.elem.setAttribute('disabled', 'disabled');	
-		}
-		var currencyLabel = elems.total.elem.parentNode.querySelector('.currency').innerHTML = constants.DTO.currency;
+	var dtoTotal = constants.DTO.invoice.total;
+	if (dtoTotal && dtoTotal.length > 0) {
+		elems.total.elem.setAttribute('value', dtoTotal);
+		elems.total.elem.setAttribute('disabled', 'disabled');
+		var currencyLabel = elems.total.elem.parentNode.querySelector('.currency').innerHTML = constants.DTO.invoice.currency;
 		hasValidTotal = true;
 		elems.total.elem.dispatchEvent(new Event('input'));
 	}
@@ -212,7 +210,7 @@ function createSubmitHandler(callBack) {
 
 
 function onValidateAmount(e) {
-	constants.DTO.amount = e.target.value;
+	constants.DTO.payment.amount = e.target.value;
 	toggleValidationFeedback(e.target, validateAmount());
 };
 
@@ -222,22 +220,12 @@ function onValidatePrivateSeed(e) {
 };
 
 function onValidatePublicKey(e) {
-	constants.DTO.publicKey = e.target.value;
+	constants.DTO.payment.from = e.target.value;
 	toggleValidationFeedback(e.target, validatePublicKey(e.target.value));
 };
 
 function onValidateTotal(e) {
-	var val = e.target.value;
-	if (constants.DTO.totalMin) {
-		if (val && val >= constants.DTO.total) {
-			constants.DTO.total = e.target.value;
-		} else {
-			e.target.value = constants.DTO.totalMin;
-			constants.DTO.total = constants.DTO.totalMin;
-		}
-	} else {
-		constants.DTO.total = e.target.value;
-	}
+	constants.DTO.invoice.total = e.target.value;
 	toggleValidationFeedback(e.target, validateTotal());
 	_cmcClient.fetch();
 };
@@ -332,7 +320,7 @@ function validateAmount() {
 		errors: [],
 		result: true
 	};
-	var amt = constants.DTO.amount;
+	var amt = constants.DTO.payment.amount;
 	if (isNaN(amt)) {
 		result.errors.push(new ErrObject('amount is not a number', elems.amount));
 		result.result = false;
@@ -374,7 +362,7 @@ function validateTotal() {
 		errors: [],
 		result: true
 	};
-	var total = constants.DTO.total;
+	var total = constants.DTO.invoice.total;
 	if (isNaN(total)) {
 		result.errors.push(new ErrObject('total is not a number', elems.total));
 		result.result = false;
@@ -394,7 +382,7 @@ function validateTransactionDto() {
 
 	var dto = constants.DTO;
 
-	var a = validateAmount(dto.amount);
+	var a = validateAmount(dto.payment.amount);
 	result.result = result.result && a.result;
 	result.errors = [...result.errors,...a.errors];
 
@@ -402,7 +390,7 @@ function validateTransactionDto() {
 
 	// publicKey OR privateSeed
 	if (constants.MODE.secure) {
-		var b = validatePublicKey(dto.publicKey);
+		var b = validatePublicKey(dto.payment.from);
 		result.result = result.result && b.result;
 		result.errors = [...result.errors,...b.errors];
 	} else {
@@ -412,7 +400,7 @@ function validateTransactionDto() {
 	}
 
 	//destinationKey
-	var c = validatePublicKey(dto.destinationKey);
+	var c = validatePublicKey(dto.payment.to);
 	result.result = result.result && c.result;
 	result.errors = [...result.errors,...c.errors];
 

@@ -3,12 +3,13 @@ import {Err} from './utils/error';
 
 function createDto(options) {
 	var dto = constants.DTO;
-	dto.asset = StellarSdk.Asset.native();
-	dto.currency = options.currency;
-	dto.destinationKey = options.destinationKey;
 	dto.env = options.env;
-	dto.memo = options.memo;
-	dto.total = options.total;
+	dto.invoice.currency = options.currency;
+	dto.invoice.total = options.total;
+	dto.payment.asset = StellarSdk.Asset.native();
+	dto.payment.fee = .00001;
+	dto.payment.memo = options.memo;
+	dto.payment.to = options.destinationKey;
 	return dto;
 };
 
@@ -33,10 +34,10 @@ function loadSdk(callback) {
 	return true;
 };
 
-function receivePayment(transactionDto, callback) {
-	var networkUri = setNetwork(transactionDto);
+function receivePayment(dto, callback) {
+	var networkUri = setNetwork(dto);
 	var server = new StellarSdk.Server(networkUri);
-	var accountId = transactionDto.destinationKey;
+	var accountId = dto.destinationKey;
 	var payments = server
 		.payments()
 		.forAccount(accountId)
@@ -48,7 +49,7 @@ function receivePayment(transactionDto, callback) {
 	      return;
 	    }
 	    var asset = (payment.asset_type === 'native') ? 'lumens' : payment.asset_code + ':' + payment.asset_issuer;
-	    var result = verifyPayment(transactionDto, payment);
+	    var result = verifyPayment(dto, payment);
 	    if (result) {
 	    	callback.call(this, null, payment);	
 	    	closeStream();
@@ -60,11 +61,11 @@ function receivePayment(transactionDto, callback) {
 	});
 }
 
-function sendPayment(transactionDto) {
-	var networkUri = setNetwork(transactionDto);
+function sendPayment(dto) {
+	var networkUri = setNetwork(dto);
 	var server = new StellarSdk.Server(networkUri);
-	var sourceKeys = StellarSdk.Keypair.fromSecret(transactionDto.privateSeed);
-	var destinationId = transactionDto.destinationKey;
+	var sourceKeys = StellarSdk.Keypair.fromSecret(dto.privateKey);
+	var destinationId = dto.payment.to;
 	var transaction;
 
 	return server.loadAccount(destinationId)
@@ -79,10 +80,10 @@ function sendPayment(transactionDto) {
 		.TransactionBuilder(sourceAccount)
 		.addOperation(StellarSdk.Operation.payment({
 			destination: destinationId,
-			asset: transactionDto.asset,
-			amount: transactionDto.amount
+			asset: dto.payment.asset,
+			amount: dto.payment.amount
 		}))
-		.addMemo(StellarSdk.Memo.text(transactionDto.memo))
+		.addMemo(StellarSdk.Memo.text(dto.memo))
 		.build();
 
 		transaction.sign(sourceKeys);
@@ -94,9 +95,9 @@ function sendPayment(transactionDto) {
 	});
 };
 
-function setNetwork(transactionDto) {
+function setNetwork(dto) {
 	var networkUri;
-	if (typeof transactionDto.env === 'string' && transactionDto.env.toLowerCase() === 'production') {
+	if (typeof dto.env === 'string' && dto.env.toLowerCase() === 'production') {
 		networkUri = 'https://horizon.stellar.org';
 		window.StellarSdk.Network.usePublicNetwork();
 	} else {
@@ -106,9 +107,9 @@ function setNetwork(transactionDto) {
 	return networkUri;
 }
 
-function verifyPayment(transactionDto, payment) {
-	var amountIsEqual = transactionDto.amount === payment.amount;
-	var publicKeyIsEqual = transactionDto.publicKey === payment.from;
+function verifyPayment(dto, payment) {
+	var amountIsEqual = dto.payment.amount === payment.amount;
+	var publicKeyIsEqual = dto.payment.from === payment.from;
 	var result = amountIsEqual && publicKeyIsEqual;
 	return result;
 }

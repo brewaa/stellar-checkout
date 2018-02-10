@@ -10,16 +10,29 @@ export default {
 		targetParent: 'stellar_checkout_container'
 	},
 	DTO: {
-		amount: null,
-		asset: null,
-		currency: null,
 		env: null,
-		destinationKey: null,
-		memo: null,
-		privateSeed: null,
-		publicKey: null,
-		total: null,
-		totalMin: null
+		invoice: {
+			currency: null,
+			total: null
+		},
+		payment: {
+			amount: null,
+			asset: null,
+			fee: null,
+			from: null,
+			memo: null,
+			to: null
+		},
+		// amount: null,
+		// asset: null,
+		// currency: null,
+		// destinationKey: null,
+		// env: null,
+		// fee: null,
+		// memo: null,
+		privateSeed: null
+		// publicKey: null,
+		// total: null
 	},
 	MODE: {
 		secure: true
