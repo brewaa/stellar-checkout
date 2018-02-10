@@ -5,6 +5,10 @@ export default {
 		message: ''
 	},
 	CURRENCIES: ["AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "USD", "ZAR"],
+	CLASS: {
+		hidden: 'stellar_checkout_hidden',
+		targetParent: 'stellar_checkout_container'
+	},
 	DTO: {
 		amount: null,
 		asset: null,

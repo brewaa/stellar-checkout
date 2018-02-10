@@ -1,20 +1,11 @@
 import constants from './constants';
 import css from './assets/css/style.css';
-import formatter from './formatter';
+import {CoinMarketCapClient} from './services/coinmarketcap.client';
+import {Err, ErrObject} from './utils/error';
 import friendBotSvg from './assets/i/FriendBot_favicon.svg';
-import fontawesome from '@fortawesome/fontawesome'
-import faSpinner from '@fortawesome/fontawesome-free-solid/faSpinner'
-import html from './assets/template.html';
-import progressTemplate from './assets/templates/progress.mustache.html';
-import errorTemplate from './assets/templates/error.mustache.html';
-import successTemplate from './assets/templates/success.mustache.html';
+import fonts from './assets/fonts';
 import QRCode from 'qrcode';
-import * as utils from './utils';
-
-const CSS_CLASS_HIDDEN = 'stellar_checkout_hidden';
-const CSS_CLASS_TARGET_PARENT = 'stellar_checkout_container';
-
-fontawesome.library.add(faSpinner);
+import template from './templates/template';
 
 var _cmcClient;
 
@@ -71,54 +62,12 @@ function createElementFromHTML(htmlString) {
   return div.firstChild; 
 };
 
-function CoinMarketCapClient(targetElem, options) {
-	this.targetElem = targetElem;
-	this.url = constants.STELLAR_CHECKOUT_API_TICKER_URL,
-	this.options = options;
-	this.data = [];
-	this.priceInLumens = null;
-	this.spinner = targetElem.parentNode.querySelector('.spinner');
-}
-
-CoinMarketCapClient.prototype.fetch = function() {
-	var self = this;
-	self.showProgress();
-	return utils.httpRequest('GET', self.url, { convert: self.options.currency }, '', true)
-	.then(function(response) {
-		var data = JSON.parse(response);
-		if (data.length > 0) {
-			var lumenPrice = data[0]['price_' + constants.DTO.currency.toLowerCase()];
-			if (lumenPrice) {
-				self.priceInLumens = self.calcPriceInLumens(constants.DTO.total, lumenPrice);
-				var formattedPrice = utils.replace(formatter.format(formatter.FORMATS.DECIMAL7, self.priceInLumens), ',', '');
-				self.targetElem.setAttribute('value', formattedPrice);
-				self.targetElem.setAttribute('disabled', 'disabled');
-				self.targetElem.dispatchEvent(new Event('input'));
-			}
-			self.data = data;
-		}
-		self.hideProgress();
-	});
-};
-
-CoinMarketCapClient.prototype.calcPriceInLumens = function(invoiceTotal, lumenPrice) {
-	return invoiceTotal / lumenPrice;
-};
-
-CoinMarketCapClient.prototype.hideProgress = function() {
-	this.spinner.classList.add(CSS_CLASS_HIDDEN);
-};
-
-CoinMarketCapClient.prototype.showProgress = function() {
-	this.spinner.classList.remove(CSS_CLASS_HIDDEN);
-};
-
 
 function create(selector, options) {
 
 	var targetElem = document.querySelector(selector);
 	if (!targetElem) {
-		console.log(utils._err('selector not found', constants.MESSAGE_TYPE.ERROR));
+		console.log(Err('selector not found', constants.MESSAGE_TYPE.ERROR));
 	}	
 
 	if (constants.CONFIG.error) {
@@ -128,9 +77,9 @@ function create(selector, options) {
 		return;
 	}
 
-	targetElem.classList.add(CSS_CLASS_TARGET_PARENT);
+	targetElem.classList.add(constants.CLASS.targetParent);
 	
-	targetElem.appendChild(createElementFromHTML(html));
+	targetElem.appendChild(createElementFromHTML(template.main));
 
 	var root = document.querySelector(elems.root.selector);
 	var header = document.querySelector(elems.header.selector);
@@ -196,12 +145,12 @@ function create(selector, options) {
 		toggleKeys[i].addEventListener('click', function(e) {
 			e.preventDefault();
 			if (constants.MODE.secure) {
-				elems.privateSeed.elem.parentNode.parentNode.classList.remove(CSS_CLASS_HIDDEN);
-				elems.publicKey.elem.parentNode.parentNode.classList.add(CSS_CLASS_HIDDEN);
+				elems.privateSeed.elem.parentNode.parentNode.classList.remove(constants.CLASS.hidden);
+				elems.publicKey.elem.parentNode.parentNode.classList.add(constants.CLASS.hidden);
 				constants.MODE.secure = false;
 			} else {
-				elems.privateSeed.elem.parentNode.parentNode.classList.add(CSS_CLASS_HIDDEN);
-				elems.publicKey.elem.parentNode.parentNode.classList.remove(CSS_CLASS_HIDDEN);
+				elems.privateSeed.elem.parentNode.parentNode.classList.add(constants.CLASS.hidden);
+				elems.publicKey.elem.parentNode.parentNode.classList.remove(constants.CLASS.hidden);
 				constants.MODE.secure = true;
 			}
 		});
@@ -227,7 +176,7 @@ function create(selector, options) {
 };
 
 function createProgressHtml(dto) {
-	var compiledHtml = progressTemplate(dto)
+	var compiledHtml = template.progress(dto)
 	elems.root.elem.appendChild(createElementFromHTML(compiledHtml));
 
 	var progressPanel = document.querySelector(elems.progressPanel.selector);
@@ -260,12 +209,7 @@ function createSubmitHandler(callBack) {
 	};
 };
 
-function ErrObject(msg, elem) {
-	return {
-		elem: elem,
-		msg: msg
-	}
-};
+
 
 function onValidateAmount(e) {
 	constants.DTO.amount = e.target.value;
@@ -327,7 +271,7 @@ function hideError() {
 
 function showError(error) {
 	error.friendBotSvg = friendBotSvg;
-	var compiledHtml = errorTemplate(error);
+	var compiledHtml = template.error(error);
 	elems.root.elem.appendChild(createElementFromHTML(compiledHtml));
 	var errorPanel = document.querySelector(elems.errorPanel.selector);
 	elems.errorPanel.elem = errorPanel;
@@ -337,13 +281,13 @@ function showError(error) {
 };
 
 function showSuccess(obj) {
-	var compiledHtml = successTemplate(obj);
+	var compiledHtml = template.success(obj);
 	elems.root.elem.appendChild(createElementFromHTML(compiledHtml));
 };
 
 function showProgressHtml() {
-	elems.formPanel.elem.classList.add(CSS_CLASS_HIDDEN);
-	elems.progressPanel.elem.classList.remove(CSS_CLASS_HIDDEN);
+	elems.formPanel.elem.classList.add(constants.CLASS.hidden);
+	elems.progressPanel.elem.classList.remove(constants.CLASS.hidden);
 };
 
 function toggleValidationFeedback(target, test) {

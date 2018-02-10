@@ -1,7 +1,7 @@
 import constants from './constants';
-import * as utils from './utils';
+import {Err} from './utils/error';
 
-function createTransactionDto(options) {
+function createDto(options) {
 	var dto = constants.DTO;
 	dto.asset = StellarSdk.Asset.native();
 	dto.currency = options.currency;
@@ -12,9 +12,9 @@ function createTransactionDto(options) {
 	return dto;
 };
 
-function loadStellarSdk(callback) {
+function loadSdk(callback) {
 	if (window && window.StellarSdk) {
-		console.log(utils._err('StellarSdk already loaded', constants.MESSAGE_TYPE.INFO));
+		console.log(Err('StellarSdk already loaded', constants.MESSAGE_TYPE.INFO));
 		callback.call();
 		return false;
 	}
@@ -33,14 +33,7 @@ function loadStellarSdk(callback) {
 	return true;
 };
 
-function verifyTransaction(transactionDto, payment) {
-	var amountIsEqual = transactionDto.amount === payment.amount;
-	var publicKeyIsEqual = transactionDto.publicKey === payment.from;
-	var result = amountIsEqual && publicKeyIsEqual;
-	return result;
-}
-
-function receiveTransaction(transactionDto, callback) {
+function receivePayment(transactionDto, callback) {
 	var networkUri = setNetwork(transactionDto);
 	var server = new StellarSdk.Server(networkUri);
 	var accountId = transactionDto.destinationKey;
@@ -55,7 +48,7 @@ function receiveTransaction(transactionDto, callback) {
 	      return;
 	    }
 	    var asset = (payment.asset_type === 'native') ? 'lumens' : payment.asset_code + ':' + payment.asset_issuer;
-	    var result = verifyTransaction(transactionDto, payment);
+	    var result = verifyPayment(transactionDto, payment);
 	    if (result) {
 	    	callback.call(this, null, payment);	
 	    	closeStream();
@@ -67,19 +60,7 @@ function receiveTransaction(transactionDto, callback) {
 	});
 }
 
-function setNetwork(transactionDto) {
-	var networkUri;
-	if (typeof transactionDto.env === 'string' && transactionDto.env.toLowerCase() === 'production') {
-		networkUri = 'https://horizon.stellar.org';
-		window.StellarSdk.Network.usePublicNetwork();
-	} else {
-		networkUri = 'https://horizon-testnet.stellar.org';
-		window.StellarSdk.Network.useTestNetwork();
-	}
-	return networkUri;
-}
-
-function submitTransaction(transactionDto) {
+function sendPayment(transactionDto) {
 	var networkUri = setNetwork(transactionDto);
 	var server = new StellarSdk.Server(networkUri);
 	var sourceKeys = StellarSdk.Keypair.fromSecret(transactionDto.privateSeed);
@@ -113,9 +94,28 @@ function submitTransaction(transactionDto) {
 	});
 };
 
+function setNetwork(transactionDto) {
+	var networkUri;
+	if (typeof transactionDto.env === 'string' && transactionDto.env.toLowerCase() === 'production') {
+		networkUri = 'https://horizon.stellar.org';
+		window.StellarSdk.Network.usePublicNetwork();
+	} else {
+		networkUri = 'https://horizon-testnet.stellar.org';
+		window.StellarSdk.Network.useTestNetwork();
+	}
+	return networkUri;
+}
+
+function verifyPayment(transactionDto, payment) {
+	var amountIsEqual = transactionDto.amount === payment.amount;
+	var publicKeyIsEqual = transactionDto.publicKey === payment.from;
+	var result = amountIsEqual && publicKeyIsEqual;
+	return result;
+}
+
 export default {
-	createTransactionDto: createTransactionDto,
-	loadStellarSdk: loadStellarSdk,
-	receiveTransaction: receiveTransaction,
-	submitTransaction: submitTransaction
+	createDto: createDto,
+	loadSdk: loadSdk,
+	receivePayment: receivePayment,
+	sendPayment: sendPayment
 }

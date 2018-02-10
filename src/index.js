@@ -1,8 +1,7 @@
 import constants from './constants';
-import formatter from './formatter';
 import stellarSdkHelper from './stellarsdk.helper';
 import ui from './ui';
-import * as utils from './utils';
+import {useRedirectUrl} from './utils/url';
 
 export default {
 	name: constants.APP_NAME,
@@ -26,9 +25,9 @@ export default {
 			_isStellarSdkLoaded = false,
 			_isValidDestinationKey = false;
 
-			_isStellarSdkLoaded = stellarSdkHelper.loadStellarSdk(function() {
+			_isStellarSdkLoaded = stellarSdkHelper.loadSdk(function() {
 
-				var dto = stellarSdkHelper.createTransactionDto(self.options);
+				var dto = stellarSdkHelper.createDto(self.options);
 
 				if (self.options.currency && typeof self.options.currency === 'string' && self.options.currency !== '') {
 					_isCurrencySupported = constants.CURRENCIES.indexOf(self.options.currency) !== -1;
@@ -61,7 +60,7 @@ export default {
 
 						// Submit the transaction to the stellar network (using private seed)
 						var result = stellarSdkHelper
-						.submitTransaction(dto)
+						.sendPayment(dto)
 						.then(function(result) {
 
 							console.log(result);
@@ -69,7 +68,7 @@ export default {
 							ui.setButtonState(ui.elems.submitButton.elem, constants.SUBMIT_BUTTON_STATE.PAYMENT_COMPLETE);
 
 							// Send to success page if the simple redirect feature is configured
-							utils.redirectIfRedirectUrlConfigured(self.options, result);
+							useRedirectUrl(self.options, result);
 
 							// Call the onSubmit callback
 							if (self.options.onSubmit && typeof self.options.onSubmit === 'function') {
@@ -90,13 +89,13 @@ export default {
 
 						ui.createProgressHtml(dto);
 						// Watch for transactions sent to the destinationKey
-						stellarSdkHelper.receiveTransaction(dto, function(err, result) {
+						stellarSdkHelper.receivePayment(dto, function(err, result) {
 							if (err) {
 								self.options.onSubmit.call(this, err);
 								return;	
 							}
 							ui.updateProgressHtml(result);
-							utils.redirectIfRedirectUrlConfigured(self.options, result);
+							useRedirectUrl(self.options, result);
 							if (self.options.onSubmit && typeof self.options.onSubmit === 'function') {
 								self.options.onSubmit.call(this, null, result);
 							}
