@@ -1,8 +1,6 @@
 export default {
-	APP_NAME: 'stellar-checkout.js',
-	CONFIG: {
-		error: false,
-		message: ''
+	APP: {
+		name: 'stellar-checkout.js'
 	},
 	CURRENCIES: ["AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "USD", "ZAR"],
 	CLASS: {
@@ -12,7 +10,7 @@ export default {
 	DTO: {
 		env: null,
 		invoice: {
-			currency: null,
+			currency: 'USD',
 			total: null
 		},
 		payment: {

@@ -1,5 +1,5 @@
-import constants from './constants';
-import {Err} from './utils/error';
+import constants from '../constants';
+import {Err} from './error';
 
 function createDto(options) {
 	var dto = constants.DTO;
@@ -15,7 +15,7 @@ function createDto(options) {
 
 function loadSdk(callback) {
 	if (window && window.StellarSdk) {
-		console.log(Err('StellarSdk already loaded', constants.MESSAGE_TYPE.INFO));
+		console.log(new Err('StellarSdk already loaded', null, constants.MESSAGE_TYPE.INFO).toString());
 		callback.call();
 		return false;
 	}
@@ -33,6 +33,7 @@ function loadSdk(callback) {
 	}
 	return true;
 };
+
 
 function receivePayment(dto, callback) {
 	var networkUri = setNetwork(dto);

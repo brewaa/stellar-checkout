@@ -1,7 +1,7 @@
 import constants from './constants';
 import css from './assets/css/style.css';
 import {CoinMarketCapClient} from './services/coinmarketcap.client';
-import {Err, ErrObject} from './utils/error';
+import {Err} from './utils/error';
 import friendBotSvg from './assets/i/FriendBot_favicon.svg';
 import fonts from './assets/fonts';
 import QRCode from 'qrcode';
@@ -67,15 +67,9 @@ function create(selector, options) {
 
 	var targetElem = document.querySelector(selector);
 	if (!targetElem) {
-		console.log(Err('selector not found', constants.MESSAGE_TYPE.ERROR));
-	}	
-
-	if (constants.CONFIG.error) {
-		var divConfigError = document.createElement('div');
-		divConfigError.innerHTML = constants.APP_NAME + ':error:' + constants.CONFIG.message;
-		targetElem.appendChild(divConfigError);
+		console.log(new Err('selector not found', constants.MESSAGE_TYPE.ERROR).toString());
 		return;
-	}
+	}	
 
 	targetElem.classList.add(constants.CLASS.targetParent);
 	
@@ -116,12 +110,13 @@ function create(selector, options) {
 	elems.publicKey.elem.addEventListener('blur', onValidatePublicKey);
 	elems.publicKey.elem.addEventListener('input', onValidatePublicKey);
 
-	constants.DTO.payment.total = options.total;
-	constants.DTO.payment.amount = _cmcClient.priceInLumens;
+	constants.DTO.invoice.total = options.total;
 	constants.DTO.invoice.currency = options.currency;
+	constants.DTO.payment.amount = _cmcClient.priceInLumens;
+	constants.DTO.payment.from = elems.publicKey.elem.value;
 	constants.DTO.payment.to = options.destinationKey;
 	constants.DTO.privateSeed = elems.privateSeed.elem.value; // todo:
-	constants.DTO.payment.from = elems.publicKey.elem.value;
+	
 
 	//todo: add a configuration check for options.total
 	var hasValidTotal = false;
@@ -325,11 +320,11 @@ function validateAmount() {
 	};
 	var amt = constants.DTO.payment.amount;
 	if (isNaN(amt)) {
-		result.errors.push(new ErrObject('amount is not a number', elems.amount));
+		result.errors.push(new Err('amount is not a number', elems.amount));
 		result.result = false;
 	}
 	if (amt <= 0) {
-		result.errors.push(new ErrObject('amount must be greater than zero', elems.amount));
+		result.errors.push(new Err('amount must be greater than zero', elems.amount));
 		result.result = false;
 	}
 	return result;
@@ -342,7 +337,7 @@ function validatePrivateSeed() {
 	};
 	var key = constants.DTO.privateSeed;
 	if (!key || !window.StellarSdk.StrKey.isValidEd25519SecretSeed(key)) {
-		result.errors.push(new ErrObject('private seed is invalid', elems.privateSeed));
+		result.errors.push(new Err('private seed is invalid', elems.privateSeed));
 		result.result = false;
 	}
 	return result;
@@ -354,7 +349,7 @@ function validatePublicKey(key) {
 		result: true
 	};
 	if (!key || !window.StellarSdk.StrKey.isValidEd25519PublicKey(key)) {
-		result.errors.push(new ErrObject('public key is invalid'));
+		result.errors.push(new Err('public key is invalid'));
 		result.result = false;
 	}
 	return result;
@@ -367,11 +362,11 @@ function validateTotal() {
 	};
 	var total = constants.DTO.invoice.total;
 	if (isNaN(total)) {
-		result.errors.push(new ErrObject('total is not a number', elems.total));
+		result.errors.push(new Err('total is not a number', elems.total));
 		result.result = false;
 	}
 	if (total <= 0) {
-		result.errors.push(new ErrObject('total must be greater than zero', elems.total));
+		result.errors.push(new Err('total must be greater than zero', elems.total));
 		result.result = false;
 	}
 	return result;

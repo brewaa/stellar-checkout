@@ -1,14 +1,12 @@
 import constants from '../constants';
 
-export function Err(msg, msgType) {
-	msgType = msgType || constants.MESSAGE_TYPE.ERROR;
-	var messageType = msgType ? ' ' + msgType : '';
-	return constants.APP_NAME + messageType + ' ' + msg;
+export function Err(msg, elem, msgType) {
+	this.elem = elem;
+	this.msg = msg;
+	this.msgType = msgType || constants.MESSAGE_TYPE.ERROR;
 };
 
-export function ErrObject(msg, elem) {
-	return {
-		elem: elem,
-		msg: msg
-	}
+Err.prototype.toString = function() {
+	var messageType = this.msgType ? ' ' + this.msgType : '';
+	return constants.APP.name + messageType + ' ' + this.msg;
 };

@@ -15,7 +15,7 @@ export function CoinMarketCapClient(targetElem, options) {
 CoinMarketCapClient.prototype.fetch = function() {
 	var self = this;
 	self.showProgress();
-	return http.request('GET', self.url, { convert: self.options.currency }, '', true)
+	return http.request('GET', self.url, { currency: self.options.currency }, '', true)
 	.then(function(response) {
 		if (response) {
 			var data = JSON.parse(response);
