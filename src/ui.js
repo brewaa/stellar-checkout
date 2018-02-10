@@ -182,7 +182,7 @@ function createProgressHtml(dto) {
 
 	var qrCodeCanvas = elems.root.elem.querySelector('.qrcode');
 
-	QRCode.toCanvas(qrCodeCanvas, dto.destinationKey, function (error) {
+	QRCode.toCanvas(qrCodeCanvas, dto.payment.to, function (error) { // todo: standardized format that popular wallets use for payment data
 		if (error) {
 			console.error(error);
 		}
@@ -297,22 +297,25 @@ function toggleValidationFeedback(target, test) {
 };
 
 function updateProgressHtml() {
-	var statusElem = elems.header.elem.querySelector('.status');
-	var statusMsgs = [
-		'transaction received',
-		'processing transaction',
-		'verifying transaction',
-		'payment complete'
-	];
-	var i = 0,
-	increment = 2000,
-	interval = setInterval(function() {
-		statusElem.innerHTML = statusMsgs[i];
-		if (i == statusMsgs.length-1) {
-			clearInterval(interval);
-		}
-		i++;
-	}, increment);
+	return new Promise(function(resolve) {
+		var statusElem = elems.header.elem.querySelector('.status');
+		var statusMsgs = [
+			'transaction received',
+			'processing transaction',
+			'verifying transaction',
+			'payment complete'
+		];
+		var i = 0,
+		increment = 2000,
+		interval = setInterval(function() {
+			statusElem.innerHTML = statusMsgs[i];
+			if (i == statusMsgs.length-1) {
+				clearInterval(interval);
+				resolve();
+			}
+			i++;
+		}, increment);
+	});
 }
 
 function validateAmount() {

@@ -93,14 +93,16 @@ export default {
 								self.options.onSubmit.call(this, err);
 								return;	
 							}
-							ui.updateProgressHtml(result);
-							useRedirectUrl(self.options, result);
-							if (self.options.onSubmit && typeof self.options.onSubmit === 'function') {
-								self.options.onSubmit.call(this, null, result);
-							}
-							else {
-								ui.showSuccess();
-							}
+							ui.updateProgressHtml(result)
+							.then(function() {
+								useRedirectUrl(self.options, result);
+								if (self.options.onSubmit && typeof self.options.onSubmit === 'function') {
+									self.options.onSubmit.call(this, null, result);
+								}
+								else {
+									ui.showSuccess();
+								}
+							});
 						});
 
 					}

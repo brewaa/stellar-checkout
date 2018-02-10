@@ -4,19 +4,19 @@
 	<div class="field">
 		<label for="stellarCheckoutConfirmTo">To</label>
 		<div class="txtwrap">
-			<textarea id="stellarCheckoutConfirmTo" class="txt" type="text" autocomplete="off" disabled>{{destinationKey}}</textarea>
+			<textarea id="stellarCheckoutConfirmTo" class="txt" type="text" autocomplete="off" disabled>{{payment.to}}</textarea>
 		</div>
 	</div>
 	<div class="field">
 		<label for="stellarCheckoutConfirmFrom">From</label>
 		<div class="txtwrap">
-			<textarea id="stellarCheckoutConfirmFrom" class="txt" type="text" autocomplete="off" disabled>{{publicKey}}</textarea>
+			<textarea id="stellarCheckoutConfirmFrom" class="txt" type="text" autocomplete="off" disabled>{{payment.from}}</textarea>
 		</div>
 	</div>
 	<div class="field">
 		<label for="stellarCheckoutConfirmAmount">Amount</label>
 		<div class="txtwrap txtwrap--input">
-			<input id="stellarCheckoutConfirmAmount" class="txt" type="text" value="{{amount}}" step="0.0000001" autocomplete="off" disabled></input>
+			<input id="stellarCheckoutConfirmAmount" class="txt" type="text" value="{{payment.amount}}" step="0.0000001" autocomplete="off" disabled></input>
 			<span class="currency">XLM</span>
 		</div>
 	</div>

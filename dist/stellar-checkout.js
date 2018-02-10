@@ -851,16 +851,29 @@ module.exports = Buffer
 		targetParent: 'stellar_checkout_container'
 	},
 	DTO: {
-		amount: null,
-		asset: null,
-		currency: null,
 		env: null,
-		destinationKey: null,
-		memo: null,
-		privateSeed: null,
-		publicKey: null,
-		total: null,
-		totalMin: null
+		invoice: {
+			currency: null,
+			total: null
+		},
+		payment: {
+			amount: null,
+			asset: null,
+			fee: null,
+			from: null,
+			memo: null,
+			to: null
+		},
+		// amount: null,
+		// asset: null,
+		// currency: null,
+		// destinationKey: null,
+		// env: null,
+		// fee: null,
+		// memo: null,
+		privateSeed: null
+		// publicKey: null,
+		// total: null
 	},
 	MODE: {
 		secure: true
@@ -1521,7 +1534,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.options.destinationKey = opts.destinationKey;
 			this.options.redirectUrl = opts.redirectUrl;
 			this.options.total = opts.total;
-			this.options.totalMin = opts.totalMin;
 			this.options.onSubmit = opts.onSubmit;
 
 			var self = this,
@@ -1598,14 +1610,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 								self.options.onSubmit.call(this, err);
 								return;	
 							}
-							__WEBPACK_IMPORTED_MODULE_2__ui__["a" /* default */].updateProgressHtml(result);
-							Object(__WEBPACK_IMPORTED_MODULE_3__utils_url__["b" /* useRedirectUrl */])(self.options, result);
-							if (self.options.onSubmit && typeof self.options.onSubmit === 'function') {
-								self.options.onSubmit.call(this, null, result);
-							}
-							else {
-								__WEBPACK_IMPORTED_MODULE_2__ui__["a" /* default */].showSuccess();
-							}
+							__WEBPACK_IMPORTED_MODULE_2__ui__["a" /* default */].updateProgressHtml(result)
+							.then(function() {
+								Object(__WEBPACK_IMPORTED_MODULE_3__utils_url__["b" /* useRedirectUrl */])(self.options, result);
+								if (self.options.onSubmit && typeof self.options.onSubmit === 'function') {
+									self.options.onSubmit.call(this, null, result);
+								}
+								else {
+									__WEBPACK_IMPORTED_MODULE_2__ui__["a" /* default */].showSuccess();
+								}
+							});
 						});
 
 					}
@@ -1628,12 +1642,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 function createDto(options) {
 	var dto = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO;
-	dto.asset = StellarSdk.Asset.native();
-	dto.currency = options.currency;
-	dto.destinationKey = options.destinationKey;
 	dto.env = options.env;
-	dto.memo = options.memo;
-	dto.total = options.total;
+	dto.invoice.currency = options.currency;
+	dto.invoice.total = options.total;
+	dto.payment.asset = StellarSdk.Asset.native();
+	dto.payment.fee = .00001;
+	dto.payment.memo = options.memo;
+	dto.payment.to = options.destinationKey;
 	return dto;
 };
 
@@ -1658,10 +1673,10 @@ function loadSdk(callback) {
 	return true;
 };
 
-function receivePayment(transactionDto, callback) {
-	var networkUri = setNetwork(transactionDto);
+function receivePayment(dto, callback) {
+	var networkUri = setNetwork(dto);
 	var server = new StellarSdk.Server(networkUri);
-	var accountId = transactionDto.destinationKey;
+	var accountId = dto.payment.to;
 	var payments = server
 		.payments()
 		.forAccount(accountId)
@@ -1673,7 +1688,7 @@ function receivePayment(transactionDto, callback) {
 	      return;
 	    }
 	    var asset = (payment.asset_type === 'native') ? 'lumens' : payment.asset_code + ':' + payment.asset_issuer;
-	    var result = verifyPayment(transactionDto, payment);
+	    var result = verifyPayment(dto, payment);
 	    if (result) {
 	    	callback.call(this, null, payment);	
 	    	closeStream();
@@ -1685,11 +1700,13 @@ function receivePayment(transactionDto, callback) {
 	});
 }
 
-function sendPayment(transactionDto) {
-	var networkUri = setNetwork(transactionDto);
+function sendPayment(dto) {
+	console.log(dto);
+
+	var networkUri = setNetwork(dto);
 	var server = new StellarSdk.Server(networkUri);
-	var sourceKeys = StellarSdk.Keypair.fromSecret(transactionDto.privateSeed);
-	var destinationId = transactionDto.destinationKey;
+	var sourceKeys = StellarSdk.Keypair.fromSecret(dto.privateSeed);
+	var destinationId = dto.payment.to;
 	var transaction;
 
 	return server.loadAccount(destinationId)
@@ -1704,10 +1721,10 @@ function sendPayment(transactionDto) {
 		.TransactionBuilder(sourceAccount)
 		.addOperation(StellarSdk.Operation.payment({
 			destination: destinationId,
-			asset: transactionDto.asset,
-			amount: transactionDto.amount
+			asset: dto.payment.asset,
+			amount: dto.payment.amount
 		}))
-		.addMemo(StellarSdk.Memo.text(transactionDto.memo))
+		.addMemo(StellarSdk.Memo.text(dto.payment.memo))
 		.build();
 
 		transaction.sign(sourceKeys);
@@ -1719,9 +1736,9 @@ function sendPayment(transactionDto) {
 	});
 };
 
-function setNetwork(transactionDto) {
+function setNetwork(dto) {
 	var networkUri;
-	if (typeof transactionDto.env === 'string' && transactionDto.env.toLowerCase() === 'production') {
+	if (typeof dto.env === 'string' && dto.env.toLowerCase() === 'production') {
 		networkUri = 'https://horizon.stellar.org';
 		window.StellarSdk.Network.usePublicNetwork();
 	} else {
@@ -1731,9 +1748,9 @@ function setNetwork(transactionDto) {
 	return networkUri;
 }
 
-function verifyPayment(transactionDto, payment) {
-	var amountIsEqual = transactionDto.amount === payment.amount;
-	var publicKeyIsEqual = transactionDto.publicKey === payment.from;
+function verifyPayment(dto, payment) {
+	var amountIsEqual = dto.payment.amount === payment.amount;
+	var publicKeyIsEqual = dto.payment.from === payment.from;
 	var result = amountIsEqual && publicKeyIsEqual;
 	return result;
 }
@@ -1879,22 +1896,20 @@ function create(selector, options) {
 	elems.publicKey.elem.addEventListener('blur', onValidatePublicKey);
 	elems.publicKey.elem.addEventListener('input', onValidatePublicKey);
 
-	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.total = options.total;
-	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.totalMin = options.totalMin;
-	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.amount = _cmcClient.priceInLumens;
-	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.currency = options.currency;
-	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.destinationKey = options.destinationKey;
-	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.privateSeed = elems.privateSeed.elem.value;
-	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.publicKey = elems.publicKey.elem.value;
+	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.payment.total = options.total;
+	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.payment.amount = _cmcClient.priceInLumens;
+	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.invoice.currency = options.currency;
+	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.payment.to = options.destinationKey;
+	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.privateSeed = elems.privateSeed.elem.value; // todo:
+	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.payment.from = elems.publicKey.elem.value;
 
 	//todo: add a configuration check for options.total
 	var hasValidTotal = false;
-	if (__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.total && __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.total.length > 0) {
-		elems.total.elem.setAttribute('value', __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.total);
-		if (!__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.totalMin) {
-			elems.total.elem.setAttribute('disabled', 'disabled');	
-		}
-		var currencyLabel = elems.total.elem.parentNode.querySelector('.currency').innerHTML = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.currency;
+	var dtoTotal = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.invoice.total;
+	if (dtoTotal && dtoTotal.length > 0) {
+		elems.total.elem.setAttribute('value', dtoTotal);
+		elems.total.elem.setAttribute('disabled', 'disabled');
+		var currencyLabel = elems.total.elem.parentNode.querySelector('.currency').innerHTML = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.invoice.currency;
 		hasValidTotal = true;
 		elems.total.elem.dispatchEvent(new Event('input'));
 	}
@@ -1947,7 +1962,7 @@ function createProgressHtml(dto) {
 
 	var qrCodeCanvas = elems.root.elem.querySelector('.qrcode');
 
-	__WEBPACK_IMPORTED_MODULE_6_qrcode___default.a.toCanvas(qrCodeCanvas, dto.destinationKey, function (error) {
+	__WEBPACK_IMPORTED_MODULE_6_qrcode___default.a.toCanvas(qrCodeCanvas, dto.payment.to, function (error) { // todo: standardized format that popular wallets use for payment data
 		if (error) {
 			console.error(error);
 		}
@@ -1975,7 +1990,7 @@ function createSubmitHandler(callBack) {
 
 
 function onValidateAmount(e) {
-	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.amount = e.target.value;
+	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.payment.amount = e.target.value;
 	toggleValidationFeedback(e.target, validateAmount());
 };
 
@@ -1985,22 +2000,12 @@ function onValidatePrivateSeed(e) {
 };
 
 function onValidatePublicKey(e) {
-	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.publicKey = e.target.value;
+	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.payment.from = e.target.value;
 	toggleValidationFeedback(e.target, validatePublicKey(e.target.value));
 };
 
 function onValidateTotal(e) {
-	var val = e.target.value;
-	if (__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.totalMin) {
-		if (val && val >= __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.total) {
-			__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.total = e.target.value;
-		} else {
-			e.target.value = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.totalMin;
-			__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.total = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.totalMin;
-		}
-	} else {
-		__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.total = e.target.value;
-	}
+	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.invoice.total = e.target.value;
 	toggleValidationFeedback(e.target, validateTotal());
 	_cmcClient.fetch();
 };
@@ -2072,22 +2077,25 @@ function toggleValidationFeedback(target, test) {
 };
 
 function updateProgressHtml() {
-	var statusElem = elems.header.elem.querySelector('.status');
-	var statusMsgs = [
-		'transaction received',
-		'processing transaction',
-		'verifying transaction',
-		'payment complete'
-	];
-	var i = 0,
-	increment = 2000,
-	interval = setInterval(function() {
-		statusElem.innerHTML = statusMsgs[i];
-		if (i == statusMsgs.length-1) {
-			clearInterval(interval);
-		}
-		i++;
-	}, increment);
+	return new Promise(function(resolve) {
+		var statusElem = elems.header.elem.querySelector('.status');
+		var statusMsgs = [
+			'transaction received',
+			'processing transaction',
+			'verifying transaction',
+			'payment complete'
+		];
+		var i = 0,
+		increment = 2000,
+		interval = setInterval(function() {
+			statusElem.innerHTML = statusMsgs[i];
+			if (i == statusMsgs.length-1) {
+				clearInterval(interval);
+				resolve();
+			}
+			i++;
+		}, increment);
+	});
 }
 
 function validateAmount() {
@@ -2095,7 +2103,7 @@ function validateAmount() {
 		errors: [],
 		result: true
 	};
-	var amt = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.amount;
+	var amt = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.payment.amount;
 	if (isNaN(amt)) {
 		result.errors.push(new __WEBPACK_IMPORTED_MODULE_3__utils_error__["b" /* ErrObject */]('amount is not a number', elems.amount));
 		result.result = false;
@@ -2137,7 +2145,7 @@ function validateTotal() {
 		errors: [],
 		result: true
 	};
-	var total = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.total;
+	var total = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.invoice.total;
 	if (isNaN(total)) {
 		result.errors.push(new __WEBPACK_IMPORTED_MODULE_3__utils_error__["b" /* ErrObject */]('total is not a number', elems.total));
 		result.result = false;
@@ -2157,7 +2165,7 @@ function validateTransactionDto() {
 
 	var dto = __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO;
 
-	var a = validateAmount(dto.amount);
+	var a = validateAmount(dto.payment.amount);
 	result.result = result.result && a.result;
 	result.errors = [...result.errors,...a.errors];
 
@@ -2165,7 +2173,7 @@ function validateTransactionDto() {
 
 	// publicKey OR privateSeed
 	if (__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].MODE.secure) {
-		var b = validatePublicKey(dto.publicKey);
+		var b = validatePublicKey(dto.payment.from);
 		result.result = result.result && b.result;
 		result.errors = [...result.errors,...b.errors];
 	} else {
@@ -2175,7 +2183,7 @@ function validateTransactionDto() {
 	}
 
 	//destinationKey
-	var c = validatePublicKey(dto.destinationKey);
+	var c = validatePublicKey(dto.payment.to);
 	result.result = result.result && c.result;
 	result.errors = [...result.errors,...c.errors];
 
@@ -2877,9 +2885,9 @@ CoinMarketCapClient.prototype.fetch = function() {
 		if (response) {
 			var data = JSON.parse(response);
 			if (data.length > 0) {
-				var lumenPrice = data[0]['price_' + __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.currency.toLowerCase()];
+				var lumenPrice = data[0]['price_' + __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.invoice.currency.toLowerCase()];
 				if (lumenPrice) {
-					self.priceInLumens = self.calcPriceInLumens(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.total, lumenPrice);
+					self.priceInLumens = self.calcPriceInLumens(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.invoice.total, lumenPrice);
 					var formattedPrice = Object(__WEBPACK_IMPORTED_MODULE_3__utils_string__["a" /* replace */])(__WEBPACK_IMPORTED_MODULE_1__utils_formatter__["a" /* default */].format(__WEBPACK_IMPORTED_MODULE_1__utils_formatter__["a" /* default */].FORMATS.DECIMAL7, self.priceInLumens), ',', '');
 					self.targetElem.setAttribute('value', formattedPrice);
 					self.targetElem.setAttribute('disabled', 'disabled');
@@ -8138,7 +8146,7 @@ return T.render.apply(T, arguments); };
 /* 61 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"stellar_checkout_progress\">\r\n\t\r\n\t<div class=\"transaction_info\">Complete this transaction by sending a payment with the following information:</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmTo\">To</label>\r\n\t\t<div class=\"txtwrap\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmTo\" class=\"txt\" type=\"text\" autocomplete=\"off\" disabled>{{destinationKey}}</textarea>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmFrom\">From</label>\r\n\t\t<div class=\"txtwrap\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmFrom\" class=\"txt\" type=\"text\" autocomplete=\"off\" disabled>{{publicKey}}</textarea>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmAmount\">Amount</label>\r\n\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t<input id=\"stellarCheckoutConfirmAmount\" class=\"txt\" type=\"text\" value=\"{{amount}}\" step=\"0.0000001\" autocomplete=\"off\" disabled></input>\r\n\t\t\t<span class=\"currency\">XLM</span>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+module.exports = "<div class=\"stellar_checkout_progress\">\r\n\t\r\n\t<div class=\"transaction_info\">Complete this transaction by sending a payment with the following information:</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmTo\">To</label>\r\n\t\t<div class=\"txtwrap\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmTo\" class=\"txt\" type=\"text\" autocomplete=\"off\" disabled>{{payment.to}}</textarea>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmFrom\">From</label>\r\n\t\t<div class=\"txtwrap\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmFrom\" class=\"txt\" type=\"text\" autocomplete=\"off\" disabled>{{payment.from}}</textarea>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmAmount\">Amount</label>\r\n\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t<input id=\"stellarCheckoutConfirmAmount\" class=\"txt\" type=\"text\" value=\"{{payment.amount}}\" step=\"0.0000001\" autocomplete=\"off\" disabled></input>\r\n\t\t\t<span class=\"currency\">XLM</span>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
 
 /***/ }),
 /* 62 */

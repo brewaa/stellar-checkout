@@ -37,7 +37,7 @@ function loadSdk(callback) {
 function receivePayment(dto, callback) {
 	var networkUri = setNetwork(dto);
 	var server = new StellarSdk.Server(networkUri);
-	var accountId = dto.destinationKey;
+	var accountId = dto.payment.to;
 	var payments = server
 		.payments()
 		.forAccount(accountId)
@@ -62,9 +62,11 @@ function receivePayment(dto, callback) {
 }
 
 function sendPayment(dto) {
+	console.log(dto);
+
 	var networkUri = setNetwork(dto);
 	var server = new StellarSdk.Server(networkUri);
-	var sourceKeys = StellarSdk.Keypair.fromSecret(dto.privateKey);
+	var sourceKeys = StellarSdk.Keypair.fromSecret(dto.privateSeed);
 	var destinationId = dto.payment.to;
 	var transaction;
 
@@ -83,7 +85,7 @@ function sendPayment(dto) {
 			asset: dto.payment.asset,
 			amount: dto.payment.amount
 		}))
-		.addMemo(StellarSdk.Memo.text(dto.memo))
+		.addMemo(StellarSdk.Memo.text(dto.payment.memo))
 		.build();
 
 		transaction.sign(sourceKeys);

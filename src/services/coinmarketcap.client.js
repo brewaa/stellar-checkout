@@ -20,9 +20,9 @@ CoinMarketCapClient.prototype.fetch = function() {
 		if (response) {
 			var data = JSON.parse(response);
 			if (data.length > 0) {
-				var lumenPrice = data[0]['price_' + constants.DTO.currency.toLowerCase()];
+				var lumenPrice = data[0]['price_' + constants.DTO.invoice.currency.toLowerCase()];
 				if (lumenPrice) {
-					self.priceInLumens = self.calcPriceInLumens(constants.DTO.total, lumenPrice);
+					self.priceInLumens = self.calcPriceInLumens(constants.DTO.invoice.total, lumenPrice);
 					var formattedPrice = replace(formatter.format(formatter.FORMATS.DECIMAL7, self.priceInLumens), ',', '');
 					self.targetElem.setAttribute('value', formattedPrice);
 					self.targetElem.setAttribute('disabled', 'disabled');
