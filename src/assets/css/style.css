@@ -112,7 +112,7 @@
     width: 100%;
 }
 
-.stellar_checkout .header.progress .alt > div {
+.stellar_checkout .header.payment_awaiting .alt > div {
     flex-basis: 50%;
     align-items: center;
     display: flex;
@@ -124,7 +124,7 @@
 .stellar_checkout .header .status {
 }
 
-.stellar_checkout .header.progress .alt {
+.stellar_checkout .header.payment_awaiting .alt {
     display: flex;
 }
 

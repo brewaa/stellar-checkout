@@ -7,7 +7,7 @@ import {useRedirectUrl} from './utils/url';
 import {validateTransactionDto} from './ui/validate';
 
 import {setButtonState} from './ui/buttons';
-import {showError} from './ui/errors';
+import {showPaymentError} from './ui/payment.error';
 import {showPaymentComplete} from './ui/payment.complete';
 import {createPaymentAwaitingTemplate, showPaymentAwaitingProgress} from './ui/payment.awaiting';
 
@@ -56,7 +56,7 @@ export function init(selector, options) {
 			})
 			.catch(function(error) {
 				// Send the error back to the onSubmit call back (error-first)
-				showError(error);
+				showPaymentError(error);
 				console.log(error);
 				options.onSubmit.call(this, error);
 			});

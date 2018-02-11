@@ -1,6 +1,6 @@
 import elems from './elems';
 import {createElementFromHTML} from '../utils/dom';
-import {paymentCompleteTemplate} from '../templates/template';
+import {paymentCompleteTemplate} from '../ui/template';
 
 export function showPaymentComplete(obj) {
 	var template = paymentCompleteTemplate();

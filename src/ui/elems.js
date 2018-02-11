@@ -15,14 +15,18 @@ export default {
 		selector: '.stellar_checkout_form',
 		elem: null
 	},
-	progressPanel: {
+	paymentAwaitingPanel: {
 		selector: '.stellar_checkout_progress',
 		elem: null
 	},
-	errorPanel: {
+	paymentErrorPanel: {
 		selector: '.stellar_checkout_error',
 		elem: null
 	},
+	// paymentCompletePanel: {
+	// 	selector: '.stellar_checkout_complete',
+	// 	elem: null
+	// },
 	total: {
 		selector: '#stellarCheckoutTotal',
 		elem: null

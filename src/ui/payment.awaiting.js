@@ -2,15 +2,15 @@ import constants from '../constants';
 import {createElementFromHTML} from '../utils/dom';
 import elems from './elems';
 import QRCode from 'qrcode';
-import {paymentAwaitingTemplate} from '../templates/template';
+import {paymentAwaitingTemplate} from '../ui/template';
 
 export function createPaymentAwaitingTemplate(dto) {
 	var template = paymentAwaitingTemplate();
 	var compiledHtml = template(dto);
 	elems.root.elem.appendChild(createElementFromHTML('div', compiledHtml));
 
-	var progressPanel = document.querySelector(elems.progressPanel.selector);
-	elems.progressPanel.elem = progressPanel;
+	var paymentAwaitingPanel = document.querySelector(elems.paymentAwaitingPanel.selector);
+	elems.paymentAwaitingPanel.elem = paymentAwaitingPanel;
 
 	var qrCodeCanvas = elems.root.elem.querySelector('.qrcode');
 
@@ -20,16 +20,16 @@ export function createPaymentAwaitingTemplate(dto) {
 		}
 	});
 
-	elems.header.elem.classList.add('progress');
+	elems.header.elem.classList.add('payment_awaiting');
 
 	showPaymentAwaitingTemplate();
 
-	return progressPanel;
+	return paymentAwaitingPanel;
 }
 
 export function showPaymentAwaitingTemplate() {
 	elems.formPanel.elem.classList.add(constants.CLASS.hidden);
-	elems.progressPanel.elem.classList.remove(constants.CLASS.hidden);
+	elems.paymentAwaitingPanel.elem.classList.remove(constants.CLASS.hidden);
 };
 
 export function showPaymentAwaitingProgress() {

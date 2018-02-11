@@ -1,6 +1,6 @@
 {
   "name": "stellar-checkout",
-  "version": "1.0.4",
+  "version": "1.0.6",
   "description": "A responsive Drop-in UI for submitting transactions to the Stellar.org blockchain",
   "main": "stellar-checkout.js",
   "repository": {

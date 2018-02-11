@@ -1,14 +1,14 @@
-import constants from './constants';
-import css from './assets/css/style.css';
-import {CoinMarketCapClient} from './services/coinmarketcap.client';
-import {Err} from './utils/error';
-import fonts from './assets/fonts';
-import {mainTemplate} from './templates/template';
+import constants from '../constants';
+import css from '../assets/css/style.css';
+import {CoinMarketCapClient} from '../services/coinmarketcap.client';
+import {Err} from '../utils/error';
+import fonts from '../assets/fonts';
+import {createElementFromHTML} from '../utils/dom';
 
-import {createElementFromHTML} from './utils/dom';
-import {setButtonState} from './ui/buttons';
-import elems from './ui/elems';
-import {onValidateAmount, onValidatePrivateSeed, onValidatePublicKey, onValidateTotal} from './ui/events';
+import elems from './elems';
+import {mainTemplate} from './template';
+import {onValidateAmount, onValidatePrivateSeed, onValidatePublicKey, onValidateTotal} from './events';
+import {setButtonState} from './buttons';
 
 function create(selector, options) {
 

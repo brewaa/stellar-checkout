@@ -1,7 +1,7 @@
-import error from './error.mustache.html';
-import main from './main.template.html';
-import paymentAwaiting from './payment.awaiting.mustache.html';
-import paymentComplete from './payment.complete.mustache.html';
+import error from '../templates/error.mustache.html';
+import main from '../templates/main.template.html';
+import paymentAwaiting from '../templates/payment.awaiting.mustache.html';
+import paymentComplete from '../templates/payment.complete.mustache.html';
 
 export function errorTemplate() {
 	return error;
