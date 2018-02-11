@@ -7,6 +7,7 @@ export default {
 		hidden: 'stellar_checkout_hidden',
 		targetParent: 'stellar_checkout_container'
 	},
+	CMCCLIENT: null,
 	DTO: {
 		env: null,
 		invoice: {

@@ -2,66 +2,13 @@ import constants from './constants';
 import css from './assets/css/style.css';
 import {CoinMarketCapClient} from './services/coinmarketcap.client';
 import {Err} from './utils/error';
-import friendBotSvg from './assets/i/FriendBot_favicon.svg';
 import fonts from './assets/fonts';
-import QRCode from 'qrcode';
-import template from './templates/template';
+import {mainTemplate} from './templates/template';
 
-var _cmcClient;
-
-var elems = {
-	targetElem: {
-		selector: '',
-		elem: null
-	},
-	root: {
-		selector: '.stellar_checkout',
-		elem: null
-	},
-	header: {
-		selector: '.stellar_checkout .header',
-		elem: null
-	},
-	formPanel: {
-		selector: '.stellar_checkout_form',
-		elem: null
-	},
-	progressPanel: {
-		selector: '.stellar_checkout_progress',
-		elem: null
-	},
-	errorPanel: {
-		selector: '.stellar_checkout_error',
-		elem: null
-	},
-	total: {
-		selector: '#stellarCheckoutTotal',
-		elem: null
-	},
-	amount: {
-		selector: '#stellarCheckoutAmount',
-		elem: null
-	},
-	privateSeed: {
-		selector: '#stellarCheckoutPrivateSeed',
-		elem: null
-	},
-	publicKey: {
-		selector: '#stellarCheckoutPublicKey',
-		elem: null
-	},
-	submitButton: {
-		selector: '#stellarCheckoutSubmitButton',
-		elem: null
-	}
-};
-
-function createElementFromHTML(htmlString) {
-  var div = document.createElement('div');
-  div.innerHTML = htmlString.trim();
-  return div.firstChild; 
-};
-
+import {createElementFromHTML} from './utils/dom';
+import {setButtonState} from './ui/buttons';
+import elems from './ui/elems';
+import {onValidateAmount, onValidatePrivateSeed, onValidatePublicKey, onValidateTotal} from './ui/events';
 
 function create(selector, options) {
 
@@ -73,7 +20,7 @@ function create(selector, options) {
 
 	targetElem.classList.add(constants.CLASS.targetParent);
 	
-	targetElem.appendChild(createElementFromHTML(template.main));
+	targetElem.appendChild(createElementFromHTML('div', mainTemplate()));
 
 	var root = document.querySelector(elems.root.selector);
 	var header = document.querySelector(elems.header.selector);
@@ -94,7 +41,7 @@ function create(selector, options) {
 	elems.publicKey.elem = publicKey;
 	elems.submitButton.elem = submitButton;
 
-	_cmcClient = new CoinMarketCapClient(elems.amount.elem, options);
+	constants.CMCCLIENT = new CoinMarketCapClient(elems.amount.elem, options); // todo: refactor this and the one in ./ui/events
 
 	/* ---- */
 
@@ -112,7 +59,7 @@ function create(selector, options) {
 
 	constants.DTO.invoice.total = options.total;
 	constants.DTO.invoice.currency = options.currency;
-	constants.DTO.payment.amount = _cmcClient.priceInLumens;
+	constants.DTO.payment.amount = constants.CMCCLIENT.priceInLumens;
 	constants.DTO.payment.from = elems.publicKey.elem.value;
 	constants.DTO.payment.to = options.destinationKey;
 	constants.DTO.privateSeed = elems.privateSeed.elem.value; // todo:
@@ -130,7 +77,7 @@ function create(selector, options) {
 	}
 
 	if (hasValidTotal) {
-		_cmcClient.fetch();
+		constants.CMCCLIENT.fetch();
 	}
 
 	var toggleKeys = document.querySelectorAll('.toggle_keys');
@@ -168,28 +115,6 @@ function create(selector, options) {
 	return root;
 };
 
-function createProgressHtml(dto) {
-	var compiledHtml = template.progress(dto)
-	elems.root.elem.appendChild(createElementFromHTML(compiledHtml));
-
-	var progressPanel = document.querySelector(elems.progressPanel.selector);
-	elems.progressPanel.elem = progressPanel;
-
-	var qrCodeCanvas = elems.root.elem.querySelector('.qrcode');
-
-	QRCode.toCanvas(qrCodeCanvas, dto.payment.to, function (error) { // todo: standardized format that popular wallets use for payment data
-		if (error) {
-			console.error(error);
-		}
-	});
-
-	elems.header.elem.classList.add('progress');
-
-	showProgressHtml();
-
-	return progressPanel;
-}
-
 function createSubmitHandler(callBack) {
 	var btn = elems.submitButton.elem;
 	if (btn) {
@@ -202,222 +127,7 @@ function createSubmitHandler(callBack) {
 	};
 };
 
-
-
-function onValidateAmount(e) {
-	constants.DTO.payment.amount = e.target.value;
-	toggleValidationFeedback(e.target, validateAmount());
-};
-
-function onValidatePrivateSeed(e) {
-	constants.DTO.privateSeed = e.target.value;
-	toggleValidationFeedback(e.target, validatePrivateSeed());
-};
-
-function onValidatePublicKey(e) {
-	constants.DTO.payment.from = e.target.value;
-	toggleValidationFeedback(e.target, validatePublicKey(e.target.value));
-};
-
-function onValidateTotal(e) {
-	constants.DTO.invoice.total = e.target.value;
-	toggleValidationFeedback(e.target, validateTotal());
-	_cmcClient.fetch();
-};
-
-function setButtonState(target, state)  {
-	switch(state) {
-		case constants.SUBMIT_BUTTON_STATE.DISABLED:
-			target.setAttribute('disabled', 'disabled');
-			target.innerHTML = 'Enter payment info';
-			break;
-		case constants.SUBMIT_BUTTON_STATE.NORMAL:
-			target.removeAttribute('disabled');
-			target.innerHTML = 'Send payment';
-			break;
-		case constants.SUBMIT_BUTTON_STATE.IN_PROGRESS:
-			target.setAttribute('disabled', 'disabled');
-			target.innerHTML = 'Confirming transaction...';
-			break;
-		case constants.SUBMIT_BUTTON_STATE.PAYMENT_COMPLETE:
-			target.setAttribute('disabled', 'disabled');
-			target.innerHTML = 'Payment complete';
-			break;
-		default:
-			break;
-	}
-};
-
-function hideError() {
-	elems.errorPanel.elem.parentNode.removeChild(elems.errorPanel.elem);
-};
-
-function showError(error) {
-	error.friendBotSvg = friendBotSvg;
-	var compiledHtml = template.error(error);
-	elems.root.elem.appendChild(createElementFromHTML(compiledHtml));
-	var errorPanel = document.querySelector(elems.errorPanel.selector);
-	elems.errorPanel.elem = errorPanel;
-	var closeElem = errorPanel.querySelector('.close');
-	closeElem.addEventListener('click', hideError);
-	errorPanel;	
-};
-
-function showSuccess(obj) {
-	var compiledHtml = template.success(obj);
-	elems.root.elem.appendChild(createElementFromHTML(compiledHtml));
-};
-
-function showProgressHtml() {
-	elems.formPanel.elem.classList.add(constants.CLASS.hidden);
-	elems.progressPanel.elem.classList.remove(constants.CLASS.hidden);
-};
-
-function toggleValidationFeedback(target, test) {
-	if (!test.result) {
-		target.parentNode.classList.remove('valid');
-		target.parentNode.classList.add('error');
-		target.parentNode.querySelector('.error_msg').innerHTML = test.errors[0].msg;
-	} else {
-		target.parentNode.classList.add('valid');
-		target.parentNode.classList.remove('error');
-		target.parentNode.querySelector('.error_msg').innerHTML = '';
-	}
-	var formIsValid = validateTransactionDto(constants.DTO);
-	if (formIsValid.result) {
-		setButtonState(elems.submitButton.elem, constants.SUBMIT_BUTTON_STATE.NORMAL);
-	} else {
-		setButtonState(elems.submitButton.elem, constants.SUBMIT_BUTTON_STATE.DISABLED);
-	}
-};
-
-function updateProgressHtml() {
-	return new Promise(function(resolve) {
-		var statusElem = elems.header.elem.querySelector('.status');
-		var statusMsgs = [
-			'transaction received',
-			'processing transaction',
-			'verifying transaction',
-			'payment complete'
-		];
-		var i = 0,
-		increment = 2000,
-		interval = setInterval(function() {
-			statusElem.innerHTML = statusMsgs[i];
-			if (i == statusMsgs.length-1) {
-				clearInterval(interval);
-				resolve();
-			}
-			i++;
-		}, increment);
-	});
-}
-
-function validateAmount() {
-	var result = {
-		errors: [],
-		result: true
-	};
-	var amt = constants.DTO.payment.amount;
-	if (isNaN(amt)) {
-		result.errors.push(new Err('amount is not a number', elems.amount));
-		result.result = false;
-	}
-	if (amt <= 0) {
-		result.errors.push(new Err('amount must be greater than zero', elems.amount));
-		result.result = false;
-	}
-	return result;
-};
-
-function validatePrivateSeed() {
-	var result = {
-		errors: [],
-		result: true
-	};
-	var key = constants.DTO.privateSeed;
-	if (!key || !window.StellarSdk.StrKey.isValidEd25519SecretSeed(key)) {
-		result.errors.push(new Err('private seed is invalid', elems.privateSeed));
-		result.result = false;
-	}
-	return result;
-};
-
-function validatePublicKey(key) {
-	var result = {
-		errors: [],
-		result: true
-	};
-	if (!key || !window.StellarSdk.StrKey.isValidEd25519PublicKey(key)) {
-		result.errors.push(new Err('public key is invalid'));
-		result.result = false;
-	}
-	return result;
-};
-
-function validateTotal() {
-	var result = {
-		errors: [],
-		result: true
-	};
-	var total = constants.DTO.invoice.total;
-	if (isNaN(total)) {
-		result.errors.push(new Err('total is not a number', elems.total));
-		result.result = false;
-	}
-	if (total <= 0) {
-		result.errors.push(new Err('total must be greater than zero', elems.total));
-		result.result = false;
-	}
-	return result;
-};
-
-function validateTransactionDto() {
-	var result = {
-		errors: [],
-		result: true
-	};
-
-	var dto = constants.DTO;
-
-	var a = validateAmount(dto.payment.amount);
-	result.result = result.result && a.result;
-	result.errors = [...result.errors,...a.errors];
-
-	// asset
-
-	// publicKey OR privateSeed
-	if (constants.MODE.secure) {
-		var b = validatePublicKey(dto.payment.from);
-		result.result = result.result && b.result;
-		result.errors = [...result.errors,...b.errors];
-	} else {
-		var b = validatePrivateSeed(dto.privateSeed);
-		result.result = result.result && b.result;
-		result.errors = [...result.errors,...b.errors];
-	}
-
-	//destinationKey
-	var c = validatePublicKey(dto.payment.to);
-	result.result = result.result && c.result;
-	result.errors = [...result.errors,...c.errors];
-
-	// memo
-
-	// env
-
-	return result;
-};
-
 export default {
-	elems: elems,
 	create: create,
-	createProgressHtml: createProgressHtml,
-	createSubmitHandler: createSubmitHandler,
-	setButtonState: setButtonState,
-	showError: showError,
-	showSuccess: showSuccess,
-	updateProgressHtml: updateProgressHtml,
-	validatePublicKey: validatePublicKey,
-	validateTransactionDto: validateTransactionDto
+	createSubmitHandler: createSubmitHandler
 };

@@ -81,10 +81,6 @@
     
 }
 
-.stellar_checkout_error .friendbot {
-    width: 16%;
-}
-
 .stellar_checkout_error .error_message {
     display: flex;
     align-items: center;
