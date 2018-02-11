@@ -1,8 +1,8 @@
 # StellarCheckout
 
-A javascript plugin with a responsive UI.
-
 StellarCheckout integrates e-commerce web sites with the Stellar.org blockchain allowing merchants to accept payment in lumens.
+
+It's a javascript plugin with a responsive UI.
 
 ## Installation
 
@@ -16,13 +16,15 @@ npm i -save stellar-checkout
 ```
 
 ## Integration
-1. Add a script reference to stellar-checkout.min.js (CDN or module import)
-1. Copy and paste the StellarCheckout Drop-in UI initialization code into a page on your web site
+1. Add a script reference to stellar-checkout.min.js
+1. Install the example code into a page on your web site
 2. Configure the initialization code with:
-   1. amount
-   2. destinationKey (the merchant's PublicKey/AccountID)
-   3. redirectURL (or custom javascript via the onSubmit callback)
-3. Direct customers to the StellarCheckout page you just created
+   - currency
+   - total
+   - destinationKey
+3. OPTIONAL: Implement one of the following:
+   - redirectUrl
+   - onSubmit
 
 ## Options
 
@@ -55,10 +57,6 @@ npm i -save stellar-checkout
   total: {		// Order total in the currency specified
   	type: decimal,
   	required: true
-  },
-  totalMin: {    // Use totalMin to enable to "Total" field so customers can pay you more :) Must be used WITH "total"
-    type: decimal,
-    required: true
   }
 }
 ```
@@ -109,13 +107,6 @@ StellarCheckout.ui.render('#elem', {
 });
 </script>
 ```
-
-## Completing a transaction
-1. Visit a page containing the Drop-in UI (must include an amount, a destinationKey AND a redirectUrl OR onSubmit callback)
-2. Enter your Public Key
-3. Click Send payment to be taken to the confirmation page (don't close the page)
-4. Open your favourite lumens wallet and send a transaction containing the same details as listed on the confirmation page
-5. Wait for a response from StellarCheckout
 
 ## Tip Jar
 

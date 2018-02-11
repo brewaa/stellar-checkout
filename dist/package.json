@@ -8,10 +8,11 @@
     "url": "git+https://github.com/brewaa/stellar-checkout.git"
   },
   "keywords": [
-    "Stellar Lumens",
-    "Lumens",
-    "stellar.org",
-    "SBC"
+    "stellar checkout",
+    "blockchain checkout",
+    "stellar lumens",
+    "lumens",
+    "stellar.org"
   ],
   "author": "brewaa",
   "license": "ISC",
