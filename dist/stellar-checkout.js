@@ -1997,12 +1997,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 function init(selector, options) {
 
-	// var isValidDestinationKey = window.StellarSdk.StrKey.isValidEd25519PublicKey(options.destinationKey);
-	// if (!isValidDestinationKey) {
-	// 	console.log(new Err('destinationKey is invalid').toString());
-	// 	return;
-	// }
-
 	var dto = __WEBPACK_IMPORTED_MODULE_3__utils_stellarsdk_helper__["a" /* default */].createDto(options);
 
 	__WEBPACK_IMPORTED_MODULE_4__ui__["a" /* default */].create(selector, options);

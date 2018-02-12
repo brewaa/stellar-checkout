@@ -13,12 +13,6 @@ import {createPaymentAwaitingTemplate, showPaymentAwaitingProgress} from './ui/p
 
 export function init(selector, options) {
 
-	// var isValidDestinationKey = window.StellarSdk.StrKey.isValidEd25519PublicKey(options.destinationKey);
-	// if (!isValidDestinationKey) {
-	// 	console.log(new Err('destinationKey is invalid').toString());
-	// 	return;
-	// }
-
 	var dto = sdkHelper.createDto(options);
 
 	ui.create(selector, options);
