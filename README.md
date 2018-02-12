@@ -110,7 +110,7 @@ StellarCheckout.ui.render('#elem', {
 
 ## Wiki
 
-More information can be found in the [StellarCheckout Wiki](https://github.com/brewaa/stellar-checkout/wiki)
+More examples can be found in the [StellarCheckout Wiki Examples](https://github.com/brewaa/stellar-checkout/wiki/Examples)
 
 ## Tip Jar
 
