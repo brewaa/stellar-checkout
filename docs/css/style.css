@@ -48,9 +48,9 @@ body {
 }
 
 .head {
-	border: .0625rem solid #eee;
+	border-bottom: .0625rem solid #eee;
 	display: none;
-	height: 2.4rem;
+	height: 3.2rem;
 }
 
 .container {
@@ -60,7 +60,7 @@ body {
 .container .margin {
 	background: #f8f8f8;
 	display: none;
-	flex-basis: 10rem;
+	flex-basis: 12rem;
 }
 
 .container .sidebar {
@@ -74,6 +74,12 @@ body {
 	padding: .4rem;
 }
 
+.foot {
+	border-top: .0625rem solid #eee;
+	display: none;
+	height: 3.2rem;
+}
+
 @media screen and (min-device-width: 1200px) {
 	.head,
 	.foot,
@@ -84,6 +90,6 @@ body {
 	.container {
 		display: flex;
 		margin: auto;
-		width: 76rem;
+		width: 66rem;
 	}
 }

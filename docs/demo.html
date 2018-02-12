@@ -2,42 +2,28 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>Stellar Checkout Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stellar Checkout Demo</title>
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-  	<div class="head"></div>
+  	<div class="head">.head</div>
   	<div class="container">
-  		<div class="margin"></div>
+  		<div class="margin">.margin</div>
   		<div class="main">
   			<form id="form">
 	  			<div id="elem"></div>
 		  	</form>
   		</div>
-  		<div class="sidebar"></div>
+  		<div class="sidebar">.sidebar</div>
   	</div>
-  	<div class="foot"></div>
+  	<div class="foot">.foot</div>
   	<script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js"></script>
   	<script>
 	StellarCheckout.ui.render('#elem', {
 		total: '10',
-		totalMin: '10',
 		currency: 'AUD',
-		env: 'development',
-		memo: 'test-transaction',
-		destinationKey: 'GB5L45CNNM5I56YYH3FBA7QXUZGJL5CYR2GG7PS5WLT5FK4NEHXEUH73',
-		// redirectUrl: '',
-		onSubmit: function(err, result) {
-			if (err) {
-				// handle error condition
-				console.log(error);
-				return;
-			}
-			// result contains transaction info
-			// manually submit the form 
-			console.log(result);
-		}
+		destinationKey: 'GB5L45CNNM5I56YYH3FBA7QXUZGJL5CYR2GG7PS5WLT5FK4NEHXEUH73'
 	});
 	</script>
   </body>
