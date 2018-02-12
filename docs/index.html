@@ -2,28 +2,43 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Stellar Checkout Examples</title>
-    <link rel="stylesheet" href="css/style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <title>Stellar Checkout Example</title>
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+  	<div class="head"></div>
   	<div class="container">
-  	<h1>StellarCheckout</h1>
-    <div class="box">
-    	<h2>Examples</h2>
-    	<ul>
-    		<li><a href="example.html">example 1</a></li>
-    	</ul>
-    </div>
-    <div class="box">
-      <h2>Screenshots</h2>
-      <h3></h3>
-      <p>StellarCheckout is a form you can use on your web site to accept payments in lumens (XLM).</p>
-      <p>Here's what users see when visiting a landing page containing the StellarCheckout Drop-in  UI:</p>
-      <div class="screenshots">
-        <img alt="" src="" />
-      </div>
-    </div>
-  </div>
+  		<div class="margin"></div>
+  		<div class="main">
+  			<form id="form">
+	  			<div id="elem"></div>
+		  	</form>
+  		</div>
+  		<div class="sidebar"></div>
+  	</div>
+  	<div class="foot"></div>
+  	<script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js"></script>
+  	<script>
+	StellarCheckout.ui.render('#elem', {
+		total: '10',
+		totalMin: '10',
+		currency: 'AUD',
+		env: 'development',
+		memo: 'test-transaction',
+		destinationKey: 'GB5L45CNNM5I56YYH3FBA7QXUZGJL5CYR2GG7PS5WLT5FK4NEHXEUH73',
+		// redirectUrl: '',
+		onSubmit: function(err, result) {
+			if (err) {
+				// handle error condition
+				console.log(error);
+				return;
+			}
+			// result contains transaction info
+			// manually submit the form 
+			console.log(result);
+		}
+	});
+	</script>
   </body>
 </html>
