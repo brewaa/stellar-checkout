@@ -7,7 +7,7 @@ It's a javascript plugin with a responsive UI so it will work on any web site in
 ## Installation
 
 ```
-npm i -save--dev stellar-checkout
+npm i --save-dev stellar-checkout
 ```
 
 ## CDN
