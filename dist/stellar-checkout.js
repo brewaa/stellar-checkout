@@ -70,7 +70,7 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 21);
+/******/ 	return __webpack_require__(__webpack_require__.s = 22);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -191,8 +191,8 @@ exports.toSJIS = function toSJIS (kanji) {
 /* 2 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Version = __webpack_require__(18)
-var Regex = __webpack_require__(19)
+var Version = __webpack_require__(19)
+var Regex = __webpack_require__(20)
 
 /**
  * Numeric mode encodes data from the decimal digit set (0 - 9)
@@ -1247,9 +1247,9 @@ function verifyPayment(dto, payment) {
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = CoinMarketCapClient;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_formatter__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_http__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_string__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_formatter__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_http__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_string__ = __webpack_require__(16);
 
 
 
@@ -1310,18 +1310,26 @@ CoinMarketCapClient.prototype.showProgress = function() {
 /* unused harmony export redirect */
 /* harmony export (immutable) */ __webpack_exports__["b"] = useRedirectUrl;
 /* harmony export (immutable) */ __webpack_exports__["a"] = toQueryString;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__string__ = __webpack_require__(16);
+
+
 function redirect(url, qs) {
 	if (window) {
-		window.location.href = url + toQueryString(qs);	
+		window.location.href = url + qs;	
 	}
 };
 
 function useRedirectUrl(options, result) {
 	if (options.redirectUrl) {
+		var url = options.redirectUrl;
 		var qs = {
 			hash: result.hash ? result.hash : result.transaction_hash ? result.transaction_hash : ''
 		};
-		redirect(options.redirectUrl, qs);
+		qs = toQueryString(qs);
+		if (url.indexOf('?') !== -1) {
+			qs = Object(__WEBPACK_IMPORTED_MODULE_0__string__["a" /* replace */])(qs, '\\?', '&');
+		}
+		redirect(url, qs);
 	}
 };
 
@@ -1336,6 +1344,16 @@ function toQueryString(params) {
 
 /***/ }),
 /* 16 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = replace;
+function replace(text, search, replacement) {
+    return text.replace(new RegExp(search, 'g'), replacement);
+};
+
+/***/ }),
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1462,7 +1480,7 @@ function validateTransactionDto() {
 };
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var ECLevel = __webpack_require__(12)
@@ -1603,11 +1621,11 @@ exports.getTotalCodewordsCount = function getTotalCodewordsCount (version, error
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var Utils = __webpack_require__(1)
-var ECCode = __webpack_require__(17)
+var ECCode = __webpack_require__(18)
 var ECLevel = __webpack_require__(12)
 var Mode = __webpack_require__(2)
 var isArray = __webpack_require__(11)
@@ -1782,7 +1800,7 @@ exports.getEncodedBits = function getEncodedBits (version) {
 
 
 /***/ }),
-/* 19 */
+/* 20 */
 /***/ (function(module, exports) {
 
 var numeric = '[0-9]+'
@@ -1819,7 +1837,7 @@ exports.testAlphanumeric = function testAlphanumeric (str) {
 
 
 /***/ }),
-/* 20 */
+/* 21 */
 /***/ (function(module, exports) {
 
 function hex2rgba (hex) {
@@ -1918,12 +1936,12 @@ exports.qrToImageData = function qrToImageData (imgData, qr, opts) {
 
 
 /***/ }),
-/* 21 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app__ = __webpack_require__(23);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_error__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_config_checker__ = __webpack_require__(72);
@@ -1966,7 +1984,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 22 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1975,9 +1993,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ui_elems__ = __webpack_require__(3);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_error__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_stellarsdk_helper__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ui__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ui__ = __webpack_require__(24);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__utils_url__ = __webpack_require__(15);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ui_validate__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ui_validate__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ui_buttons__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ui_payment_error__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ui_payment_complete__ = __webpack_require__(48);
@@ -2018,16 +2036,20 @@ function init(selector, options) {
 			// Handle error
 			if (err) {
 				// Pass error to onSubmit callback
-				options.onSubmit.call(this, err);
+				if (options.onSubmit && typeof options.onSubmit === 'function') {
+					options.onSubmit.call(this, err);
+				}
 				return;	
 			}
 			// Show payment verification feedback
 			Object(__WEBPACK_IMPORTED_MODULE_10__ui_payment_awaiting__["b" /* showPaymentAwaitingProgress */])(result)
 			.then(function() {
-				// Use redirectUrl if configured
-				Object(__WEBPACK_IMPORTED_MODULE_5__utils_url__["b" /* useRedirectUrl */])(options, result);
-				// Call the onSubmit callback
-				if (options.onSubmit && typeof options.onSubmit === 'function') {
+				if (options.redirectUrl) {
+					// Use redirectUrl if configured
+					Object(__WEBPACK_IMPORTED_MODULE_5__utils_url__["b" /* useRedirectUrl */])(options, result);
+				}
+				else if (options.onSubmit && typeof options.onSubmit === 'function') {
+					// Call the onSubmit callback
 					options.onSubmit.call(this, null, result);
 				}
 				else {
@@ -2041,12 +2063,12 @@ function init(selector, options) {
 };
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_css_style_css__ = __webpack_require__(24);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_css_style_css__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_css_style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__assets_css_style_css__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_coinmarketcap_client__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_error__ = __webpack_require__(5);
@@ -2157,11 +2179,11 @@ function createSubmitHandler(callBack) {
 });
 
 /***/ }),
-/* 24 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 
-var content = __webpack_require__(25);
+var content = __webpack_require__(26);
 
 if(typeof content === 'string') content = [[module.i, content, '']];
 
@@ -2175,7 +2197,7 @@ var options = {"hmr":true}
 options.transform = transform
 options.insertInto = undefined;
 
-var update = __webpack_require__(28)(content, options);
+var update = __webpack_require__(29)(content, options);
 
 if(content.locals) module.exports = content.locals;
 
@@ -2207,11 +2229,11 @@ if(false) {
 }
 
 /***/ }),
-/* 25 */
+/* 26 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var escape = __webpack_require__(26);
-exports = module.exports = __webpack_require__(27)(false);
+var escape = __webpack_require__(27);
+exports = module.exports = __webpack_require__(28)(false);
 // imports
 
 
@@ -2222,7 +2244,7 @@ exports.push([module.i, "/* STELLAR CHECKOUT */\r\n\r\n.stellar_checkout_contain
 
 
 /***/ }),
-/* 26 */
+/* 27 */
 /***/ (function(module, exports) {
 
 module.exports = function escape(url) {
@@ -2244,7 +2266,7 @@ module.exports = function escape(url) {
 
 
 /***/ }),
-/* 27 */
+/* 28 */
 /***/ (function(module, exports) {
 
 /*
@@ -2326,7 +2348,7 @@ function toComment(sourceMap) {
 
 
 /***/ }),
-/* 28 */
+/* 29 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -2392,7 +2414,7 @@ var singleton = null;
 var	singletonCounter = 0;
 var	stylesInsertedAtTop = [];
 
-var	fixUrls = __webpack_require__(29);
+var	fixUrls = __webpack_require__(30);
 
 module.exports = function(list, options) {
 	if (typeof DEBUG !== "undefined" && DEBUG) {
@@ -2708,7 +2730,7 @@ function updateLink (link, options, obj) {
 
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports) {
 
 
@@ -2803,7 +2825,7 @@ module.exports = function (css) {
 
 
 /***/ }),
-/* 30 */
+/* 31 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2881,7 +2903,7 @@ function format(theFormat, num) {
 });
 
 /***/ }),
-/* 31 */
+/* 32 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -2921,16 +2943,6 @@ function format(theFormat, num) {
 	}
 
 });
-
-/***/ }),
-/* 32 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = replace;
-function replace(text, search, replacement) {
-    return text.replace(new RegExp(search, 'g'), replacement);
-};
 
 /***/ }),
 /* 33 */
@@ -5796,7 +5808,7 @@ module.exports = "<div class=\"stellar_checkout_error\">\r\n\t<div class=\"inner
 /* harmony export (immutable) */ __webpack_exports__["c"] = onValidateTotal;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__services_coinmarketcap_client__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__validate__ = __webpack_require__(16);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__validate__ = __webpack_require__(17);
 
 
 
@@ -6085,9 +6097,9 @@ var BitMatrix = __webpack_require__(56)
 var AlignmentPattern = __webpack_require__(57)
 var FinderPattern = __webpack_require__(58)
 var MaskPattern = __webpack_require__(59)
-var ECCode = __webpack_require__(17)
+var ECCode = __webpack_require__(18)
 var ReedSolomonEncoder = __webpack_require__(60)
-var Version = __webpack_require__(18)
+var Version = __webpack_require__(19)
 var FormatInfo = __webpack_require__(63)
 var Mode = __webpack_require__(2)
 var Segments = __webpack_require__(64)
@@ -7310,7 +7322,7 @@ var NumericData = __webpack_require__(65)
 var AlphanumericData = __webpack_require__(66)
 var ByteData = __webpack_require__(67)
 var KanjiData = __webpack_require__(68)
-var Regex = __webpack_require__(19)
+var Regex = __webpack_require__(20)
 var Utils = __webpack_require__(1)
 var dijkstra = __webpack_require__(69)
 
@@ -8020,7 +8032,7 @@ if (true) {
 /* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Utils = __webpack_require__(20)
+var Utils = __webpack_require__(21)
 
 function clearCanvas (ctx, canvas, size) {
   ctx.clearRect(0, 0, canvas.width, canvas.height)
@@ -8089,7 +8101,7 @@ exports.renderToDataURL = function renderToDataURL (qrData, canvas, options) {
 /* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Utils = __webpack_require__(20)
+var Utils = __webpack_require__(21)
 
 function getColorAttrib (color, attrib) {
   var alpha = color.a / 255

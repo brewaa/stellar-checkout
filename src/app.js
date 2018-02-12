@@ -34,16 +34,20 @@ export function init(selector, options) {
 			// Handle error
 			if (err) {
 				// Pass error to onSubmit callback
-				options.onSubmit.call(this, err);
+				if (options.onSubmit && typeof options.onSubmit === 'function') {
+					options.onSubmit.call(this, err);
+				}
 				return;	
 			}
 			// Show payment verification feedback
 			showPaymentAwaitingProgress(result)
 			.then(function() {
-				// Use redirectUrl if configured
-				useRedirectUrl(options, result);
-				// Call the onSubmit callback
-				if (options.onSubmit && typeof options.onSubmit === 'function') {
+				if (options.redirectUrl) {
+					// Use redirectUrl if configured
+					useRedirectUrl(options, result);
+				}
+				else if (options.onSubmit && typeof options.onSubmit === 'function') {
+					// Call the onSubmit callback
 					options.onSubmit.call(this, null, result);
 				}
 				else {
