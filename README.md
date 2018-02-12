@@ -68,7 +68,7 @@ https://brewaa.github.io/stellar-checkout/example.html
 Here are some quick examples to get you started.
 
 ### Basic Example
-See [Basic Configuration Example](/brewaa/stellar-checkout/wiki/Basic-Configuration-Example) in the wiki.
+See [Basic Configuration Example](/wiki/Basic-Configuration-Example) in the wiki.
 
 ```html
 <div id="elem"></div>
@@ -84,7 +84,7 @@ StellarCheckout.ui.render('#elem', {
 
 ## Wiki
 
-More examples can be found in the wiki. [View Examples](https://github.com/brewaa/stellar-checkout/wiki/Examples)
+More examples can be found in the wiki. [View Examples](/wiki/Examples)
 
 ## Tip Jar
 
