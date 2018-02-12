@@ -4,6 +4,8 @@ StellarCheckout integrates e-commerce web sites with the Stellar.org blockchain 
 
 It's a javascript plugin with a responsive UI so it will work on any web site in modern browsers.
 
+> This project is a work in progress and may contain bugs and defects. Use at your own risk.
+
 ## Installation
 
 ```
