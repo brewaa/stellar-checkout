@@ -62,7 +62,7 @@ npm i --save-dev stellar-checkout
 ```
 
 ## Demo
-https://brewaa.github.io/stellar-checkout/example.html
+https://brewaa.github.io/stellar-checkout/demo.html
 
 ## Examples
 Here are some quick examples to get you started.
