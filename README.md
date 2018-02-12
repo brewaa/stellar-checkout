@@ -108,6 +108,10 @@ StellarCheckout.ui.render('#elem', {
 </script>
 ```
 
+## Wiki
+
+More information can be found in the [StellarCheckout Wiki](https://github.com/brewaa/stellar-checkout/wiki)
+
 ## Tip Jar
 
 XLM: GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI
