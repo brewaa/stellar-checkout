@@ -68,10 +68,7 @@ npm i --save-dev stellar-checkout
 ## Demo
 https://brewaa.github.io/stellar-checkout/demo.html
 
-## Examples
-Here are some quick examples to get you started.
-
-### Basic Example
+## Basic Example
 See [Basic Configuration Example](https://github.com/brewaa/stellar-checkout/wiki/Basic-Configuration-Example) in the wiki.
 
 ```html
