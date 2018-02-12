@@ -38,18 +38,18 @@ export function validateAmount() {
 	return result;
 };
 
-export function validatePrivateSeed() {
-	var result = {
-		errors: [],
-		result: true
-	};
-	var key = constants.DTO.privateSeed;
-	if (!key || !window.StellarSdk.StrKey.isValidEd25519SecretSeed(key)) {
-		result.errors.push(new Err('private seed is invalid', elems.privateSeed));
-		result.result = false;
-	}
-	return result;
-};
+// export function validatePrivateSeed() {
+// 	var result = {
+// 		errors: [],
+// 		result: true
+// 	};
+// 	var key = constants.DTO.privateSeed;
+// 	if (!key || !window.StellarSdk.StrKey.isValidEd25519SecretSeed(key)) {
+// 		result.errors.push(new Err('private seed is invalid', elems.privateSeed));
+// 		result.result = false;
+// 	}
+// 	return result;
+// };
 
 export function validatePublicKey(key) {
 	var result = {
@@ -94,16 +94,10 @@ export function validateTransactionDto() {
 
 	// asset
 
-	// publicKey OR privateSeed
-	if (constants.MODE.secure) {
-		var b = validatePublicKey(dto.payment.from);
-		result.result = result.result && b.result;
-		result.errors = [...result.errors,...b.errors];
-	} else {
-		var b = validatePrivateSeed(dto.privateSeed);
-		result.result = result.result && b.result;
-		result.errors = [...result.errors,...b.errors];
-	}
+	// publicKey
+	var b = validatePublicKey(dto.payment.from);
+	result.result = result.result && b.result;
+	result.errors = [...result.errors,...b.errors];
 
 	//destinationKey
 	var c = validatePublicKey(dto.payment.to);

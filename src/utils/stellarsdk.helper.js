@@ -34,7 +34,6 @@ function loadSdk(callback) {
 	return true;
 };
 
-
 function receivePayment(dto, callback) {
 	var networkUri = setNetwork(dto);
 	var server = new StellarSdk.Server(networkUri);
@@ -46,6 +45,7 @@ function receivePayment(dto, callback) {
 
 	var closeStream = payments.stream({
 	  onmessage: function(payment) {
+	  	console.log(payment);
 	    if (payment.to !== accountId) {
 	      return;
 	    }
@@ -60,42 +60,6 @@ function receivePayment(dto, callback) {
 	    console.error('Error in payment stream');
 	  }
 	});
-}
-
-function sendPayment(dto) {
-	console.log(dto);
-
-	var networkUri = setNetwork(dto);
-	var server = new StellarSdk.Server(networkUri);
-	var sourceKeys = StellarSdk.Keypair.fromSecret(dto.privateSeed);
-	var destinationId = dto.payment.to;
-	var transaction;
-
-	return server.loadAccount(destinationId)
-	.catch(StellarSdk.NotFoundError, function (error) {
-		throw new Error('The destination account does not exist!');
-	})
-	.then(function() {
-		return server.loadAccount(sourceKeys.publicKey());
-	})
-	.then(function(sourceAccount) {
-		var builder = new StellarSdk
-		.TransactionBuilder(sourceAccount)
-		.addOperation(StellarSdk.Operation.payment({
-			destination: destinationId,
-			asset: dto.payment.asset,
-			amount: dto.payment.amount
-		}));
-		if (dto.payment.memo) {
-			builder.addMemo(StellarSdk.Memo.text(dto.payment.memo));	
-		}
-		var transaction = builder.build();
-		transaction.sign(sourceKeys);
-		return server.submitTransaction(transaction);
-	})
-	.then(function(result) {
-		return result;
-	});
 };
 
 function setNetwork(dto) {
@@ -108,18 +72,17 @@ function setNetwork(dto) {
 		window.StellarSdk.Network.useTestNetwork();
 	}
 	return networkUri;
-}
+};
 
 function verifyPayment(dto, payment) {
 	var amountIsEqual = dto.payment.amount === payment.amount;
 	var publicKeyIsEqual = dto.payment.from === payment.from;
 	var result = amountIsEqual && publicKeyIsEqual;
 	return result;
-}
+};
 
 export default {
 	createDto: createDto,
 	loadSdk: loadSdk,
-	receivePayment: receivePayment,
-	sendPayment: sendPayment
+	receivePayment: receivePayment
 }

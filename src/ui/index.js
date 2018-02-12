@@ -27,7 +27,6 @@ function create(selector, options) {
 	var formPanel = document.querySelector(elems.formPanel.selector);
 	var total = document.querySelector(elems.total.selector);
 	var amount = document.querySelector(elems.amount.selector);
-	var privateSeed = document.querySelector(elems.privateSeed.selector);
 	var publicKey = document.querySelector(elems.publicKey.selector);
 	var submitButton = document.querySelector(elems.submitButton.selector);
 	
@@ -37,7 +36,6 @@ function create(selector, options) {
 	elems.formPanel.elem = formPanel;;
 	elems.total.elem = total;
 	elems.amount.elem = amount;
-	elems.privateSeed.elem = privateSeed;
 	elems.publicKey.elem = publicKey;
 	elems.submitButton.elem = submitButton;
 
@@ -51,9 +49,6 @@ function create(selector, options) {
 	elems.amount.elem.addEventListener('blur', onValidateAmount);
 	elems.amount.elem.addEventListener('input', onValidateAmount);
 
-	elems.privateSeed.elem.addEventListener('blur', onValidatePrivateSeed);
-	elems.privateSeed.elem.addEventListener('input', onValidatePrivateSeed);
-
 	elems.publicKey.elem.addEventListener('blur', onValidatePublicKey);
 	elems.publicKey.elem.addEventListener('input', onValidatePublicKey);
 
@@ -62,8 +57,6 @@ function create(selector, options) {
 	constants.DTO.payment.amount = constants.CMCCLIENT.priceInLumens;
 	constants.DTO.payment.from = elems.publicKey.elem.value;
 	constants.DTO.payment.to = options.destinationKey;
-	constants.DTO.privateSeed = elems.privateSeed.elem.value; // todo:
-	
 
 	//todo: add a configuration check for options.total
 	var hasValidTotal = false;
@@ -79,33 +72,6 @@ function create(selector, options) {
 	if (hasValidTotal) {
 		constants.CMCCLIENT.fetch();
 	}
-
-	var toggleKeys = document.querySelectorAll('.toggle_keys');
-	for (var i = 0, len = toggleKeys.length; i < len; i++) {
-		toggleKeys[i].addEventListener('click', function(e) {
-			e.preventDefault();
-			if (constants.MODE.secure) {
-				elems.privateSeed.elem.parentNode.parentNode.classList.remove(constants.CLASS.hidden);
-				elems.publicKey.elem.parentNode.parentNode.classList.add(constants.CLASS.hidden);
-				constants.MODE.secure = false;
-			} else {
-				elems.privateSeed.elem.parentNode.parentNode.classList.add(constants.CLASS.hidden);
-				elems.publicKey.elem.parentNode.parentNode.classList.remove(constants.CLASS.hidden);
-				constants.MODE.secure = true;
-			}
-		});
-	};
-
-	document.querySelector('.reveal_seed_link').addEventListener('click', function(e) {
-		e.preventDefault();
-		var elem = elems.privateSeed.elem;
-		var typ = elem.getAttribute('type');
-		if (typ === 'password') {
-			elem.setAttribute('type', 'text');
-		} else {
-			elem.setAttribute('type', 'password');
-		}
-	});
 
 	setTimeout(function() {
 		document.querySelector('.stellar_checkout_overlay').classList.add('loaded');;

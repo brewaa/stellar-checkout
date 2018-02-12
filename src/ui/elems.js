@@ -35,10 +35,6 @@ export default {
 		selector: '#stellarCheckoutAmount',
 		elem: null
 	},
-	privateSeed: {
-		selector: '#stellarCheckoutPrivateSeed',
-		elem: null
-	},
 	publicKey: {
 		selector: '#stellarCheckoutPublicKey',
 		elem: null

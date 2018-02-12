@@ -7,11 +7,6 @@ export function onValidateAmount(e) {
 	toggleValidationFeedback(e.target, validateAmount());
 };
 
-export function onValidatePrivateSeed(e) {
-	constants.DTO.privateSeed = e.target.value;
-	toggleValidationFeedback(e.target, validatePrivateSeed());
-};
-
 export function onValidatePublicKey(e) {
 	constants.DTO.payment.from = e.target.value;
 	toggleValidationFeedback(e.target, validatePublicKey(e.target.value));

@@ -233,13 +233,13 @@
 }
 
 .stellar_checkout .field .currency {
-	border-left: .0625rem solid #ddd;
+	border-right: .0625rem solid #ddd;
     color: #a0a0a0;
 	display: block;
     height: 100%;
     line-height: 2.6;
     position: absolute;
-    right: 0;
+    left: 0;
     text-align: center;
     top: 0;
     width: 4rem;
@@ -256,7 +256,8 @@
 	font-size: 1.25rem;
     height: 100%;
     outline: 0;
-    padding: .6rem .4rem;
+    padding: .6rem .8rem;
+    text-align: right;
     width: 100%;
 }
 

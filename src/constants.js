@@ -21,20 +21,7 @@ export default {
 			from: null,
 			memo: null,
 			to: null
-		},
-		// amount: null,
-		// asset: null,
-		// currency: null,
-		// destinationKey: null,
-		// env: null,
-		// fee: null,
-		// memo: null,
-		privateSeed: null
-		// publicKey: null,
-		// total: null
-	},
-	MODE: {
-		secure: true
+		}
 	},
 	MESSAGE_TYPE: {
 		ERROR: 'ERROR',

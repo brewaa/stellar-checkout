@@ -32,57 +32,32 @@ export function init(selector, options) {
 			return;
 		}
 
-		if (!constants.MODE.secure) {
-
-			// Submit the transaction to the stellar network (using private seed)
-			var result = sdkHelper
-			.sendPayment(dto)
-			.then(function(result) {
-
-				console.log(result);
-				// Show success feedback
-				setButtonState(elems.submitButton.elem, constants.SUBMIT_BUTTON_STATE.PAYMENT_COMPLETE);
-
-				// Send to success page if the simple redirect feature is configured
+		// Show the awaiting payment page
+		createPaymentAwaitingTemplate(dto);
+		
+		// Watch for transactions sent to the destinationKey
+		sdkHelper.receivePayment(dto, function(err, result) {
+			// Handle error
+			if (err) {
+				// Pass error to onSubmit callback
+				options.onSubmit.call(this, err);
+				return;	
+			}
+			// Show payment verification feedback
+			showPaymentAwaitingProgress(result)
+			.then(function() {
+				// Use redirectUrl if configured
 				useRedirectUrl(options, result);
-
 				// Call the onSubmit callback
 				if (options.onSubmit && typeof options.onSubmit === 'function') {
-					options.onSubmit.call(this, null, result);	
+					options.onSubmit.call(this, null, result);
 				}
 				else {
+					// Show the payment complete page
 					showPaymentComplete();
 				}
-			})
-			.catch(function(error) {
-				// Send the error back to the onSubmit call back (error-first)
-				showPaymentError(error);
-				console.log(error);
-				options.onSubmit.call(this, error);
 			});
-
-		} else {
-
-			createPaymentAwaitingTemplate(dto);
-			// Watch for transactions sent to the destinationKey
-			sdkHelper.receivePayment(dto, function(err, result) {
-				if (err) {
-					options.onSubmit.call(this, err);
-					return;	
-				}
-				showPaymentAwaitingProgress(result)
-				.then(function() {
-					useRedirectUrl(options, result);
-					if (options.onSubmit && typeof options.onSubmit === 'function') {
-						options.onSubmit.call(this, null, result);
-					}
-					else {
-						showPaymentComplete();
-					}
-				});
-			});
-
-		}
+		});
 		
 	});
 };
