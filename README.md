@@ -68,49 +68,23 @@ https://brewaa.github.io/stellar-checkout/example.html
 Here are some quick examples to get you started.
 
 ### simple configuration example
-The following example requests a payment of 10 USD and submits the transaction in lumens to the Stellar main network. 
-The user is redirected automatically after a successful transaction.
-```html
-<div id="elem"></div>
-<script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js"></script>
-<script>
-StellarCheckout.ui.render('#elem', {
-  total: '10',
-  env: 'production',
-  destinationKey: 'GDLZR4NMRB6ZLZ7QTCQ3UVFVS53VBEJ3RSOZ56F4KINZVIS7DVOZ2V4W',
-  redirectUrl: 'http://example.com/cart/order_complete'
-});
-</script>
-```
+See [Basic Configuration Example](/brewaa/stellar-checkout/wiki/Basic-Configuration-Example) in the wiki.
 
-### basic javascript example
-The next example submits a test transaction to test-net in AUD and makes use of the onSubmit callback function.
 ```html
 <div id="elem"></div>
 <script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js"></script>
 <script>
 StellarCheckout.ui.render('#elem', {
-  total: '249.99',
-  currency: 'AUD',
-  env: 'development',
-  destinationKey: 'GDLZR4NMRB6ZLZ7QTCQ3UVFVS53VBEJ3RSOZ56F4KINZVIS7DVOZ2V4W',
-  onSubmit: function(err, result) {
-  	if (err) {
-	  // handle error condition
-	  console.log(err);
-	  return;
-  	}
-  	// result contains transaction info
-  	// manually handle the outcome E.g. submit a form OR display transaction details
-  	console.log(result);
-  }
+  currency: 'GBP',
+  total: '10',
+  destinationKey: 'GB5L45CNNM5I56YYH3FBA7QXUZGJL5CYR2GG7PS5WLT5FK4NEHXEUH73'
 });
 </script>
 ```
 
 ## Wiki
 
-More examples can be found in the [StellarCheckout Wiki Examples](https://github.com/brewaa/stellar-checkout/wiki/Examples) pages.
+More examples can be found in the wiki. [View Examples](https://github.com/brewaa/stellar-checkout/wiki/Examples)
 
 ## Tip Jar
 
