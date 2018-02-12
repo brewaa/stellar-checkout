@@ -204,7 +204,7 @@
 .stellar_checkout .spinner {
     position: absolute;
     top: 30%;
-    right: 4.6rem;
+    right: .8rem;
 }
 
 .stellar_checkout .field label {

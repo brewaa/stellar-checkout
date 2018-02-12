@@ -1,34 +1,72 @@
 import constants from '../constants';
 import sdkHelper from './stellarsdk.helper';
 
-export function validateConfig(options) {
-	var result = '';
+function checkCurrency(currency) {
 	return new Promise(function(resolve, reject) {
-		// invoice.currency
-		if (options.currency && typeof options.currency === 'string' && options.currency !== '') {
-			var isCurrencySupported = constants.CURRENCIES.indexOf(options.currency) !== -1;
-			if (!isCurrencySupported) {
-				result = 'Currency not supported. Allowed currencies: ' + constants.CURRENCIES.join(', ') + ';';
-				reject(result);
-			}
+		if (!currency) {
+			reject('currency is required');
 		}
-		// invoice.total
-		if (!options.total || isNaN(options.total) || options.total <= 0) {
-			result = 'Amount must be numeric and greater than zero';
-			reject(result);
+		if (typeof currency !== 'string') {
+			reject('currency must be a string');
 		}
+		if (currency === '') {
+			reject('currency is required');
+		}
+		if (constants.CURRENCIES.indexOf(currency) === -1) {
+			reject('currency not supported. allowed currencies: ' + constants.CURRENCIES.join(', ') + ';');
+		}
+		resolve(true);
+	});
+};
 
-		// StellarSdk
-		// var _isStellarSdkLoaded = sdkHelper.loadSdk(function() {
-		// 	// payment.to
-		// 	var isValidDestinationKey = window.StellarSdk.StrKey.isValidEd25519PublicKey(options.destinationKey);
-		// 	if (!isValidDestinationKey) {
-		// 		result = 'destinationKey is invalid';
-		// 		reject(result);
-		// 	}
-		// 	resolve(result);
-		// });
+function checkDestinationKey(destinationKey) {
+	return new Promise(function(resolve, reject) {
+		if (!window.StellarSdk.StrKey.isValidEd25519PublicKey(destinationKey)) {
+			reject('destinationKey is invalid');
+		}
+		resolve(true);
+	});
+};
 
-		resolve(result);
+function checkMemo(memo) {
+	return new Promise(function(resolve, reject) {
+		// todo: workout validation of memo field
+		resolve(true);
+	});
+};
+
+function checkOnSubmit(onSubmit) {
+	return new Promise(function(resolve, reject) {
+		if (onSubmit && typeof onSubmit !== 'function') {
+			reject('onSubmit must be a function');
+		}
+		resolve(true);
+	});
+};
+
+function checkTotal(total) {
+	return new Promise(function(resolve, reject) {
+		if (!total) {
+			reject('total is required');
+		}
+		if (isNaN(total)) {
+			reject('total must be numeric');
+		}
+		if (total <= 0) {
+			reject('total must be greater than zero');
+		}
+		resolve(true);
+	});
+};
+
+export function validateConfig(options) {
+	return sdkHelper.loadSdk().then(function() {
+		return Promise.all([
+			checkCurrency(options.currency),
+			checkDestinationKey(options.destinationKey),
+			checkMemo(options.memo),
+			checkOnSubmit(options.onSubmit),
+			checkTotal(options.total)
+		]);
 	});
 };

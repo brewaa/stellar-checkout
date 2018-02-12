@@ -7,8 +7,7 @@ export function redirect(url, qs) {
 export function useRedirectUrl(options, result) {
 	if (options.redirectUrl) {
 		var qs = {
-			hash: result.hash ? result.hash : result.transaction_hash ? result.transaction_hash : '',
-			link: result._links.transaction.href
+			hash: result.hash ? result.hash : result.transaction_hash ? result.transaction_hash : ''
 		};
 		redirect(options.redirectUrl, qs);
 	}

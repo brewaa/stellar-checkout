@@ -13,25 +13,28 @@ function createDto(options) {
 	return dto;
 };
 
-function loadSdk(callback) {
-	if (window && window.StellarSdk) {
-		console.log(new Err('StellarSdk already loaded', null, constants.MESSAGE_TYPE.INFO).toString());
-		callback.call();
-		return false;
-	}
-	var script = document.createElement('script');
-	script.src = constants.STELLAR_SDK_URL;
-	script.async = true;
+function loadSdk() {
+	return new Promise(function(resolve, reject) {
+		if (window && window.StellarSdk) {
+			resolve('stellar-sdk already loaded');
+		}
+		var script = document.createElement('script');
+		script.src = constants.STELLAR_SDK_URL;
+		script.async = true;
 
-	script.onload = function() {
-		callback.call();
-	};
+		script.onload = function() {
+			resolve('stellar-sdk loaded');
+		};
 
-	var head = document.getElementsByTagName('head')[0];
-	if (head) {
-		head.appendChild(script);
-	}
-	return true;
+		script.onerror = function() {
+			reject('stellar-sdk could not be loaded');
+		};
+
+		var head = document.getElementsByTagName('head')[0];
+		if (head) {
+			head.appendChild(script);
+		}
+	});
 };
 
 function receivePayment(dto, callback) {

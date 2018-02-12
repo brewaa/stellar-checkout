@@ -1,4 +1,4 @@
-# StellarCheckout
+# StellarCheckout (BETA)
 
 StellarCheckout integrates e-commerce web sites with the Stellar.org blockchain allowing merchants to accept payment in lumens.
 
