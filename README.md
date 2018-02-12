@@ -67,7 +67,7 @@ https://brewaa.github.io/stellar-checkout/example.html
 ## Examples
 Here are some quick examples to get you started.
 
-### simple configuration example
+### Basic Example
 See [Basic Configuration Example](/brewaa/stellar-checkout/wiki/Basic-Configuration-Example) in the wiki.
 
 ```html
