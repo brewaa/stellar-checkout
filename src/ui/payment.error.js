@@ -1,13 +1,15 @@
 import elems from './elems';
 import {createElementFromHTML} from '../utils/dom';
-import {errorTemplate} from '../ui/template';
+import {paymentErrorTemplate} from '../ui/template';
 
 export function hidePaymentError() {
-	elems.errorPanel.elem.parentNode.removeChild(elems.paymentErrorPanel.elem);
+	elems.paymentErrorPanel.elem.parentNode.removeChild(elems.paymentErrorPanel.elem);
 };
 
 export function showPaymentError(error) {
-	var compiledHtml = errorTemplate(error);
+	console.log(error);
+	var template = paymentErrorTemplate();
+	var compiledHtml = template(error);
 	elems.root.elem.appendChild(createElementFromHTML('div', compiledHtml));
 
 	var errorPanel = document.querySelector(elems.paymentErrorPanel.selector);

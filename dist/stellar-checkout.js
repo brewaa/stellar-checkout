@@ -986,44 +986,44 @@ function createElementFromHTML(tagName, htmlString) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = errorTemplate;
-/* harmony export (immutable) */ __webpack_exports__["b"] = mainTemplate;
-/* harmony export (immutable) */ __webpack_exports__["c"] = paymentAwaitingTemplate;
-/* harmony export (immutable) */ __webpack_exports__["d"] = paymentCompleteTemplate;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__templates_error_mustache_html__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__templates_error_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__templates_error_mustache_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_main_template_html__ = __webpack_require__(41);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_main_template_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__templates_main_template_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_payment_awaiting_mustache_html__ = __webpack_require__(42);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_payment_awaiting_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__templates_payment_awaiting_mustache_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__templates_payment_complete_mustache_html__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__templates_payment_complete_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__templates_payment_complete_mustache_html__);
+/* harmony export (immutable) */ __webpack_exports__["a"] = mainTemplate;
+/* harmony export (immutable) */ __webpack_exports__["b"] = paymentAwaitingTemplate;
+/* harmony export (immutable) */ __webpack_exports__["c"] = paymentCompleteTemplate;
+/* harmony export (immutable) */ __webpack_exports__["d"] = paymentErrorTemplate;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__templates_main_template_html__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__templates_main_template_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__templates_main_template_html__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html__ = __webpack_require__(42);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html__);
 
 
 
 
-
-function errorTemplate() {
-	return __WEBPACK_IMPORTED_MODULE_0__templates_error_mustache_html___default.a;
-};
 
 function mainTemplate() {
-	return __WEBPACK_IMPORTED_MODULE_1__templates_main_template_html___default.a;
+	return __WEBPACK_IMPORTED_MODULE_0__templates_main_template_html___default.a;
 };
 
 function paymentAwaitingTemplate() {
-	return __WEBPACK_IMPORTED_MODULE_2__templates_payment_awaiting_mustache_html___default.a;
+	return __WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html___default.a;
 };
 
 function paymentCompleteTemplate() {
-	return __WEBPACK_IMPORTED_MODULE_3__templates_payment_complete_mustache_html___default.a;
+	return __WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html___default.a;
+};
+
+function paymentErrorTemplate() {
+	return __WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html___default.a;
 };
 
 /* unused harmony default export */ var _unused_webpack_default_export = ({
-	error: __WEBPACK_IMPORTED_MODULE_0__templates_error_mustache_html___default.a,
-	main: __WEBPACK_IMPORTED_MODULE_1__templates_main_template_html___default.a,
-	paymentAwaiting: __WEBPACK_IMPORTED_MODULE_2__templates_payment_awaiting_mustache_html___default.a,
-	paymentComplete: __WEBPACK_IMPORTED_MODULE_3__templates_payment_complete_mustache_html___default.a
+	main: __WEBPACK_IMPORTED_MODULE_0__templates_main_template_html___default.a,
+	paymentAwaiting: __WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html___default.a,
+	paymentComplete: __WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html___default.a,
+	paymentError: __WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html___default.a
 });
 
 /***/ }),
@@ -1114,18 +1114,18 @@ function sendPayment(dto) {
 		return server.loadAccount(sourceKeys.publicKey());
 	})
 	.then(function(sourceAccount) {
-		transaction = new StellarSdk
+		var builder = new StellarSdk
 		.TransactionBuilder(sourceAccount)
 		.addOperation(StellarSdk.Operation.payment({
 			destination: destinationId,
 			asset: dto.payment.asset,
 			amount: dto.payment.amount
-		}))
-		.addMemo(StellarSdk.Memo.text(dto.payment.memo))
-		.build();
-
+		}));
+		if (dto.payment.memo) {
+			builder.addMemo(StellarSdk.Memo.text(dto.payment.memo));	
+		}
+		var transaction = builder.build();
 		transaction.sign(sourceKeys);
-
 		return server.submitTransaction(transaction);
 	})
 	.then(function(result) {
@@ -1186,8 +1186,8 @@ module.exports = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAA+gAAAPoCAYAAABN
 
 // This file is for use with Node.js. See dist/ for browser files.
 
-var Hogan = __webpack_require__(39);
-Hogan.Template = __webpack_require__(40).Template;
+var Hogan = __webpack_require__(40);
+Hogan.Template = __webpack_require__(41).Template;
 Hogan.template = Hogan.Template;
 module.exports = Hogan;
 
@@ -2169,7 +2169,7 @@ function create(selector, options) {
 
 	targetElem.classList.add(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].CLASS.targetParent);
 	
-	targetElem.appendChild(Object(__WEBPACK_IMPORTED_MODULE_5__utils_dom__["a" /* createElementFromHTML */])('div', Object(__WEBPACK_IMPORTED_MODULE_7__template__["b" /* mainTemplate */])()));
+	targetElem.appendChild(Object(__WEBPACK_IMPORTED_MODULE_5__utils_dom__["a" /* createElementFromHTML */])('div', Object(__WEBPACK_IMPORTED_MODULE_7__template__["a" /* mainTemplate */])()));
 
 	var root = document.querySelector(__WEBPACK_IMPORTED_MODULE_6__elems__["a" /* default */].root.selector);
 	var header = document.querySelector(__WEBPACK_IMPORTED_MODULE_6__elems__["a" /* default */].header.selector);
@@ -5082,7 +5082,13 @@ module.exports = { prefix: 'fas', iconName: 'spinner', icon: [512, 512, [], "f11
 /* 37 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var result = __webpack_require__(38)
+module.exports = "<div class=\"stellar_checkout\">\r\n\r\n\t<div class=\"header\">\r\n\t\t<div class=\"logo\">\r\n\t\t\t<img alt=\"\" class=\"rocket\" src=\"" + __webpack_require__(9) + "\" />\r\n\t\t\t<span class=\"app_name\">stellar checkout</span>\r\n\t\t</div>\r\n\t\t<div class=\"alt\">\r\n\t\t\t<div class=\"qr_wrap\">\r\n\t\t\t\t<canvas class=\"qrcode\"></canvas>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"status\">\r\n\t\t\t\t<span>Awaiting Payment</span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class=\"stellar_checkout_form\">\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutTotal\">Total</label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutTotal\" class=\"txt\" type=\"number\" required></input>\r\n\t\t\t\t<span class=\"currency\"></span>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutAmount\">Amount</label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutAmount\" class=\"txt\" type=\"text\" step=\"0.0000001\" autocomplete=\"off\" required></input>\r\n\t\t\t\t<span class=\"currency\">XLM</span>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t\t<span class=\"spinner\"><i class=\"fas fa-spinner fa-spin\"></i></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutPublicKey\">Your Public Key - <a class=\"toggle_keys\" href=\"#\">use private seed</a></label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutPublicKey\" class=\"txt\" type=\"text\" value=\"\" required></input>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field stellar_checkout_hidden\">\r\n\t\t\t<label for=\"stellarCheckoutPrivateSeed\">Private Seed - <a class=\"toggle_keys\" href=\"#\">use public key</a> - <a class=\"reveal_seed_link\" href=\"#\">reveal</a></label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutPrivateSeed\" class=\"txt\" type=\"password\" value=\"\" required></input>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"button_row\">\r\n\t\t\t<button id=\"stellarCheckoutSubmitButton\" disabled>Enter payment info</button>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class=\"stellar_checkout_overlay\"></div>\r\n\r\n</div>";
+
+/***/ }),
+/* 38 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var result = __webpack_require__(39)
 var H = __webpack_require__(10);
 window.Hogan = H;
 module.exports = function() {
@@ -5090,13 +5096,13 @@ var T = H.compile(result, {"tiny":true});
 return T.render.apply(T, arguments); };
 
 /***/ }),
-/* 38 */
+/* 39 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"stellar_checkout_error\">\r\n\t<div class=\"inner\">\r\n\t\t<div class=\"error_message\">\r\n\t\t\t<a class=\"close\" href=\"#\">close</a>\r\n\t\t\t<div class=\"message\">{{message}}\r\n\t\t\t\t{{data.extras.result_codes.transaction}}: \r\n\t\t\t\t{{#data.extras.result_codes.operations}}\r\n\t\t\t\t\t<span>{{.}}</span>\r\n\t\t\t\t{{/data.extras.result_codes.operations}}\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+module.exports = "<div class=\"stellar_checkout_progress\">\r\n\t\r\n\t<div class=\"transaction_info\">Complete this transaction by sending a payment with the following information:</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmTo\">To</label>\r\n\t\t<div class=\"txtwrap\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmTo\" class=\"txt\" type=\"text\" autocomplete=\"off\" disabled>{{payment.to}}</textarea>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmFrom\">From</label>\r\n\t\t<div class=\"txtwrap\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmFrom\" class=\"txt\" type=\"text\" autocomplete=\"off\" disabled>{{payment.from}}</textarea>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmAmount\">Amount</label>\r\n\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t<input id=\"stellarCheckoutConfirmAmount\" class=\"txt\" type=\"text\" value=\"{{payment.amount}}\" step=\"0.0000001\" autocomplete=\"off\" disabled></input>\r\n\t\t\t<span class=\"currency\">XLM</span>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
 
 /***/ }),
-/* 39 */
+/* 40 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -5525,7 +5531,7 @@ module.exports = "<div class=\"stellar_checkout_error\">\r\n\t<div class=\"inner
 
 
 /***/ }),
-/* 40 */
+/* 41 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*
@@ -5872,12 +5878,6 @@ var Hogan = {};
 
 
 /***/ }),
-/* 41 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = "<div class=\"stellar_checkout\">\r\n\r\n\t<div class=\"header\">\r\n\t\t<div class=\"logo\">\r\n\t\t\t<img alt=\"\" class=\"rocket\" src=\"" + __webpack_require__(9) + "\" />\r\n\t\t\t<span class=\"app_name\">stellar checkout</span>\r\n\t\t</div>\r\n\t\t<div class=\"alt\">\r\n\t\t\t<div class=\"qr_wrap\">\r\n\t\t\t\t<canvas class=\"qrcode\"></canvas>\r\n\t\t\t</div>\r\n\t\t\t<div class=\"status\">\r\n\t\t\t\t<span>Awaiting Payment</span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class=\"stellar_checkout_form\">\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutTotal\">Total</label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutTotal\" class=\"txt\" type=\"number\" required></input>\r\n\t\t\t\t<span class=\"currency\"></span>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutAmount\">Amount</label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutAmount\" class=\"txt\" type=\"text\" step=\"0.0000001\" autocomplete=\"off\" required></input>\r\n\t\t\t\t<span class=\"currency\">XLM</span>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t\t<span class=\"spinner\"><i class=\"fas fa-spinner fa-spin\"></i></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field\">\r\n\t\t\t<label for=\"stellarCheckoutPublicKey\">Your Public Key - <a class=\"toggle_keys\" href=\"#\">use private seed</a></label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutPublicKey\" class=\"txt\" type=\"text\" value=\"\" required></input>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"field stellar_checkout_hidden\">\r\n\t\t\t<label for=\"stellarCheckoutPrivateSeed\">Private Seed - <a class=\"toggle_keys\" href=\"#\">use public key</a> - <a class=\"reveal_seed_link\" href=\"#\">reveal</a></label>\r\n\t\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t\t<input id=\"stellarCheckoutPrivateSeed\" class=\"txt\" type=\"password\" value=\"\" required></input>\r\n\t\t\t\t<span class=\"error_msg\"></span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t\t<div class=\"button_row\">\r\n\t\t\t<button id=\"stellarCheckoutSubmitButton\" disabled>Enter payment info</button>\r\n\t\t</div>\r\n\t</div>\r\n\r\n\t<div class=\"stellar_checkout_overlay\"></div>\r\n\r\n</div>";
-
-/***/ }),
 /* 42 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -5892,7 +5892,7 @@ return T.render.apply(T, arguments); };
 /* 43 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"stellar_checkout_progress\">\r\n\t\r\n\t<div class=\"transaction_info\">Complete this transaction by sending a payment with the following information:</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmTo\">To</label>\r\n\t\t<div class=\"txtwrap\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmTo\" class=\"txt\" type=\"text\" autocomplete=\"off\" disabled>{{payment.to}}</textarea>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmFrom\">From</label>\r\n\t\t<div class=\"txtwrap\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmFrom\" class=\"txt\" type=\"text\" autocomplete=\"off\" disabled>{{payment.from}}</textarea>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"field\">\r\n\t\t<label for=\"stellarCheckoutConfirmAmount\">Amount</label>\r\n\t\t<div class=\"txtwrap txtwrap--input\">\r\n\t\t\t<input id=\"stellarCheckoutConfirmAmount\" class=\"txt\" type=\"text\" value=\"{{payment.amount}}\" step=\"0.0000001\" autocomplete=\"off\" disabled></input>\r\n\t\t\t<span class=\"currency\">XLM</span>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+module.exports = "<div class=\"stellar_checkout_success\">\r\n<div class=\"message\">Payment complete</div>\r\n</div>";
 
 /***/ }),
 /* 44 */
@@ -5909,7 +5909,7 @@ return T.render.apply(T, arguments); };
 /* 45 */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"stellar_checkout_success\">\r\n<div class=\"message\">Payment complete</div>\r\n</div>";
+module.exports = "<div class=\"stellar_checkout_error\">\r\n\t<div class=\"inner\">\r\n\t\t<div class=\"error_message\">\r\n\t\t\t<a class=\"close\" href=\"#\">close</a>\r\n\t\t\t<div class=\"message\">{{message}}\r\n\t\t\t\t{{data.extras.result_codes.transaction}}<br />\r\n\t\t\t\t{{#data.extras.result_codes.operations}}\r\n\t\t\t\t\t<span>{{.}}</span>\r\n\t\t\t\t{{/data.extras.result_codes.operations}}\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
 
 /***/ }),
 /* 46 */
@@ -5963,11 +5963,13 @@ function onValidateTotal(e) {
 
 
 function hidePaymentError() {
-	__WEBPACK_IMPORTED_MODULE_0__elems__["a" /* default */].errorPanel.elem.parentNode.removeChild(__WEBPACK_IMPORTED_MODULE_0__elems__["a" /* default */].paymentErrorPanel.elem);
+	__WEBPACK_IMPORTED_MODULE_0__elems__["a" /* default */].paymentErrorPanel.elem.parentNode.removeChild(__WEBPACK_IMPORTED_MODULE_0__elems__["a" /* default */].paymentErrorPanel.elem);
 };
 
 function showPaymentError(error) {
-	var compiledHtml = Object(__WEBPACK_IMPORTED_MODULE_2__ui_template__["a" /* errorTemplate */])(error);
+	console.log(error);
+	var template = Object(__WEBPACK_IMPORTED_MODULE_2__ui_template__["d" /* paymentErrorTemplate */])();
+	var compiledHtml = template(error);
 	__WEBPACK_IMPORTED_MODULE_0__elems__["a" /* default */].root.elem.appendChild(Object(__WEBPACK_IMPORTED_MODULE_1__utils_dom__["a" /* createElementFromHTML */])('div', compiledHtml));
 
 	var errorPanel = document.querySelector(__WEBPACK_IMPORTED_MODULE_0__elems__["a" /* default */].paymentErrorPanel.selector);
@@ -5991,7 +5993,7 @@ function showPaymentError(error) {
 
 
 function showPaymentComplete(obj) {
-	var template = Object(__WEBPACK_IMPORTED_MODULE_2__ui_template__["d" /* paymentCompleteTemplate */])();
+	var template = Object(__WEBPACK_IMPORTED_MODULE_2__ui_template__["c" /* paymentCompleteTemplate */])();
 	var compiledHtml = template(obj);
 	__WEBPACK_IMPORTED_MODULE_0__elems__["a" /* default */].root.elem.appendChild(Object(__WEBPACK_IMPORTED_MODULE_1__utils_dom__["a" /* createElementFromHTML */])('div', compiledHtml));
 };
@@ -6017,7 +6019,7 @@ function showPaymentComplete(obj) {
 
 
 function createPaymentAwaitingTemplate(dto) {
-	var template = Object(__WEBPACK_IMPORTED_MODULE_4__ui_template__["c" /* paymentAwaitingTemplate */])();
+	var template = Object(__WEBPACK_IMPORTED_MODULE_4__ui_template__["b" /* paymentAwaitingTemplate */])();
 	var compiledHtml = template(dto);
 	__WEBPACK_IMPORTED_MODULE_2__elems__["a" /* default */].root.elem.appendChild(Object(__WEBPACK_IMPORTED_MODULE_1__utils_dom__["a" /* createElementFromHTML */])('div', compiledHtml));
 

@@ -79,18 +79,18 @@ function sendPayment(dto) {
 		return server.loadAccount(sourceKeys.publicKey());
 	})
 	.then(function(sourceAccount) {
-		transaction = new StellarSdk
+		var builder = new StellarSdk
 		.TransactionBuilder(sourceAccount)
 		.addOperation(StellarSdk.Operation.payment({
 			destination: destinationId,
 			asset: dto.payment.asset,
 			amount: dto.payment.amount
-		}))
-		.addMemo(StellarSdk.Memo.text(dto.payment.memo))
-		.build();
-
+		}));
+		if (dto.payment.memo) {
+			builder.addMemo(StellarSdk.Memo.text(dto.payment.memo));	
+		}
+		var transaction = builder.build();
 		transaction.sign(sourceKeys);
-
 		return server.submitTransaction(transaction);
 	})
 	.then(function(result) {
