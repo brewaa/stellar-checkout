@@ -60,9 +60,9 @@ npm i --save-dev stellar-checkout
   	type: String,
   	required: false
   },
-  stylesheet: {     // URL to a custom stylesheet
-      type: String,
-      required: false
+  stylesheet: {       // URL to a custom stylesheet
+        type: String,
+        required: false
   },
   total: {		// Order total in the currency specified
   	type: decimal,
