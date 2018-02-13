@@ -60,7 +60,7 @@ npm i --save-dev stellar-checkout
   	type: String,
   	required: false
   },
-  stylesheet: {       // URL to a custom stylesheet
+  stylesheet: {         // URL to a custom stylesheet
         type: String,
         required: false
   },
