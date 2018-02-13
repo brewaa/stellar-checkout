@@ -1,6 +1,6 @@
 <div align="center">
-  <img alt="" src="https://github.com/brewaa/stellar-checkout/blob/master/docs/i/stellar/stellar-rocket@2x.png?1=2" /> <br/>
-  <img alt="" src="https://github.com/brewaa/stellar-checkout/blob/master/docs/i/stellar/STELLAR-logo.png?1=2" /> <br/>
+  <img alt="" src="https://raw.githubusercontent.com/brewaa/stellar-checkout/master/docs/i/stellar/stellar-rocket@2x.png?1=2" /> <br/>
+  <img alt="" src="https://raw.githubusercontent.com/brewaa/stellar-checkout/master/docs/i/stellar/STELLAR-logo.png?1=2" /> <br/>
   <strong>A #StellarBuildChallenge entry (2018).</strong>
   <br />
 </div>
