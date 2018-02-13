@@ -1,4 +1,4 @@
-<div style='text-align:center;'>
+<div align="center">
 ![](https://github.com/brewaa/stellar-checkout/blob/master/docs/i/stellar/stellar-rocket@2x.png) <br/>
 ![](https://github.com/brewaa/stellar-checkout/blob/master/docs/i/stellar/STELLAR-logo.png) <br/>
 **A #StellarBuildChallenge entry (2018).**
