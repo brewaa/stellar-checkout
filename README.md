@@ -1,6 +1,9 @@
 <div align="center">
-  <img alt="" src="https://raw.githubusercontent.com/brewaa/stellar-checkout/master/docs/i/stellar/stellar-rocket@2x.png?x=6" /> <br/>
-  <img alt="" src="https://raw.githubusercontent.com/brewaa/stellar-checkout/master/docs/i/stellar/STELLAR-logo.png?x=3" /> <br/>
+  <a href="https://www.stellar.org/">
+    <img alt="" src="https://raw.githubusercontent.com/brewaa/stellar-checkout/master/docs/i/stellar/stellar-rocket@2x.png?x=6" /> <br/>
+    <img alt="" src="https://raw.githubusercontent.com/brewaa/stellar-checkout/master/docs/i/stellar/STELLAR-logo.png?x=3" />
+  </a>
+  <br/>
   <strong>a #StellarBuildChallenge entry (2018)</strong>
   <br />
   <br />
@@ -11,8 +14,6 @@
 StellarCheckout is a javascript plug-in for e-commerce web sites. It allow merchants to accept payments for goods and services in lumens.
 
 It's a javascript plugin with a responsive UI so it will work on any web site in modern browsers.
-
-> A #StellarBuildChallenge entry (2018).
 
 ```
 WARNING: This project is a work in progress and may contain bugs and defects. Use at your own risk.
