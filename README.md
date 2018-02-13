@@ -1,7 +1,7 @@
 <div align="center">
-![](https://github.com/brewaa/stellar-checkout/blob/master/docs/i/stellar/stellar-rocket@2x.png) <br/>
-![](https://github.com/brewaa/stellar-checkout/blob/master/docs/i/stellar/STELLAR-logo.png) <br/>
-**A #StellarBuildChallenge entry (2018).**
+  <img alt="" src="https://github.com/brewaa/stellar-checkout/blob/master/docs/i/stellar/stellar-rocket@2x.png" /> <br/>
+  <img alt="" src="https://github.com/brewaa/stellar-checkout/blob/master/docs/i/stellar/STELLAR-logo.png" /> <br/>
+  <strong>A #StellarBuildChallenge entry (2018).</strong>
 </div>
 
 # StellarCheckout (BETA)
