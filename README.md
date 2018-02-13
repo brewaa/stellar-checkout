@@ -1,6 +1,8 @@
 
-![](https://github.com/brewaa/stellar-checkout/blob/master/docs/stellar-rocket@2x.png)
-![](https://github.com/brewaa/stellar-checkout/blob/master/docs/STELLAR-logo.png)
+![](https://github.com/brewaa/stellar-checkout/blob/master/docs/i/stellar/stellar-rocket@2x.png)
+![](https://github.com/brewaa/stellar-checkout/blob/master/docs/i/stellar/STELLAR-logo.png)
+
+
 
 [Basic Configuration Example](https://github.com/brewaa/stellar-checkout/wiki/Basic-Configuration-Example)
 
