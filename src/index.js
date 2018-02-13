@@ -15,6 +15,7 @@ export default {
 			this.options.memo = opts.memo;
 			this.options.redirectUrl = opts.redirectUrl;
 			this.options.onSubmit = opts.onSubmit;
+			this.options.stylesheet = opts.stylesheet;
 			this.options.total = opts.total;
 
 			var self = this;

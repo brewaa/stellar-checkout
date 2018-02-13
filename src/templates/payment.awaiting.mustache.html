@@ -1,22 +1,21 @@
-<div class="stellar_checkout_progress">
-	
+<div class="stellar_checkout_payment_awaiting">
 	<div class="transaction_info">Complete this transaction by sending a payment with the following information:</div>
 	<div class="field">
 		<label for="stellarCheckoutConfirmTo">To</label>
 		<div class="txtwrap">
-			<textarea id="stellarCheckoutConfirmTo" class="txt" type="text" autocomplete="off" disabled>{{payment.to}}</textarea>
+			<textarea id="stellarCheckoutConfirmTo" class="txt" type="text" disabled>{{payment.to}}</textarea>
 		</div>
 	</div>
 	<div class="field">
 		<label for="stellarCheckoutConfirmFrom">From</label>
 		<div class="txtwrap">
-			<textarea id="stellarCheckoutConfirmFrom" class="txt" type="text" autocomplete="off" disabled>{{payment.from}}</textarea>
+			<textarea id="stellarCheckoutConfirmFrom" class="txt" type="text" disabled>{{payment.from}}</textarea>
 		</div>
 	</div>
 	<div class="field">
 		<label for="stellarCheckoutConfirmAmount">Amount</label>
 		<div class="txtwrap txtwrap--input">
-			<input id="stellarCheckoutConfirmAmount" class="txt" type="text" value="{{payment.amount}}" step="0.0000001" autocomplete="off" disabled></input>
+			<input id="stellarCheckoutConfirmAmount" class="txt" type="text" value="{{payment.amount}}" disabled></input>
 			<span class="currency">XLM</span>
 		</div>
 	</div>

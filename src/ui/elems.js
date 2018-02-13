@@ -8,7 +8,7 @@ export default {
 		elem: null
 	},
 	header: {
-		selector: '.stellar_checkout .header',
+		selector: '.stellar_checkout_header',
 		elem: null
 	},
 	formPanel: {
@@ -16,7 +16,7 @@ export default {
 		elem: null
 	},
 	paymentAwaitingPanel: {
-		selector: '.stellar_checkout_progress',
+		selector: '.stellar_checkout_payment_awaiting',
 		elem: null
 	},
 	paymentErrorPanel: {

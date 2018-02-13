@@ -1,4 +1,5 @@
 import constants from '../constants';
+import loader from './loader';
 import sdkHelper from './stellarsdk.helper';
 
 function checkCurrency(currency) {
@@ -44,6 +45,18 @@ function checkOnSubmit(onSubmit) {
 	});
 };
 
+function checkStyleSheet(stylesheet) {
+	return new Promise(function(resolve, reject) {
+		if (stylesheet && typeof stylesheet !== 'string') {
+			reject('stylesheet must be a string');
+		}
+		if (stylesheet) {
+			return new loader.css(stylesheet);
+		}
+		resolve(true);
+	});
+};
+
 function checkTotal(total) {
 	return new Promise(function(resolve, reject) {
 		if (!total) {
@@ -60,7 +73,9 @@ function checkTotal(total) {
 };
 
 export function validateConfig(options) {
-	return sdkHelper.loadSdk().then(function() {
+	return sdkHelper.loadSdk()
+		.then(checkStyleSheet(options.stylesheet))
+		.then(function() {
 		return Promise.all([
 			checkCurrency(options.currency),
 			checkDestinationKey(options.destinationKey),

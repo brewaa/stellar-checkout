@@ -38,19 +38,6 @@ export function validateAmount() {
 	return result;
 };
 
-// export function validatePrivateSeed() {
-// 	var result = {
-// 		errors: [],
-// 		result: true
-// 	};
-// 	var key = constants.DTO.privateSeed;
-// 	if (!key || !window.StellarSdk.StrKey.isValidEd25519SecretSeed(key)) {
-// 		result.errors.push(new Err('private seed is invalid', elems.privateSeed));
-// 		result.result = false;
-// 	}
-// 	return result;
-// };
-
 export function validatePublicKey(key) {
 	var result = {
 		errors: [],
