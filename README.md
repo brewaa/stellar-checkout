@@ -4,6 +4,8 @@ StellarCheckout integrates e-commerce web sites with the Stellar.org blockchain 
 
 It's a javascript plugin with a responsive UI so it will work on any web site in modern browsers.
 
+A #StellarBuildChallenge entry (2018).
+
 ```
 WARNING: This project is a work in progress and may contain bugs and defects. Use at your own risk.
 ```
@@ -18,6 +20,17 @@ npm i --save-dev stellar-checkout
 ```
 <script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js"></script>
 ```
+
+## Features
+- Drop-in responsive UI
+- Up to date pricing info with currency conversion support for 32 fiat currencies
+- Multiple modes of operation
+- Helpful and robust validation
+- Simple integration options
+- Skinnable
+- Demos & Documentation
+- Open source
+- Available via NPM and CDN
 
 ## Options
 
