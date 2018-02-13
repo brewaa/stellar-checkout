@@ -1,10 +1,16 @@
+
+![](https://github.com/brewaa/stellar-checkout/blob/master/docs/stellar-rocket@2x.png)
+![](https://github.com/brewaa/stellar-checkout/blob/master/docs/STELLAR-logo.png)
+
+[Basic Configuration Example](https://github.com/brewaa/stellar-checkout/wiki/Basic-Configuration-Example)
+
 # StellarCheckout (BETA)
 
-StellarCheckout integrates e-commerce web sites with the Stellar.org blockchain allowing merchants to accept payment in lumens.
+StellarCheckout is a javascript plug-in for e-commerce web sites. It allow merchants to accept payments for goods and services in lumens.
 
 It's a javascript plugin with a responsive UI so it will work on any web site in modern browsers.
 
-A #StellarBuildChallenge entry (2018).
+> A #StellarBuildChallenge entry (2018).
 
 ```
 WARNING: This project is a work in progress and may contain bugs and defects. Use at your own risk.
@@ -23,11 +29,10 @@ npm i --save-dev stellar-checkout
 
 ## Features
 - Drop-in responsive UI
-- Up to date pricing info with currency conversion support for 32 fiat currencies
-- Multiple modes of operation
-- Helpful and robust validation
-- Simple integration options
 - Skinnable
+- Currency conversion support for 32 fiat currencies
+- Robust validation
+- Simple integration options
 - Demos & Documentation
 - Open source
 - Available via NPM and CDN
