@@ -16,7 +16,7 @@ StellarCheckout is a javascript plug-in for e-commerce web sites. It allow merch
 It's a javascript plugin with a responsive UI so it will work on any web site in modern browsers.
 
 ```
-WARNING: This project is a work in progress and may contain bugs and defects. Use at your own risk.
+WARNING: This project is a work in progress and may contain bugs and defects. Use at your own risk. :)
 ```
 
 ## Installation
