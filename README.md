@@ -19,17 +19,6 @@ npm i --save-dev stellar-checkout
 <script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js"></script>
 ```
 
-## Integration
-1. Add a script reference to stellar-checkout.min.js
-1. Install the example code into a page on your web site
-2. Configure the initialization code with:
-   - currency
-   - total
-   - destinationKey
-3. OPTIONAL: Implement one of the following:
-   - redirectUrl
-   - onSubmit
-
 ## Options
 
 ```javascript
