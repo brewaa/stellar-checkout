@@ -26,6 +26,7 @@
     position: absolute;
     transition: .4s;
     top: 0;
+
     width: 100%;
 }
 
@@ -304,9 +305,10 @@
 
 .stellar_checkout .field .error_msg {
     border-radius: .4rem;
+    left: 0;
     padding: .4rem .4rem;
-    position: absolute;;
-    transition: all .3s cubic-bezier(0.68, -0.55, 0.265, 1.55);;
+    position: absolute;
+    transition: all .3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     top: 0;
     width: 100%;
     z-index: -1;
