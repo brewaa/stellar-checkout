@@ -18,39 +18,40 @@ export function createPaymentAwaitingTemplate(dto) {
 		// Add the element to elems
 		var paymentAwaitingPanel = document.querySelector(elems.paymentAwaitingPanel.selector);
 		elems.paymentAwaitingPanel.elem = paymentAwaitingPanel;	
-	}
+	
 
-	// QR Code
-	var qrCodeCanvas = elems.root.elem.querySelector('.qrcode');
+		// QR Code
+		var qrCodeCanvas = elems.root.elem.querySelector('.qrcode');
 
-	QRCode.toCanvas(qrCodeCanvas, dto.payment.to, function (error) { // todo: standardized format that popular wallets use for payment data
-		if (error) {
-			console.error(error);
-		}
-	});
+		QRCode.toCanvas(qrCodeCanvas, dto.payment.to, function (error) { // todo: standardized format that popular wallets use for payment data
+			if (error) {
+				console.error(error);
+			}
+		});
 
-	// Wallet picker
-	var walletPicker = elems.paymentAwaitingPanel.elem.querySelector('#walletPicker');
-	walletPicker.addEventListener('change', function(e) {
-		var el = e.target;
-		var data = dto.payment.to;
-		var format = el.options[el.selectedIndex].value;
-		if (format) {
-			walletFormat[format](dto).then(function(result) {
-				QRCode.toCanvas(qrCodeCanvas, JSON.stringify(result), function (error) {
-					if (error) {
-						console.error(error);
-					}
+		// Wallet picker
+		var walletPicker = elems.paymentAwaitingPanel.elem.querySelector('#walletPicker');
+		walletPicker.addEventListener('change', function(e) {
+			var el = e.target;
+			var data = dto.payment.to;
+			var format = el.options[el.selectedIndex].value;
+			if (format) {
+				walletFormat[format](dto).then(function(result) {
+					QRCode.toCanvas(qrCodeCanvas, JSON.stringify(result), function (error) {
+						if (error) {
+							console.error(error);
+						}
+					});
 				});
-			});
-		}
-	});
+			}
+		});
 
-	// Add the goBackLink event handler
-	elems.goBackLink.elem.addEventListener('click', function() {
-		hidePaymentAwaitingTemplate.call(this);
-	});
-
+		// Add the goBackLink event handler
+		elems.goBackLink.elem.addEventListener('click', function() {
+			hidePaymentAwaitingTemplate.call(this);
+		});
+	}
+	
 	// Show the payment await page	
 	showPaymentAwaitingTemplate();
 }
