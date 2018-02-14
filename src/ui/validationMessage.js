@@ -1,4 +1,4 @@
-import constants from './constants';
+import constants from '../constants';
 
 export function ValidationMessage(msg, elem, msgType) {
 	this.elem = elem;

@@ -7,16 +7,18 @@ import walletFormat from '../utils/wallet.format';
 
 export function createPaymentAwaitingTemplate(dto) {
 
-	// Load the mustache template
-	var template = paymentAwaitingTemplate();
-	var compiledHtml = template(dto);
+	if (!elems.paymentAwaitingPanel.elem) {
+		// Load the mustache template
+		var template = paymentAwaitingTemplate();
+		var compiledHtml = template(dto);
 
-	// Append to DOM
-	elems.root.elem.appendChild(createElementFromHTML('div', compiledHtml));
+		// Append to DOM
+		elems.root.elem.appendChild(createElementFromHTML('div', compiledHtml));
 
-	// Add the element to elems
-	var paymentAwaitingPanel = document.querySelector(elems.paymentAwaitingPanel.selector);
-	elems.paymentAwaitingPanel.elem = paymentAwaitingPanel;
+		// Add the element to elems
+		var paymentAwaitingPanel = document.querySelector(elems.paymentAwaitingPanel.selector);
+		elems.paymentAwaitingPanel.elem = paymentAwaitingPanel;	
+	}
 
 	// QR Code
 	var qrCodeCanvas = elems.root.elem.querySelector('.qrcode');
@@ -44,14 +46,27 @@ export function createPaymentAwaitingTemplate(dto) {
 		}
 	});
 
+	// Add the goBackLink event handler
+	elems.goBackLink.elem.addEventListener('click', function() {
+		hidePaymentAwaitingTemplate.call(this);
+	});
+
 	// Show the payment await page	
 	showPaymentAwaitingTemplate();
 }
+
+export function hidePaymentAwaitingTemplate() {
+	elems.header.elem.classList.remove('payment_awaiting');
+	elems.formPanel.elem.classList.remove(constants.CLASS.hidden);
+	elems.paymentAwaitingPanel.elem.classList.add(constants.CLASS.hidden);
+	elems.goBackLink.elem.classList.add(constants.CLASS.hidden);
+};
 
 export function showPaymentAwaitingTemplate() {
 	elems.header.elem.classList.add('payment_awaiting');
 	elems.formPanel.elem.classList.add(constants.CLASS.hidden);
 	elems.paymentAwaitingPanel.elem.classList.remove(constants.CLASS.hidden);
+	elems.goBackLink.elem.classList.remove(constants.CLASS.hidden);
 };
 
 export function showPaymentAwaitingProgress() {

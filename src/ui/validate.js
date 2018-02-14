@@ -1,7 +1,7 @@
 import {setButtonState} from './buttons';
 import constants from '../constants';
 import elems from './elems';
-import {ValidationMessage} from '../validationMessage';
+import {ValidationMessage} from './validationMessage';
 
 export function toggleValidationFeedback(target, test) {
 	if (!test.result) {

@@ -28,6 +28,10 @@ export default {
 	// 	selector: '.stellar_checkout_complete',
 	// 	elem: null
 	// },
+	goBackLink: {
+		selector: '.stellar_checkout_goback',
+		elem: null
+	},
 	total: {
 		selector: '#stellarCheckoutTotal',
 		elem: null

@@ -104,6 +104,13 @@
     padding: .8rem;
 }
 
+.stellar_checkout_header .stellar_checkout_goback {
+    font-size: 2rem;
+    left: 1.2rem;
+    position: absolute;
+    top: 1.2rem;
+}
+
 .stellar_checkout_header .alt {
     display: none;
     width: 100%;
@@ -323,7 +330,6 @@
     white-space: nowrap;
     width: 100%;
 }
-
 
 .stellar_checkout textarea[disabled],
 .stellar_checkout textarea:disabled {

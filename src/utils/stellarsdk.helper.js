@@ -47,30 +47,6 @@ function buildTransaction(dto) {
 	});
 };
 
-function loadSdk() {
-	return new Promise(function(resolve, reject) {
-		if (window && window.StellarSdk) {
-			resolve('stellar-sdk already loaded');
-		}
-		var script = document.createElement('script');
-		script.src = constants.STELLAR_SDK_URL;
-		script.async = true;
-
-		script.onload = function() {
-			resolve('stellar-sdk loaded');
-		};
-
-		script.onerror = function() {
-			reject('stellar-sdk could not be loaded');
-		};
-
-		var head = document.getElementsByTagName('head')[0];
-		if (head) {
-			head.appendChild(script);
-		}
-	});
-};
-
 function receivePayment(dto, callback) {
 	var server = new StellarSdk.Server(_network.uri);
 	var accountId = dto.payment.to;
@@ -124,6 +100,5 @@ function verifyPayment(dto, payment) {
 export default {
 	buildTransaction: buildTransaction,
 	createDto: createDto,
-	loadSdk: loadSdk,
 	receivePayment: receivePayment
 }

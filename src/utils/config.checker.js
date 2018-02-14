@@ -87,7 +87,7 @@ function checkTotal(total) {
 };
 
 export function validateConfig(options) {
-	return loader.js(constants.STELLAR_SDK_URL) //sdkHelper.loadSdk()
+	return loader.js(constants.STELLAR_SDK_URL)
 		.then(checkStyleSheet(options.stylesheet))
 		.then(function() {
 		return Promise.all([

@@ -1,10 +1,9 @@
 import constants from '../constants';
-import css from '../assets/css/style.css';
 import {CoinMarketCapClient} from '../services/coinmarketcap.client';
-import fonts from '../assets/fonts';
+import css from '../assets/css/style.css';
 import {createElementFromHTML} from '../utils/dom';
-
 import elems from './elems';
+import fonts from './fonts';
 import {mainTemplate} from './template';
 import {onValidateAmount, onValidatePrivateSeed, onValidatePublicKey, onValidateTotal} from './events';
 import {setButtonState} from './buttons';
@@ -23,6 +22,7 @@ function create(options) {
 	var root = targetElem.querySelector(elems.root.selector);
 	var header = targetElem.querySelector(elems.header.selector);
 	var formPanel = targetElem.querySelector(elems.formPanel.selector);
+	var goBackLink = targetElem.querySelector(elems.goBackLink.selector);
 	var total = targetElem.querySelector(elems.total.selector);
 	var amount = targetElem.querySelector(elems.amount.selector);
 	var publicKey = targetElem.querySelector(elems.publicKey.selector);
@@ -30,7 +30,8 @@ function create(options) {
 	
 	elems.root.elem = root;
 	elems.header.elem = header;
-	elems.formPanel.elem = formPanel;;
+	elems.formPanel.elem = formPanel;
+	elems.goBackLink.elem = goBackLink;
 	elems.total.elem = total;
 	elems.amount.elem = amount;
 	elems.publicKey.elem = publicKey;
