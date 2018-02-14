@@ -1,6 +1,16 @@
 <div class="stellar_checkout_payment_awaiting">
 	<div class="transaction_info">Complete this transaction by sending a payment with the following information:</div>
 	<div class="field">
+		<label for="stellarCheckoutConfirmTo">QR Code Format</label>
+		<div class="txtwrap">
+			<select id="walletPicker" class="picker">
+				<option value="destinationkey">Merchant's Account ID (Public Key)</option>
+				<option value="envelopexdr">Envelope XDR</option>
+				<option value="stargazer">Stargazer Wallet</option>
+			</select>
+		</div>
+	</div>
+	<div class="field">
 		<label for="stellarCheckoutConfirmTo">To</label>
 		<div class="txtwrap">
 			<textarea id="stellarCheckoutConfirmTo" class="txt" type="text" disabled>{{payment.to}}</textarea>

@@ -1,6 +1,11 @@
 import constants from '../constants';
 
+var _network;
+
 function createDto(options) {
+
+	_network = setNetwork(options.env);
+
 	var dto = constants.DTO;
 	dto.env = options.env;
 	dto.invoice.currency = options.currency;
@@ -8,8 +13,38 @@ function createDto(options) {
 	dto.payment.asset = StellarSdk.Asset.native();
 	dto.payment.fee = .00001;
 	dto.payment.memo = options.memo;
+	dto.payment.network = _network.network;
 	dto.payment.to = options.destinationKey;
+
 	return dto;
+};
+
+function buildTransaction(dto) {
+	var server = new StellarSdk.Server(_network.uri);
+	var destinationId = dto.payment.to;
+	var transaction;
+
+	return server.loadAccount(destinationId)
+	.catch(StellarSdk.NotFoundError, function (error) {
+		throw new Error('The destination account does not exist!');
+	})
+	.then(function() {
+		return server.loadAccount(dto.payment.from);
+	})
+	.then(function(sourceAccount) {
+		var builder = new StellarSdk
+		.TransactionBuilder(sourceAccount)
+		.addOperation(StellarSdk.Operation.payment({
+			destination: destinationId,
+			asset: dto.payment.asset,
+			amount: dto.payment.amount
+		}));
+		if (dto.payment.memo) {
+			builder.addMemo(StellarSdk.Memo.text(dto.payment.memo));	
+		}
+		transaction = builder.build();
+		return transaction;
+	});
 };
 
 function loadSdk() {
@@ -37,8 +72,7 @@ function loadSdk() {
 };
 
 function receivePayment(dto, callback) {
-	var networkUri = setNetwork(dto);
-	var server = new StellarSdk.Server(networkUri);
+	var server = new StellarSdk.Server(_network.uri);
 	var accountId = dto.payment.to;
 	var payments = server
 		.payments()
@@ -64,16 +98,20 @@ function receivePayment(dto, callback) {
 	});
 };
 
-function setNetwork(dto) {
-	var networkUri;
-	if (typeof dto.env === 'string' && dto.env.toLowerCase() === 'production') {
-		networkUri = 'https://horizon.stellar.org';
-		window.StellarSdk.Network.usePublicNetwork();
+function setNetwork(env) {
+	var uri;
+	var network = window.StellarSdk.Network;
+	if (typeof env === 'string' && env.toLowerCase() === 'production') {
+		uri = 'https://horizon.stellar.org';
+		network.usePublicNetwork();
 	} else {
-		networkUri = 'https://horizon-testnet.stellar.org';
-		window.StellarSdk.Network.useTestNetwork();
+		uri = 'https://horizon-testnet.stellar.org';
+		network.useTestNetwork();
 	}
-	return networkUri;
+	return  {
+		network: network.current(),
+		uri: uri
+	};
 };
 
 function verifyPayment(dto, payment) {
@@ -84,6 +122,7 @@ function verifyPayment(dto, payment) {
 };
 
 export default {
+	buildTransaction: buildTransaction,
 	createDto: createDto,
 	loadSdk: loadSdk,
 	receivePayment: receivePayment

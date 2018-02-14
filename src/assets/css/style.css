@@ -125,7 +125,7 @@
     display: flex;
 }
 
-    @media screen and (min-device-width: 600px) {
+    @media screen and (min-device-width: 636px) {
         .stellar_checkout_header {
             flex-direction: row;
         }
@@ -141,6 +141,10 @@
         }
     }
 
+.stellar_checkout_header .qr_wrap .qrcode {
+    max-height: 10rem;
+    max-width: 10rem;
+}
 
 .stellar_checkout_header .status {
     background: #f8f8f8;
@@ -243,7 +247,6 @@
 .stellar_checkout .field .txt {
 	background: transparent;
 	border: 0;
-	font-family: monospace, monospace;
 	font-size: 1.25rem;
     height: 100%;
     outline: 0;
@@ -252,7 +255,18 @@
     text-align: right;
 }
 
+.stellar_checkout .field .picker {
+    background: transparent;
+    border: 0;
+    font-size: 1rem;
+    height: 100%;
+    outline: 0;
+    padding: .6rem .8rem;
+    width: 99%;
+}
+
 .stellar_checkout .field textarea.txt {
+    font-size: 1.5rem;
     padding: .6rem .4rem;
     text-align: left;
 }
@@ -310,6 +324,11 @@
     width: 100%;
 }
 
+
+.stellar_checkout textarea[disabled],
+.stellar_checkout textarea:disabled {
+    color: #000;
+}
 
 .stellar_checkout button[disabled],
 .stellar_checkout button:disabled {

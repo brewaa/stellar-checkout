@@ -19,6 +19,7 @@ export default {
 			fee: null,
 			from: null,
 			memo: null,
+			network: null,
 			to: null
 		}
 	},

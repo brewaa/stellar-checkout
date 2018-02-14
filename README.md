@@ -34,6 +34,7 @@ npm i --save-dev stellar-checkout
 - Drop-in responsive UI
 - Skinnable
 - Currency conversion support for 32 fiat currencies
+- QR Codes in various formats
 - Robust validation
 - Simple integration options
 - Demos & Documentation
