@@ -18,8 +18,8 @@ function toEnvelopeXdr(dto) {
 
 function toStarGazer(dto) {
 	return new Promise(function(resolve) {
-		resolve({
-		    "stellar": {
+		var result = {
+			"stellar": {
 		        "payment": {
 		            "destination":  dto.payment.to,
 		            "network":      getHash(dto.payment.network._networkPassphrase),
@@ -27,14 +27,17 @@ function toStarGazer(dto) {
 		            "asset": {
 		                "code":     dto.payment.asset.code,
 		                "issuer":   dto.payment.asset.issuer
-		            },
-		            "memo": {
-		                "type":     dto.payment.memo ? 'MemoText' : null,
-		                "value":    dto.payment.memo
 		            }
 		        }
 		    }
-		});
+		};
+	    if (dto.payment.memo) {
+	    	result.stellar.payment.memo = {
+                "type":     'MemoText',
+                "value":    dto.payment.memo
+            };
+	    }
+		resolve(result);
 	});
 };
 
