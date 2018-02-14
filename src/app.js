@@ -1,6 +1,5 @@
 import constants from './constants';
 import elems from './ui/elems';
-import {Err} from './utils/error';
 import sdkHelper from './utils/stellarsdk.helper';
 import ui from './ui';
 import {useRedirectUrl} from './utils/url';
@@ -11,11 +10,11 @@ import {showPaymentError} from './ui/payment.error';
 import {showPaymentComplete} from './ui/payment.complete';
 import {createPaymentAwaitingTemplate, showPaymentAwaitingProgress} from './ui/payment.awaiting';
 
-export function init(selector, options) {
+export function init(options) {
 
 	var dto = sdkHelper.createDto(options);
 
-	ui.create(selector, options);
+	ui.create(options);
 
 	ui.createSubmitHandler(function(e) {
 

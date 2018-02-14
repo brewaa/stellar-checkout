@@ -5,8 +5,8 @@
 }
 
 .stellar_checkout {
-	border: .0625rem solid #eee;
-	border-radius: .2rem;
+	/*border: .0625rem solid #eee;
+	border-radius: .2rem;*/
     position: relative;
     font-family: monospace, monospace;
 
@@ -127,7 +127,7 @@
     display: flex;
 }
 
-    @media screen and (min-device-width: 640px) {
+    @media screen and (min-device-width: 600px) {
         .stellar_checkout_header {
             flex-direction: row;
         }
@@ -250,8 +250,13 @@
     height: 100%;
     outline: 0;
     padding: .6rem .8rem;
-    text-align: right;
     width: 100%;
+    text-align: right;
+}
+
+.stellar_checkout .field textarea.txt {
+    padding: .6rem .4rem;
+    text-align: left;
 }
 
 .stellar_checkout .field .error {

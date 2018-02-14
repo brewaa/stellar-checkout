@@ -10,8 +10,8 @@ function _load(tag) {
       element.onload = function() {
         resolve(url);
       };
-      element.onerror = function() {
-        reject(url);
+      element.onerror = function(err) {
+        reject(new Error('could not load url: ' + url));
       };
 
       // Need to set different attributes depending on tag type

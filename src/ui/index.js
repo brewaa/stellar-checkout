@@ -1,7 +1,6 @@
 import constants from '../constants';
 import css from '../assets/css/style.css';
 import {CoinMarketCapClient} from '../services/coinmarketcap.client';
-import {Err} from '../utils/error';
 import fonts from '../assets/fonts';
 import {createElementFromHTML} from '../utils/dom';
 
@@ -10,27 +9,25 @@ import {mainTemplate} from './template';
 import {onValidateAmount, onValidatePrivateSeed, onValidatePublicKey, onValidateTotal} from './events';
 import {setButtonState} from './buttons';
 
-function create(selector, options) {
+function create(options) {
 
-	var targetElem = document.querySelector(selector);
+	var targetElem = elems.targetElem.elem;
 	if (!targetElem) {
-		console.log(new Err('selector not found', constants.MESSAGE_TYPE.ERROR).toString());
 		return;
-	}	
+	}
 
-	targetElem.classList.add(constants.CLASS.targetParent);
+	targetElem.classList.add(elems.targetElem.cssClass);
 	
 	targetElem.appendChild(createElementFromHTML('div', mainTemplate()));
 
-	var root = document.querySelector(elems.root.selector);
-	var header = document.querySelector(elems.header.selector);
-	var formPanel = document.querySelector(elems.formPanel.selector);
-	var total = document.querySelector(elems.total.selector);
-	var amount = document.querySelector(elems.amount.selector);
-	var publicKey = document.querySelector(elems.publicKey.selector);
-	var submitButton = document.querySelector(elems.submitButton.selector);
+	var root = targetElem.querySelector(elems.root.selector);
+	var header = targetElem.querySelector(elems.header.selector);
+	var formPanel = targetElem.querySelector(elems.formPanel.selector);
+	var total = targetElem.querySelector(elems.total.selector);
+	var amount = targetElem.querySelector(elems.amount.selector);
+	var publicKey = targetElem.querySelector(elems.publicKey.selector);
+	var submitButton = targetElem.querySelector(elems.submitButton.selector);
 	
-	elems.targetElem.elem = targetElem;
 	elems.root.elem = root;
 	elems.header.elem = header;
 	elems.formPanel.elem = formPanel;;

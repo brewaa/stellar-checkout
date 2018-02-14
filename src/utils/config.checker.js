@@ -1,20 +1,21 @@
 import constants from '../constants';
+import elems from '../ui/elems';
 import loader from './loader';
 import sdkHelper from './stellarsdk.helper';
 
 function checkCurrency(currency) {
 	return new Promise(function(resolve, reject) {
 		if (!currency) {
-			reject('currency is required');
+			reject(new Error('currency is required'));
 		}
 		if (typeof currency !== 'string') {
-			reject('currency must be a string');
+			reject(new Error('currency must be a string'));
 		}
 		if (currency === '') {
-			reject('currency is required');
+			reject(new Error('currency is required'));
 		}
 		if (constants.CURRENCIES.indexOf(currency) === -1) {
-			reject('currency not supported. allowed currencies: ' + constants.CURRENCIES.join(', ') + ';');
+			reject(new Error('currency not supported. allowed currencies: ' + constants.CURRENCIES.join(', ') + ';'));
 		}
 		resolve(true);
 	});
@@ -23,7 +24,7 @@ function checkCurrency(currency) {
 function checkDestinationKey(destinationKey) {
 	return new Promise(function(resolve, reject) {
 		if (!window.StellarSdk.StrKey.isValidEd25519PublicKey(destinationKey)) {
-			reject('destinationKey is invalid');
+			reject(new Error('destinationKey is invalid'));
 		}
 		resolve(true);
 	});
@@ -39,8 +40,21 @@ function checkMemo(memo) {
 function checkOnSubmit(onSubmit) {
 	return new Promise(function(resolve, reject) {
 		if (onSubmit && typeof onSubmit !== 'function') {
-			reject('onSubmit must be a function');
+			reject(new Error('onSubmit must be a function'));
 		}
+		resolve(true);
+	});
+};
+
+function checkSelector(selector) {
+	return new Promise(function(resolve, reject) {
+		var targetElem = document.querySelector(selector);
+		if (!targetElem) {
+			reject(new Error('selector not found'));
+			return;
+		}
+		elems.targetElem.elem = targetElem;
+		elems.targetElem.selector = selector;
 		resolve(true);
 	});
 };
@@ -48,7 +62,7 @@ function checkOnSubmit(onSubmit) {
 function checkStyleSheet(stylesheet) {
 	return new Promise(function(resolve, reject) {
 		if (stylesheet && typeof stylesheet !== 'string') {
-			reject('stylesheet must be a string');
+			reject(new Error('stylesheet must be a string'));
 		}
 		if (stylesheet) {
 			return new loader.css(stylesheet);
@@ -60,23 +74,24 @@ function checkStyleSheet(stylesheet) {
 function checkTotal(total) {
 	return new Promise(function(resolve, reject) {
 		if (!total) {
-			reject('total is required');
+			reject(new Error('total is required'));
 		}
 		if (isNaN(total)) {
-			reject('total must be numeric');
+			reject(new Error('total must be numeric'));
 		}
 		if (total <= 0) {
-			reject('total must be greater than zero');
+			reject(new Error('total must be greater than zero'));
 		}
 		resolve(true);
 	});
 };
 
 export function validateConfig(options) {
-	return sdkHelper.loadSdk()
+	return loader.js(constants.STELLAR_SDK_URL) //sdkHelper.loadSdk()
 		.then(checkStyleSheet(options.stylesheet))
 		.then(function() {
 		return Promise.all([
+			checkSelector(options.selector),
 			checkCurrency(options.currency),
 			checkDestinationKey(options.destinationKey),
 			checkMemo(options.memo),

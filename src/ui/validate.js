@@ -1,7 +1,7 @@
 import {setButtonState} from './buttons';
 import constants from '../constants';
 import elems from './elems';
-import {Err} from '../utils/error';
+import {ValidationMessage} from '../validationMessage';
 
 export function toggleValidationFeedback(target, test) {
 	if (!test.result) {
@@ -28,11 +28,11 @@ export function validateAmount() {
 	};
 	var amt = constants.DTO.payment.amount;
 	if (isNaN(amt)) {
-		result.errors.push(new Err('amount is not a number', elems.amount));
+		result.errors.push(new ValidationMessage('amount is not a number', elems.amount));
 		result.result = false;
 	}
 	if (amt <= 0) {
-		result.errors.push(new Err('amount must be greater than zero', elems.amount));
+		result.errors.push(new ValidationMessage('amount must be greater than zero', elems.amount));
 		result.result = false;
 	}
 	return result;
@@ -44,7 +44,7 @@ export function validatePublicKey(key) {
 		result: true
 	};
 	if (!key || !window.StellarSdk.StrKey.isValidEd25519PublicKey(key)) {
-		result.errors.push(new Err('public key is invalid'));
+		result.errors.push(new ValidationMessage('public key is invalid'));
 		result.result = false;
 	}
 	return result;
@@ -57,11 +57,11 @@ export function validateTotal() {
 	};
 	var total = constants.DTO.invoice.total;
 	if (isNaN(total)) {
-		result.errors.push(new Err('total is not a number', elems.total));
+		result.errors.push(new ValidationMessage('total is not a number', elems.total));
 		result.result = false;
 	}
 	if (total <= 0) {
-		result.errors.push(new Err('total must be greater than zero', elems.total));
+		result.errors.push(new ValidationMessage('total must be greater than zero', elems.total));
 		result.result = false;
 	}
 	return result;

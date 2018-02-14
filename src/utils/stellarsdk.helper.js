@@ -1,5 +1,4 @@
 import constants from '../constants';
-import {Err} from './error';
 
 function createDto(options) {
 	var dto = constants.DTO;

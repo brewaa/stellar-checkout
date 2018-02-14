@@ -1,6 +1,5 @@
 import {init} from './app';
 import constants from './constants';
-import {Err} from './utils/error';
 import {validateConfig} from './utils/config.checker';
 
 export default {
@@ -9,6 +8,7 @@ export default {
 		render: function(selector, opts) {
 			this.selector = selector;
 			this.options = {};
+			this.options.selector = selector;
 			this.options.currency = opts.currency;
 			this.options.destinationKey = opts.destinationKey;
 			this.options.env = opts.env || 'development';
@@ -20,16 +20,18 @@ export default {
 
 			var self = this;
 
+			// window.addEventListener('error', function(e) {
+			// });
+
+			// window.addEventListener('unhandledrejection', function(ev) {
+			// 	console.log(ev);
+			// });
+
 			document.addEventListener('DOMContentLoaded', function() {
 
 				validateConfig(self.options)
 				.then(function() {
-					init(selector, self.options);
-				})
-				.catch(function(error) {
-					console.log(constants.APP.name + ' CONFIGURATION_ERROR');
-					console.log(new Err(error).toString());
-					console.log(error);
+					init(self.options);
 				});
 
 			});
