@@ -8,7 +8,8 @@ import {validateTransactionDto} from './ui/validate';
 import {setButtonState} from './ui/buttons';
 import {showPaymentError} from './ui/payment.error';
 import {showPaymentComplete} from './ui/payment.complete';
-import {createPaymentAwaitingTemplate, showPaymentAwaitingProgress} from './ui/payment.awaiting';
+// import {createPaymentAwaitingTemplate, showPaymentAwaitingProgress} from './ui/payment.awaiting';
+import viewState from './ui/view.state';
 
 export function init(options) {
 
@@ -28,36 +29,37 @@ export function init(options) {
 
 			// 	// Show the awaiting payment page
 			// 	createPaymentAwaitingTemplate(dto);
-				ui.nextView();
+			ui.nextView('PaymentAwaitingView');
 
 
-			// 	// Watch for transactions sent to the destinationKey
-			// 	sdkHelper.receivePayment(dto, function(err, result) {
-			// 		// Handle error
-			// 		if (err) {
-			// 			// Pass error to onSubmit callback
-			// 			if (options.onSubmit && typeof options.onSubmit === 'function') {
-			// 				options.onSubmit.call(this, err);
-			// 			}
-			// 			return;	
-			// 		}
-			// 		// Show payment verification feedback
-			// 		showPaymentAwaitingProgress(result)
-			// 		.then(function() {
-			// 			if (options.redirectUrl) {
-			// 				// Use redirectUrl if configured
-			// 				useRedirectUrl(options, result);
-			// 			}
-			// 			else if (options.onSubmit && typeof options.onSubmit === 'function') {
-			// 				// Call the onSubmit callback
-			// 				options.onSubmit.call(this, null, result);
-			// 			}
-			// 			else {
-			// 				// Show the payment complete page
-			// 				showPaymentComplete();
-			// 			}
-			// 		});
-			// 	});
+			// Watch for transactions sent to the destinationKey
+			sdkHelper.receivePayment(dto, function(err, result) {
+				// Handle error
+				if (err) {
+					// Pass error to onSubmit callback
+					if (options.onSubmit && typeof options.onSubmit === 'function') {
+						options.onSubmit.call(this, err);
+					}
+					return;	
+				}
+				// Show payment verification feedback
+				viewState.currentView.showProgress(result)
+				.then(function() {
+					if (options.redirectUrl) {
+						// Use redirectUrl if configured
+						useRedirectUrl(options, result);
+					}
+					else if (options.onSubmit && typeof options.onSubmit === 'function') {
+						// Call the onSubmit callback
+						options.onSubmit.call(this, null, result);
+					}
+					else {
+						// Show the payment complete page
+						//showPaymentComplete();
+						ui.showView('PaymentCompleteView');
+					}
+				});
+			});
 			
 		});
 

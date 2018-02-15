@@ -16,7 +16,7 @@
 /** OVERLAYS */
 
 .stellar_checkout_overlay,
-.stellar_checkout_success {
+.stellar_checkout_payment_complete {
     background-image: url('../i/stellar-rocket@2x.png');
     background-position-x: 50%;
     background-position-y: 50%;
@@ -36,11 +36,11 @@
     transform: scale3d(0, 0, 0);
 }
 
-.stellar_checkout_success {
+.stellar_checkout_payment_complete {
     background-position-y: 36%;
 }
 
-.stellar_checkout_success .message {
+.stellar_checkout_payment_complete .message {
     position: absolute;
     top: 60%;
     left: 50%;
@@ -112,7 +112,7 @@
 }
 
 .stellar_checkout_header .alt {
-    display: none;
+    /*display: none;*/
     width: 100%;
 }
 

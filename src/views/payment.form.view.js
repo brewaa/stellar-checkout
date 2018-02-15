@@ -4,16 +4,15 @@ import constants from '../constants';
 import {CoinMarketCapClient} from '../services/coinmarketcap.client';
 import {createElementFromHTML} from '../utils/dom';
 
-
 import rootElems from '../ui/elems';
-import paymentFormElems from '../ui/payment.form.elems';
+import thisElems from '../ui/payment.form.elems';
 
 import {paymentFormTemplate} from '../ui/template';
 
 export class PaymentFormView extends BaseView {
 
-	constructor(dto) {
-		super(dto, paymentFormElems, paymentFormTemplate);
+	constructor() {
+		super(thisElems, paymentFormTemplate);
 	}
 
 	create() {
@@ -21,10 +20,8 @@ export class PaymentFormView extends BaseView {
 		// console.log(this.elems);
 
 		constants.CMCCLIENT = new CoinMarketCapClient(
-			this.elems.total.elem, 
-			this.elems.amount.elem, 
-			constants.DTO.invoice.currency, 
-			constants.DTO.invoice.total
+			thisElems.total.elem, 
+			thisElems.amount.elem
 		); // todo: refactor this and the one in ./ui/events
 
 		this.elems.total.elem.dispatchEvent(new Event('input'));
@@ -76,4 +73,7 @@ export class PaymentFormView extends BaseView {
 		super.show();
 	}
 
+	update() {
+		super.update();
+	}
 };

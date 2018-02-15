@@ -4,8 +4,8 @@ import rootElems from '../ui/elems';
 
 export default class BaseView {
 
-	constructor(dto, elems, template) {
-		this.dto = dto;
+	constructor(elems, template) {
+		this.dto = constants.DTO;
 		this.elems = elems;
 		this.template = template;
 		this.create();
@@ -32,12 +32,15 @@ export default class BaseView {
 	}
 
 	destroy() {
-		var keys = Object.keys(this.elems).reverse();
-		for (var key in keys) {
-			this.elems[key].elem.parentNode.removeChild(this.elems[key].elem);
-		}
-		for (var key in keys) {
-			this.elems[key].pop();
+		// var keys = Object.keys(this.elems).reverse();
+		// for (var key in keys) {
+		// 	this.elems[key].elem.parentNode.removeChild(this.elems[key].elem);
+		// }
+		// for (var key in keys) {
+		// 	this.elems[key].pop();
+		// }
+		if (this.elems.root) {
+			this.elems.root.elem.parentNode.removeChild(this.elems.root.elem);
 		}
 	}
 
@@ -51,6 +54,10 @@ export default class BaseView {
 		if (this.elems.root) {
 			this.elems.root.elem.classList.remove(constants.CLASS.hidden);
 		}
+	}
+
+	update() {
+		
 	}
 
 };

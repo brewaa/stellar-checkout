@@ -11,16 +11,9 @@ import {setButtonState} from './buttons';
 
 import {PaymentFormView} from '../views/payment.form.view';
 import {PaymentAwaitingView} from '../views/payment.awaiting.view';
+import {PaymentCompleteView} from '../views/payment.complete.view';
 
-var viewState =  {
-	currentIndex: -1,
-	currentView: null,
-	views: [{
-		view: PaymentFormView
-	}, {
-		view: PaymentAwaitingView
-	}]
-};
+import viewState from './view.state';
 
 function create(options) {
 	return new Promise(function(resolve, reject) {
@@ -39,6 +32,15 @@ function create(options) {
 		
 		elems.root.elem = root;
 		
+		// Initialize the views
+		// for (var i = 0, len = viewState.views.length; i < len; i++) {
+		// 	viewState.views[i].view = new viewState.views[i].view(constants.DTO);
+		// };
+
+		viewState.views.push({ name: 'PaymentFormView', view: new PaymentFormView() });
+		viewState.views.push({ name: 'PaymentAwaitingView', view: new PaymentAwaitingView() });
+		viewState.views.push({ name: 'PaymentCompleteView', view: new PaymentCompleteView() });
+
 		// var formPanel = targetElem.querySelector(elems.formPanel.selector);
 		// var goBackLink = targetElem.querySelector(elems.goBackLink.selector);
 		// var total = targetElem.querySelector(elems.total.selector);
@@ -104,7 +106,6 @@ function create(options) {
 
 function createSubmitHandler(callBack) {
 	var btn = paymentFormElems.submitButton.elem;
-	console.log(btn);
 	if (btn) {
 		btn.addEventListener('click', function(e) {
 			e.preventDefault();
@@ -115,28 +116,45 @@ function createSubmitHandler(callBack) {
 	};
 };
 
-function prevView() {
+ // todo: set boundaries
+
+export function prevView() {
 	if (viewState.currentView) {
 		viewState.currentView.hide();
 	}
 	viewState.currentIndex--;
-	viewState.currentView = new viewState.views[viewState.currentIndex].view(constants.DTO);
+	viewState.currentView = viewState.views[viewState.currentIndex].view;
 	viewState.currentView.show();
 }
 
-function nextView() {
+export function nextView() {
 	if (viewState.currentView) {
 		viewState.currentView.hide();
 	}
 	viewState.currentIndex++;
-	viewState.currentView = new viewState.views[viewState.currentIndex].view(constants.DTO);
+	viewState.currentView = viewState.views[viewState.currentIndex].view;
 	viewState.currentView.show();
-	console.log(viewState.currentView);
+}
+
+export function showView(viewName) {
+	var vw = viewState.views.find(function(el) {
+		return el.name == viewName;
+	});
+	var idx = viewState.views.indexOf(vw);
+	if (vw !== -1) {
+		if (viewState.currentView) {
+			viewState.currentView.hide();
+		}
+		viewState.currentIndex = idx;
+		viewState.currentView = vw.view;
+		viewState.currentView.show();
+	}
 }
 
 export default {
 	create: create,
 	createSubmitHandler: createSubmitHandler,
 	nextView: nextView,
-	prevView: prevView
+	prevView: prevView,
+	showView: showView
 };
