@@ -11,7 +11,7 @@
 
 # StellarCheckout (BETA)
 
-StellarCheckout is a javascript plug-in for e-commerce web sites. It allow merchants to accept payments for goods and services in lumens.
+StellarCheckout is a javascript plug-in for e-commerce web sites. It allows merchants to accept payments for goods and services in lumens.
 
 It's a javascript plugin with a responsive UI so it will work on any web site in modern browsers.
 
