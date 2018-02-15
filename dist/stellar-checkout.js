@@ -133,46 +133,6 @@ return /******/ (function(modules) { // webpackBootstrap
 		selector: '.stellar_checkout',
 		elem: null
 	}
-	// header: {
-	// 	selector: '.stellar_checkout_header',
-	// 	elem: null
-	// },
-	// formPanel: {
-	// 	selector: '.stellar_checkout_form',
-	// 	elem: null
-	// },
-	// paymentAwaitingPanel: {
-	// 	selector: '.stellar_checkout_payment_awaiting',
-	// 	elem: null
-	// },
-	// paymentErrorPanel: {
-	// 	selector: '.stellar_checkout_error',
-	// 	elem: null
-	// },
-	// // paymentCompletePanel: {
-	// // 	selector: '.stellar_checkout_complete',
-	// // 	elem: null
-	// // },
-	// goBackLink: {
-	// 	selector: '.stellar_checkout_goback',
-	// 	elem: null
-	// },
-	// total: {
-	// 	selector: '#stellarCheckoutTotal',
-	// 	elem: null
-	// },
-	// amount: {
-	// 	selector: '#stellarCheckoutAmount',
-	// 	elem: null
-	// },
-	// publicKey: {
-	// 	selector: '#stellarCheckoutPublicKey',
-	// 	elem: null
-	// },
-	// submitButton: {
-	// 	selector: '#stellarCheckoutSubmitButton',
-	// 	elem: null
-	// }
 });
 
 /***/ }),
@@ -419,73 +379,6 @@ exports.from = function from (value, defaultValue) {
 
 /***/ }),
 /* 4 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = createElementFromHTML;
-
-function createElementFromHTML(tagName, htmlString) {
-  var div = document.createElement(tagName);
-  div.innerHTML = htmlString.trim();
-  return div.firstChild; 
-};
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (immutable) */ __webpack_exports__["a"] = mainTemplate;
-/* harmony export (immutable) */ __webpack_exports__["b"] = paymentAwaitingTemplate;
-/* harmony export (immutable) */ __webpack_exports__["c"] = paymentCompleteTemplate;
-/* harmony export (immutable) */ __webpack_exports__["d"] = paymentErrorTemplate;
-/* harmony export (immutable) */ __webpack_exports__["e"] = paymentFormTemplate;
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__templates_main_template_html__ = __webpack_require__(39);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__templates_main_template_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__templates_main_template_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html__ = __webpack_require__(40);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__templates_payment_form_mustache_html__ = __webpack_require__(48);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__templates_payment_form_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__templates_payment_form_mustache_html__);
-
-
-
-
-
-
-function mainTemplate() {
-	return __WEBPACK_IMPORTED_MODULE_0__templates_main_template_html___default.a;
-};
-
-function paymentAwaitingTemplate() {
-	return __WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html___default.a;
-};
-
-function paymentCompleteTemplate() {
-	return __WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html___default.a;
-};
-
-function paymentErrorTemplate() {
-	return __WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html___default.a;
-};
-
-function paymentFormTemplate() {
-	return __WEBPACK_IMPORTED_MODULE_4__templates_payment_form_mustache_html___default.a;
-};
-
-/* unused harmony default export */ var _unused_webpack_default_export = ({
-	main: __WEBPACK_IMPORTED_MODULE_0__templates_main_template_html___default.a,
-	paymentAwaiting: __WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html___default.a,
-	paymentComplete: __WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html___default.a,
-	paymentError: __WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html___default.a,
-	paymentForm: __WEBPACK_IMPORTED_MODULE_4__templates_payment_form_mustache_html___default.a
-});
-
-/***/ }),
-/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1004,6 +897,73 @@ module.exports = Buffer
 
 
 /***/ }),
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = createElementFromHTML;
+
+function createElementFromHTML(tagName, htmlString) {
+  var div = document.createElement(tagName);
+  div.innerHTML = htmlString.trim();
+  return div.firstChild; 
+};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (immutable) */ __webpack_exports__["a"] = mainTemplate;
+/* harmony export (immutable) */ __webpack_exports__["b"] = paymentAwaitingTemplate;
+/* harmony export (immutable) */ __webpack_exports__["c"] = paymentCompleteTemplate;
+/* harmony export (immutable) */ __webpack_exports__["d"] = paymentErrorTemplate;
+/* harmony export (immutable) */ __webpack_exports__["e"] = paymentFormTemplate;
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__templates_main_template_html__ = __webpack_require__(39);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__templates_main_template_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__templates_main_template_html__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html__ = __webpack_require__(40);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__templates_payment_form_mustache_html__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__templates_payment_form_mustache_html___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__templates_payment_form_mustache_html__);
+
+
+
+
+
+
+function mainTemplate() {
+	return __WEBPACK_IMPORTED_MODULE_0__templates_main_template_html___default.a;
+};
+
+function paymentAwaitingTemplate() {
+	return __WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html___default.a;
+};
+
+function paymentCompleteTemplate() {
+	return __WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html___default.a;
+};
+
+function paymentErrorTemplate() {
+	return __WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html___default.a;
+};
+
+function paymentFormTemplate() {
+	return __WEBPACK_IMPORTED_MODULE_4__templates_payment_form_mustache_html___default.a;
+};
+
+/* unused harmony default export */ var _unused_webpack_default_export = ({
+	main: __WEBPACK_IMPORTED_MODULE_0__templates_main_template_html___default.a,
+	paymentAwaiting: __WEBPACK_IMPORTED_MODULE_1__templates_payment_awaiting_mustache_html___default.a,
+	paymentComplete: __WEBPACK_IMPORTED_MODULE_2__templates_payment_complete_mustache_html___default.a,
+	paymentError: __WEBPACK_IMPORTED_MODULE_3__templates_payment_error_mustache_html___default.a,
+	paymentForm: __WEBPACK_IMPORTED_MODULE_4__templates_payment_form_mustache_html___default.a
+});
+
+/***/ }),
 /* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -1236,7 +1196,7 @@ function setButtonState(target, state)  {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_dom__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_dom__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui_elems__ = __webpack_require__(1);
 
 
@@ -1267,18 +1227,9 @@ class BaseView {
 				item.elem.addEventListener(ev, item.events[ev]);
 			}
 		}
-
-		console.log(this.elems);
 	}
 
 	destroy() {
-		// var keys = Object.keys(this.elems).reverse();
-		// for (var key in keys) {
-		// 	this.elems[key].elem.parentNode.removeChild(this.elems[key].elem);
-		// }
-		// for (var key in keys) {
-		// 	this.elems[key].pop();
-		// }
 		if (this.elems.root) {
 			this.elems.root.elem.parentNode.removeChild(this.elems.root.elem);
 		}
@@ -1382,11 +1333,11 @@ exports.from = function from (value, defaultValue) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_css_style_css__ = __webpack_require__(26);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__assets_css_style_css___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__assets_css_style_css__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_dom__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_dom__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__elems__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__payment_form_elems__ = __webpack_require__(10);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__fonts__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__template__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__template__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__buttons__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__views_payment_form_view__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__views_payment_awaiting_view__ = __webpack_require__(54);
@@ -1422,70 +1373,19 @@ function create(options) {
 
 		var root = targetElem.querySelector(__WEBPACK_IMPORTED_MODULE_3__elems__["a" /* default */].root.selector);
 		
-		//var header = targetElem.querySelector(elems.header.selector);
-		
 		__WEBPACK_IMPORTED_MODULE_3__elems__["a" /* default */].root.elem = root;
 		
 		// Initialize the views
-		// for (var i = 0, len = viewState.views.length; i < len; i++) {
-		// 	viewState.views[i].view = new viewState.views[i].view(constants.DTO);
-		// };
-
 		__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].views.push({ name: 'PaymentFormView', view: new __WEBPACK_IMPORTED_MODULE_8__views_payment_form_view__["a" /* PaymentFormView */]() });
 		__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].views.push({ name: 'PaymentAwaitingView', view: new __WEBPACK_IMPORTED_MODULE_9__views_payment_awaiting_view__["a" /* PaymentAwaitingView */]() });
 		__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].views.push({ name: 'PaymentCompleteView', view: new __WEBPACK_IMPORTED_MODULE_10__views_payment_complete_view__["a" /* PaymentCompleteView */]() });
 
-		// var formPanel = targetElem.querySelector(elems.formPanel.selector);
-		// var goBackLink = targetElem.querySelector(elems.goBackLink.selector);
-		// var total = targetElem.querySelector(elems.total.selector);
-		// var amount = targetElem.querySelector(elems.amount.selector);
-		// var publicKey = targetElem.querySelector(elems.publicKey.selector);
-		// var submitButton = targetElem.querySelector(elems.submitButton.selector);
-
-		// elems.header.elem = header;
-		// elems.formPanel.elem = formPanel;
-		// elems.goBackLink.elem = goBackLink;
-		// elems.total.elem = total;
-		// elems.amount.elem = amount;
-		// elems.publicKey.elem = publicKey;
-		// elems.submitButton.elem = submitButton;
-
-		//constants.CMCCLIENT = new CoinMarketCapClient(elems.amount.elem, options); // todo: refactor this and the one in ./ui/events
-
-		
-		//var viewPaymentAwaiting = new PaymentAwaitingView(constants.DTO);
-
-		/* ---- */
-
-		// elems.total.elem.addEventListener('blur', onValidateTotal);
-		// elems.total.elem.addEventListener('input', onValidateTotal);
-
-		// elems.amount.elem.addEventListener('blur', onValidateAmount);
-		// elems.amount.elem.addEventListener('input', onValidateAmount);
-
-		// elems.publicKey.elem.addEventListener('blur', onValidatePublicKey);
-		// elems.publicKey.elem.addEventListener('input', onValidatePublicKey);
 
 		__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.invoice.total = options.total;
 		__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.invoice.currency = options.currency;
 		// constants.DTO.payment.amount = constants.CMCCLIENT.priceInLumens;
 		//constants.DTO.payment.from = elems.publicKey.elem.value;
 		__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.payment.to = options.destinationKey;
-
-		// //todo: add a configuration check for options.total
-		// var hasValidTotal = false;
-		// var dtoTotal = constants.DTO.invoice.total;
-		// if (dtoTotal && dtoTotal.length > 0) {
-		// 	elems.total.elem.setAttribute('value', dtoTotal);
-		// 	elems.total.elem.setAttribute('disabled', 'disabled');
-		// 	var currencyLabel = elems.total.elem.parentNode.querySelector('.currency').innerHTML = constants.DTO.invoice.currency;
-		// 	hasValidTotal = true;
-		// 	elems.total.elem.dispatchEvent(new Event('input'));
-		// }
-
-		// if (hasValidTotal) {
-		// 	constants.CMCCLIENT.fetch();
-		// }
 
 		nextView();
 
@@ -1506,7 +1406,6 @@ function createSubmitHandler(callBack) {
 			Object(__WEBPACK_IMPORTED_MODULE_7__buttons__["a" /* setButtonState */])(this, __WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].SUBMIT_BUTTON_STATE.IN_PROGRESS)
 			callBack.call(this);
 		});
-		//elems.submitButton.elem = btn;
 	};
 };
 
@@ -2192,7 +2091,7 @@ exports.qrToImageData = function qrToImageData (imgData, qr, opts) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_config_checker__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_config_checker__ = __webpack_require__(81);
 
 
 
@@ -2248,8 +2147,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ui_validate__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ui_buttons__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ui_payment_error__ = __webpack_require__(80);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ui_payment_complete__ = __webpack_require__(81);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ui_view_state__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ui_view_state__ = __webpack_require__(23);
 
 
 
@@ -2259,8 +2157,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 
-
-// import {createPaymentAwaitingTemplate, showPaymentAwaitingProgress} from './ui/payment.awaiting';
 
 
 function init(options) {
@@ -2279,10 +2175,8 @@ function init(options) {
 				return;
 			}
 
-			// 	// Show the awaiting payment page
-			// 	createPaymentAwaitingTemplate(dto);
+			// Show the awaiting payment page
 			__WEBPACK_IMPORTED_MODULE_3__ui__["a" /* default */].nextView('PaymentAwaitingView');
-
 
 			// Watch for transactions sent to the destinationKey
 			__WEBPACK_IMPORTED_MODULE_2__utils_stellarsdk_helper__["a" /* default */].receivePayment(dto, function(err, result) {
@@ -2295,7 +2189,7 @@ function init(options) {
 					return;	
 				}
 				// Show payment verification feedback
-				__WEBPACK_IMPORTED_MODULE_9__ui_view_state__["a" /* default */].currentView.showProgress(result)
+				__WEBPACK_IMPORTED_MODULE_8__ui_view_state__["a" /* default */].currentView.showProgress(result)
 				.then(function() {
 					if (options.redirectUrl) {
 						// Use redirectUrl if configured
@@ -2307,7 +2201,6 @@ function init(options) {
 					}
 					else {
 						// Show the payment complete page
-						//showPaymentComplete();
 						__WEBPACK_IMPORTED_MODULE_3__ui__["a" /* default */].showView('PaymentCompleteView');
 					}
 				});
@@ -5903,10 +5796,10 @@ module.exports = "<div class=\"stellar_checkout_form\">\r\n\t<div class=\"stella
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_view__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__services_coinmarketcap_client__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_dom__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__utils_dom__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ui_elems__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ui_payment_form_elems__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ui_template__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ui_template__ = __webpack_require__(6);
 
 
 
@@ -5926,7 +5819,6 @@ class PaymentFormView extends __WEBPACK_IMPORTED_MODULE_0__base_view__["a" /* de
 
 	create() {
 		super.create();
-		// console.log(this.elems);
 
 		__WEBPACK_IMPORTED_MODULE_1__constants__["a" /* default */].CMCCLIENT = new __WEBPACK_IMPORTED_MODULE_2__services_coinmarketcap_client__["a" /* CoinMarketCapClient */](
 			__WEBPACK_IMPORTED_MODULE_5__ui_payment_form_elems__["a" /* default */].total.elem, 
@@ -5934,40 +5826,6 @@ class PaymentFormView extends __WEBPACK_IMPORTED_MODULE_0__base_view__["a" /* de
 		); // todo: refactor this and the one in ./ui/events
 
 		this.elems.total.elem.dispatchEvent(new Event('input'));
-		/* ---- */
-
-		console.log(this.dto);
-
-		// this.elems.total.elem.addEventListener('blur', onValidateTotal);
-		// this.elems.total.elem.addEventListener('input', onValidateTotal);
-
-		// this.elems.amount.elem.addEventListener('blur', onValidateAmount);
-		// this.elems.amount.elem.addEventListener('input', onValidateAmount);
-
-		// this.elems.publicKey.elem.addEventListener('blur', onValidatePublicKey);
-		// this.elems.publicKey.elem.addEventListener('input', onValidatePublicKey);
-
-		// constants.DTO.invoice.total = options.total;
-		// constants.DTO.invoice.currency = options.currency;
-		//constants.DTO.payment.amount = constants.CMCCLIENT.priceInLumens;
-		// constants.DTO.payment.from = elems.publicKey.elem.value;
-		// constants.DTO.payment.to = options.destinationKey;
-
-		//todo: add a configuration check for options.total
-		// var hasValidTotal = false;
-		// var dtoTotal = constants.DTO.invoice.total;
-		// if (dtoTotal && dtoTotal.length > 0) {
-		// 	this.elems.total.elem.setAttribute('value', dtoTotal);
-		// 	this.elems.total.elem.setAttribute('disabled', 'disabled');
-		// 	var currencyLabel = this.elems.total.elem.parentNode.querySelector('.currency').innerHTML = constants.DTO.invoice.currency;
-		// 	hasValidTotal = true;
-		// 	this.elems.total.elem.dispatchEvent(new Event('input'));
-		// }
-
-		// if (hasValidTotal) {
-		// 	//constants.CMCCLIENT.fetch();
-		// }
-
 	}
 
 	destroy() {
@@ -6013,15 +5871,6 @@ function CoinMarketCapClient(totalElem, amountElem) {
 	this.data = [];
 	this.priceInLumens = null;
 	this.spinner = amountElem.parentNode.querySelector('.spinner');
-
-	//var hasValidTotal = false;
-	//if (this.total && this.total.length > 0) {
-		//this.elems.total.elem.setAttribute('value', this.total);
-		//this.elems.total.elem.setAttribute('disabled', 'disabled');
-		//var currencyLabel = this.elems.total.elem.parentNode.querySelector('.currency').innerHTML = constants.DTO.invoice.currency;
-		//hasValidTotal = true;
-		//this.elems.total.elem.dispatchEvent(new Event('input'));
-	//}
 
 	if (this.total && this.total.length > 0) {
 		this.fetch();
@@ -6196,11 +6045,10 @@ function format(theFormat, num) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ui_elems__ = __webpack_require__(1);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ui_payment_awaiting_elems__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ui_template__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ui_template__ = __webpack_require__(6);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_qrcode__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_qrcode___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_qrcode__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__utils_wallet_format__ = __webpack_require__(78);
-
 
 
 
@@ -6217,56 +6065,35 @@ class PaymentAwaitingView extends __WEBPACK_IMPORTED_MODULE_0__base_view__["a" /
 
 	create() {
 		super.create();
-		//if (!thisElems.root.elem) {
-			// Load the mustache template
-			//var template = paymentAwaitingTemplate();
-			//var compiledHtml = template(dto);
 
-			// Append to DOM
-			//elems.root.elem.appendChild(createElementFromHTML('div', compiledHtml));
+		// QR Code
+		var qrCodeCanvas = __WEBPACK_IMPORTED_MODULE_3__ui_payment_awaiting_elems__["a" /* default */].root.elem.querySelector('.qrcode');
 
-			// Add the element to elems
-			//var paymentAwaitingPanel = document.querySelector(elems.paymentAwaitingPanel.selector);
-			//elems.paymentAwaitingPanel.elem = paymentAwaitingPanel;	
-		
+		__WEBPACK_IMPORTED_MODULE_5_qrcode___default.a.toCanvas(qrCodeCanvas, this.dto.payment.to, function (error) { // todo: standardized format that popular wallets use for payment data
+			if (error) {
+				console.error(error);
+			}
+		});
 
-			// QR Code
-			var qrCodeCanvas = __WEBPACK_IMPORTED_MODULE_3__ui_payment_awaiting_elems__["a" /* default */].root.elem.querySelector('.qrcode');
+		var self = this;
 
-			__WEBPACK_IMPORTED_MODULE_5_qrcode___default.a.toCanvas(qrCodeCanvas, this.dto.payment.to, function (error) { // todo: standardized format that popular wallets use for payment data
-				if (error) {
-					console.error(error);
-				}
-			});
-
-			var self = this;
-
-			// Wallet picker
-			var walletPicker = __WEBPACK_IMPORTED_MODULE_3__ui_payment_awaiting_elems__["a" /* default */].root.elem.querySelector('#walletPicker');
-			walletPicker.addEventListener('change', function(e) {
-				var el = e.target;
-				var data = self.dto.payment.to;
-				var format = el.options[el.selectedIndex].value;
-				if (format) {
-					__WEBPACK_IMPORTED_MODULE_6__utils_wallet_format__["a" /* default */][format](self.dto).then(function(result) {
-						__WEBPACK_IMPORTED_MODULE_5_qrcode___default.a.toCanvas(qrCodeCanvas, JSON.stringify(result), function (error) {
-							if (error) {
-								console.error(error);
-							}
-						});
+		// Wallet picker
+		var walletPicker = __WEBPACK_IMPORTED_MODULE_3__ui_payment_awaiting_elems__["a" /* default */].root.elem.querySelector('#walletPicker');
+		walletPicker.addEventListener('change', function(e) {
+			var el = e.target;
+			var data = self.dto.payment.to;
+			var format = el.options[el.selectedIndex].value;
+			if (format) {
+				__WEBPACK_IMPORTED_MODULE_6__utils_wallet_format__["a" /* default */][format](self.dto).then(function(result) {
+					__WEBPACK_IMPORTED_MODULE_5_qrcode___default.a.toCanvas(qrCodeCanvas, JSON.stringify(result), function (error) {
+						if (error) {
+							console.error(error);
+						}
 					});
-				}
-			});
+				});
+			}
+		});
 
-			// Add the goBackLink event handler
-			//thisElems.goBackLink.elem.addEventListener('click', function() {
-				//hidePaymentAwaitingTemplate.call(this);
-			//	self.hide()
-			//});
-		//}
-		
-		// Show the payment await page	
-		//showPaymentAwaitingTemplate();
 	}
 
 	destroy() {
@@ -6291,7 +6118,6 @@ class PaymentAwaitingView extends __WEBPACK_IMPORTED_MODULE_0__base_view__["a" /
 
 	showProgress() {
 		return new Promise(function(resolve) {
-			// var statusElem = thisElems.header.elem.querySelector('.status');
 			var statusMsgs = [
 				'transaction received',
 				'processing transaction',
@@ -6502,7 +6328,7 @@ module.exports = g;
 /* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Buffer = __webpack_require__(6)
+var Buffer = __webpack_require__(4)
 var Utils = __webpack_require__(2)
 var ECLevel = __webpack_require__(14)
 var BitBuffer = __webpack_require__(61)
@@ -7050,7 +6876,7 @@ module.exports = BitBuffer
 /* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Buffer = __webpack_require__(6)
+var Buffer = __webpack_require__(4)
 
 /**
  * Helper class to handle QR Code symbol modules
@@ -7482,7 +7308,7 @@ exports.getBestMask = function getBestMask (data, setupFormatFunc) {
 /* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Buffer = __webpack_require__(6)
+var Buffer = __webpack_require__(4)
 var Polynomial = __webpack_require__(67)
 
 function ReedSolomonEncoder (degree) {
@@ -7547,7 +7373,7 @@ module.exports = ReedSolomonEncoder
 /* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Buffer = __webpack_require__(6)
+var Buffer = __webpack_require__(4)
 var GF = __webpack_require__(68)
 
 /**
@@ -7617,7 +7443,7 @@ exports.generateECPolynomial = function generateECPolynomial (degree) {
 /* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Buffer = __webpack_require__(6)
+var Buffer = __webpack_require__(4)
 
 var EXP_TABLE = new Buffer(512)
 var LOG_TABLE = new Buffer(256)
@@ -8180,7 +8006,7 @@ module.exports = AlphanumericData
 /* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var Buffer = __webpack_require__(6)
+var Buffer = __webpack_require__(4)
 var Mode = __webpack_require__(3)
 
 function ByteData (data) {
@@ -8665,9 +8491,9 @@ function getHash(passphrase) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_view__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_dom__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_dom__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ui_elems__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ui_template__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ui_template__ = __webpack_require__(6);
 
 
 
@@ -8715,8 +8541,8 @@ class PaymentCompleteView extends __WEBPACK_IMPORTED_MODULE_0__base_view__["a" /
 /* unused harmony export hidePaymentError */
 /* unused harmony export showPaymentError */
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__elems__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_dom__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__template__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__utils_dom__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__template__ = __webpack_require__(6);
 
 
 
@@ -8743,38 +8569,10 @@ function showPaymentError(error) {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* unused harmony export showPaymentComplete */
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__elems__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_dom__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ui_template__ = __webpack_require__(5);
-
-
-
-
-
-function showPaymentComplete(obj) {
-	// Load the mustache template
-	var template = Object(__WEBPACK_IMPORTED_MODULE_3__ui_template__["c" /* paymentCompleteTemplate */])();
-	var compiledHtml = template(obj);
-
-	// Append to the DOM
-	__WEBPACK_IMPORTED_MODULE_1__elems__["a" /* default */].root.elem.appendChild(Object(__WEBPACK_IMPORTED_MODULE_2__utils_dom__["a" /* createElementFromHTML */])('div', compiledHtml));
-
-	// Hide other panels
-	__WEBPACK_IMPORTED_MODULE_1__elems__["a" /* default */].formPanel.elem.classList.add(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].CLASS.hidden);
-	__WEBPACK_IMPORTED_MODULE_1__elems__["a" /* default */].paymentAwaitingPanel.elem.classList.add(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].CLASS.hidden);
-};
-
-/***/ }),
-/* 82 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = validateConfig;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ui_elems__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__loader__ = __webpack_require__(83);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__loader__ = __webpack_require__(82);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stellarsdk_helper__ = __webpack_require__(8);
 
 
@@ -8880,7 +8678,7 @@ function validateConfig(options) {
 };
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

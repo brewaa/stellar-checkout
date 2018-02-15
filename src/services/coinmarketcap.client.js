@@ -13,15 +13,6 @@ export function CoinMarketCapClient(totalElem, amountElem) {
 	this.priceInLumens = null;
 	this.spinner = amountElem.parentNode.querySelector('.spinner');
 
-	//var hasValidTotal = false;
-	//if (this.total && this.total.length > 0) {
-		//this.elems.total.elem.setAttribute('value', this.total);
-		//this.elems.total.elem.setAttribute('disabled', 'disabled');
-		//var currencyLabel = this.elems.total.elem.parentNode.querySelector('.currency').innerHTML = constants.DTO.invoice.currency;
-		//hasValidTotal = true;
-		//this.elems.total.elem.dispatchEvent(new Event('input'));
-	//}
-
 	if (this.total && this.total.length > 0) {
 		this.fetch();
 	}

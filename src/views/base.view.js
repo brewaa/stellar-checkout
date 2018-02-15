@@ -27,18 +27,9 @@ export default class BaseView {
 				item.elem.addEventListener(ev, item.events[ev]);
 			}
 		}
-
-		console.log(this.elems);
 	}
 
 	destroy() {
-		// var keys = Object.keys(this.elems).reverse();
-		// for (var key in keys) {
-		// 	this.elems[key].elem.parentNode.removeChild(this.elems[key].elem);
-		// }
-		// for (var key in keys) {
-		// 	this.elems[key].pop();
-		// }
 		if (this.elems.root) {
 			this.elems.root.elem.parentNode.removeChild(this.elems.root.elem);
 		}

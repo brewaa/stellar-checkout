@@ -7,8 +7,6 @@ import {validateTransactionDto} from './ui/validate';
 
 import {setButtonState} from './ui/buttons';
 import {showPaymentError} from './ui/payment.error';
-import {showPaymentComplete} from './ui/payment.complete';
-// import {createPaymentAwaitingTemplate, showPaymentAwaitingProgress} from './ui/payment.awaiting';
 import viewState from './ui/view.state';
 
 export function init(options) {
@@ -27,10 +25,8 @@ export function init(options) {
 				return;
 			}
 
-			// 	// Show the awaiting payment page
-			// 	createPaymentAwaitingTemplate(dto);
+			// Show the awaiting payment page
 			ui.nextView('PaymentAwaitingView');
-
 
 			// Watch for transactions sent to the destinationKey
 			sdkHelper.receivePayment(dto, function(err, result) {
@@ -55,7 +51,6 @@ export function init(options) {
 					}
 					else {
 						// Show the payment complete page
-						//showPaymentComplete();
 						ui.showView('PaymentCompleteView');
 					}
 				});
