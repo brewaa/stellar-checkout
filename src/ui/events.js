@@ -1,5 +1,4 @@
 import constants from '../constants';
-import {CoinMarketCapClient} from '../services/coinmarketcap.client';
 import {toggleValidationFeedback, validateAmount, validatePrivateSeed, validatePublicKey, validateTotal} from './validate';
 
 export function onValidateAmount(e) {

@@ -254,6 +254,7 @@
 .stellar_checkout .field .txt {
 	background: transparent;
 	border: 0;
+    font-family: monospace, monospace;
 	font-size: 1.25rem;
     height: 100%;
     outline: 0;

@@ -1,6 +1,6 @@
 import {setButtonState} from './buttons';
 import constants from '../constants';
-import elems from './elems';
+import elems from './payment.form.elems';
 import {ValidationMessage} from './validationMessage';
 
 export function toggleValidationFeedback(target, test) {

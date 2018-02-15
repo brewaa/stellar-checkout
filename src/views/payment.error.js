@@ -1,6 +1,6 @@
-import elems from './elems';
+import rootElems from '../ui/elems';
 import {createElementFromHTML} from '../utils/dom';
-import {paymentErrorTemplate} from './template';
+import {paymentErrorTemplate} from '../ui/template';
 
 export function hidePaymentError() {
 	elems.paymentErrorPanel.elem.parentNode.removeChild(elems.paymentErrorPanel.elem);
