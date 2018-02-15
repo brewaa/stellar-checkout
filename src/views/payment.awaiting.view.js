@@ -76,7 +76,6 @@ export class PaymentAwaitingView extends BaseView {
 			var i = 0,
 			increment = 2000,
 			interval = setInterval(function() {
-				console.log(statusMsgs[i]);
 				thisElems.statusElem.elem.innerHTML = statusMsgs[i];
 				if (i == statusMsgs.length-1) {
 					clearInterval(interval);

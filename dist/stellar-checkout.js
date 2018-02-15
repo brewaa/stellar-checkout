@@ -2091,7 +2091,7 @@ exports.qrToImageData = function qrToImageData (imgData, qr, opts) {
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__app__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_config_checker__ = __webpack_require__(81);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_config_checker__ = __webpack_require__(82);
 
 
 
@@ -2146,7 +2146,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__utils_url__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ui_validate__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__ui_buttons__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ui_payment_error__ = __webpack_require__(80);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__ui_payment_error__ = __webpack_require__(81);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ui_view_state__ = __webpack_require__(23);
 
 
@@ -8492,10 +8492,9 @@ function getHash(passphrase) {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__base_view__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__constants__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__utils_dom__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ui_elems__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ui_template__ = __webpack_require__(6);
-
-
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ui_template__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ui_elems__ = __webpack_require__(1);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ui_payment_complete_elems__ = __webpack_require__(80);
 
 
 
@@ -8506,12 +8505,11 @@ function getHash(passphrase) {
 class PaymentCompleteView extends __WEBPACK_IMPORTED_MODULE_0__base_view__["a" /* default */] {
 
 	constructor() {
-		super(null, __WEBPACK_IMPORTED_MODULE_4__ui_template__["c" /* paymentCompleteTemplate */]);
+		super(__WEBPACK_IMPORTED_MODULE_5__ui_payment_complete_elems__["a" /* default */], __WEBPACK_IMPORTED_MODULE_3__ui_template__["c" /* paymentCompleteTemplate */]);
 	}
 
 	create() {
 		super.create();
-		console.log('payment.complete.view');
 	}
 
 	destroy() {
@@ -8535,6 +8533,18 @@ class PaymentCompleteView extends __WEBPACK_IMPORTED_MODULE_0__base_view__["a" /
 
 /***/ }),
 /* 80 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony default export */ __webpack_exports__["a"] = ({
+	root: {
+		elem: null,
+		selector: '.stellar_checkout_payment_complete'
+	}
+});
+
+/***/ }),
+/* 81 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -8565,14 +8575,14 @@ function showPaymentError(error) {
 };
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (immutable) */ __webpack_exports__["a"] = validateConfig;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__constants__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__ui_elems__ = __webpack_require__(1);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__loader__ = __webpack_require__(82);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__loader__ = __webpack_require__(83);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stellarsdk_helper__ = __webpack_require__(8);
 
 
@@ -8678,7 +8688,7 @@ function validateConfig(options) {
 };
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

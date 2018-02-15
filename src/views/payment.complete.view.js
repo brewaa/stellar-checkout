@@ -1,21 +1,18 @@
 import BaseView from './base.view';
 import constants from '../constants';
-
 import {createElementFromHTML} from '../utils/dom';
-
-import rootElems from '../ui/elems';
-
 import {paymentCompleteTemplate} from '../ui/template';
+import rootElems from '../ui/elems';
+import thisElems from '../ui/payment.complete.elems';
 
 export class PaymentCompleteView extends BaseView {
 
 	constructor() {
-		super(null, paymentCompleteTemplate);
+		super(thisElems, paymentCompleteTemplate);
 	}
 
 	create() {
 		super.create();
-		console.log('payment.complete.view');
 	}
 
 	destroy() {
