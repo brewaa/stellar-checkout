@@ -1,5 +1,5 @@
 import constants from '../constants';
-import {toggleValidationFeedback, validateAmount, validatePrivateSeed, validatePublicKey, validateTotal} from './validate';
+import {toggleValidationFeedback, validateAmount, validatePublicKey, validateTotal} from './validate';
 
 export function onValidateAmount(e) {
 	constants.DTO.payment.amount = e.target.value;

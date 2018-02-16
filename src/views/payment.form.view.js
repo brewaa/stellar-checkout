@@ -21,9 +21,10 @@ export class PaymentFormView extends BaseView {
 		constants.CMCCLIENT = new CoinMarketCapClient(
 			thisElems.total.elem, 
 			thisElems.amount.elem
-		); // todo: refactor this and the one in ./ui/events
+		);
 
 		this.elems.total.elem.dispatchEvent(new Event('input'));
+		
 	}
 
 	destroy() {
@@ -36,6 +37,10 @@ export class PaymentFormView extends BaseView {
 
 	show() {
 		super.show();
+
+		if (this.elems.publicKey.elem.value.length > 0) {
+			this.elems.publicKey.elem.dispatchEvent(new Event('blur'));	
+		}
 	}
 
 	update() {

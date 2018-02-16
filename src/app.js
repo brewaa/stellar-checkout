@@ -26,7 +26,7 @@ export function init(options) {
 			}
 
 			// Show the awaiting payment page
-			ui.nextView('PaymentAwaitingView');
+			ui.showView('PaymentAwaitingView');
 
 			// Watch for transactions sent to the destinationKey
 			sdkHelper.receivePayment(dto, function(err, result) {

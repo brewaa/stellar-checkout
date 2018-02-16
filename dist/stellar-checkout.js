@@ -1070,6 +1070,8 @@ function receivePayment(dto, callback) {
 	    console.error('Error in payment stream');
 	  }
 	});
+
+	return closeStream;
 };
 
 function setNetwork(env) {
@@ -1387,7 +1389,7 @@ function create(options) {
 		//constants.DTO.payment.from = elems.publicKey.elem.value;
 		__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.payment.to = options.destinationKey;
 
-		nextView();
+		showView('PaymentFormView');
 
 		setTimeout(function() {
 			document.querySelector('.stellar_checkout_overlay').classList.add('loaded');
@@ -1409,13 +1411,11 @@ function createSubmitHandler(callBack) {
 	};
 };
 
- // todo: set boundaries
-
 function prevView() {
 	if (__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentView) {
 		__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentView.hide();
 	}
-	__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentIndex--;
+	__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentIndex = __WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentIndex <= 0 ? 0 : __WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentIndex-1;
 	__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentView = __WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].views[__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentIndex].view;
 	__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentView.show();
 }
@@ -1424,7 +1424,7 @@ function nextView() {
 	if (__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentView) {
 		__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentView.hide();
 	}
-	__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentIndex++;
+	__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentIndex = __WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentIndex >= __WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].views.length-1 ? __WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].views.length-1 : __WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentIndex+1;
 	__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentView = __WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].views[__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentIndex].view;
 	__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentView.show();
 }
@@ -2175,7 +2175,7 @@ function init(options) {
 			}
 
 			// Show the awaiting payment page
-			__WEBPACK_IMPORTED_MODULE_3__ui__["a" /* default */].nextView('PaymentAwaitingView');
+			__WEBPACK_IMPORTED_MODULE_3__ui__["a" /* default */].showView('PaymentAwaitingView');
 
 			// Watch for transactions sent to the destinationKey
 			__WEBPACK_IMPORTED_MODULE_2__utils_stellarsdk_helper__["a" /* default */].receivePayment(dto, function(err, result) {
@@ -2876,6 +2876,7 @@ function onValidateAmount(e) {
 };
 
 function onValidatePublicKey(e) {
+	console.log('123');
 	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.payment.from = e.target.value;
 	Object(__WEBPACK_IMPORTED_MODULE_1__validate__["a" /* toggleValidationFeedback */])(e.target, Object(__WEBPACK_IMPORTED_MODULE_1__validate__["c" /* validatePublicKey */])(e.target.value));
 };
@@ -2912,16 +2913,16 @@ ValidationMessage.prototype.toString = function() {
 
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome__ = __webpack_require__(35);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid_faSpinner__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid_faSpinner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid_faSpinner__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fortawesome_fontawesome_free_solid_faChevronCircleLeft__ = __webpack_require__(38);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fortawesome_fontawesome_free_solid_faChevronCircleLeft___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__fortawesome_fontawesome_free_solid_faChevronCircleLeft__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid_faChevronCircleLeft__ = __webpack_require__(37);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid_faChevronCircleLeft___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid_faChevronCircleLeft__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fortawesome_fontawesome_free_solid_faSpinner__ = __webpack_require__(38);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fortawesome_fontawesome_free_solid_faSpinner___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__fortawesome_fontawesome_free_solid_faSpinner__);
 
 
 
 
-__WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome__["a" /* default */].library.add(__WEBPACK_IMPORTED_MODULE_2__fortawesome_fontawesome_free_solid_faChevronCircleLeft___default.a);
-__WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome__["a" /* default */].library.add(__WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid_faSpinner___default.a);
+__WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome__["a" /* default */].library.add(__WEBPACK_IMPORTED_MODULE_1__fortawesome_fontawesome_free_solid_faChevronCircleLeft___default.a);
+__WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome__["a" /* default */].library.add(__WEBPACK_IMPORTED_MODULE_2__fortawesome_fontawesome_free_solid_faSpinner___default.a);
 
 /***/ }),
 /* 35 */
@@ -4929,13 +4930,13 @@ process.umask = function() { return 0; };
 /* 37 */
 /***/ (function(module, exports) {
 
-module.exports = { prefix: 'fas', iconName: 'spinner', icon: [512, 512, [], "f110", "M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"] };
+module.exports = { prefix: 'fas', iconName: 'chevron-circle-left', icon: [512, 512, [], "f137", "M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z"] };
 
 /***/ }),
 /* 38 */
 /***/ (function(module, exports) {
 
-module.exports = { prefix: 'fas', iconName: 'chevron-circle-left', icon: [512, 512, [], "f137", "M256 504C119 504 8 393 8 256S119 8 256 8s248 111 248 248-111 248-248 248zM142.1 273l135.5 135.5c9.4 9.4 24.6 9.4 33.9 0l17-17c9.4-9.4 9.4-24.6 0-33.9L226.9 256l101.6-101.6c9.4-9.4 9.4-24.6 0-33.9l-17-17c-9.4-9.4-24.6-9.4-33.9 0L142.1 239c-9.4 9.4-9.4 24.6 0 34z"] };
+module.exports = { prefix: 'fas', iconName: 'spinner', icon: [512, 512, [], "f110", "M304 48c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-48 368c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zm208-208c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48zM96 256c0-26.51-21.49-48-48-48S0 229.49 0 256s21.49 48 48 48 48-21.49 48-48zm12.922 99.078c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.491-48-48-48zm294.156 0c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48c0-26.509-21.49-48-48-48zM108.922 60.922c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.491-48-48-48z"] };
 
 /***/ }),
 /* 39 */
@@ -5822,9 +5823,10 @@ class PaymentFormView extends __WEBPACK_IMPORTED_MODULE_0__base_view__["a" /* de
 		__WEBPACK_IMPORTED_MODULE_1__constants__["a" /* default */].CMCCLIENT = new __WEBPACK_IMPORTED_MODULE_2__services_coinmarketcap_client__["a" /* CoinMarketCapClient */](
 			__WEBPACK_IMPORTED_MODULE_5__ui_payment_form_elems__["a" /* default */].total.elem, 
 			__WEBPACK_IMPORTED_MODULE_5__ui_payment_form_elems__["a" /* default */].amount.elem
-		); // todo: refactor this and the one in ./ui/events
+		);
 
 		this.elems.total.elem.dispatchEvent(new Event('input'));
+		
 	}
 
 	destroy() {
@@ -5837,6 +5839,10 @@ class PaymentFormView extends __WEBPACK_IMPORTED_MODULE_0__base_view__["a" /* de
 
 	show() {
 		super.show();
+
+		if (this.elems.publicKey.elem.value.length > 0) {
+			this.elems.publicKey.elem.dispatchEvent(new Event('blur'));	
+		}
 	}
 
 	update() {

@@ -42,7 +42,7 @@ function create(options) {
 		//constants.DTO.payment.from = elems.publicKey.elem.value;
 		constants.DTO.payment.to = options.destinationKey;
 
-		nextView();
+		showView('PaymentFormView');
 
 		setTimeout(function() {
 			document.querySelector('.stellar_checkout_overlay').classList.add('loaded');
@@ -64,23 +64,20 @@ function createSubmitHandler(callBack) {
 	};
 };
 
- // todo: set boundaries
-
 export function prevView() {
 	if (viewState.currentView) {
 		viewState.currentView.hide();
 	}
-	viewState.currentIndex = viewState.currentIndex <= 0 ? 0 : viewState.currentIndex--;
+	viewState.currentIndex = viewState.currentIndex <= 0 ? 0 : viewState.currentIndex-1;
 	viewState.currentView = viewState.views[viewState.currentIndex].view;
 	viewState.currentView.show();
-	console.log(viewState);
 }
 
 export function nextView() {
 	if (viewState.currentView) {
 		viewState.currentView.hide();
 	}
-	viewState.currentIndex = viewState.currentIndex >= viewState.views.length-1 ? viewState.views.length-1 : viewState.currentIndex++;
+	viewState.currentIndex = viewState.currentIndex >= viewState.views.length-1 ? viewState.views.length-1 : viewState.currentIndex+1;
 	viewState.currentView = viewState.views[viewState.currentIndex].view;
 	viewState.currentView.show();
 }
@@ -96,9 +93,7 @@ export function showView(viewName) {
 		viewState.currentIndex = viewState.views.indexOf(vw);
 		viewState.currentView = vw.view;
 		viewState.currentView.show();
-		console.log(viewState);
 	}
-
 }
 
 export default {

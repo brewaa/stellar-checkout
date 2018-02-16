@@ -72,6 +72,8 @@ function receivePayment(dto, callback) {
 	    console.error('Error in payment stream');
 	  }
 	});
+
+	return closeStream;
 };
 
 function setNetwork(env) {
