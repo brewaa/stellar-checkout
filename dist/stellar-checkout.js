@@ -2876,7 +2876,6 @@ function onValidateAmount(e) {
 };
 
 function onValidatePublicKey(e) {
-	console.log('123');
 	__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].DTO.payment.from = e.target.value;
 	Object(__WEBPACK_IMPORTED_MODULE_1__validate__["a" /* toggleValidationFeedback */])(e.target, Object(__WEBPACK_IMPORTED_MODULE_1__validate__["c" /* validatePublicKey */])(e.target.value));
 };
