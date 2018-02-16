@@ -70,16 +70,17 @@ export function prevView() {
 	if (viewState.currentView) {
 		viewState.currentView.hide();
 	}
-	viewState.currentIndex--;
+	viewState.currentIndex = viewState.currentIndex <= 0 ? 0 : viewState.currentIndex--;
 	viewState.currentView = viewState.views[viewState.currentIndex].view;
 	viewState.currentView.show();
+	console.log(viewState);
 }
 
 export function nextView() {
 	if (viewState.currentView) {
 		viewState.currentView.hide();
 	}
-	viewState.currentIndex++;
+	viewState.currentIndex = viewState.currentIndex >= viewState.views.length-1 ? viewState.views.length-1 : viewState.currentIndex++;
 	viewState.currentView = viewState.views[viewState.currentIndex].view;
 	viewState.currentView.show();
 }
@@ -88,15 +89,16 @@ export function showView(viewName) {
 	var vw = viewState.views.find(function(el) {
 		return el.name == viewName;
 	});
-	var idx = viewState.views.indexOf(vw);
-	if (vw !== -1) {
+	if (vw) {
 		if (viewState.currentView) {
 			viewState.currentView.hide();
 		}
-		viewState.currentIndex = idx;
+		viewState.currentIndex = viewState.views.indexOf(vw);
 		viewState.currentView = vw.view;
 		viewState.currentView.show();
+		console.log(viewState);
 	}
+
 }
 
 export default {

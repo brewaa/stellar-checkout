@@ -1433,12 +1433,11 @@ function showView(viewName) {
 	var vw = __WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].views.find(function(el) {
 		return el.name == viewName;
 	});
-	var idx = __WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].views.indexOf(vw);
-	if (vw !== -1) {
+	if (vw) {
 		if (__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentView) {
 			__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentView.hide();
 		}
-		__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentIndex = idx;
+		__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentIndex = __WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].views.indexOf(vw);
 		__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentView = vw.view;
 		__WEBPACK_IMPORTED_MODULE_11__view_state__["a" /* default */].currentView.show();
 	}
@@ -6127,7 +6126,6 @@ class PaymentAwaitingView extends __WEBPACK_IMPORTED_MODULE_0__base_view__["a" /
 			var i = 0,
 			increment = 2000,
 			interval = setInterval(function() {
-				console.log(statusMsgs[i]);
 				__WEBPACK_IMPORTED_MODULE_3__ui_payment_awaiting_elems__["a" /* default */].statusElem.elem.innerHTML = statusMsgs[i];
 				if (i == statusMsgs.length-1) {
 					clearInterval(interval);
