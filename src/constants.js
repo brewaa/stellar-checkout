@@ -11,6 +11,7 @@ export default {
 		env: null,
 		invoice: {
 			currency: 'USD',
+			id: null,
 			total: null
 		},
 		payment: {

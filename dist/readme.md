@@ -1,5 +1,5 @@
 # StellarCheckout
 
-This packages targets the browser. It makes use of the window object so it won't work in a pure node environment without some sorcery.
+This package targets the browser. Created for the Stellar Build Challenge Mar 2018.
 
 See https://github.com/brewaa/stellar-checkout#readme for full readme.

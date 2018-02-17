@@ -39,7 +39,7 @@ export class PaymentFormView extends BaseView {
 		super.show();
 
 		if (this.elems.publicKey.elem.value.length > 0) {
-			this.elems.publicKey.elem.dispatchEvent(new Event('blur'));	
+			this.elems.publicKey.elem.dispatchEvent(new Event('input'));	
 		}
 	}
 

@@ -1,6 +1,6 @@
 import constants from '../constants';
 import formatter from '../utils/formatter';
-import http from '../utils/http';
+import {httpRequest} from '../utils/http';
 import {replace} from '../utils/string';
 
 export function CoinMarketCapClient(totalElem, amountElem) {
@@ -21,7 +21,7 @@ export function CoinMarketCapClient(totalElem, amountElem) {
 CoinMarketCapClient.prototype.fetch = function() {
 	var self = this;
 	self.showProgress();
-	return http.request('GET', self.url, { currency: constants.DTO.invoice.currency }, '', true)
+	return httpRequest('GET', self.url, { currency: constants.DTO.invoice.currency })
 	.then(function(response) {
 		if (response) {
 			var data = JSON.parse(response);

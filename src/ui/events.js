@@ -1,8 +1,12 @@
 import constants from '../constants';
+import formatter from '../utils/formatter';
 import {toggleValidationFeedback, validateAmount, validatePublicKey, validateTotal} from './validate';
+import {replace} from '../utils/string';
 
 export function onValidateAmount(e) {
-	constants.DTO.payment.amount = e.target.value;
+	var amt = e.target.value;
+	var formattedAmount = replace(formatter.format(formatter.FORMATS.DECIMAL7, amt), ',', '');
+	constants.DTO.payment.amount = formattedAmount;
 	toggleValidationFeedback(e.target, validateAmount());
 };
 
