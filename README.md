@@ -57,7 +57,7 @@ npm i --save-dev stellar-checkout
   	type: String,
   	required: true
   },
-  env: {		// This controls which Stellar network to use; Use 'production' for mainnet. Any value other than production will result in using test-net. Options: [development|staging|production];
+  env: {		// This controls which Stellar network to use; Use 'production' for mainnet. Any value other than production will result in using test-net. Options: [production|*];
   	type: String,
   	required: false
   },
