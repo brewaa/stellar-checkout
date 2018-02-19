@@ -76,13 +76,14 @@
 
 .stellar_checkout_header .alt {
     display: flex;
+    min-height: 10rem;
     width: 100%;
 }
 
 .stellar_checkout_header .alt > div {
-    flex-basis: 50%;
     align-items: center;
     display: flex;
+    flex-basis: 50%;
     font-family: monospace, monospace;
     justify-content: center;
 }
@@ -110,6 +111,10 @@
 .stellar_checkout_header .qr_wrap .qrcode {
     max-height: 10rem;
     max-width: 10rem;
+}
+
+.stellar_checkout_header .qr_wrap .spinner {
+    font-size: 2rem;
 }
 
 .stellar_checkout_header .status {
@@ -201,12 +206,6 @@
 	text-align: left;
 }
 
-.stellar_checkout .spinner {
-    position: absolute;
-    top: 30%;
-    right: .8rem;
-}
-
 .stellar_checkout .field label {
 	color: #a0a0a0;
     display: block;
@@ -228,12 +227,41 @@
     width: 100%;
 }
 
+.stellar_checkout .textwrap .spinner {
+    position: absolute;
+    top: 30%;
+    right: .8rem;
+}
+
+.stellar_checkout .field .txtwrap--clipboard {
+    display: flex;
+    height: 5.2rem;
+}
+
 .stellar_checkout .field .txtwrap--input {
     height: 2.8rem;
 }
 
 .stellar_checkout .field .txtwrap--picker {
     height: 2.4rem;
+}
+
+.stellar_checkout .field .clipboard {
+    align-items: center;
+    display: flex;
+    border-left: .0625rem solid #ddd;
+    flex-basis: 4rem;
+    font-size: 1rem;
+    justify-content: center;
+    position: relative;;
+}
+
+.stellar_checkout .field .clipboard_click {
+    background: transparent;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+    z-index: 2;
 }
 
 .stellar_checkout .field .txtwrap textarea {
@@ -281,8 +309,6 @@
     width: 99%;
 }
 
-
-
 .stellar_checkout .field .error {
     border: 0.0625rem solid #f80000;
     border-radius: .2rem;
@@ -307,6 +333,17 @@
 .stellar_checkout .field .error .error_msg {
     color: #f80000;
     top: 2.55rem;
+}
+
+.stellar_checkout .field .copied {
+    position: absolute;
+    top: .4rem;
+    right: .4rem;
+    background: #f8f8f8;
+    padding: .4rem;
+    border-radius: .2rem;
+    font-size: .8rem;
+    border: .0625rem solid #eee;
 }
 
 /* BUTTONS */

@@ -30,15 +30,11 @@ function checkDestinationKey(destinationKey) {
 	});
 };
 
-function checkId(id) {
+function checkMemo(memo) {
 	return new Promise(function(resolve, reject) {
-		if (!id && typeof id !== 'string') {
-			reject('id field must be a string');
+		if (memo && typeof memo !== 'string') {
+			reject('memo field must be a string');
 		}
-		// we'll truncate it
-		// if (memo.length > 28) {
-		// 	reject('id field must be 28 characters max');
-		// }
 		resolve(true);
 	});
 };
@@ -100,7 +96,7 @@ export function validateConfig(options) {
 			checkSelector(options.selector),
 			checkCurrency(options.currency),
 			checkDestinationKey(options.destinationKey),
-			checkId(options.id),
+			checkMemo(options.memo),
 			checkOnSubmit(options.onSubmit),
 			checkTotal(options.total)
 		]);

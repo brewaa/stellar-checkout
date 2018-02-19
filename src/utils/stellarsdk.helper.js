@@ -8,18 +8,17 @@ function createDto(options) {
 
 	_network = setNetwork(options.env);
 
-	var dto = constants.DTO;
-	dto.env = options.env;
-	dto.invoice.currency = options.currency;
-	dto.invoice.id = options.id;
-	dto.invoice.total = options.total;
-	dto.payment.asset = StellarSdk.Asset.native();
-	dto.payment.fee = .00001;
-	dto.payment.memo = options.id;
-	dto.payment.network = _network.network;
-	dto.payment.to = options.destinationKey;
+	constants.DTO.env = options.env;
+	constants.DTO.invoice.currency = options.currency;
+	constants.DTO.invoice.total = options.total;
+	constants.DTO.payment.asset = StellarSdk.Asset.native();
+	constants.DTO.payment.fee = .00001;
+	constants.DTO.payment.memo = options.memo || randomId(28);
+	constants.DTO.payment.memoType = StellarSdk.MemoHash;
+	constants.DTO.payment.network = _network.network;
+	constants.DTO.payment.to = options.destinationKey;
 
-	return dto;
+	return constants.DTO;
 };
 
 function buildTransaction(dto) {
@@ -44,8 +43,8 @@ function buildTransaction(dto) {
 		}));
 		if (dto.payment.memo) {
 			var memo = dto.payment.memo;
-			memo = substring(StellarSdk.StrKey.encodeSha256Hash(memo), 0, 28);
-			builder.addMemo(StellarSdk.Memo.text(memo));	
+			memo = StellarSdk.hash(memo);
+			builder.addMemo(StellarSdk.Memo.hash(memo));	
 		}
 		transaction = builder.build();
 		return transaction;
@@ -62,6 +61,7 @@ function receivePayment(dto, callback) {
 
 	var closeStream = payments.stream({
 	  onmessage: function(payment) {
+	  	console.log(payment);
 	  	if (payment.to !== accountId) {
 	      return;
 	    }
@@ -115,7 +115,7 @@ function verifyPayment(dto, payment) {
 	.then(function (result) {
 		amountIsEqual = parseFloat(dto.payment.amount) === parseFloat(payment.amount);
 		destinationKeyIsEqual = dto.payment.to === payment.to;
-		memoIsEqual = dto.payment.memo === StellarSdk.StrKey.decodeSha256Hash(result.memo).toString();
+		memoIsEqual = StellarSdk.hash(dto.payment.memo).toString('base64') === result.memo;
 		publicKeyIsEqual = dto.payment.from && payment.from === result.source_account;
 		var result = amountIsEqual && destinationKeyIsEqual && memoIsEqual && publicKeyIsEqual;
 		return result;

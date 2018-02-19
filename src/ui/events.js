@@ -1,7 +1,29 @@
 import constants from '../constants';
+import {copy} from '../utils/clipboard';
 import formatter from '../utils/formatter';
 import {toggleValidationFeedback, validateAmount, validatePublicKey, validateTotal} from './validate';
 import {replace} from '../utils/string';
+
+// let isCopying = false;
+
+export function onCopy(e) {
+    // if (isCopying) {
+    //     return;
+    // }
+    // isCopying = true;
+    var copied = copy.call(this, e.target.parentNode.parentNode.querySelector('.txt'));
+    if (copied) {
+        var elem = document.createElement('span');
+        elem.classList.add('copied');
+        elem.innerHTML = 'copied';
+        e.target.blur();
+        e.target.parentNode.parentNode.parentNode.appendChild(elem);
+        setTimeout(function() {
+            e.target.parentNode.parentNode.parentNode.removeChild(elem);
+            // isCopying = false;
+        }, 500);
+    }
+};
 
 export function onValidateAmount(e) {
 	var amt = e.target.value;

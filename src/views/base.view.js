@@ -23,8 +23,10 @@ export default class BaseView {
 		for (var key in this.elems) {
 			var item = this.elems[key];
 			item.elem = rootElems.root.elem.querySelector(item.selector);
-			for (var ev in item.events) {
-				item.elem.addEventListener(ev, item.events[ev]);
+			if (elem) {
+				for (var ev in item.events) {
+					item.elem.addEventListener(ev, item.events[ev]);
+				}
 			}
 		}
 	}

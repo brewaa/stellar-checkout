@@ -45,10 +45,6 @@ npm i --save-dev stellar-checkout
 
 ```javascript
 {
-  memo: {   // A field to record additional data related to a payment. E.g. OrderID, UserID
-    type: String,
-    required: true
-  },
   currency: {		// DefaultValue: USD; ["AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "ZAR"],
   	type: String,
   	required: false
@@ -61,6 +57,10 @@ npm i --save-dev stellar-checkout
   	type: String,
   	required: false
   },
+  memo: {   // A field to record additional data related to a payment. E.g. OrderID, UserID (Truncated to 28 characters)
+    type: String,
+    required: true
+  },  
   onSubmit: {		// Submit handler executed after a completing a transaction. Has access to error and payment data
   	type: function,
   	required: false

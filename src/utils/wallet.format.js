@@ -33,11 +33,11 @@ function toStarGazer(dto) {
 		};
 	    if (dto.payment.memo) {
 	    	result.stellar.payment.memo = {
-                "type":     'MemoText',
+                "type":     'MemoHash',
                 "value":    dto.payment.memo
             };
 	    }
-		resolve(result);
+		resolve(JSON.stringify(result));
 	});
 };
 

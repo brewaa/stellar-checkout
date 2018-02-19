@@ -24,7 +24,6 @@ export class PaymentFormView extends BaseView {
 		);
 
 		this.elems.total.elem.dispatchEvent(new Event('input'));
-		
 	}
 
 	destroy() {

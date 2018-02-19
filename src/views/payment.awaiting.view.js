@@ -10,36 +10,28 @@ export class PaymentAwaitingView extends BaseView {
 
 	constructor() {
 		super(thisElems, paymentAwaitingTemplate);
+		this.isQrGenerated = false;
 	}
 
 	create() {
 		super.create();
 
-		// QR Code
-		var qrCodeCanvas = thisElems.root.elem.querySelector('.qrcode');
-
-		QRCode.toCanvas(qrCodeCanvas, this.dto.payment.to, function (error) { // todo: standardized format that popular wallets use for payment data
-			if (error) {
-				console.error(error);
-			}
-		});
-
 		var self = this;
 
+		// Show Wallet Picker
+		thisElems.linkShowWalletPicker.elem.addEventListener('click', function() {
+			thisElems.walletPicker.elem.parentNode.parentNode.classList.toggle(constants.CLASS.hidden);
+			thisElems.walletPicker.elem.focus();
+		});
+
 		// Wallet picker
-		var walletPicker = thisElems.root.elem.querySelector('#walletPicker');
-		walletPicker.addEventListener('change', function(e) {
+		thisElems.walletPicker.elem.addEventListener('change', function(e) {
+			thisElems.qrCodeSpinner.elem.classList.toggle(constants.CLASS.hidden);
+			thisElems.qrCodeCanvas.elem.classList.toggle(constants.CLASS.hidden);
 			var el = e.target;
-			var data = self.dto.payment.to;
 			var format = el.options[el.selectedIndex].value;
 			if (format) {
-				walletFormat[format](self.dto).then(function(result) {
-					QRCode.toCanvas(qrCodeCanvas, JSON.stringify(result), function (error) {
-						if (error) {
-							console.error(error);
-						}
-					});
-				});
+				self.generateQrCode(format);
 			}
 		});
 
@@ -56,6 +48,9 @@ export class PaymentAwaitingView extends BaseView {
 	show() {
 		super.show();
 		this.update();
+		if (!this.isQrGenerated) {
+			this.generateQrCode('envelopexdr');
+		}
 	}
 
 	update() {
@@ -63,6 +58,21 @@ export class PaymentAwaitingView extends BaseView {
 		thisElems.stellarCheckoutConfirmTo.elem.value = this.dto.payment.to;
 		thisElems.stellarCheckoutConfirmFrom.elem.value = this.dto.payment.from;
 		thisElems.stellarCheckoutConfirmAmount.elem.value = this.dto.payment.amount;
+	}
+
+	generateQrCode(format) {
+		var self = this;
+		walletFormat[format](this.dto).then(function(result) {
+			QRCode.toCanvas(thisElems.qrCodeCanvas.elem, result, function (error) {
+				if (error) {
+					console.error(error);
+				}
+				self.isQrGenerated = true;
+				thisElems.qrCodeSpinner.elem.classList.toggle(constants.CLASS.hidden);
+				thisElems.qrCodeCanvas.elem.classList.toggle(constants.CLASS.hidden);
+				thisElems.walletPicker.elem.parentNode.parentNode.classList.add(constants.CLASS.hidden);
+			});
+		});
 	}
 
 	showProgress() {
