@@ -54,6 +54,14 @@ function buildTransaction(dto) {
 function receivePayment(dto, callback) {
 	var server = new StellarSdk.Server(_network.uri);
 	var accountId = dto.payment.to;
+	
+	var lastTransaction = server
+		.transactions()
+		.limit(1)
+		.order('desc');
+
+	console.log(lastTransaction);
+
 	var payments = server
 		.payments()
 		.forAccount(accountId)
