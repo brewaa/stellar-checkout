@@ -54,44 +54,53 @@ function buildTransaction(dto) {
 function receivePayment(dto, callback) {
 	var server = new StellarSdk.Server(_network.uri);
 	var accountId = dto.payment.to;
-	
-	var lastTransaction = server
-		.transactions()
-		.limit(1)
-		.order('desc');
+	var now = new Date();
+	var blockHeight;
 
-	console.log(lastTransaction);
+	server.payments()
+	.limit(1)
+	.order('desc')
+	.call()
+	.then(function(response) {
+		return response.records[0].transaction();
+	})
+	.then(function(lastTransaction) {
+		blockHeight = lastTransaction.ledger_attr;
 
-	var payments = server
+		var payments = server
 		.payments()
 		.forAccount(accountId)
 		.cursor('now');
 
-	var closeStream = payments.stream({
-	  onmessage: function(payment) {
-	  	console.log(payment);
-	  	if (payment.to !== accountId) {
-	      return;
-	    }
-	    var asset = (payment.asset_type === 'native') ? 'lumens' : payment.asset_code + ':' + payment.asset_issuer;
-	    
-	    verifyPayment(dto, payment)
-	    .then(function(result) {
-	    	if (result) {
-	    		callback.call(this, null, payment);	
-	    		closeStream();
-	    	}
-    		else {
-    			throw new Error('payment received. it wasn\'t our payment though...');
-    		}
-	    });
-	  },
-	  onerror: function(error) {
-	    console.error('Error in payment stream');
-	  }
-	});
+		return payments;
 
-	return closeStream;
+	}).then(function(payments) {
+
+		var closeStream = payments.stream({
+		  onmessage: function(payment) {
+		  	if (payment.to !== accountId) {
+		      return;
+		    }
+		    var asset = (payment.asset_type === 'native') ? 'lumens' : payment.asset_code + ':' + payment.asset_issuer;
+		    
+		    verifyPayment(now, blockHeight, dto, payment)
+		    .then(function(result) {
+		    	if (result) {
+		    		callback.call(this, null, payment);	
+		    		closeStream();
+		    	}
+	    		else {
+	    			throw new Error('payment received. it wasn\'t our payment though...');
+	    		}
+		    });
+		  },
+		  onerror: function(error) {
+		    console.error('Error in payment stream');
+		  }
+		});
+
+		return closeStream;
+	});
 };
 
 function setNetwork(env) {
@@ -110,11 +119,13 @@ function setNetwork(env) {
 	};
 };
 
-function verifyPayment(dto, payment) {
+function verifyPayment(now, blockHeight, dto, payment) {
 	var amountIsEqual = false;
+	var blockHeightIsGood = false;
 	var destinationKeyIsEqual = false;
 	var memoIsEqual = false;
 	var publicKeyIsEqual = false;
+	var timeLooksGood = false;
 	var server = new StellarSdk.Server(_network.uri);
 
 	return server.transactions()
@@ -122,10 +133,12 @@ function verifyPayment(dto, payment) {
 	.call()
 	.then(function (result) {
 		amountIsEqual = parseFloat(dto.payment.amount) === parseFloat(payment.amount);
+		blockHeightIsGood = result.ledger_attr > blockHeight;
 		destinationKeyIsEqual = dto.payment.to === payment.to;
 		memoIsEqual = StellarSdk.hash(dto.payment.memo).toString('base64') === result.memo;
 		publicKeyIsEqual = dto.payment.from && payment.from === result.source_account;
-		var result = amountIsEqual && destinationKeyIsEqual && memoIsEqual && publicKeyIsEqual;
+		timeLooksGood = Date.parse(result.created_at) >= now.getTime();
+		var result = amountIsEqual && blockHeightIsGood && destinationKeyIsEqual && memoIsEqual && publicKeyIsEqual && timeLooksGood;
 		return result;
 	})
 	.catch(function (err) {
