@@ -5997,7 +5997,8 @@ class PaymentAwaitingView extends __WEBPACK_IMPORTED_MODULE_3__base_view__["a" /
 		var self = this;
 
 		// Show Wallet Picker
-		__WEBPACK_IMPORTED_MODULE_4__payment_awaiting_elems__["a" /* default */].linkShowWalletPicker.elem.addEventListener('click', function() {
+		__WEBPACK_IMPORTED_MODULE_4__payment_awaiting_elems__["a" /* default */].linkShowWalletPicker.elem.addEventListener('click', function(e) {
+			e.preventDefault();
 			__WEBPACK_IMPORTED_MODULE_4__payment_awaiting_elems__["a" /* default */].walletPicker.elem.parentNode.parentNode.classList.toggle(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].CLASS.hidden);
 			__WEBPACK_IMPORTED_MODULE_4__payment_awaiting_elems__["a" /* default */].walletPicker.elem.focus();
 		});

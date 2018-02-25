@@ -19,7 +19,8 @@ export class PaymentAwaitingView extends BaseView {
 		var self = this;
 
 		// Show Wallet Picker
-		thisElems.linkShowWalletPicker.elem.addEventListener('click', function() {
+		thisElems.linkShowWalletPicker.elem.addEventListener('click', function(e) {
+			e.preventDefault();
 			thisElems.walletPicker.elem.parentNode.parentNode.classList.toggle(constants.CLASS.hidden);
 			thisElems.walletPicker.elem.focus();
 		});
