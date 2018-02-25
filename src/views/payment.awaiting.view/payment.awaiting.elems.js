@@ -1,21 +1,21 @@
-import {prevView} from './index';
-import {onCopy} from './events';
+import {prevView} from '../../ui/index';
+import {onCopy} from './payment.awaiting.events';
 
 export default {
+	xdrTest: {
+		elem: null,
+		selector: '#xdrTest'
+	},
 	root: {
 		elem: null,
-		selector: '.stellar_checkout_payment_awaiting'
-	},
-	header: {
-		selector: '.stellar_checkout_header',
-		elem: null
+		selector: '#paymentAwaitingView'
 	},
 	statusElem: {
-		selector: '.stellar_checkout_header .alt .status',
+		selector: '#paymentAwaitingStatus',
 		elem: null
 	},
 	goBackLink: {
-		selector: '.stellar_checkout_goback',
+		selector: '#paymentAwaitingGoBack',
 		elem: null,
 		events: {
 			click: prevView

@@ -1,13 +1,12 @@
 import constants from '../constants';
-
+import {setButtonState} from './buttons';
 import css from '../assets/css/style.css';
 import {createElementFromHTML} from '../utils/dom';
 import elems from './elems';
-import paymentFormElems from './payment.form.elems';
 import fonts from './fonts';
-import {mainTemplate} from './template';
+import mainTemplate from '../templates/main.template.html';
 
-import {setButtonState} from './buttons';
+import paymentFormElems from '../views/payment.form.view/payment.form.elems';
 
 import {PaymentFormView} from '../views/payment.form.view';
 import {PaymentAwaitingView} from '../views/payment.awaiting.view';
@@ -17,17 +16,16 @@ import viewState from './view.state';
 
 function create(options) {
 	return new Promise(function(resolve, reject) {
+		// Get the target elem
 		var targetElem = elems.targetElem.elem;
 		if (!targetElem) {
 			return;
 		}
-
 		targetElem.classList.add(elems.targetElem.cssClass);
-		
-		targetElem.appendChild(createElementFromHTML('div', mainTemplate()));
+		targetElem.appendChild(createElementFromHTML('div', mainTemplate));
 
+		// Get the stellar checkout root elements from main template html
 		var root = targetElem.querySelector(elems.root.selector);
-		
 		elems.root.elem = root;
 		
 		// Initialize the views
@@ -35,18 +33,18 @@ function create(options) {
 		viewState.views.push({ name: 'PaymentAwaitingView', view: new PaymentAwaitingView() });
 		viewState.views.push({ name: 'PaymentCompleteView', view: new PaymentCompleteView() });
 
-
+		// Set initial DTO state
 		constants.DTO.invoice.total = options.total;
 		constants.DTO.invoice.currency = options.currency;
-		// constants.DTO.payment.amount = constants.CMCCLIENT.priceInLumens;
-		//constants.DTO.payment.from = elems.publicKey.elem.value;
 		constants.DTO.payment.to = options.destinationKey;
 
+		// Show the first view
 		showView('PaymentFormView');
 
+		// Hide the overlay
 		setTimeout(function() {
-			document.querySelector('.stellar_checkout_overlay').classList.add('loaded');
-			document.querySelector('.stellar_checkout_form').classList.add('loaded');
+			document.querySelector('.stellar_checkout_overlay').classList.add(constants.CLASS.loaded);
+			document.querySelector('.stellar_checkout_form').classList.add(constants.CLASS.loaded);
 		}, 1000);
 
 		resolve();

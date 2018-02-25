@@ -57,7 +57,7 @@ npm i --save-dev stellar-checkout
   	type: String,
   	required: false
   },
-  memo: {   // A field to record additional data related to a payment. E.g. OrderID, UserID (Truncated to 28 characters)
+  memo: {   // A field to record additional data related to a payment. E.g. OrderID, UserID
     type: String,
     required: true
   },  

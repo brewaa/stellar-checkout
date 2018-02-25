@@ -1,73 +1,68 @@
-import {setButtonState} from './buttons';
 import constants from '../constants';
-import elems from './payment.form.elems';
 import {ValidationMessage} from './validationMessage';
 
 export function toggleValidationFeedback(target, test) {
+	var elemErrMsg = target.parentNode.querySelector(constants.SELECTOR.fieldErrorMessage);
+	var parentNode = target.parentNode;
 	if (!test.result) {
-		target.parentNode.classList.remove('valid');
-		target.parentNode.classList.add('error');
-		target.parentNode.querySelector('.error_msg').innerHTML = test.errors[0].msg;
+		parentNode.classList.remove(constants.CLASS.valid);
+		parentNode.classList.add(constants.CLASS.error);
+		elemErrMsg.innerHTML = test.errors[0].msg;
 	} else {
-		target.parentNode.classList.add('valid');
-		target.parentNode.classList.remove('error');
-		target.parentNode.querySelector('.error_msg').innerHTML = '';
-	}
-	var formIsValid = validateTransactionDto(constants.DTO);
-	if (formIsValid.result) {
-		setButtonState(elems.submitButton.elem, constants.SUBMIT_BUTTON_STATE.NORMAL);
-	} else {
-		setButtonState(elems.submitButton.elem, constants.SUBMIT_BUTTON_STATE.DISABLED);
+		parentNode.classList.add(constants.CLASS.valid);
+		parentNode.classList.remove(constants.CLASS.error);
+		elemErrMsg.innerHTML = '';
 	}
 };
 
-export function validateAmount() {
+export function validateAmount(target) {
 	var result = {
 		errors: [],
 		result: true
 	};
 	var amt = constants.DTO.payment.amount;
 	if (isNaN(amt)) {
-		result.errors.push(new ValidationMessage('amount is not a number', elems.amount));
+		result.errors.push(new ValidationMessage('amount is not a number', target));
 		result.result = false;
 	}
 	if (amt <= 0) {
-		result.errors.push(new ValidationMessage('amount must be greater than zero', elems.amount));
+		result.errors.push(new ValidationMessage('amount must be greater than zero', target));
 		result.result = false;
 	}
 	return result;
 };
 
-export function validatePublicKey(key) {
+export function validatePublicKey(target) {
 	var result = {
 		errors: [],
 		result: true
 	};
+	var key = constants.DTO.payment.from;
 	if (!key || !window.StellarSdk.StrKey.isValidEd25519PublicKey(key)) {
-		result.errors.push(new ValidationMessage('public key is invalid'));
+		result.errors.push(new ValidationMessage('public key is invalid'), target);
 		result.result = false;
 	}
 	return result;
 };
 
-export function validateTotal() {
+export function validateTotal(target) {
 	var result = {
 		errors: [],
 		result: true
 	};
 	var total = constants.DTO.invoice.total;
 	if (isNaN(total)) {
-		result.errors.push(new ValidationMessage('total is not a number', elems.total));
+		result.errors.push(new ValidationMessage('total is not a number', target));
 		result.result = false;
 	}
 	if (total <= 0) {
-		result.errors.push(new ValidationMessage('total must be greater than zero', elems.total));
+		result.errors.push(new ValidationMessage('total must be greater than zero', target));
 		result.result = false;
 	}
 	return result;
 };
 
-export function validateTransactionDto() {
+export function validateTransactionDto(target) {
 	var result = {
 		errors: [],
 		result: true

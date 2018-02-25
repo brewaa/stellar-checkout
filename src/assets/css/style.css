@@ -31,7 +31,7 @@
     width: 100%;
 }
 
-.stellar_checkout_overlay.loaded {
+.stellar_checkout_overlay.stellar_checkout_loaded {
     opacity: 0;
     transform: scale3d(0, 0, 0);
 }
@@ -55,7 +55,7 @@
     padding: 1rem;
 }
 
-.stellar_checkout_header .logo .rocket {
+.stellar_checkout_header .stellar_checkout_logo .stellar_checkout_rocket {
     background: #fff;
     border: .0625rem solid #eee;
     border-radius: .4rem;
@@ -66,7 +66,7 @@
     width: 5.6rem;
 }
 
-.stellar_checkout_header .logo .app_name {
+.stellar_checkout_header .stellar_checkout_logo .stellar_checkout_app_name {
     display: block;
     padding: .4rem;
     text-transform: uppercase;
@@ -74,13 +74,13 @@
     font-family: monospace, monospace;
 }
 
-.stellar_checkout_header .alt {
+.stellar_checkout_header .stellar_checkout_header_alt {
     display: flex;
     min-height: 10rem;
     width: 100%;
 }
 
-.stellar_checkout_header .alt > div {
+.stellar_checkout_header .stellar_checkout_header_alt > div {
     align-items: center;
     display: flex;
     flex-basis: 50%;
@@ -88,36 +88,36 @@
     justify-content: center;
 }
 
-.stellar_checkout_header .qr_wrap,
-.stellar_checkout_header .status {
+.stellar_checkout_header .stellar_checkout_qr_wrap,
+.stellar_checkout_header .stellar_checkout_status {
 }
 
     @media screen and (min-device-width: 636px) {
         .stellar_checkout_header {
             flex-direction: row;
         }
-        .stellar_checkout_header .logo {
+        .stellar_checkout_header .stellar_checkout_logo {
             flex-basis: 33%;
         }
-        .stellar_checkout_header .alt {
+        .stellar_checkout_header .stellar_checkout_header_alt {
             flex-grow: 1;
             width: auto;
         }
-        .stellar_checkout_header .alt > div {
+        .stellar_checkout_header .stellar_checkout_header_alt > div {
             flex-basis: 50%;
         }
     }
 
-.stellar_checkout_header .qr_wrap .qrcode {
+.stellar_checkout_header .stellar_checkout_qr_wrap .stellar_checkout_qrcode {
     max-height: 10rem;
     max-width: 10rem;
 }
 
-.stellar_checkout_header .qr_wrap .spinner {
+.stellar_checkout_header .stellar_checkout_qr_wrap .stellar_checkout_spinner {
     font-size: 2rem;
 }
 
-.stellar_checkout_header .status {
+.stellar_checkout_header .stellar_checkout_status {
     background: #f8f8f8;
     margin: .8rem .8rem .8rem 0;
     text-transform: uppercase;
@@ -135,7 +135,7 @@
     background-position-y: 36%;
 }
 
-.stellar_checkout_payment_complete .message {
+.stellar_checkout_payment_complete .stellar_checkout_message {
     position: absolute;
     top: 60%;
     left: 50%;
@@ -160,7 +160,7 @@
     background: rgba(0, 0, 0, .76);
 }
 
-.stellar_checkout_error .inner {
+.stellar_checkout_error .stellar_checkout_inner {
     background: #fff;
     border-radius: .2rem;
     border: .125rem solid #f80000;
@@ -176,13 +176,13 @@
     margin-left: 4%;
 }
 
-.stellar_checkout_error .close {
+.stellar_checkout_error .stellar_checkout_error_close {
     position: absolute;
     top: .6rem;
     right: 1.2rem;
 }
 
-.stellar_checkout_error .error_message {
+.stellar_checkout_error .stellar_checkout_error_message {
     display: flex;
     align-items: center;
     justify-items: center;
@@ -194,19 +194,19 @@
     display: none;
 }
 
-.stellar_checkout_form.loaded {
+.stellar_checkout_form.stellar_checkout_loaded {
     display: block;
 }
 
 /* FORM FIELDS */
 
-.stellar_checkout .field {
+.stellar_checkout .stellar_checkout_field {
 	padding: .8rem .4rem;
     position: relative;
 	text-align: left;
 }
 
-.stellar_checkout .field label {
+.stellar_checkout .stellar_checkout_field label {
 	color: #a0a0a0;
     display: block;
     font-size: .8rem;
@@ -216,7 +216,7 @@
     width: 100%;
 }
 
-.stellar_checkout .field .txtwrap {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_txtwrap {
 	background: #f8f8f8;
     border: .0625rem solid #eee;
     border-radius: .2rem;
@@ -227,26 +227,26 @@
     width: 100%;
 }
 
-.stellar_checkout .txtwrap .spinner {
+.stellar_checkout .stellar_checkout_txtwrap .spinner {
     position: absolute;
     top: 30%;
     right: .8rem;
 }
 
-.stellar_checkout .field .txtwrap--clipboard {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_txtwrap--clipboard {
     display: flex;
     height: 5.2rem;
 }
 
-.stellar_checkout .field .txtwrap--input {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_txtwrap--input {
     height: 2.8rem;
 }
 
-.stellar_checkout .field .txtwrap--picker {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_txtwrap--picker {
     height: 2.4rem;
 }
 
-.stellar_checkout .field .clipboard {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_clipboard {
     align-items: center;
     display: flex;
     border-left: .0625rem solid #ddd;
@@ -256,7 +256,7 @@
     position: relative;;
 }
 
-.stellar_checkout .field .clipboard_click {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_clipboard_click {
     background: transparent;
     height: 100%;
     position: absolute;
@@ -264,13 +264,13 @@
     z-index: 2;
 }
 
-.stellar_checkout .field .txtwrap textarea {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_txtwrap textarea {
     overflow: hidden;
     resize: none;
 }
 
-.stellar_checkout .field input[type=text],
-.stellar_checkout .field textarea {
+.stellar_checkout .stellar_checkout_field input[type=text],
+.stellar_checkout .stellar_checkout_field textarea {
     background: transparent;
     border: 0;
     font-family: monospace, monospace;
@@ -282,11 +282,11 @@
     text-align: right;
 }
 
-.stellar_checkout .field textarea {
+.stellar_checkout .stellar_checkout_field textarea {
     text-align: left;
 }
 
-.stellar_checkout .field .currency {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_currency {
 	border-right: .0625rem solid #ddd;
     color: #a0a0a0;
 	display: block;
@@ -299,7 +299,7 @@
     width: 4rem;
 }
 
-.stellar_checkout .field .picker {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_picker {
     background: transparent;
     border: 0;
     font-size: 1rem;
@@ -309,17 +309,17 @@
     width: 99%;
 }
 
-.stellar_checkout .field .error {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_error {
     border: 0.0625rem solid #f80000;
     border-radius: .2rem;
 }
 
-.stellar_checkout .field .valid {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_valid {
     border: 0.0625rem solid #05ff05;
     border-radius: .2rem;
 }
 
-.stellar_checkout .field .error_msg {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_error_message {
     border-radius: .4rem;
     left: 0;
     padding: .4rem .4rem;
@@ -330,12 +330,12 @@
     z-index: -1;
 }
 
-.stellar_checkout .field .error .error_msg {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_error .stellar_checkout_error_message {
     color: #f80000;
     top: 2.55rem;
 }
 
-.stellar_checkout .field .copied {
+.stellar_checkout .stellar_checkout_field .stellar_checkout_copied {
     position: absolute;
     top: .4rem;
     right: .4rem;
@@ -348,11 +348,11 @@
 
 /* BUTTONS */
 
-.stellar_checkout .button_row {
+.stellar_checkout .stellar_checkout_button_row {
 	padding: .8rem .4rem;
 }
 
-.stellar_checkout .button_row button {
+.stellar_checkout .stellar_checkout_button_row button {
 	background: #08b5e5;
     border-color: #08b5e5;
     border-radius: 3px;
@@ -385,7 +385,7 @@
 
 /* PAYMENT AWAITING */
 
-.stellar_checkout_payment_awaiting .transaction_info {
+.stellar_checkout_payment_awaiting .stellar_checkout_transaction_info {
     line-height: 1.2;
     color: #a0a0a0;
     font-family: monospace, monospace;

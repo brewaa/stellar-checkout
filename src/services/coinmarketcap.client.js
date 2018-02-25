@@ -1,5 +1,5 @@
 import constants from '../constants';
-import formatter from '../utils/formatter';
+import {formatDecimal7} from '../utils/formatter';
 import {httpRequest} from '../utils/http';
 import {replace} from '../utils/string';
 
@@ -11,8 +11,7 @@ export function CoinMarketCapClient(totalElem, amountElem) {
 	this.total = constants.DTO.invoice.total;
 	this.data = [];
 	this.priceInLumens = null;
-	this.spinner = amountElem.parentNode.querySelector('.spinner');
-
+	this.spinner = amountElem.parentNode.querySelector(constants.SELECTOR.spinner);
 	if (this.total && this.total.length > 0) {
 		this.fetch();
 	}
@@ -29,7 +28,7 @@ CoinMarketCapClient.prototype.fetch = function() {
 				var lumenPrice = data[0]['price_' + constants.DTO.invoice.currency.toLowerCase()];
 				if (lumenPrice) {
 					self.priceInLumens = self.calcPriceInLumens(constants.DTO.invoice.total, lumenPrice);
-					var formattedPrice = replace(formatter.format(formatter.FORMATS.DECIMAL7, self.priceInLumens), ',', '');
+					var formattedPrice = replace(formatDecimal7(self.priceInLumens), ',', '');
 					self.amountElem.setAttribute('value', formattedPrice);
 					self.amountElem.setAttribute('disabled', 'disabled');
 					self.amountElem.dispatchEvent(new Event('input'));
@@ -38,9 +37,6 @@ CoinMarketCapClient.prototype.fetch = function() {
 				self.data = data;
 			}
 			self.hideProgress();	
-		}
-		else {
-
 		}
 	});
 };

@@ -1,13 +1,11 @@
-import BaseView from './base.view';
-import constants from '../constants';
+import constants 				from '../../constants';
+import {CoinMarketCapClient} 	from '../../services/coinmarketcap.client';
+import {createElementFromHTML} 	from '../../utils/dom';
+import rootElems 				from '../../ui/elems';
 
-import {CoinMarketCapClient} from '../services/coinmarketcap.client';
-import {createElementFromHTML} from '../utils/dom';
-
-import rootElems from '../ui/elems';
-import thisElems from '../ui/payment.form.elems';
-
-import {paymentFormTemplate} from '../ui/template';
+import BaseView 			from '../base.view';
+import thisElems 			from './payment.form.elems';
+import paymentFormTemplate 	from './templates/payment.form.mustache.html';
 
 export class PaymentFormView extends BaseView {
 

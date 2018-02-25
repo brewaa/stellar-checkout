@@ -1,10 +1,10 @@
-import BaseView from './base.view';
-import constants from '../constants';
-import rootElems from '../ui/elems';
-import thisElems from '../ui/payment.awaiting.elems';
-import {paymentAwaitingTemplate} from '../ui/template';
+import constants from '../../constants';
+import walletFormat from '../../utils/wallet.format';
 import QRCode from 'qrcode';
-import walletFormat from '../utils/wallet.format';
+// import {paymentAwaitingTemplate} from '../ui/template';
+import BaseView from '../base.view';
+import thisElems from './payment.awaiting.elems';
+import paymentAwaitingTemplate from './templates/payment.awaiting.mustache.html';
 
 export class PaymentAwaitingView extends BaseView {
 
@@ -71,6 +71,8 @@ export class PaymentAwaitingView extends BaseView {
 				thisElems.qrCodeSpinner.elem.classList.toggle(constants.CLASS.hidden);
 				thisElems.qrCodeCanvas.elem.classList.toggle(constants.CLASS.hidden);
 				thisElems.walletPicker.elem.parentNode.parentNode.classList.add(constants.CLASS.hidden);
+
+				thisElems.xdrTest.elem.value = result;
 			});
 		});
 	}

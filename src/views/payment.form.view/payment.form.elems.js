@@ -1,17 +1,9 @@
-import {onValidateAmount, onValidatePrivateSeed, onValidatePublicKey, onValidateTotal} from './events';
+import {onValidateAmount, onValidatePrivateSeed, onValidatePublicKey, onValidateTotal} from './payment.form.events';
 
 export default {
 	root: {
 		elem: null,
-		selector: '.stellar_checkout_form'
-	},
-	header: {
-		selector: '.stellar_checkout_header',
-		elem: null
-	},
-	formPanel: {
-		selector: '.stellar_checkout_form',
-		elem: null
+		selector: '#paymentFormView'
 	},
 	total: {
 		selector: '#stellarCheckoutTotal',

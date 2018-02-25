@@ -5,7 +5,7 @@ export default {
 		selector: ''
 	},
 	root: {
-		selector: '.stellar_checkout',
+		selector: '#stellarCheckoutRoot',
 		elem: null
 	}
 };

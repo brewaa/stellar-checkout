@@ -13,8 +13,7 @@ export default class BaseView {
 
 	create() {
 		// Compile the mustache template
-		var template = this.template();
-		var compiledHtml = template(this.dto);
+		var compiledHtml = this.template(this.dto);
 
 		// Append the compiled HTML to the DOM
 		rootElems.root.elem.appendChild(createElementFromHTML('div', compiledHtml));

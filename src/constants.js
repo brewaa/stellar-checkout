@@ -4,7 +4,11 @@ export default {
 	},
 	CURRENCIES: ["AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "USD", "ZAR"],
 	CLASS: {
-		hidden: 'stellar_checkout_hidden'
+		copied: 'stellar_checkout_copied',
+		error: 'stellar_checkout_error',
+		hidden: 'stellar_checkout_hidden',
+		loaded: 'stellar_checkout_loaded',
+		valid: 'stellar_checkout_valid'
 	},
 	CMCCLIENT: null,
 	DTO: {
@@ -29,6 +33,11 @@ export default {
 		ERROR: 'ERROR',
 		INFO: 'INFO',
 		WARNING: 'WARNING'
+	},
+	SELECTOR: {
+		clipBoardInput: '.stellar_checkout_txt',
+		fieldErrorMessage: '.stellar_checkout_error_message',
+		spinner: '.stellar_checkout_spinner'
 	},
 	STELLAR_CHECKOUT_API_TICKER_URL: 'https://stellarcheckout.azurewebsites.net/api/tickers/stellar',
 	STELLAR_SDK_URL: 'https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/0.8.0/stellar-sdk.js',

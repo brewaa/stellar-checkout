@@ -1,6 +1,5 @@
 import constants from '../constants';
 import {randomId} from './generator'
-import {httpRequest} from './http';
 
 var _network;
 
@@ -55,7 +54,7 @@ function receivePayment(dto, callback) {
 	var server = new StellarSdk.Server(_network.uri);
 	var accountId = dto.payment.to;
 	var now = new Date();
-	var blockHeight;
+	var ledgerHeight;
 
 	server.payments()
 	.limit(1)
@@ -65,7 +64,7 @@ function receivePayment(dto, callback) {
 		return response.records[0].transaction();
 	})
 	.then(function(lastTransaction) {
-		blockHeight = lastTransaction.ledger_attr;
+		ledgerHeight = lastTransaction.ledger_attr;
 
 		var payments = server
 		.payments()
@@ -83,7 +82,7 @@ function receivePayment(dto, callback) {
 		    }
 		    var asset = (payment.asset_type === 'native') ? 'lumens' : payment.asset_code + ':' + payment.asset_issuer;
 		    
-		    verifyPayment(now, blockHeight, dto, payment)
+		    verifyPayment(now, ledgerHeight, dto, payment)
 		    .then(function(result) {
 		    	if (result) {
 		    		callback.call(this, null, payment);	
@@ -119,9 +118,9 @@ function setNetwork(env) {
 	};
 };
 
-function verifyPayment(now, blockHeight, dto, payment) {
+function verifyPayment(now, ledgerHeight, dto, payment) {
 	var amountIsEqual = false;
-	var blockHeightIsGood = false;
+	var ledgerHeightIsGood = false;
 	var destinationKeyIsEqual = false;
 	var memoIsEqual = false;
 	var publicKeyIsEqual = false;
@@ -133,12 +132,12 @@ function verifyPayment(now, blockHeight, dto, payment) {
 	.call()
 	.then(function (result) {
 		amountIsEqual = parseFloat(dto.payment.amount) === parseFloat(payment.amount);
-		blockHeightIsGood = result.ledger_attr > blockHeight;
+		ledgerHeightIsGood = result.ledger_attr > ledgerHeight;
 		destinationKeyIsEqual = dto.payment.to === payment.to;
 		memoIsEqual = StellarSdk.hash(dto.payment.memo).toString('base64') === result.memo;
 		publicKeyIsEqual = dto.payment.from && payment.from === result.source_account;
 		timeLooksGood = Date.parse(result.created_at) >= now.getTime();
-		var result = amountIsEqual && blockHeightIsGood && destinationKeyIsEqual && memoIsEqual && publicKeyIsEqual && timeLooksGood;
+		var result = amountIsEqual && ledgerHeightIsGood && destinationKeyIsEqual && memoIsEqual && publicKeyIsEqual && timeLooksGood;
 		return result;
 	})
 	.catch(function (err) {
