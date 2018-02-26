@@ -44,6 +44,7 @@ export default class BaseView {
 
 	show() {
 		if (this.elems.root) {
+			window.scrollTo(0, 0);
 			this.elems.root.elem.classList.remove(constants.CLASS.hidden);
 		}
 	}
