@@ -7,18 +7,18 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-  	<div class="head">.head</div>
-  	<div class="container">
-  		<div class="margin">.margin</div>
+  	<div id="head" class="head"></div>
+  	<div id="container" class="container">
+  		<div class="margin"></div>
   		<div class="main">
   			<form id="form">
 	  			<div id="elem"></div>
 		  	</form>
   		</div>
-  		<div class="sidebar">.sidebar</div>
+  		<div class="sidebar"></div>
   	</div>
-  	<div class="foot">.foot</div>
-  	<script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js?x=1"></script>
+  	<script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js?x=2"></script> 
+    <!--<script type="text/javascript" src="../dist/stellar-checkout.min.js?x=2"></script>-->
   	<script>
   	StellarCheckout.ui.render('#elem', {
   		total: '10',

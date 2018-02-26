@@ -43,6 +43,10 @@ table {
 
 /* end reset */
 
+html, body {
+	height: 100%;
+}
+
 body {
 	text-align: center;
 }
@@ -54,7 +58,7 @@ body {
 }
 
 .container {
-	
+	height: 100%;
 }
 
 .container .margin {
@@ -70,7 +74,7 @@ body {
 }
 
 .container .main {
-	flex-grow: 1;
+	flex-basis: 34rem;
 	padding: .4rem;
 }
 

@@ -1,7 +1,7 @@
 /* STELLAR CHECKOUT */
 
 .stellar_checkout_container {
-    height: 98vh; /* todo: ugh vh */
+    
 }
 
 .stellar_checkout {
@@ -124,7 +124,7 @@
     transition: .4s;
 }
 
-.stellar_checkout_header .status > span {
+.stellar_checkout_header .stellar_checkout_status > span {
     line-height: 1.6;
     width: 50%;
 }
@@ -227,7 +227,7 @@
     width: 100%;
 }
 
-.stellar_checkout .stellar_checkout_txtwrap .spinner {
+.stellar_checkout .stellar_checkout_txtwrap .stellar_checkout_spinner {
     position: absolute;
     top: 30%;
     right: .8rem;
