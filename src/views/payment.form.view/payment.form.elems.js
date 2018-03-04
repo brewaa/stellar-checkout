@@ -21,6 +21,10 @@ export default {
 			input: onValidateAmount
 		}
 	},
+	currencyConversionInfo: {
+		selector: '#stellarCheckoutCurrencyConversionInfo',
+		elem: null
+	},
 	publicKey: {
 		selector: '#stellarCheckoutPublicKey',
 		elem: null,

@@ -18,7 +18,8 @@ export class PaymentFormView extends BaseView {
 
 		constants.CMCCLIENT = new CoinMarketCapClient(
 			thisElems.total.elem, 
-			thisElems.amount.elem
+			thisElems.amount.elem,
+			thisElems.currencyConversionInfo.elem
 		);
 
 		this.elems.total.elem.dispatchEvent(new Event('input'));

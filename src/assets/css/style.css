@@ -299,6 +299,10 @@
     width: 4rem;
 }
 
+.stellar_checkout .stellar_checkout_field .stellar_checkout_currency_conversion_info {
+    float: right;
+}
+
 .stellar_checkout .stellar_checkout_field .stellar_checkout_picker {
     background: transparent;
     border: 0;

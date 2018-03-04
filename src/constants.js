@@ -40,7 +40,7 @@ export default {
 		spinner: '.stellar_checkout_spinner'
 	},
 	STELLAR_CHECKOUT_API_TICKER_URL: 'https://stellarcheckout.azurewebsites.net/api/tickers/stellar',
-	STELLAR_SDK_URL: 'https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/0.8.0/stellar-sdk.js',
+	STELLAR_SDK_URL: 'https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/0.8.0/stellar-sdk.min.js',
 	SUBMIT_BUTTON_STATE: {
 		DISABLED: 'DISABLED',
 		NORMAL: 'NORMAL',
