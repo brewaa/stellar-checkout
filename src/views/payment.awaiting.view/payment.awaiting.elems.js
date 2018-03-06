@@ -30,9 +30,20 @@ export default {
 		selector: '#qrCodeSpinner',
 		elem: null
 	},
+	paymentAwaitingTransactionInfo: {
+		selector: '#paymentAwaitingTransactionInfo',
+		elem: null,
+		l10nKey: 'paymentAwaitingTransactionInfo'
+	},
+	paymentAwaitingTransactionInfo1: {
+		selector: '#paymentAwaitingTransactionInfo1',
+		elem: null,
+		l10nKey: 'paymentAwaitingTransactionInfo1'
+	},
 	linkShowWalletPicker: {
 		selector: '#linkShowWalletPicker',
-		elem: null
+		elem: null,
+		l10nKey: 'changeQrCode'
 	},
 	walletPicker: {
 		selector: '#walletPicker',

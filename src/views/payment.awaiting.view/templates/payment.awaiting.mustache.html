@@ -20,7 +20,11 @@
 		</div>
 	</div>
 	<textarea id="fldXdr" class="stellar_checkout_offscreen"></textarea>
-	<div id="paymentAwaitingTransactionInfo" class="stellar_checkout_transaction_info">Complete this transaction by scanning the QR code. The QR code contains a ready to be signed XDR envelope (<a id="linkShowWalletPicker" href="#">change qrcode format</a>). Alternatively, manually create a payment with the following information:</div>
+	<div class="stellar_checkout_transaction_info">
+		<span id="paymentAwaitingTransactionInfo">Complete this transaction by scanning the QR code. The QR code contains a ready to be signed XDR envelope. </span>
+		<a id="linkShowWalletPicker" href="#">change qrcode format</a>.
+		<span id="paymentAwaitingTransactionInfo1">Alternatively, manually create a payment with the following information:</span>
+	</div>
 	<div class="stellar_checkout_field stellar_checkout_hidden">
 		<label id="walletPickerLabel" for="walletPicker">QRCode Format</label>
 		<div class="stellar_checkout_txtwrap stellar_checkout_txtwrap--picker">
