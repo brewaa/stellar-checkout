@@ -1,7 +1,6 @@
 import constants from '../../constants';
 import {copy} from '../../utils/clipboard';
-import {Localizer} from '../../utils/l10n';
-import commonLocalizations from '../../ui/l10n.common';
+import l10n from '../../l10n';
 
 let isCopying = false;
 
@@ -12,7 +11,7 @@ export function onCopy(e) {
     isCopying = true;
     var copied = copy.call(this, e.target.parentNode.parentNode.querySelector(constants.SELECTOR.clipBoardInput));
     if (copied) {
-        var l = new Localizer(constants.LANG, commonLocalizations);
+        var l = l10n.localizer;
         var elem = document.createElement('span');
         elem.classList.add(constants.CLASS.copied);
         elem.innerHTML = l.localize('copied', 'copied');

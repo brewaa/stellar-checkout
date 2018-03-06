@@ -1,7 +1,7 @@
 import constants from '../constants';
 import {createElementFromHTML} from '../utils/dom';
 import rootElems from '../ui/elems';
-import {Localizer} from '../utils/l10n'
+import l10n from '../l10n';
 
 export default class BaseView {
 
@@ -10,8 +10,12 @@ export default class BaseView {
 		this.elems = elems;
 		this.template = template;
 		this.localizations = localizations;
-		this.l = new Localizer(constants.LANG, this.localizations);
+		this.localizer = l10n.localizer;
+
+		console.log(this.localizations);
 		
+		l10n.localizer.addLocalizations(localizations);
+
 		this.create();
 	}
 
@@ -28,7 +32,7 @@ export default class BaseView {
 			var el = item.elem = rootElems.root.elem.querySelector(item.selector);
 			if (el) {
 				if (item.l10nKey && this.localizations) {
-					el.innerHTML = this.l.localize(item.l10nKey, el.innerHTML);
+					el.innerHTML = l10n.localizer.localize(item.l10nKey, el.innerHTML);
 				}
 				for (var ev in item.events) {
 					el.addEventListener(ev, item.events[ev]);

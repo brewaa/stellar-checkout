@@ -1,10 +1,10 @@
 import constants from './constants';
 import elems from './ui/elems';
+import l10n from './l10n';
 import sdkHelper from './utils/stellarsdk.helper';
 import ui from './ui';
 import {useRedirectUrl} from './utils/url';
 import {validateTransactionDto} from './ui/validate';
-
 import {setButtonState} from './ui/buttons';
 import {showPaymentError} from './ui/payment.error';
 import viewState from './ui/view.state';
@@ -13,7 +13,7 @@ export function init(options) {
 
 	var dto = sdkHelper.createDto(options);
 
-	constants.LANG = options.lang;
+	l10n.init(options.lang);
 
 	ui.create(options).then(function() {
 

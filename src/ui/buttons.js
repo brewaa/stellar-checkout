@@ -1,9 +1,8 @@
 import constants from '../constants';
-import {Localizer} from '../utils/l10n';
-import commonLocalizations from './l10n.common';
+import l10n from '../l10n';
 
 export function setButtonState(target, state)  {
-	var l = new Localizer(constants.LANG, commonLocalizations);
+	var l = l10n.localizer;
 	switch(state) {
 		case constants.SUBMIT_BUTTON_STATE.DISABLED:
 			target.setAttribute('disabled', 'disabled');

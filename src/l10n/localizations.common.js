@@ -1,4 +1,4 @@
-export default {
+export var common = {
 	'en': {
 		'buttonStateDisabled': 'Enter payment info',
 		'buttonStateNormal': 'Send payment',

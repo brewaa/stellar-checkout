@@ -1,7 +1,6 @@
 import constants from '../constants';
 import {ValidationMessage} from './validationMessage';
-import {Localizer} from '../utils/l10n';
-import commonLocalizations from './l10n.common';
+import l10n from '../l10n';
 
 export function toggleValidationFeedback(target, test) {
 	var elemErrMsg = target.parentNode.querySelector(constants.SELECTOR.fieldErrorMessage);
@@ -22,7 +21,7 @@ export function validateAmount(target) {
 		errors: [],
 		result: true
 	};
-	var l = new Localizer(constants.LANG, commonLocalizations);
+	var l = l10n.localizer;
 	var amt = constants.DTO.payment.amount;
 	if (isNaN(amt)) {
 		result.errors.push(new ValidationMessage(l.localize('validateAmountNaN', 'amount is not a number'), target));
@@ -40,7 +39,7 @@ export function validatePublicKey(target) {
 		errors: [],
 		result: true
 	};
-	var l = new Localizer(constants.LANG, commonLocalizations);
+	var l = l10n.localizer;
 	var key = constants.DTO.payment.from;
 	if (!key || !window.StellarSdk.StrKey.isValidEd25519PublicKey(key)) {
 		result.errors.push(new ValidationMessage(l.localize('validatePublicKeyInvalid', 'public key is invalid'), target));
@@ -54,7 +53,7 @@ export function validateTotal(target) {
 		errors: [],
 		result: true
 	};
-	var l = new Localizer(constants.LANG, commonLocalizations);
+	var l = l10n.localizer;
 	var total = constants.DTO.invoice.total;
 	if (isNaN(total)) {
 		result.errors.push(new ValidationMessage(l.localize('validateTotalNaN', 'total is not a number'), target));

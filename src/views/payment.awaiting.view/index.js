@@ -83,10 +83,10 @@ export class PaymentAwaitingView extends BaseView {
 		var self = this;
 		return new Promise(function(resolve) {
 			var statusMsgs = [
-				self.l.localize('transactionReceived', 'transaction received'),
-				self.l.localize('processingTransaction', 'processing transaction'),
-				self.l.localize('verifyingTransaction', 'verifying transaction'),
-				self.l.localize('paymentComplete', 'payment complete')
+				self.localizer.localize('transactionReceived', 'transaction received'),
+				self.localizer.localize('processingTransaction', 'processing transaction'),
+				self.localizer.localize('verifyingTransaction', 'verifying transaction'),
+				self.localizer.localize('paymentComplete', 'payment complete')
 			];
 			var i = 0,
 			increment = 2000,

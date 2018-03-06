@@ -1,15 +1,18 @@
-import constants from '../../constants';
-import {createElementFromHTML} from '../../utils/dom';
-import rootElems from '../../ui/elems';
+import constants 				from '../../constants';
+import {createElementFromHTML} 	from '../../utils/dom';
+import rootElems 				from '../../ui/elems';
 
-import BaseView from '../base.view';
-import thisElems from './payment.complete.elems';
-import paymentCompleteTemplate from './templates/payment.complete.mustache.html';
+import BaseView 				from '../base.view';
+import thisElems 				from './payment.complete.elems';
+import paymentCompleteL10n 		from './payment.complete.l10n.js';
+import paymentCompleteTemplate 	from './templates/payment.complete.mustache.html';
 
 export class PaymentCompleteView extends BaseView {
 
 	constructor() {
-		super(thisElems, paymentCompleteTemplate);
+		super(thisElems, paymentCompleteTemplate, paymentCompleteL10n);
+
+		console.log(thisElems);
 	}
 
 	create() {
