@@ -11,8 +11,6 @@ export class PaymentCompleteView extends BaseView {
 
 	constructor() {
 		super(thisElems, paymentCompleteTemplate, paymentCompleteL10n);
-
-		console.log(thisElems);
 	}
 
 	create() {

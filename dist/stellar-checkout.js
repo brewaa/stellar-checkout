@@ -10834,8 +10834,6 @@ class PaymentCompleteView extends __WEBPACK_IMPORTED_MODULE_3__base_view__["a" /
 
 	constructor() {
 		super(__WEBPACK_IMPORTED_MODULE_4__payment_complete_elems__["a" /* default */], __WEBPACK_IMPORTED_MODULE_6__templates_payment_complete_mustache_html___default.a, __WEBPACK_IMPORTED_MODULE_5__payment_complete_l10n_js__["a" /* default */]);
-
-		console.log(__WEBPACK_IMPORTED_MODULE_4__payment_complete_elems__["a" /* default */]);
 	}
 
 	create() {
