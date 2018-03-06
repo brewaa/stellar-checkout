@@ -1,10 +1,10 @@
 import {prevView} from '../../ui/index';
-import {onCopy} from './payment.awaiting.events';
+import {onCopyField} from './payment.awaiting.events';
 
 export default {
-	xdrTest: {
+	fldXdr: {
 		elem: null,
-		selector: '#xdrTest'
+		selector: '#fldXdr'
 	},
 	root: {
 		elem: null,
@@ -56,7 +56,7 @@ export default {
 		selector: '#stellarCheckoutConfirmToClipboard',
 		elem: null,
 		events: {
-			click: onCopy
+			click: onCopyField
 		}
 	},
 	stellarCheckoutConfirmFrom: {
@@ -72,7 +72,7 @@ export default {
 		selector: '#stellarCheckoutConfirmFromClipboard',
 		elem: null,
 		events: {
-			click: onCopy
+			click: onCopyField
 		}
 	},
 	stellarCheckoutConfirmMemo: {
@@ -88,7 +88,7 @@ export default {
 		selector: '#stellarCheckoutConfirmMemoClipboard',
 		elem: null,
 		events: {
-			click: onCopy
+			click: onCopyField
 		}
 	},
 	stellarCheckoutConfirmMemoType: {
@@ -113,7 +113,7 @@ export default {
 		selector: '#stellarCheckoutConfirmAmountClipboard',
 		elem: null,
 		events: {
-			click: onCopy
+			click: onCopyField
 		}
 	}
 };

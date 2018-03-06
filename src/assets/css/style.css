@@ -47,6 +47,7 @@
 }
 
 .stellar_checkout_header .stellar_checkout_goback {
+    cursor: pointer;
     font-size: 1.2rem;
     left: 0;
     position: absolute;
@@ -108,6 +109,7 @@
     }
 
 .stellar_checkout_header .stellar_checkout_qr_wrap .stellar_checkout_qrcode {
+    cursor: pointer;
     max-height: 10rem;
     max-width: 10rem;
 }
@@ -257,6 +259,7 @@
 
 .stellar_checkout .stellar_checkout_field .stellar_checkout_clipboard_click {
     background: transparent;
+    cursor: pointer;
     height: 100%;
     position: absolute;
     width: 100%;
@@ -398,4 +401,9 @@
 
 .stellar_checkout_hidden {
     display: none!important;
+}
+
+.stellar_checkout_offscreen {
+    left: -1000000px;
+    position: absolute;
 }

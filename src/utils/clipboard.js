@@ -9,7 +9,7 @@ export function copy(target) {
             } else {
                 result = false;
             }
-            target.setSelectionRange(0, 0);
+            // target.setSelectionRange(0, 0);
         } catch(err) {
             console.log(err);
         }

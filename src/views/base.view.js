@@ -12,8 +12,6 @@ export default class BaseView {
 		this.localizations = localizations;
 		this.localizer = l10n.localizer;
 
-		console.log(this.localizations);
-		
 		l10n.localizer.addLocalizations(localizations);
 
 		this.create();

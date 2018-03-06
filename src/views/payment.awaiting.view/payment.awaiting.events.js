@@ -4,7 +4,7 @@ import l10n from '../../l10n';
 
 let isCopying = false;
 
-export function onCopy(e) {
+export function onCopyField(e) {
     if (isCopying) {
         return;
     }

@@ -1,4 +1,5 @@
 import constants 		from '../../constants';
+import {copy} 			from '../../utils/clipboard';
 import walletFormat 	from '../../utils/wallet.format';
 import QRCode 			from 'qrcode';
 
@@ -74,7 +75,11 @@ export class PaymentAwaitingView extends BaseView {
 				thisElems.qrCodeCanvas.elem.classList.toggle(constants.CLASS.hidden);
 				thisElems.walletPicker.elem.parentNode.parentNode.classList.add(constants.CLASS.hidden);
 
-				thisElems.xdrTest.elem.value = result;
+				thisElems.fldXdr.elem.value = result;
+
+				thisElems.qrCodeCanvas.elem.addEventListener('click', function() {
+					copy.call(this, thisElems.fldXdr.elem);
+				});
 			});
 		});
 	}
