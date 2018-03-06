@@ -29,6 +29,7 @@ export default {
 			to: null
 		}
 	},
+	LANG: 'en',
 	MESSAGE_TYPE: {
 		ERROR: 'ERROR',
 		INFO: 'INFO',

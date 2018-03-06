@@ -1,13 +1,17 @@
 import constants from '../constants';
 import {createElementFromHTML} from '../utils/dom';
 import rootElems from '../ui/elems';
+import {Localizer} from '../utils/l10n'
 
 export default class BaseView {
 
-	constructor(elems, template) {
+	constructor(elems, template, localizations) {
 		this.dto = constants.DTO;
 		this.elems = elems;
 		this.template = template;
+		this.localizations = localizations;
+		this.l = new Localizer(constants.LANG, this.localizations);
+		
 		this.create();
 	}
 
@@ -21,10 +25,13 @@ export default class BaseView {
 		// Get a reference to all elems in this view
 		for (var key in this.elems) {
 			var item = this.elems[key];
-			item.elem = rootElems.root.elem.querySelector(item.selector);
-			if (elem) {
+			var el = item.elem = rootElems.root.elem.querySelector(item.selector);
+			if (el) {
+				if (item.l10nKey && this.localizations) {
+					el.innerHTML = this.l.localize(item.l10nKey, el.innerHTML);
+				}
 				for (var ev in item.events) {
-					item.elem.addEventListener(ev, item.events[ev]);
+					el.addEventListener(ev, item.events[ev]);
 				}
 			}
 		}

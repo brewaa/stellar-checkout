@@ -12,7 +12,8 @@ export default {
 	},
 	statusElem: {
 		selector: '#paymentAwaitingStatus',
-		elem: null
+		elem: null,
+		l10nKey: 'paymentAwaitingStatus'
 	},
 	goBackLink: {
 		selector: '#paymentAwaitingGoBack',
@@ -37,9 +38,19 @@ export default {
 		selector: '#walletPicker',
 		elem: null
 	},
+	walletPickerLabel: {
+		selector: '#walletPickerLabel',
+		elem: null,
+		l10nKey: 'qrCodeFormat'
+	},
 	stellarCheckoutConfirmTo: {
 		selector: '#stellarCheckoutConfirmTo',
 		elem: null
+	},
+	stellarCheckoutConfirmToLabel: {
+		selector: '#stellarCheckoutConfirmToLabel',
+		elem: null,
+		l10nKey: 'toLabel'
 	},
 	stellarCheckoutConfirmToClipboard: {
 		selector: '#stellarCheckoutConfirmToClipboard',
@@ -52,6 +63,11 @@ export default {
 		selector: '#stellarCheckoutConfirmFrom',
 		elem: null
 	},
+	stellarCheckoutConfirmFromLabel: {
+		selector: '#stellarCheckoutConfirmFromLabel',
+		elem: null,
+		l10nKey: 'fromLabel'
+	},
 	stellarCheckoutConfirmFromClipboard: {
 		selector: '#stellarCheckoutConfirmFromClipboard',
 		elem: null,
@@ -63,6 +79,11 @@ export default {
 		selector: '#stellarCheckoutConfirmMemo',
 		elem: null
 	},
+	stellarCheckoutConfirmMemoLabel: {
+		selector: '#stellarCheckoutConfirmMemoLabel',
+		elem: null,
+		l10nKey: 'memoLabel'
+	},
 	stellarCheckoutConfirmMemoClipboard: {
 		selector: '#stellarCheckoutConfirmMemoClipboard',
 		elem: null,
@@ -70,9 +91,23 @@ export default {
 			click: onCopy
 		}
 	},
+	stellarCheckoutConfirmMemoType: {
+		selector: '#stellarCheckoutConfirmMemoType',
+		elem: null
+	},
+	stellarCheckoutConfirmMemoTypeLabel: {
+		selector: '#stellarCheckoutConfirmMemoTypeLabel',
+		elem: null,
+		l10nKey: 'memoTypeLabel'
+	},
 	stellarCheckoutConfirmAmount: {
 		selector: '#stellarCheckoutConfirmAmount',
 		elem: null
+	},
+	stellarCheckoutConfirmAmountLabel: {
+		selector: '#stellarCheckoutConfirmAmountLabel',
+		elem: null,
+		l10nKey: 'amountLabel'
 	},
 	stellarCheckoutConfirmAmountClipboard: {
 		selector: '#stellarCheckoutConfirmAmountClipboard',

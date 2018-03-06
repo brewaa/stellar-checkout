@@ -3,14 +3,15 @@ import {CoinMarketCapClient} 	from '../../services/coinmarketcap.client';
 import {createElementFromHTML} 	from '../../utils/dom';
 import rootElems 				from '../../ui/elems';
 
-import BaseView 			from '../base.view';
-import thisElems 			from './payment.form.elems';
-import paymentFormTemplate 	from './templates/payment.form.mustache.html';
+import BaseView 				from '../base.view';
+import thisElems 				from './payment.form.elems';
+import paymentFormL10n 			from './payment.form.l10n.js';
+import paymentFormTemplate 		from './templates/payment.form.mustache.html';
 
 export class PaymentFormView extends BaseView {
 
 	constructor() {
-		super(thisElems, paymentFormTemplate);
+		super(thisElems, paymentFormTemplate, paymentFormL10n);
 	}
 
 	create() {

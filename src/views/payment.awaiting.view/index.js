@@ -1,15 +1,16 @@
-import constants from '../../constants';
-import walletFormat from '../../utils/wallet.format';
-import QRCode from 'qrcode';
-// import {paymentAwaitingTemplate} from '../ui/template';
-import BaseView from '../base.view';
-import thisElems from './payment.awaiting.elems';
-import paymentAwaitingTemplate from './templates/payment.awaiting.mustache.html';
+import constants 		from '../../constants';
+import walletFormat 	from '../../utils/wallet.format';
+import QRCode 			from 'qrcode';
+
+import BaseView 				from '../base.view';
+import thisElems 				from './payment.awaiting.elems';
+import paymentAwaitingL10n 		from './payment.awaiting.l10n.js';
+import paymentAwaitingTemplate 	from './templates/payment.awaiting.mustache.html';
 
 export class PaymentAwaitingView extends BaseView {
 
 	constructor() {
-		super(thisElems, paymentAwaitingTemplate);
+		super(thisElems, paymentAwaitingTemplate, paymentAwaitingL10n);
 		this.isQrGenerated = false;
 	}
 
@@ -79,12 +80,13 @@ export class PaymentAwaitingView extends BaseView {
 	}
 
 	showProgress() {
+		var self = this;
 		return new Promise(function(resolve) {
 			var statusMsgs = [
-				'transaction received',
-				'processing transaction',
-				'verifying transaction',
-				'payment complete'
+				self.l.localize('transactionReceived', 'transaction received'),
+				self.l.localize('processingTransaction', 'processing transaction'),
+				self.l.localize('verifyingTransaction', 'verifying transaction'),
+				self.l.localize('paymentComplete', 'payment complete')
 			];
 			var i = 0,
 			increment = 2000,

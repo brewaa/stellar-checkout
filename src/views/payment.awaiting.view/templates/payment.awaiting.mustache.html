@@ -20,9 +20,9 @@
 		</div>
 	</div>
 	<textarea id="xdrTest" class="stellar_checkout_hidden"></textarea>
-	<div class="stellar_checkout_transaction_info">Complete this transaction by scanning the QR code. The QR code contains a ready to be signed XDR envelope (<a id="linkShowWalletPicker" href="#">change qrcode format</a>). Alternatively, manually create a payment with the following information:</div>
+	<div id="paymentAwaitingTransactionInfo" class="stellar_checkout_transaction_info">Complete this transaction by scanning the QR code. The QR code contains a ready to be signed XDR envelope (<a id="linkShowWalletPicker" href="#">change qrcode format</a>). Alternatively, manually create a payment with the following information:</div>
 	<div class="stellar_checkout_field stellar_checkout_hidden">
-		<label for="stellarCheckoutConfirmTo">QRCode Format</label>
+		<label id="walletPickerLabel" for="walletPicker">QRCode Format</label>
 		<div class="stellar_checkout_txtwrap stellar_checkout_txtwrap--picker">
 			<select id="walletPicker" class="stellar_checkout_picker">
 				<option value="envelopexdr">XDR</option>
@@ -32,7 +32,7 @@
 		</div>
 	</div>
 	<div class="stellar_checkout_field">
-		<label for="stellarCheckoutConfirmTo">To</label>
+		<label id="stellarCheckoutConfirmToLabel" for="stellarCheckoutConfirmTo">To</label>
 		<div class="stellar_checkout_txtwrap stellar_checkout_txtwrap--clipboard">
 			<textarea id="stellarCheckoutConfirmTo" class="stellar_checkout_txt" readonly>{{payment.to}}</textarea>
 			<span class="stellar_checkout_clipboard">
@@ -42,7 +42,7 @@
 		</div>
 	</div>
 	<div class="stellar_checkout_field">
-		<label for="stellarCheckoutConfirmFrom">From</label>
+		<label id="stellarCheckoutConfirmFromLabel" for="stellarCheckoutConfirmFrom">From</label>
 		<div class="stellar_checkout_txtwrap stellar_checkout_txtwrap--clipboard">
 			<textarea id="stellarCheckoutConfirmFrom" class="stellar_checkout_txt" readonly>{{payment.from}}</textarea>
 			<span class="stellar_checkout_clipboard">
@@ -52,7 +52,7 @@
 		</div>
 	</div>
 	<div class="stellar_checkout_field">
-		<label for="stellarCheckoutConfirmMemo">Memo</label>
+		<label id="stellarCheckoutConfirmMemoLabel" for="stellarCheckoutConfirmMemo">Memo</label>
 		<div class="stellar_checkout_txtwrap stellar_checkout_txtwrap--clipboard">
 			<textarea id="stellarCheckoutConfirmMemo" class="stellar_checkout_txt" readonly>{{payment.memo}}</textarea>
 			<span class="stellar_checkout_clipboard">
@@ -62,7 +62,7 @@
 		</div>
 	</div>
 	<div class="stellar_checkout_field">
-		<label for="stellarCheckoutConfirmMemoType">Memo Type</label>
+		<label id="stellarCheckoutConfirmMemoTypeLabel" for="stellarCheckoutConfirmMemoType">Memo Type</label>
 		<div class="stellar_checkout_txtwrap stellar_checkout_txtwrap--picker">
 			<select id="stellarCheckoutConfirmMemoType" class="stellar_checkout_picker" disabled>
 				<option value="hash" selected>MemoHash</option>
@@ -74,7 +74,7 @@
 		</div>
 	</div>
 	<div class="stellar_checkout_field">
-		<label for="stellarCheckoutConfirmAmount">Amount</label>
+		<label id="stellarCheckoutConfirmAmountLabel" for="stellarCheckoutConfirmAmount">Amount</label>
 		<div class="stellar_checkout_txtwrap stellar_checkout_txtwrap--input stellar_checkout_txtwrap--clipboard">
 			<input id="stellarCheckoutConfirmAmount" class="stellar_checkout_txt" type="text" value="{{payment.amount}}" readonly></input>
 			<span class="stellar_checkout_currency">XLM</span>

@@ -13,8 +13,9 @@ export function init(options) {
 
 	var dto = sdkHelper.createDto(options);
 
-	ui.create(options)
-	.then(function() {
+	constants.LANG = options.lang;
+
+	ui.create(options).then(function() {
 
 		ui.createSubmitHandler(function(e) {
 
@@ -39,8 +40,7 @@ export function init(options) {
 					return;	
 				}
 				// Show payment verification feedback
-				viewState.currentView.showProgress(result)
-				.then(function() {
+				viewState.currentView.showProgress(result).then(function() {
 					if (options.redirectUrl) {
 						// Use redirectUrl if configured
 						useRedirectUrl(options, result);

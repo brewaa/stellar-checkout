@@ -13,6 +13,11 @@ export default {
 			input: onValidateTotal
 		}
 	},
+	totalLabel: {
+		selector: '#stellarCheckoutTotalLabel',
+		elem: null,
+		l10nKey: 'labelTotal'
+	},
 	amount: {
 		selector: '#stellarCheckoutAmount',
 		elem: null,
@@ -20,6 +25,11 @@ export default {
 			blur: onValidateAmount,
 			input: onValidateAmount
 		}
+	},
+	amountLabel: {
+		selector: '#stellarCheckoutAmountLabel',
+		elem: null,
+		l10nKey: 'labelAmount'
 	},
 	currencyConversionInfo: {
 		selector: '#stellarCheckoutCurrencyConversionInfo',
@@ -33,8 +43,14 @@ export default {
 			input: onValidatePublicKey
 		}
 	},
+	publicKeyLabel: {
+		selector: '#stellarCheckoutPublicKeyLabel',
+		elem: null,
+		l10nKey: 'labelPublicKey'
+	},
 	submitButton: {
 		selector: '#stellarCheckoutSubmitButton',
-		elem: null
+		elem: null,
+		l10nKey: 'submitButton'
 	}
 };

@@ -7,7 +7,7 @@
 	</div>
 	<div class="stellar_checkout_form_wrap">
 		<div class="stellar_checkout_field">
-			<label for="stellarCheckoutTotal">Total</label>
+			<label id="stellarCheckoutTotalLabel" for="stellarCheckoutTotal">Total</label>
 			<div class="stellar_checkout_txtwrap stellar_checkout_txtwrap--input">
 				<input id="stellarCheckoutTotal" class="stellar_checkout_txt" type="text" autocomplete="off" value="{{invoice.total}}" disabled></input>
 				<span class="stellar_checkout_currency">{{invoice.currency}}</span>
@@ -15,7 +15,10 @@
 			</div>
 		</div>
 		<div class="stellar_checkout_field">
-			<label for="stellarCheckoutAmount">Amount <span id="stellarCheckoutCurrencyConversionInfo" class="stellar_checkout_currency_conversion_info"></span></label>
+			<label for="stellarCheckoutAmount">
+				<span id="stellarCheckoutAmountLabel">Amount</span>
+				<span id="stellarCheckoutCurrencyConversionInfo" class="stellar_checkout_currency_conversion_info"></span>
+			</label>
 			<div class="stellar_checkout_txtwrap stellar_checkout_txtwrap--input">
 				<input id="stellarCheckoutAmount" class="stellar_checkout_txt" type="text" autocomplete="off" value="{{payment.amount}}" disabled></input>
 				<span class="stellar_checkout_currency">XLM</span>
@@ -24,7 +27,7 @@
 			</div>
 		</div>
 		<div class="stellar_checkout_field">
-			<label for="stellarCheckoutPublicKey">Your Public Key</label>
+			<label id="stellarCheckoutPublicKeyLabel" for="stellarCheckoutPublicKey">Your Public Key</label>
 			<div class="stellar_checkout_txtwrap stellar_checkout_txtwrap--input">
 				<input id="stellarCheckoutPublicKey" class="stellar_checkout_txt" type="text" autocomplete="off" required></input>
 				<span class="stellar_checkout_error_message"></span>

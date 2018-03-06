@@ -1,5 +1,7 @@
 import constants from '../constants';
 import {ValidationMessage} from './validationMessage';
+import {Localizer} from '../utils/l10n';
+import commonLocalizations from './l10n.common';
 
 export function toggleValidationFeedback(target, test) {
 	var elemErrMsg = target.parentNode.querySelector(constants.SELECTOR.fieldErrorMessage);
@@ -20,13 +22,14 @@ export function validateAmount(target) {
 		errors: [],
 		result: true
 	};
+	var l = new Localizer(constants.LANG, commonLocalizations);
 	var amt = constants.DTO.payment.amount;
 	if (isNaN(amt)) {
-		result.errors.push(new ValidationMessage('amount is not a number', target));
+		result.errors.push(new ValidationMessage(l.localize('validateAmountNaN', 'amount is not a number'), target));
 		result.result = false;
 	}
 	if (amt <= 0) {
-		result.errors.push(new ValidationMessage('amount must be greater than zero', target));
+		result.errors.push(new ValidationMessage(l.localize('validateAmountGreaterThanZero', 'amount must be greater than zero'), target));
 		result.result = false;
 	}
 	return result;
@@ -37,9 +40,10 @@ export function validatePublicKey(target) {
 		errors: [],
 		result: true
 	};
+	var l = new Localizer(constants.LANG, commonLocalizations);
 	var key = constants.DTO.payment.from;
 	if (!key || !window.StellarSdk.StrKey.isValidEd25519PublicKey(key)) {
-		result.errors.push(new ValidationMessage('public key is invalid'), target);
+		result.errors.push(new ValidationMessage(l.localize('validatePublicKeyInvalid', 'public key is invalid'), target));
 		result.result = false;
 	}
 	return result;
@@ -50,13 +54,14 @@ export function validateTotal(target) {
 		errors: [],
 		result: true
 	};
+	var l = new Localizer(constants.LANG, commonLocalizations);
 	var total = constants.DTO.invoice.total;
 	if (isNaN(total)) {
-		result.errors.push(new ValidationMessage('total is not a number', target));
+		result.errors.push(new ValidationMessage(l.localize('validateTotalNaN', 'total is not a number'), target));
 		result.result = false;
 	}
 	if (total <= 0) {
-		result.errors.push(new ValidationMessage('total must be greater than zero', target));
+		result.errors.push(new ValidationMessage(l.localize('validateTotalGreaterThanZero', 'total must be greater than zero'), target));
 		result.result = false;
 	}
 	return result;

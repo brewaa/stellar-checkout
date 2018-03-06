@@ -12,6 +12,7 @@ export default {
 			this.options.currency = opts.currency;
 			this.options.destinationKey = opts.destinationKey;
 			this.options.env = opts.env || 'development';
+			this.options.lang = opts.lang || 'en';
 			this.options.memo = opts.memo;
 			this.options.redirectUrl = opts.redirectUrl;
 			this.options.onSubmit = opts.onSubmit;

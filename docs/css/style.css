@@ -76,12 +76,18 @@ body {
 .container .main {
 	flex-basis: 34rem;
 	padding: .4rem;
+	height: 100%;
 }
 
 .foot {
 	border-top: .0625rem solid #eee;
 	display: none;
 	height: 3.2rem;
+}
+
+.the_form,
+.stellar_checkout_container {
+	height: 100%;
 }
 
 @media screen and (min-device-width: 1200px) {
