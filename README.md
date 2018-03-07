@@ -69,7 +69,7 @@ npm i --save-dev stellar-checkout
   	type: function,
   	required: false
   },
-  redirectUrl: {	// The URL to redirect the user to after a succesfully completed transaction
+  redirectUrl: {	// The URL to redirect the user to after a successfully completed transaction
   	type: String,
   	required: false
   },
