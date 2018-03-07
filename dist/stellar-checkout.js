@@ -404,32 +404,35 @@ exports.from = function from (value, defaultValue) {
 
 var cultures = [
 	'en',
-	'pt-BR',
-	'de-LI',
-	'arn-CL',
-	'zh-CN',
-	'cs-CZ',
-	'da-DK',
-	'zh-HK',
-	'hu-HU',
-	'id-ID',
-	'he-IL',
-	'hi-IN',
+	'de-DE',
+	'es-ES',
+	'it-IT',
+	'fr-FR',
 	'ja-JP',
 	'ko-KR',
-	'es-MX',
-	'ms-MY',
-	'nb-NO',
-	'fil-PH',
-	'ur-PK',
-	'pl-PL',
+	'pt-BR',
 	'ru-RU',
-	'sv-SE',
-	'zh-SD',
 	'th-TH',
-	'tr-TR',
-	'zh-TW',
+	'zh-CN',
 	'zu-ZA'
+	// 'arn-CL',
+	// 'cs-CZ',
+	// 'da-DK',
+	// 'zh-HK',
+	// 'hu-HU',
+	// 'id-ID',
+	// 'he-IL',
+	// 'hi-IN',
+	// 'es-MX',
+	// 'ms-MY',
+	// 'nb-NO',
+	// 'fil-PH',
+	// 'ur-PK',
+	// 'pl-PL',
+	// 'sv-SE',
+	// 'zh-SD',
+	// 'tr-TR',
+	// 'zh-TW'
 ];
 
 /* harmony default export */ __webpack_exports__["b"] = ({
@@ -2373,13 +2376,144 @@ var common = {
 		'buttonStateNormal': 'Send payment',
 		'buttonStateInProgress': 'Confirming transaction...',
 		'buttonStatePaymentComplete': 'Payment complete',
+		'copied': 'copied',
 		'validateAmountNaN': 'amount is not a number',
 		'validateAmountGreaterThanZero': 'amount must be greater than zero',
 		'validatePublicKeyInvalid': 'public key is invalid',
 		'validateTotalNaN': 'total is not a number',
 		'validateTotalGreaterThanZero': 'total must be greater than zero'
 	},
-	'en-gb': {
+	'de-de': {
+		'buttonStateDisabled': 'Zahlungsinformationen eingeben',
+		'buttonStateNormal': 'Zahlung senden',
+		'buttonStateInProgress': 'Transaktion bestätigen ...',
+		'buttonStatePaymentComplete': 'Zahlung abgeschlossen',
+		'copied': 'kopiert',
+		'validateAmountNaN': 'Betrag ist keine Zahl',
+		'validateAmountGreaterThanZero': 'Betrag muss größer als Null sein',
+		'validatePublicKeyInvalid': 'öffentlicher Schlüssel ist ungültig',
+		'validateTotalNaN': 'Summe ist keine Zahl',
+		'validateTotalGreaterThanZero': 'Summe muss größer als Null sein'
+	},
+	'es-es': {
+		'buttonStateDisabled': 'Ingresar información de pago',
+		'buttonStateNormal': 'Enviar pago',
+		'buttonStateInProgress': 'Confirming transaction ...',
+		'buttonStatePaymentComplete': 'Pago completo',
+		'copied': 'copiado',
+		'validateAmountNaN': 'la cantidad no es un número',
+		'validateAmountGreaterThanZero': 'la cantidad debe ser mayor que cero',
+		'validatePublicKeyInvalid': 'la clave pública no es válida',
+		'validateTotalNaN': 'total no es un número',
+		'validateTotalGreaterThanZero': 'total debe ser mayor que cero'
+	},
+	'it-it': {
+		'buttonStateDisabled': 'Inserisci informazioni di pagamento',
+		'buttonStateNormal': 'Invia pagamento',
+		'buttonStateInProgress': 'Conferma della transazione ...',
+		'buttonStatePaymentComplete': 'Pagamento completato',
+		'copied': 'copiato',
+		'validateAmountNaN': 'amount is not a number',
+		'validateAmountGreaterThanZero': 'l\'importo deve essere maggiore di zero',
+		'validatePublicKeyInvalid': 'public key is invalid',
+		'validateTotalNaN': 'total non è un numero',
+		'validateTotalGreaterThanZero': 'totale deve essere maggiore di zero'
+	},
+	'fr-fr': {
+		'buttonStateDisabled': 'Entrer les informations de paiement',
+		'buttonStateNormal': 'Envoyer le paiement',
+		'buttonStateInProgress': 'Confirmation de transaction ...',
+		'buttonStatePaymentComplete': 'Paiement terminé',
+		'copied': 'copié',
+		'validateAmountNaN': 'amount n\'est pas un nombre',
+		'validateAmountGreaterThanZero': 'le montant doit être supérieur à zéro',
+		'validatePublicKeyInvalid': 'clé publique invalide',
+		'validerTotalNaN': 'total n\'est pas un nombre',
+		'validateTotalGreaterThanZero': 'total doit être supérieur à zéro'
+	},
+	'ja-jp': {
+		'buttonStateDisabled': '支払い情報を入力',
+		'buttonStateNormal': '支払いを送る',
+		'buttonStateInProgress': 'トランザクションの確認中...',
+		'buttonStatePaymentComplete': '支払い完了',
+		'copied': 'コピーされた',
+		'validateAmountNaN': '金額は数字ではありません',
+		'validateAmountGreaterThanZero': '額はゼロより大きくする必要があります',
+		'validatePublicKeyInvalid': '公開鍵が無効です',
+		'validateTotalNaN': '合計は数字ではありません',
+		'validateTotalGreaterThanZero': '合計はゼロより大きくなければなりません'
+	},
+	'ko-kr': {
+		'buttonStateDisabled': '결제 정보 입력',
+		'buttonStateNormal': '지불하기',
+		'buttonStateInProgress': '거래 확인 중 ...',
+		'buttonStatePaymentComplete': '지불 완료',
+		'copied': '복사 한',
+		'validateAmountNaN': '금액이 숫자가 아닙니다',
+		'validateAmountGreaterThanZero': '금액은 0보다 커야합니다',
+		'validatePublicKeyInvalid': '공개 키가 유효하지 않습니다',
+		'validateTotalNaN': '총 숫자가 아닙니다',
+		'validateTotalGreaterThanZero': '합계가 0보다 커야합니다.'
+	},
+	'pt-br': {
+		'buttonStateDisabled': 'Digite informações de pagamento',
+		'buttonStateNormal': 'Enviar pagamento',
+		'buttonStateInProgress': 'Confirmar transação ...',
+		'buttonStatePaymentComplete': 'Pagamento completo',
+		'copied': 'copiado',
+		'validateAmountNaN': 'amount is not a number',
+		'validateAmountGreaterThanZero': 'quantidade deve ser maior que zero',
+		'validatePublicKeyInvalid': 'chave pública é inválida',
+		'validateTotalNaN': 'total não é um número',
+		'validateTotalGreaterThanZero': 'total deve ser maior que zero'
+	},
+	'ru-ru': {
+		'buttonStateDisabled': 'Введите платежную информацию',
+		'buttonStateNormal': 'Отправить платеж',
+		'buttonStateInProgress': 'Подтверждение транзакции ...',
+		'buttonStatePaymentComplete': 'Полная оплата',
+		'copied': 'skopirovano',
+		'validateAmountNaN': 'сумма не является числом',
+		'validateAmountGreaterThanZero': 'сумма должна быть больше нуля',
+		'validatePublicKeyInvalid': 'открытый ключ недействителен',
+		'validateTotalNaN': 'total is not a number',
+		'validateTotalGreaterThanZero': 'total должно быть больше нуля'
+	},
+	'th-th': {
+		'ButtonStateDisabled': 'P̂xn k̄ĥxmūl kār chảra ngein',
+		'buttonStateNormal': 'S̄̀ng kār chảra ngein',
+		'buttonStateInProgress': 'Kảlạng yụ̄nyạn kār thả ṭhurkrrm... ',
+		'ButtonStatePaymentComplete': 'Kār chảra ngein s̄er̆c s̄mbūrṇ̒',
+		'copied': 'Khạd lxk',
+		'validateAmountNaN': 'Cảnwn mị̀chı̀ cảnwn',
+		'validateAmountGreaterThanZero': 'Cảnwn ngein t̂xng mākkẁā ṣ̄ūny̒',
+		'validatePublicKeyInvalid': 'Khīy̒ s̄āṭhārṇa mị̀ t̄hūk t̂xng',
+		'validateTotalNaN': 'Total mị̀chı̀ tạwlek̄h',
+		'validateTotalGreaterThanZero': 'Cảnwn rwm t̂xng mākkẁā ṣ̄ūny̒'
+	},
+	'zh-cn': {
+		'ButtonStateDisabled': 'Shūrù fùkuǎn xìnxī',
+		'buttonStateNormal': 'Fāsòng fùkuǎn',
+		'buttonStateInProgress': 'Quèrèn jiāoyì...',
+		'ButtonStatePaymentComplete': 'Fùkuǎn wánchéng',
+		'copied': 'Fùzhì',
+		'validateAmountNaN': 'Jīn\'é bùshì shùzì',
+		'validateAmountGreaterThanZero': 'Jīn\'é bìxū dàyú líng',
+		'validatePublicKeyInvalid': 'Gōng yào wúxiào',
+		'validateTotalNaN': 'Zǒng shǔ bùshì shùzì',
+		'validateTotalGreaterThanZero': 'Zǒngshù bìxū dàyú líng'
+	},
+	'zu-za': {
+		'buttonStateDisabled': 'Betaal inligting in te vul',
+		'buttonStateNormal': 'Stuur betaling',
+		'buttonStateInProgress': 'Bevestiging van transaksie ...',
+		'buttonStatePaymentComplete': 'Betaling voltooi',
+		'copied': 'gekopieer',
+		'validateAmountNaN': 'bedrag is nie \'n nommer\' nie',
+		'validateAmountGreaterThanZero': 'bedrag moet groter as nul\' wees',
+		'validatePublicKeyInvalid': 'publieke sleutel is ongeldig',
+		'validateTotalNaN': 'totaal is nie \'n nommer\' nie',
+		'validateTotalGreaterThanZero': 'totaal moet groter as nul wees'
 	}
 };
 
@@ -7401,7 +7535,71 @@ function httpRequest(method, url, params, body, accessToken) {
 		'labelPublicKey': 'Public Key',
 		'submitButton': 'Enter payment info'
 	},
-	'en-gb': {
+	'de-de': {
+		'labelTotal': 'Gesamt',
+		'labelAmount': 'Betrag',
+		'labelPublicKey': 'Öffentlicher Schlüssel',
+		'submitButton': 'Zahlungsinformationen eingeben'
+	},
+	'es-es': {
+		'labelTotal': 'Total',
+		'labelAmount': 'Cantidad',
+		'labelPublicKey': 'Clave pública',
+		'submitButton': 'Ingresar información de pago'
+	},
+	'it-it': {
+		'labelTotal': 'Totale',
+		'labelAmount': 'Quantità',
+		'labelPublicKey': 'Chiave pubblica',
+		'submitButton': 'Inserisci le informazioni di pagamento'
+	},
+	'fr-fr': {
+		'labelTotal': 'Total',
+		'labelAmount': 'Montant',
+		'labelPublicKey': 'Clé publique',
+		'submitButton': 'Entrer les informations de paiement'
+	},
+	'ja-jp': {
+		'labelTotal': '合計',
+		'labelAmount': '金額',
+		'labelPublicKey': '公開鍵',
+		'submitButton': '支払い情報を入力してください'
+	},
+	'ko-kr': {
+		'labelTotal': '합계',
+		'labelAmount': '금액',
+		'labelPublicKey': '공개 키',
+		'submitButton': '결제 정보 입력'
+	},
+	'pt-br': {
+		'labelTotal': 'Total',
+		'labelAmount': 'Montante',
+		'labelPublicKey': 'Chave pública',
+		'submitButton': 'Digite informações de pagamento'
+	},
+	'ru-ru': {
+		'labelTotal': 'Всего',
+		'labelAmount': 'количество',
+		'labelPublicKey': 'Открытый ключ',
+		'submitButton': 'Введите платежную информацию'
+	},
+	'th-th': {
+		'labelTotal': 'Rwm',
+		'labelAmount': 'Cảnwn ngein',
+		'labelPublicKey': 'Khīy̒ s̄āṭhārṇa',
+		'submitButton': 'P̂xn k̄ĥxmūl kār chảra ngein'
+	},
+	'zh-cn': {
+		'labelTotal': 'Zǒngjì',
+		'labelAmount': 'Jīn\'é',
+		'labelPublicKey': 'Gōng yào',
+		'submitButton': 'Shūrù fùkuǎn xìnxī'
+	},
+	'zu-za': {
+		'labelTotal': 'Totale',
+		'labelAmount': 'Bedrag',
+		'labelPublicKey': 'Publieke sleutel',
+		'SubmitButton': 'Betaal inligting in'
 	}
 });
 
@@ -10788,6 +10986,182 @@ function onCopyField(e) {
 		'processingTransaction': 'processing transaction',
 		'verifyingTransaction': 'verifying transaction',
 		'paymentComplete': 'payment complete'
+	},
+	'de-de': {
+		'paymentAwaitingStatus': 'Warten auf Zahlung',
+		'paymentAwaitingTransactionInfo': 'Schließen Sie diese Transaktion ab, indem Sie den QR-Code scannen. Der QR-Code enthält einen fertig signierten XDR-Umschlag. ',
+		'paymentAwaitingTransactionInfo1': 'Alternativ können Sie manuell eine Zahlung mit den folgenden Informationen erstellen:',
+		'changeQrCode': 'qrcode format ändern',
+		'qrCodeFormat': 'QRCode Format',
+		'toLabel': 'Zu',
+		'fromLabel': 'Von',
+		'memoLabel': 'Memo',
+		'memoTypeLabel': 'Memotyp',
+		'amountLabel': 'Betrag',
+		'transactionReceived': 'Transaktion erhalten',
+		'processingTransaction': 'Verarbeitung der Transaktion',
+		'verifyingTransaction': "Überprüfung der Transaktion",
+		'paymentComplete': 'Zahlung abgeschlossen'
+	},
+	'es-es': {
+		'paymentAwaitingStatus': 'En espera de pago',
+		'paymentAwaitingTransactionInfo': 'Complete esta transacción escaneando el código QR. El código QR contiene un sobre XDR listo para ser firmado. ',
+		'paymentAwaitingTransactionInfo1': 'Alternativamente, cree manualmente un pago con la siguiente información:',
+		'changeQrCode': 'cambiar el formato de qrcode',
+		'qrCodeFormat': 'Formato de código QR',
+		'toLabel': 'A',
+		'fromLabel': 'De',
+		'memoLabel': 'Memo',
+		'memoTypeLabel': 'Tipo de Memo',
+		'amountLabel': 'Cantidad',
+		'transactionReceived': 'transacción recibida',
+		'processingTransaction': 'procesamiento de la transacción',
+		'verifyingTransaction': 'verificar la transacción',
+		'paymentComplete': 'pago completo'
+	},
+	'it-it': {
+		'paymentAwaitingStatus': 'In attesa di pagamento',
+		'paymentAwaitingTransactionInfo': 'Completa questa transazione scansionando il codice QR. Il codice QR contiene una busta XDR pronta per essere firmata. ',
+		'paymentAwaitingTransactionInfo1': 'In alternativa, crea manualmente un pagamento con le seguenti informazioni:',
+		'changeQrCode': 'cambia formato qrcode',
+		'qrCodeFormat': 'Formato QRCode',
+		'toLabel': "A",
+		'fromLabel': 'Da',
+		'memoLabel': 'Promemoria',
+		'memoTypeLabel': 'Promemoria Tipo',
+		'amountLabel': 'Importo',
+		'transactionReceived': 'transazione ricevuta',
+		'processingTransaction': 'transazione di elaborazione',
+		'verifyingTransaction': 'verifica della transazione',
+		'paymentComplete': 'payment complete'
+	},
+	'fr-fr': {
+		'paymentAwaitingStatus': 'En attente de paiement',
+		'paymentAwaitingTransactionInfo': 'Terminez cette transaction en scannant le code QR. Le code QR contient une enveloppe XDR prête à être signée. ',
+		'paymentAwaitingTransactionInfo1': 'Sinon, créez manuellement un paiement avec les informations suivantes:',
+		'changeQrCode': 'change le format du qrcode',
+		'qrCodeFormat': 'Format QRCode',
+		'toLabel': 'À',
+		'fromLabel': 'De',
+		'memoLabel': 'Mémo',
+		'memoTypeLabel': 'Type de mémo',
+		'amountLabel': 'Montant',
+		'transactionReceived': 'transaction reçue',
+		'processingTransaction': 'transaction de traitement',
+		'verifyingTransaction': 'vérification de transaction',
+		'paymentComplete': 'paiement complet'
+	},
+	'ja-jp': {
+		'paymentAwaitingStatus': 'お支払い待ち',
+		'paymentAwaitingTransactionInfo': 'QRコードをスキャンしてこのトランザクションを完了します。 QRコードには、署名済みのXDRエンベロープが含まれています。 ',
+		'paymentAwaitingTransactionInfo1': 'または、次の情報を含む支払いを手動で作成する：',
+		'changeQrCode': 'qrcode形式を変更する',
+		'qrCodeFormat': 'QRコード形式',
+		'toLabel': 'に',
+		'fromLabel': 'から',
+		'memoLabel': 'メモ',
+		'memoTypeLabel': 'メモ型',
+		'amountLabel': '金額',
+		'transactionReceived': 'トランザクション受信済み',
+		'processingTransaction': '処理中のトランザクション',
+		'verifyingTransaction': 'トランザクションの確認',
+		'paymentComplete': '支払い完了'
+	},
+	'ko-kr': {
+		'paymentAwaitingStatus': '지불 대기 중',
+		'paymentAwaitingTransactionInfo': 'QR 코드를 스캔하여이 거래를 완료하십시오. QR 코드에는 서명 할 준비가 된 XDR 봉투가 들어 있습니다. ',
+		'paymentAwaitingTransactionInfo1': '또는 다음 정보가 포함 된 지불을 수동으로 생성하십시오.',
+		'changeQrCode': 'qrcode 형식 변경',
+		'qrCodeFormat': 'QRCode 형식',
+		'toLabel': '에',
+		'fromLabel': '보낸 사람',
+		'memoLabel': '메모',
+		'memoTypeLabel': '메모 유형',
+		'amountLabel': '금액',
+		'transactionReceived': '거래 접수 됨',
+		'processingTransaction': '거래 처리 중',
+		'verifyingTransaction': '거래 확인',
+		'paymentComplete': '지불 완료'
+	},
+	'pt-br': {
+		'paymentAwaitingStatus': 'Aguardando pagamento',
+		'paymentAwaitingTransactionInfo': 'Complete esta transação digitalizando o código QR. O código QR contém um envelope XDR pronto para ser assinado. ',
+		'paymentAwaitingTransactionInfo1': 'Alternativamente, crie manualmente um pagamento com as seguintes informações:',
+		'changeQrCode': 'alterar o formato qrcode',
+		'qrCodeFormat': 'Formato QRCode',
+		'toLabel': 'Para',
+		'fromLabel': 'A partir de',
+		'memoLabel': 'Memorando',
+		'memoTypeLabel': 'Tipo de Memorando',
+		'amountLabel': 'Montante',
+		'transactionReceived': 'transação recebida',
+		'processingTransaction': 'transação de processamento',
+		'verifyingTransaction': 'verificar transação',
+		'paymentComplete': 'pagamento completo'
+	},
+	'ru-ru': {
+		'paymentAwaitingStatus': 'Ожидание платежа',
+		'paymentAwaitingTransactionInfo': 'Завершите эту транзакцию, просмотрев QR-код. QR-код содержит готовый к подписанию XDR-конверт. ',
+		'paymentAwaitingTransactionInfo1': 'В качестве альтернативы вручную создайте платеж со следующей информацией:',
+		'changeQrCode': 'изменить формат qrcode',
+		'qrCodeFormat': 'Формат QRCode',
+		'toLabel': 'к',
+		'fromLabel': 'Из',
+		'memoLabel': 'меморандум',
+		'memoTypeLabel': 'Тип напоминания',
+		'amountLabel': 'Количество',
+		'transactionReceived': 'полученная транзакция',
+		'processingTransaction': 'транзакция обработки',
+		'verifyingTransaction': 'проверка транзакции',
+		'paymentComplete': 'платеж завершен'
+	},
+	'th-th': {
+		'paymentAwaitingStatus': 'Kảlạng rx kār chảra ngein',
+		'paymentAwaitingTransactionInfo': 'Thả rāykār nī̂ h̄ı̂ s̄mbūrṇ̒ doy kār s̄kæn khôd QR khôd QR prakxbd̂wy phr̂xm thī̀ ca lng nām nı sxng cdh̄māy XDR',
+		'paymentAwaitingTransactionInfo1': 'H̄rụ̄x s̄r̂āng kār chảra ngein d̂wy tnxeng d̂wy k̄ĥxmūl t̀x pị nī̂:',
+		'changeQrCode': 'Pelī̀yn rūp bæb qrcode',
+		'qrCodeFormat': 'Rūp bæb QRCode',
+		'toLabel': 'T̄hụng',
+		'fromLabel': 'Cāk',
+		'memoLabel': 'K̄ĥx khwr cả',
+		'memoTypeLabel': 'Prap̣heth k̄ĥx khwr cả',
+		'amountLabel': 'Cảnwn ngein',
+		'transactionReceived': 'Rāykār thī̀ dị̂ rạb',
+		'processingTransaction': 'Pramwl p̄hl ṭhurkrrm',
+		'verifyingTransaction': 'Yụ̄nyạn kār thả ṭhurkrrm',
+		'paymentComplete': 'Kār chảra ngein s̄er̆c s̄mbūrṇ̒'
+	},
+	'zh-cn': {
+		'paymentAwaitingStatus': 'Děngdài zhīfù',
+		'paymentAwaitingTransactionInfo': 'Tōngguò sǎomiáo QR mǎ wánchéng cǐ jiāoyì. QR mǎ bāohán kěyǐ bèi qiānmíng de XDR xìnfēng. ',
+		'paymentAwaitingTransactionInfo1': 'Huòzhě, shǐyòng yǐxià xìnxī shǒudòng chuàngjiàn fùkuǎn:',
+		'changeQrCode': 'Gēnggǎi qrcode géshì',
+		'qrCodeFormat': 'QRCode géshì',
+		'toLabel': 'Zhì',
+		'fromLabel': 'Cóng',
+		'memoLabel': 'Bèiwànglù',
+		'memoTypeLabel': 'Bèiwànglù lèixíng',
+		'amountLabel': 'Jīn\'é',
+		'transactionReceived': 'Shōu dào de jiāoyì',
+		'processingTransaction': 'Chǔlǐ jiāoyì',
+		'verifyingTransaction': 'Yànzhèng jiāoyì',
+		'paymentComplete': 'Fùkuǎn wánchéng'
+	},
+	'zu-za': {
+		'paymentAwaitingStatus': 'Wag op betaling',
+		'paymentAwaitingTransactionInfo': 'Voltooi hierdie transaksie deur die QR-kode te skandeer. Die QR-kode bevat \'n ondertekende XDR koevert. ',
+		'paymentAwaitingTransactionInfo1': 'Alternatiewelik, maak \'n betaling handmatig met die volgende inligting:',
+		'changeQrCode': 'verander qrcode formaat',
+		'qrCodeFormat': 'QRCode Formaat',
+		'toLabel': 'Om',
+		'fromLabel': 'Van',
+		'memoLabel': 'Memo',
+		'memoTypeLabel': 'Memo tipe',
+		'amountLabel': 'Bedrag',
+		'transactionReceived': 'transaksie ontvang',
+		'processingTransaction': 'verwerkingstransaksie',
+		'verifyingTransaction': 'verifiërende transaksie',
+		'paymentComplete': 'betaling voltooi'
 	}
 });
 
@@ -10806,7 +11180,7 @@ return T.render.apply(T, arguments); };
 /* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = "<div id=\"paymentAwaitingView\" class=\"stellar_checkout_payment_awaiting stellar_checkout_hidden\">\r\n\t<div class=\"stellar_checkout_header\">\r\n\t\t<span id=\"paymentAwaitingGoBack\" class=\"stellar_checkout_goback\">\r\n\t\t\t<i class=\"fas fa-chevron-circle-left\"></i>\r\n\t\t</span>\r\n\t\t<div class=\"stellar_checkout_logo\">\r\n\t\t\t<img alt=\"\" class=\"stellar_checkout_rocket\" src=\"" + __webpack_require__(10) + "\" />\r\n\t\t\t<span class=\"stellar_checkout_app_name\">stellar checkout</span>\r\n\t\t</div>\r\n\t\t<div class=\"stellar_checkout_header_alt\">\r\n\t\t\t<div class=\"stellar_checkout_qr_wrap\">\r\n\t\t\t\t<div>\r\n\t\t\t\t\t<span id=\"qrCodeSpinner\" class=\"stellar_checkout_spinner\"><i class=\"fas fa-spinner fa-spin\"></i></span>\r\n\t\t\t\t\t<canvas id=\"qrCodeCanvas\" class=\"stellar_checkout_qrcode stellar_checkout_hidden\"></canvas>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\t<div id=\"paymentAwaitingStatus\" class=\"stellar_checkout_status\">\r\n\t\t\t\t<span>Awaiting Payment</span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\t<textarea id=\"fldXdr\" class=\"stellar_checkout_offscreen\"></textarea>\r\n\t<div class=\"stellar_checkout_transaction_info\">\r\n\t\t<span id=\"paymentAwaitingTransactionInfo\">Complete this transaction by scanning the QR code. The QR code contains a ready to be signed XDR envelope. </span>\r\n\t\t<a id=\"linkShowWalletPicker\" href=\"#\">change qrcode format</a>.\r\n\t\t<span id=\"paymentAwaitingTransactionInfo1\">Alternatively, manually create a payment with the following information:</span>\r\n\t</div>\r\n\t<div class=\"stellar_checkout_field stellar_checkout_hidden\">\r\n\t\t<label id=\"walletPickerLabel\" for=\"walletPicker\">QRCode Format</label>\r\n\t\t<div class=\"stellar_checkout_txtwrap stellar_checkout_txtwrap--picker\">\r\n\t\t\t<select id=\"walletPicker\" class=\"stellar_checkout_picker\">\r\n\t\t\t\t<option value=\"envelopexdr\">XDR</option>\r\n\t\t\t\t<option value=\"destinationkey\">Destination Public Key</option>\r\n\t\t\t\t<option value=\"stargazer\">Stargazer Wallet</option>\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"stellar_checkout_field\">\r\n\t\t<label id=\"stellarCheckoutConfirmToLabel\" for=\"stellarCheckoutConfirmTo\">To</label>\r\n\t\t<div class=\"stellar_checkout_txtwrap stellar_checkout_txtwrap--clipboard\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmTo\" class=\"stellar_checkout_txt\" readonly>{{payment.to}}</textarea>\r\n\t\t\t<span class=\"stellar_checkout_clipboard\">\r\n\t\t\t\t<i class=\"fas fa-copy\"></i>\r\n\t\t\t\t<span id=\"stellarCheckoutConfirmToClipboard\" class=\"stellar_checkout_clipboard_click\"></span>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"stellar_checkout_field\">\r\n\t\t<label id=\"stellarCheckoutConfirmFromLabel\" for=\"stellarCheckoutConfirmFrom\">From</label>\r\n\t\t<div class=\"stellar_checkout_txtwrap stellar_checkout_txtwrap--clipboard\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmFrom\" class=\"stellar_checkout_txt\" readonly>{{payment.from}}</textarea>\r\n\t\t\t<span class=\"stellar_checkout_clipboard\">\r\n\t\t\t\t<i class=\"fas fa-copy\"></i>\r\n\t\t\t\t<span id=\"stellarCheckoutConfirmFromClipboard\" class=\"stellar_checkout_clipboard_click\"></span>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"stellar_checkout_field\">\r\n\t\t<label id=\"stellarCheckoutConfirmMemoLabel\" for=\"stellarCheckoutConfirmMemo\">Memo</label>\r\n\t\t<div class=\"stellar_checkout_txtwrap stellar_checkout_txtwrap--clipboard\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmMemo\" class=\"stellar_checkout_txt\" readonly>{{payment.memo}}</textarea>\r\n\t\t\t<span class=\"stellar_checkout_clipboard\">\r\n\t\t\t\t<i class=\"fas fa-copy\"></i>\r\n\t\t\t\t<span id=\"stellarCheckoutConfirmMemoClipboard\" class=\"stellar_checkout_clipboard_click\"></span>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"stellar_checkout_field\">\r\n\t\t<label id=\"stellarCheckoutConfirmMemoTypeLabel\" for=\"stellarCheckoutConfirmMemoType\">Memo Type</label>\r\n\t\t<div class=\"stellar_checkout_txtwrap stellar_checkout_txtwrap--picker\">\r\n\t\t\t<select id=\"stellarCheckoutConfirmMemoType\" class=\"stellar_checkout_picker\" disabled>\r\n\t\t\t\t<option value=\"hash\" selected>MemoHash</option>\r\n\t\t\t\t<option value=\"id\">MemoID</option>\r\n\t\t\t\t<option value=\"none\">MemoNone</option>\r\n\t\t\t\t<option value=\"return\">MemoReturn</option>\r\n\t\t\t\t<option value=\"text\">MemoText</option>\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"stellar_checkout_field\">\r\n\t\t<label id=\"stellarCheckoutConfirmAmountLabel\" for=\"stellarCheckoutConfirmAmount\">Amount</label>\r\n\t\t<div class=\"stellar_checkout_txtwrap stellar_checkout_txtwrap--input stellar_checkout_txtwrap--clipboard\">\r\n\t\t\t<input id=\"stellarCheckoutConfirmAmount\" class=\"stellar_checkout_txt\" type=\"text\" value=\"{{payment.amount}}\" readonly></input>\r\n\t\t\t<span class=\"stellar_checkout_currency\">XLM</span>\r\n\t\t\t<span class=\"stellar_checkout_clipboard\">\r\n\t\t\t\t<i class=\"fas fa-copy\"></i>\r\n\t\t\t\t<span id=\"stellarCheckoutConfirmAmountClipboard\" class=\"stellar_checkout_clipboard_click\"></span>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
+module.exports = "<div id=\"paymentAwaitingView\" class=\"stellar_checkout_payment_awaiting stellar_checkout_hidden\">\r\n\t<div class=\"stellar_checkout_header\">\r\n\t\t<span id=\"paymentAwaitingGoBack\" class=\"stellar_checkout_goback\">\r\n\t\t\t<i class=\"fas fa-chevron-circle-left\"></i>\r\n\t\t</span>\r\n\t\t<div class=\"stellar_checkout_logo\">\r\n\t\t\t<img alt=\"\" class=\"stellar_checkout_rocket\" src=\"" + __webpack_require__(10) + "\" />\r\n\t\t\t<span class=\"stellar_checkout_app_name\">stellar checkout</span>\r\n\t\t</div>\r\n\t\t<div class=\"stellar_checkout_header_alt\">\r\n\t\t\t<div class=\"stellar_checkout_qr_wrap\">\r\n\t\t\t\t<div>\r\n\t\t\t\t\t<span id=\"qrCodeSpinner\" class=\"stellar_checkout_spinner\"><i class=\"fas fa-spinner fa-spin\"></i></span>\r\n\t\t\t\t\t<canvas id=\"qrCodeCanvas\" class=\"stellar_checkout_qrcode stellar_checkout_hidden\"></canvas>\r\n\t\t\t\t</div>\r\n\t\t\t</div>\r\n\t\t\t<div id=\"paymentAwaitingStatus\" class=\"stellar_checkout_status\">\r\n\t\t\t\t<span>Awaiting Payment</span>\r\n\t\t\t</div>\r\n\t\t</div>\r\n\t</div>\r\n\t<textarea id=\"fldXdr\" class=\"stellar_checkout_offscreen\"></textarea>\r\n\t<div class=\"stellar_checkout_transaction_info\">\r\n\t\t<span id=\"paymentAwaitingTransactionInfo\">Complete this transaction by scanning the QR code. The QR code contains a ready to be signed XDR envelope. </span>\r\n\t\t<a id=\"linkShowWalletPicker\" href=\"#\">change qrcode format</a>.\r\n\t\t<span id=\"paymentAwaitingTransactionInfo1\">Alternatively, manually create a payment with the following information:</span>\r\n\t</div>\r\n\t<div class=\"stellar_checkout_field stellar_checkout_hidden\">\r\n\t\t<label id=\"walletPickerLabel\" for=\"walletPicker\">QRCode Format</label>\r\n\t\t<div class=\"stellar_checkout_txtwrap stellar_checkout_txtwrap--picker\">\r\n\t\t\t<select id=\"walletPicker\" class=\"stellar_checkout_picker\">\r\n\t\t\t\t<option value=\"envelopexdr\">XDR</option>\r\n\t\t\t\t<option value=\"destinationkey\">Public Key</option>\r\n\t\t\t\t<option value=\"stargazer\">Stargazer Wallet</option>\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"stellar_checkout_field\">\r\n\t\t<label id=\"stellarCheckoutConfirmToLabel\" for=\"stellarCheckoutConfirmTo\">To</label>\r\n\t\t<div class=\"stellar_checkout_txtwrap stellar_checkout_txtwrap--clipboard\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmTo\" class=\"stellar_checkout_txt\" readonly>{{payment.to}}</textarea>\r\n\t\t\t<span class=\"stellar_checkout_clipboard\">\r\n\t\t\t\t<i class=\"fas fa-copy\"></i>\r\n\t\t\t\t<span id=\"stellarCheckoutConfirmToClipboard\" class=\"stellar_checkout_clipboard_click\"></span>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"stellar_checkout_field\">\r\n\t\t<label id=\"stellarCheckoutConfirmFromLabel\" for=\"stellarCheckoutConfirmFrom\">From</label>\r\n\t\t<div class=\"stellar_checkout_txtwrap stellar_checkout_txtwrap--clipboard\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmFrom\" class=\"stellar_checkout_txt\" readonly>{{payment.from}}</textarea>\r\n\t\t\t<span class=\"stellar_checkout_clipboard\">\r\n\t\t\t\t<i class=\"fas fa-copy\"></i>\r\n\t\t\t\t<span id=\"stellarCheckoutConfirmFromClipboard\" class=\"stellar_checkout_clipboard_click\"></span>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"stellar_checkout_field\">\r\n\t\t<label id=\"stellarCheckoutConfirmMemoLabel\" for=\"stellarCheckoutConfirmMemo\">Memo</label>\r\n\t\t<div class=\"stellar_checkout_txtwrap stellar_checkout_txtwrap--clipboard\">\r\n\t\t\t<textarea id=\"stellarCheckoutConfirmMemo\" class=\"stellar_checkout_txt\" readonly>{{payment.memo}}</textarea>\r\n\t\t\t<span class=\"stellar_checkout_clipboard\">\r\n\t\t\t\t<i class=\"fas fa-copy\"></i>\r\n\t\t\t\t<span id=\"stellarCheckoutConfirmMemoClipboard\" class=\"stellar_checkout_clipboard_click\"></span>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"stellar_checkout_field\">\r\n\t\t<label id=\"stellarCheckoutConfirmMemoTypeLabel\" for=\"stellarCheckoutConfirmMemoType\">Memo Type</label>\r\n\t\t<div class=\"stellar_checkout_txtwrap stellar_checkout_txtwrap--picker\">\r\n\t\t\t<select id=\"stellarCheckoutConfirmMemoType\" class=\"stellar_checkout_picker\" disabled>\r\n\t\t\t\t<option value=\"hash\" selected>MemoHash</option>\r\n\t\t\t\t<option value=\"id\">MemoID</option>\r\n\t\t\t\t<option value=\"none\">MemoNone</option>\r\n\t\t\t\t<option value=\"return\">MemoReturn</option>\r\n\t\t\t\t<option value=\"text\">MemoText</option>\r\n\t\t\t</select>\r\n\t\t</div>\r\n\t</div>\r\n\t<div class=\"stellar_checkout_field\">\r\n\t\t<label id=\"stellarCheckoutConfirmAmountLabel\" for=\"stellarCheckoutConfirmAmount\">Amount</label>\r\n\t\t<div class=\"stellar_checkout_txtwrap stellar_checkout_txtwrap--input stellar_checkout_txtwrap--clipboard\">\r\n\t\t\t<input id=\"stellarCheckoutConfirmAmount\" class=\"stellar_checkout_txt\" type=\"text\" value=\"{{payment.amount}}\" readonly></input>\r\n\t\t\t<span class=\"stellar_checkout_currency\">XLM</span>\r\n\t\t\t<span class=\"stellar_checkout_clipboard\">\r\n\t\t\t\t<i class=\"fas fa-copy\"></i>\r\n\t\t\t\t<span id=\"stellarCheckoutConfirmAmountClipboard\" class=\"stellar_checkout_clipboard_click\"></span>\r\n\t\t\t</span>\r\n\t\t</div>\r\n\t</div>\r\n</div>";
 
 /***/ }),
 /* 85 */
@@ -10884,6 +11258,39 @@ class PaymentCompleteView extends __WEBPACK_IMPORTED_MODULE_3__base_view__["a" /
 /* harmony default export */ __webpack_exports__["a"] = ({
 	'en': {
 		'paymentCompleteMessage': 'Payment complete'
+	},
+	'de-de': {
+		'paymentCompleteMessage': 'Zahlung abgeschlossen'
+	},
+	'es-es': {
+		'paymentCompleteMessage': 'Pago completo'
+	},
+	'it-it': {
+		'paymentCompleteMessage': 'Pagamento completato'
+	},
+	'fr-fr': {
+		'paymentCompleteMessage': 'Paiement terminé'
+	},
+	'ja-jp': {
+		'paymentCompleteMessage': '支払い完了'
+	},
+	'ko-kr': {
+		'paymentCompleteMessage': '지불 완료'
+	},
+	'pt-br': {
+		'paymentCompleteMessage': 'Pagamento completo'
+	},
+	'ru-ru': {
+		'paymentCompleteMessage': 'полная оплата'
+	},
+	'th-th': {
+		'paymentCompleteMessage': 'Kār chảra ngein s̄er̆c s̄mbūrṇ̒'
+	},
+	'zh-cn': {
+		'paymentCompleteMessage':'Fùkuǎn wánchéng'
+	},
+	'zu-za': {
+		'paymentCompleteMessage': 'Betaling voltooi'
 	}
 });
 
