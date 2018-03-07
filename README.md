@@ -57,6 +57,10 @@ npm i --save-dev stellar-checkout
   	type: String,
   	required: false
   },
+  lang: {   // Sets the culture used for localization. Supported cultures: 'en', 'de-DE', 'es-ES', 'it-IT', 'fr-FR', 'ja-JP', 'ko-KR', 'pt-BR', 'ru-RU', 'th-TH', 'zh-CN', 'zu-ZA'; 
+    type: String,
+    required: false
+  }, 
   memo: {   // A field to record additional data related to a payment. E.g. OrderID, UserID
     type: String,
     required: true
