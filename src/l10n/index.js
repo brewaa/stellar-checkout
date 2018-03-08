@@ -4,35 +4,24 @@ import {Localizer} from './localizer';
 
 export var cultures = [
 	'en',
+	'cs-CZ',
+	'da-DK',
 	'de-DE',
 	'es-ES',
-	'it-IT',
 	'fr-FR',
+	'hu-HU',
+	'id-ID',
+	'it-IT',
 	'ja-JP',
 	'ko-KR',
+	'pl-PL',
 	'pt-BR',
 	'ru-RU',
+	'sv-SE',
 	'th-TH',
+	'tr-TR',
 	'zh-CN',
 	'zu-ZA'
-	// 'arn-CL',
-	// 'cs-CZ',
-	// 'da-DK',
-	// 'zh-HK',
-	// 'hu-HU',
-	// 'id-ID',
-	// 'he-IL',
-	// 'hi-IN',
-	// 'es-MX',
-	// 'ms-MY',
-	// 'nb-NO',
-	// 'fil-PH',
-	// 'ur-PK',
-	// 'pl-PL',
-	// 'sv-SE',
-	// 'zh-SD',
-	// 'tr-TR',
-	// 'zh-TW'
 ];
 
 export default {

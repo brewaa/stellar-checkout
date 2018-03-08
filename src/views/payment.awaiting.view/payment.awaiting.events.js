@@ -14,7 +14,7 @@ export function onCopyField(e) {
         var l = l10n.localizer;
         var elem = document.createElement('span');
         elem.classList.add(constants.CLASS.copied);
-        elem.innerHTML = l.localize('copied', 'copied');
+        elem.innerHTML = l.localize('isCopied', 'copied');
         e.target.blur();
         e.target.parentNode.parentNode.parentNode.appendChild(elem);
         setTimeout(function() {

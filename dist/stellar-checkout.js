@@ -404,35 +404,24 @@ exports.from = function from (value, defaultValue) {
 
 var cultures = [
 	'en',
+	'cs-CZ',
+	'da-DK',
 	'de-DE',
 	'es-ES',
-	'it-IT',
 	'fr-FR',
+	'hu-HU',
+	'id-ID',
+	'it-IT',
 	'ja-JP',
 	'ko-KR',
+	'pl-PL',
 	'pt-BR',
 	'ru-RU',
+	'sv-SE',
 	'th-TH',
+	'tr-TR',
 	'zh-CN',
 	'zu-ZA'
-	// 'arn-CL',
-	// 'cs-CZ',
-	// 'da-DK',
-	// 'zh-HK',
-	// 'hu-HU',
-	// 'id-ID',
-	// 'he-IL',
-	// 'hi-IN',
-	// 'es-MX',
-	// 'ms-MY',
-	// 'nb-NO',
-	// 'fil-PH',
-	// 'ur-PK',
-	// 'pl-PL',
-	// 'sv-SE',
-	// 'zh-SD',
-	// 'tr-TR',
-	// 'zh-TW'
 ];
 
 /* harmony default export */ __webpack_exports__["b"] = ({
@@ -2376,19 +2365,43 @@ var common = {
 		'buttonStateNormal': 'Send payment',
 		'buttonStateInProgress': 'Confirming transaction...',
 		'buttonStatePaymentComplete': 'Payment complete',
-		'copied': 'copied',
+		'isCopied': 'copied',
 		'validateAmountNaN': 'amount is not a number',
 		'validateAmountGreaterThanZero': 'amount must be greater than zero',
 		'validatePublicKeyInvalid': 'public key is invalid',
 		'validateTotalNaN': 'total is not a number',
 		'validateTotalGreaterThanZero': 'total must be greater than zero'
 	},
+	'cs-cz': {
+		'buttonStateDisabled': 'Zadat informace o platbě',
+		'buttonStateNormal': 'Odeslat platbu',
+		'buttonStateInProgress': 'Potvrzení transakce ...',
+		'buttonStatePaymentComplete': 'Platba dokončena',
+		'isCopied': 'kopírovaný',
+		'validateAmountNaN': 'částka není číslo',
+		'validateAmountGreaterThanZero': 'částka musí být větší než nula',
+		'validatePublicKeyInvalid': 'veřejný klíč je neplatný',
+		'validateTotalNaN': 'totální není číslo',
+		'validateTotalGreaterThanZero': 'celkový počet musí být větší než nula'
+	},
+	'da-dk': {
+		'buttonStateDisabled': 'Indtast betalingsoplysninger',
+		'buttonStateNormal': 'Sende betaling',
+		'buttonStateInProgress': 'Bekræftelse af transaktion ...',
+		'buttonStatePaymentComplete': 'Betaling fuldført',
+		'isCopied': 'kopieret',
+		'validateAmountNaN': 'beløb er ikke et tal',
+		'validateAmountGreaterThanZero': 'beløb skal være større end nul',
+		'validatePublicKeyInvalid': 'Offentlig nøgle er ugyldig',
+		'validateTotalNaN': 'totalt er ikke et tal',
+		'validateTotalGreaterThanZero': 'alt skal være større end nul'
+	},
 	'de-de': {
 		'buttonStateDisabled': 'Zahlungsinformationen eingeben',
 		'buttonStateNormal': 'Zahlung senden',
 		'buttonStateInProgress': 'Transaktion bestätigen ...',
 		'buttonStatePaymentComplete': 'Zahlung abgeschlossen',
-		'copied': 'kopiert',
+		'isCopied': 'kopiert',
 		'validateAmountNaN': 'Betrag ist keine Zahl',
 		'validateAmountGreaterThanZero': 'Betrag muss größer als Null sein',
 		'validatePublicKeyInvalid': 'öffentlicher Schlüssel ist ungültig',
@@ -2400,43 +2413,67 @@ var common = {
 		'buttonStateNormal': 'Enviar pago',
 		'buttonStateInProgress': 'Confirming transaction ...',
 		'buttonStatePaymentComplete': 'Pago completo',
-		'copied': 'copiado',
+		'isCopied': 'copiado',
 		'validateAmountNaN': 'la cantidad no es un número',
 		'validateAmountGreaterThanZero': 'la cantidad debe ser mayor que cero',
 		'validatePublicKeyInvalid': 'la clave pública no es válida',
 		'validateTotalNaN': 'total no es un número',
 		'validateTotalGreaterThanZero': 'total debe ser mayor que cero'
 	},
-	'it-it': {
-		'buttonStateDisabled': 'Inserisci informazioni di pagamento',
-		'buttonStateNormal': 'Invia pagamento',
-		'buttonStateInProgress': 'Conferma della transazione ...',
-		'buttonStatePaymentComplete': 'Pagamento completato',
-		'copied': 'copiato',
-		'validateAmountNaN': 'amount is not a number',
-		'validateAmountGreaterThanZero': 'l\'importo deve essere maggiore di zero',
-		'validatePublicKeyInvalid': 'public key is invalid',
-		'validateTotalNaN': 'total non è un numero',
-		'validateTotalGreaterThanZero': 'totale deve essere maggiore di zero'
-	},
 	'fr-fr': {
 		'buttonStateDisabled': 'Entrer les informations de paiement',
 		'buttonStateNormal': 'Envoyer le paiement',
 		'buttonStateInProgress': 'Confirmation de transaction ...',
 		'buttonStatePaymentComplete': 'Paiement terminé',
-		'copied': 'copié',
+		'isCopied': 'copié',
 		'validateAmountNaN': 'amount n\'est pas un nombre',
 		'validateAmountGreaterThanZero': 'le montant doit être supérieur à zéro',
 		'validatePublicKeyInvalid': 'clé publique invalide',
 		'validerTotalNaN': 'total n\'est pas un nombre',
 		'validateTotalGreaterThanZero': 'total doit être supérieur à zéro'
 	},
+	'hu-hu': {
+		'buttonStateDisabled': 'Adja meg a fizetési adatokat',
+		'buttonStateNormal': 'Fizetés küldése',
+		'buttonStateInProgress': 'Tranzakció megerősítése ...',
+		'buttonStatePaymentComplete': 'Fizetés kész',
+		'isCopied': 'másolt',
+		'validateAmountNaN': 'összeg nem szám',
+		'validateAmountGreaterThanZero': 'az összegnek nagyobbnak kell lennie mint nulla',
+		'validatePublicKeyInvalid': 'nyilvános kulcs érvénytelen',
+		'validateTotalNaN': 'a teljes nem szám',
+		'validateTotalGreaterThanZero': 'összesnek nagyobbnak kell lennie mint nulla'
+	},
+	'id-id': {
+		'buttonStateDisabled': 'Masukkan info pembayaran',
+		'buttonStateNormal': 'Send Payment',
+		'buttonStateInProgress': 'Mengkonfirmasi transaksi ...',
+		'buttonStatePaymentComplete': 'Pembayaran selesai',
+		'isCopied': 'disalin',
+		'validateAmountNaN': 'jumlah bukan angka',
+		'validateAmountGreaterThanZero': 'jumlah harus lebih besar dari nol',
+		'validatePublicKeyInvalid': 'kunci publik tidak valid',
+		'validateTotalNaN': 'total bukan angka',
+		'validateTotalGreaterThanZero': 'total harus lebih besar dari nol'
+	},
+	'it-it': {
+		'buttonStateDisabled': 'Inserisci informazioni di pagamento',
+		'buttonStateNormal': 'Invia pagamento',
+		'buttonStateInProgress': 'Conferma della transazione ...',
+		'buttonStatePaymentComplete': 'Pagamento completato',
+		'isCopied': 'copiato',
+		'validateAmountNaN': 'amount is not a number',
+		'validateAmountGreaterThanZero': 'l\'importo deve essere maggiore di zero',
+		'validatePublicKeyInvalid': 'public key is invalid',
+		'validateTotalNaN': 'total non è un numero',
+		'validateTotalGreaterThanZero': 'totale deve essere maggiore di zero'
+	},
 	'ja-jp': {
 		'buttonStateDisabled': '支払い情報を入力',
 		'buttonStateNormal': '支払いを送る',
 		'buttonStateInProgress': 'トランザクションの確認中...',
 		'buttonStatePaymentComplete': '支払い完了',
-		'copied': 'コピーされた',
+		'isCopied': 'コピーされた',
 		'validateAmountNaN': '金額は数字ではありません',
 		'validateAmountGreaterThanZero': '額はゼロより大きくする必要があります',
 		'validatePublicKeyInvalid': '公開鍵が無効です',
@@ -2448,19 +2485,31 @@ var common = {
 		'buttonStateNormal': '지불하기',
 		'buttonStateInProgress': '거래 확인 중 ...',
 		'buttonStatePaymentComplete': '지불 완료',
-		'copied': '복사 한',
+		'isCopied': '복사 한',
 		'validateAmountNaN': '금액이 숫자가 아닙니다',
 		'validateAmountGreaterThanZero': '금액은 0보다 커야합니다',
 		'validatePublicKeyInvalid': '공개 키가 유효하지 않습니다',
 		'validateTotalNaN': '총 숫자가 아닙니다',
 		'validateTotalGreaterThanZero': '합계가 0보다 커야합니다.'
 	},
+	'pl-pl': {
+		"buttonStateDisabled": "Wprowadź informacje o płatności",
+		"buttonStateNormal": "Wyślij płatność",
+		"buttonStateInProgress": "Potwierdzanie transakcji ...",
+		"buttonStatePaymentComplete": "Płatność została zrealizowana",
+		"isCopied": "skopiowany",
+		"validateAmountNaN": "kwota nie jest liczbą",
+		"validateAmountGreaterThanZero": "kwota musi być większa od zera",
+		"validatePublicKeyInvalid": "klucz publiczny jest nieprawidłowy",
+		"validateTotalNaN": "suma nie jest liczbą",
+		"validateTotalGreaterThanZero": "suma musi być większa od zera"
+	},
 	'pt-br': {
 		'buttonStateDisabled': 'Digite informações de pagamento',
 		'buttonStateNormal': 'Enviar pagamento',
 		'buttonStateInProgress': 'Confirmar transação ...',
 		'buttonStatePaymentComplete': 'Pagamento completo',
-		'copied': 'copiado',
+		'isCopied': 'copiado',
 		'validateAmountNaN': 'amount is not a number',
 		'validateAmountGreaterThanZero': 'quantidade deve ser maior que zero',
 		'validatePublicKeyInvalid': 'chave pública é inválida',
@@ -2472,31 +2521,55 @@ var common = {
 		'buttonStateNormal': 'Отправить платеж',
 		'buttonStateInProgress': 'Подтверждение транзакции ...',
 		'buttonStatePaymentComplete': 'Полная оплата',
-		'copied': 'skopirovano',
+		'isCopied': 'skopirovano',
 		'validateAmountNaN': 'сумма не является числом',
 		'validateAmountGreaterThanZero': 'сумма должна быть больше нуля',
 		'validatePublicKeyInvalid': 'открытый ключ недействителен',
 		'validateTotalNaN': 'total is not a number',
 		'validateTotalGreaterThanZero': 'total должно быть больше нуля'
 	},
+	'sv-se': {
+		'buttonStateDisabled': 'Ange betalningsinfo',
+		'buttonStateNormal': 'Skicka betalning',
+		'buttonStateInProgress': 'Bekräftar transaktion ...',
+		'buttonStatePaymentComplete': 'Betalning komplett',
+		'isCopied': 'kopieras',
+		'validateAmountNaN': 'beloppet är inte ett nummer',
+		'validateAmountGreaterThanZero': 'beloppet måste vara större än noll',
+		'validatePublicKeyInvalid': 'Offentlig nyckel är ogiltig',
+		'validateTotalNaN': 'totalt är inte ett tal',
+		'validateTotalGreaterThanZero': 'totalt måste vara större än noll'
+	},
 	'th-th': {
 		'ButtonStateDisabled': 'P̂xn k̄ĥxmūl kār chảra ngein',
 		'buttonStateNormal': 'S̄̀ng kār chảra ngein',
 		'buttonStateInProgress': 'Kảlạng yụ̄nyạn kār thả ṭhurkrrm... ',
 		'ButtonStatePaymentComplete': 'Kār chảra ngein s̄er̆c s̄mbūrṇ̒',
-		'copied': 'Khạd lxk',
+		'isCopied': 'Khạd lxk',
 		'validateAmountNaN': 'Cảnwn mị̀chı̀ cảnwn',
 		'validateAmountGreaterThanZero': 'Cảnwn ngein t̂xng mākkẁā ṣ̄ūny̒',
 		'validatePublicKeyInvalid': 'Khīy̒ s̄āṭhārṇa mị̀ t̄hūk t̂xng',
 		'validateTotalNaN': 'Total mị̀chı̀ tạwlek̄h',
 		'validateTotalGreaterThanZero': 'Cảnwn rwm t̂xng mākkẁā ṣ̄ūny̒'
 	},
+	'tr-tr': {
+		'buttonStateDisabled': 'Ödeme bilgilerini girin',
+		'buttonStateNormal': 'Ödeme gönder',
+		'buttonStateInProgress': 'İşlemi Onaylıyor ...',
+		'buttonStatePaymentComplete': 'Ödeme tamamlandı',
+		'isCopied': 'kopyalanmış',
+		'validateAmountNaN': 'tutar bir sayı değil',
+		'validateAmountGreaterThanZero': 'tutar sıfırdan büyük olmalı',
+		'validatePublicKeyInvalid': 'genel anahtar geçersiz',
+		'validateTotalNaN': 'toplam bir sayı değil',
+		'validateTotalGreaterThanZero': 'toplam sıfırdan büyük olmalı'
+	},
 	'zh-cn': {
 		'ButtonStateDisabled': 'Shūrù fùkuǎn xìnxī',
 		'buttonStateNormal': 'Fāsòng fùkuǎn',
 		'buttonStateInProgress': 'Quèrèn jiāoyì...',
 		'ButtonStatePaymentComplete': 'Fùkuǎn wánchéng',
-		'copied': 'Fùzhì',
+		'isCopied': 'Fùzhì',
 		'validateAmountNaN': 'Jīn\'é bùshì shùzì',
 		'validateAmountGreaterThanZero': 'Jīn\'é bìxū dàyú líng',
 		'validatePublicKeyInvalid': 'Gōng yào wúxiào',
@@ -2508,7 +2581,7 @@ var common = {
 		'buttonStateNormal': 'Stuur betaling',
 		'buttonStateInProgress': 'Bevestiging van transaksie ...',
 		'buttonStatePaymentComplete': 'Betaling voltooi',
-		'copied': 'gekopieer',
+		'isCopied': 'gekopieer',
 		'validateAmountNaN': 'bedrag is nie \'n nommer\' nie',
 		'validateAmountGreaterThanZero': 'bedrag moet groter as nul\' wees',
 		'validatePublicKeyInvalid': 'publieke sleutel is ongeldig',
@@ -7535,6 +7608,18 @@ function httpRequest(method, url, params, body, accessToken) {
 		'labelPublicKey': 'Public Key',
 		'submitButton': 'Enter payment info'
 	},
+	'cs-cz': {
+		'labelTotal': 'Celkem',
+		'labelAmount': 'Částka',
+		'labelPublicKey': 'Veřejný klíč',
+		'submitButton': 'Zadat informace o platbě'
+	},
+	'da-dk': {
+		'labelTotal': 'Total',
+		'labelAmount': 'Beløb',
+		'labelPublicKey': 'Offentlig nøgle',
+		'submitButton': 'Indtast betalingsoplysninger'
+	},
 	'de-de': {
 		'labelTotal': 'Gesamt',
 		'labelAmount': 'Betrag',
@@ -7547,17 +7632,29 @@ function httpRequest(method, url, params, body, accessToken) {
 		'labelPublicKey': 'Clave pública',
 		'submitButton': 'Ingresar información de pago'
 	},
-	'it-it': {
-		'labelTotal': 'Totale',
-		'labelAmount': 'Quantità',
-		'labelPublicKey': 'Chiave pubblica',
-		'submitButton': 'Inserisci le informazioni di pagamento'
-	},
 	'fr-fr': {
 		'labelTotal': 'Total',
 		'labelAmount': 'Montant',
 		'labelPublicKey': 'Clé publique',
 		'submitButton': 'Entrer les informations de paiement'
+	},
+	'hu-hu': {
+		"labelTotal": "Összesen",
+		"labelAmount": "Összeg",
+		'labelPublicKey': 'Nyilvános kulcs',
+		'submitButton': 'Adja meg a fizetési adatokat'
+	},
+	'id-id': {
+		'labelTotal': 'Total',
+		'labelAmount': 'Jumlah',
+		'labelPublicKey': 'Kunci Publik',
+		'submitButton': 'Masukkan info pembayaran'
+	},
+	'it-it': {
+		'labelTotal': 'Totale',
+		'labelAmount': 'Quantità',
+		'labelPublicKey': 'Chiave pubblica',
+		'submitButton': 'Inserisci le informazioni di pagamento'
 	},
 	'ja-jp': {
 		'labelTotal': '合計',
@@ -7571,6 +7668,12 @@ function httpRequest(method, url, params, body, accessToken) {
 		'labelPublicKey': '공개 키',
 		'submitButton': '결제 정보 입력'
 	},
+	'pl-pl': {
+		"labelTotal": "Całkowity",
+		"labelAmount": "Ilość",
+		"labelPublicKey": "Klucz publiczny",
+		"submitButton": "Wprowadź informacje o płatności"
+	},
 	'pt-br': {
 		'labelTotal': 'Total',
 		'labelAmount': 'Montante',
@@ -7583,11 +7686,23 @@ function httpRequest(method, url, params, body, accessToken) {
 		'labelPublicKey': 'Открытый ключ',
 		'submitButton': 'Введите платежную информацию'
 	},
+	'sv-se': {
+		'labelTotal': 'Total',
+		'labelAmount': 'Belopp',
+		'labelPublicKey': 'offentlig nyckel-',
+		'submitButton': 'Ange betalningsinfo'
+	},
 	'th-th': {
 		'labelTotal': 'Rwm',
 		'labelAmount': 'Cảnwn ngein',
 		'labelPublicKey': 'Khīy̒ s̄āṭhārṇa',
 		'submitButton': 'P̂xn k̄ĥxmūl kār chảra ngein'
+	},
+	'tr-tr': {
+		'labelTotal': 'Toplam',
+		'labelAmount': 'Tutar',
+		'labelPublicKey': 'Genel Anahtar',
+		'submitButton': 'Ödeme bilgilerini girin'
 	},
 	'zh-cn': {
 		'labelTotal': 'Zǒngjì',
@@ -10955,7 +11070,7 @@ function onCopyField(e) {
         var l = __WEBPACK_IMPORTED_MODULE_2__l10n__["b" /* default */].localizer;
         var elem = document.createElement('span');
         elem.classList.add(__WEBPACK_IMPORTED_MODULE_0__constants__["a" /* default */].CLASS.copied);
-        elem.innerHTML = l.localize('copied', 'copied');
+        elem.innerHTML = l.localize('isCopied', 'copied');
         e.target.blur();
         e.target.parentNode.parentNode.parentNode.appendChild(elem);
         setTimeout(function() {
@@ -10986,6 +11101,38 @@ function onCopyField(e) {
 		'processingTransaction': 'processing transaction',
 		'verifyingTransaction': 'verifying transaction',
 		'paymentComplete': 'payment complete'
+	},
+	'cs-cz': {
+		'paymentAwaitingStatus': 'Čeká na platbu',
+		'paymentAwaitingTransactionInfo': 'Dokončete tuto transakci skenováním QR kódu. QR kód obsahuje připravenou podepsanou obálku XDR. ',
+		'paymentAwaitingTransactionInfo1': 'Alternativně můžete ručně vytvořit platbu s následujícími informacemi:',
+		'changeQrCode': 'změnit formát qrcode',
+		'qrCodeFormat': 'QRCode Format',
+		'toLabel': 'Na',
+		'fromLabel': 'Od',
+		'memoLabel': 'Memo',
+		'memoTypeLabel': 'Typ poznámky',
+		"amountLabel": "částka",
+		'transactionReceived': 'přijatá transakce',
+		"processingTransaction": "zpracování transakce",
+		'verifyingTransaction': 'ověřovací transakce',
+		'paymentComplete': 'payment completed'
+	},
+	'da-dk': {
+		'paymentAwaitingStatus': 'Afventer betaling',
+		'paymentAwaitingTransactionInfo': 'Fuldfør denne transaktion ved at scanne QR-koden. QR-koden indeholder en klar til at blive underskrevet XDR-konvolut. ',
+		'paymentAwaitingTransactionInfo1': 'Alternativt skal du manuelt oprette en betaling med følgende oplysninger:',
+		'changeQrCode': 'skift qrcode format',
+		'qrCodeFormat': 'QRCode Format',
+		'toLabel': 'Til',
+		'fromLabel': 'Fra',
+		'memoLabel': 'Memo',
+		'memoTypeLabel': 'Memo Type',
+		'amountLabel': 'Beløb',
+		'transactionReceived': 'modtaget transaktion',
+		'processingTransaction': 'behandlingstransaktion',
+		'verifyingTransaction': 'verificerende transaktion',
+		'paymentComplete': 'betaling fuldført'
 	},
 	'de-de': {
 		'paymentAwaitingStatus': 'Warten auf Zahlung',
@@ -11019,22 +11166,6 @@ function onCopyField(e) {
 		'verifyingTransaction': 'verificar la transacción',
 		'paymentComplete': 'pago completo'
 	},
-	'it-it': {
-		'paymentAwaitingStatus': 'In attesa di pagamento',
-		'paymentAwaitingTransactionInfo': 'Completa questa transazione scansionando il codice QR. Il codice QR contiene una busta XDR pronta per essere firmata. ',
-		'paymentAwaitingTransactionInfo1': 'In alternativa, crea manualmente un pagamento con le seguenti informazioni:',
-		'changeQrCode': 'cambia formato qrcode',
-		'qrCodeFormat': 'Formato QRCode',
-		'toLabel': "A",
-		'fromLabel': 'Da',
-		'memoLabel': 'Promemoria',
-		'memoTypeLabel': 'Promemoria Tipo',
-		'amountLabel': 'Importo',
-		'transactionReceived': 'transazione ricevuta',
-		'processingTransaction': 'transazione di elaborazione',
-		'verifyingTransaction': 'verifica della transazione',
-		'paymentComplete': 'payment complete'
-	},
 	'fr-fr': {
 		'paymentAwaitingStatus': 'En attente de paiement',
 		'paymentAwaitingTransactionInfo': 'Terminez cette transaction en scannant le code QR. Le code QR contient une enveloppe XDR prête à être signée. ',
@@ -11050,6 +11181,54 @@ function onCopyField(e) {
 		'processingTransaction': 'transaction de traitement',
 		'verifyingTransaction': 'vérification de transaction',
 		'paymentComplete': 'paiement complet'
+	},
+	'hu-hu': {
+		'paymentAwaitingStatus': 'Fizetés várakozás',
+		'paymentAwaitingTransactionInfo': 'Végezze el a tranzakciót a QR-kód beolvasásával. A QR-kód tartalmaz egy aláírásra kész XDR borítékot. ',
+		'paymentAwaitingTransactionInfo1': 'Alternatívaként kézzel is készíthet fizetést az alábbi információkkal:',
+		'changeQrCode': 'változás qrcode formátumban',
+		'qrCodeFormat': 'QRCode Format',
+		'toLabel': 'Nak nek',
+		"FromLabel": "Tól től",
+		'memoLabel': 'Memo',
+		'memoTypeLabel': 'Emlékeztető típusa',
+		"amountLabel": "Összeg",
+		"transactionReceived": "beérkezett tranzakció",
+		"processingTransaction": "feldolgozási tranzakció",
+		'verifyingTransaction': 'tranzakció ellenőrzése',
+		"paymentComplete": "teljes fizetés"
+	},
+	'id-id': {
+		'paymentAwaitingStatus': 'Menunggu Pembayaran',
+		'paymentAwaitingTransactionInfo': 'Selesaikan transaksi ini dengan memindai kode QR. Kode QR berisi amplop XDR yang siap ditandatangani. ',
+		'paymentAwaitingTransactionInfo1': 'Sebagai alternatif, buat pembayaran secara manual dengan informasi berikut:',
+		'changeQrCode': 'ubah format qrcode',
+		'qrCodeFormat': 'QRCode Format',
+		'toLabel': 'Untuk',
+		'fromLabel': 'Dari',
+		'memoLabel': 'Memo',
+		'memoTypeLabel': 'Jenis Memo',
+		'amountLabel': 'Jumlah',
+		'transactionReceived': 'transaksi diterima',
+		'processingTransaction': 'pengolahan transaksi',
+		'verifyingTransaction': 'memverifikasi transaksi',
+		'paymentComplete': 'pembayaran selesai'
+	},
+	'it-it': {
+		'paymentAwaitingStatus': 'In attesa di pagamento',
+		'paymentAwaitingTransactionInfo': 'Completa questa transazione scansionando il codice QR. Il codice QR contiene una busta XDR pronta per essere firmata. ',
+		'paymentAwaitingTransactionInfo1': 'In alternativa, crea manualmente un pagamento con le seguenti informazioni:',
+		'changeQrCode': 'cambia formato qrcode',
+		'qrCodeFormat': 'Formato QRCode',
+		'toLabel': "A",
+		'fromLabel': 'Da',
+		'memoLabel': 'Promemoria',
+		'memoTypeLabel': 'Promemoria Tipo',
+		'amountLabel': 'Importo',
+		'transactionReceived': 'transazione ricevuta',
+		'processingTransaction': 'transazione di elaborazione',
+		'verifyingTransaction': 'verifica della transazione',
+		'paymentComplete': 'payment complete'
 	},
 	'ja-jp': {
 		'paymentAwaitingStatus': 'お支払い待ち',
@@ -11083,6 +11262,22 @@ function onCopyField(e) {
 		'verifyingTransaction': '거래 확인',
 		'paymentComplete': '지불 완료'
 	},
+	'pl-pl': {
+		"paymentAwaitingStatus": "Oczekiwanie na płatność",
+		"paymentAwaitingTransactionInfo": "Zakończ tę transakcję, skanując kod QR. Kod QR zawiera gotową do podpisania kopertę XDR. ",
+		"paymentAwaitingTransactionInfo1": "Alternatywnie, ręcznie utwórz płatność z następującymi informacjami:",
+		"changeQrCode": "zmień format qrcode",
+		"qrCodeFormat": "Format QRCode",
+		"toLabel": "Do",
+		"fromLabel": "Od",
+		"memoLabel": "Notatka",
+		"memoTypeLabel": "Typ noty",
+		"amountLabel": "Kwota",
+		"transactionReceived": "transakcja otrzymana",
+		"processingTransaction": "przetwarzanie transakcji",
+		"verifyingTransaction": "weryfikacja transakcji",
+		"paymentComplete": "płatność zakończona"
+	},
 	'pt-br': {
 		'paymentAwaitingStatus': 'Aguardando pagamento',
 		'paymentAwaitingTransactionInfo': 'Complete esta transação digitalizando o código QR. O código QR contém um envelope XDR pronto para ser assinado. ',
@@ -11115,6 +11310,22 @@ function onCopyField(e) {
 		'verifyingTransaction': 'проверка транзакции',
 		'paymentComplete': 'платеж завершен'
 	},
+	'sv-se': {
+		"paymentAwaitingStatus": "Väntar på betalning",
+		'paymentAwaitingTransactionInfo': 'Fyll i denna transaktion genom att skanna QR-koden. QR-koden innehåller ett klart signerat XDR-kuvert. ',
+		'paymentAwaitingTransactionInfo1': 'Alternativt, manuellt skapa en betalning med följande information:',
+		'changeQrCode': 'ändra qrcode format',
+		'qrCodeFormat': 'QRCode Format',
+		'toLabel': 'Till',
+		'fromLabel': 'Från',
+		'memoLabel': 'PM',
+		'memoTypeLabel': 'PM Typ',
+		'amountLabel': 'Belopp',
+		"transactionReceived": "mottagen transaktion",
+		"processingTransaction": "bearbetningstransaktion",
+		"verifyingTransaction": "verifierande transaktion",
+		'paymentComplete': 'betalning slutförd'
+	},
 	'th-th': {
 		'paymentAwaitingStatus': 'Kảlạng rx kār chảra ngein',
 		'paymentAwaitingTransactionInfo': 'Thả rāykār nī̂ h̄ı̂ s̄mbūrṇ̒ doy kār s̄kæn khôd QR khôd QR prakxbd̂wy phr̂xm thī̀ ca lng nām nı sxng cdh̄māy XDR',
@@ -11130,6 +11341,22 @@ function onCopyField(e) {
 		'processingTransaction': 'Pramwl p̄hl ṭhurkrrm',
 		'verifyingTransaction': 'Yụ̄nyạn kār thả ṭhurkrrm',
 		'paymentComplete': 'Kār chảra ngein s̄er̆c s̄mbūrṇ̒'
+	},
+	'tr-tr': {
+		'paymentAwaitingStatus': 'Ödeme Bekliyor',
+		'paymentAwaitingTransactionInfo': 'QR kodunu tarayarak bu işlemi tamamlayın. QR kodu imzalanmış bir XDR zarf içeriyor. ',
+		'paymentAwaitingTransactionInfo1': 'Alternatif olarak, şu bilgileri içeren bir ödeme oluşturun:',
+		'changeQrCode': 'qrcode biçimi değiştir',
+		'qrCodeFormat': 'QRCode Biçimi',
+		'toLabel': 'için',
+		'fromLabel': 'itibaren',
+		'memoLabel': 'Not',
+		'memoTypeLabel': 'Not Türü',
+		'amountLabel': 'Tutar',
+		'transactionReceived': 'işlem alındı',
+		'processingTransaction': 'işleme işlemi',
+		'verifyingTransaction': 'işlem doğrulanıyor',
+		'paymentComplete': 'ödeme tamamlandı'
 	},
 	'zh-cn': {
 		'paymentAwaitingStatus': 'Děngdài zhīfù',
@@ -11259,6 +11486,12 @@ class PaymentCompleteView extends __WEBPACK_IMPORTED_MODULE_3__base_view__["a" /
 	'en': {
 		'paymentCompleteMessage': 'Payment complete'
 	},
+	'cs-cz': {
+		'paymentCompleteMessage': 'Platba byla dokončena'
+	},
+	'da-dk': {
+		'paymentCompleteMessage': 'Betaling fuldført'
+	},
 	'de-de': {
 		'paymentCompleteMessage': 'Zahlung abgeschlossen'
 	},
@@ -11271,11 +11504,20 @@ class PaymentCompleteView extends __WEBPACK_IMPORTED_MODULE_3__base_view__["a" /
 	'fr-fr': {
 		'paymentCompleteMessage': 'Paiement terminé'
 	},
+	'hu-hu': {
+		"paymentCompleteMessage": "Fizetés kész"
+	},
+	'id-id': {
+		'paymentCompleteMessage': 'Pembayaran selesai'
+	},
 	'ja-jp': {
 		'paymentCompleteMessage': '支払い完了'
 	},
 	'ko-kr': {
 		'paymentCompleteMessage': '지불 완료'
+	},
+	'pl-pl': {
+		"paymentCompleteMessage": "Płatność została zrealizowana"
 	},
 	'pt-br': {
 		'paymentCompleteMessage': 'Pagamento completo'
@@ -11283,8 +11525,14 @@ class PaymentCompleteView extends __WEBPACK_IMPORTED_MODULE_3__base_view__["a" /
 	'ru-ru': {
 		'paymentCompleteMessage': 'полная оплата'
 	},
+	'sv-se': {
+		'PaymentCompleteMessage': 'Betalning komplett'
+	},
 	'th-th': {
 		'paymentCompleteMessage': 'Kār chảra ngein s̄er̆c s̄mbūrṇ̒'
+	},
+	'tr-tr': {
+		'paymentCompleteMessage': 'Ödeme tamamlandı'
 	},
 	'zh-cn': {
 		'paymentCompleteMessage':'Fùkuǎn wánchéng'

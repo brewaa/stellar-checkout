@@ -5,6 +5,18 @@ export default {
 		'labelPublicKey': 'Public Key',
 		'submitButton': 'Enter payment info'
 	},
+	'cs-cz': {
+		'labelTotal': 'Celkem',
+		'labelAmount': 'Částka',
+		'labelPublicKey': 'Veřejný klíč',
+		'submitButton': 'Zadat informace o platbě'
+	},
+	'da-dk': {
+		'labelTotal': 'Total',
+		'labelAmount': 'Beløb',
+		'labelPublicKey': 'Offentlig nøgle',
+		'submitButton': 'Indtast betalingsoplysninger'
+	},
 	'de-de': {
 		'labelTotal': 'Gesamt',
 		'labelAmount': 'Betrag',
@@ -17,17 +29,29 @@ export default {
 		'labelPublicKey': 'Clave pública',
 		'submitButton': 'Ingresar información de pago'
 	},
-	'it-it': {
-		'labelTotal': 'Totale',
-		'labelAmount': 'Quantità',
-		'labelPublicKey': 'Chiave pubblica',
-		'submitButton': 'Inserisci le informazioni di pagamento'
-	},
 	'fr-fr': {
 		'labelTotal': 'Total',
 		'labelAmount': 'Montant',
 		'labelPublicKey': 'Clé publique',
 		'submitButton': 'Entrer les informations de paiement'
+	},
+	'hu-hu': {
+		"labelTotal": "Összesen",
+		"labelAmount": "Összeg",
+		'labelPublicKey': 'Nyilvános kulcs',
+		'submitButton': 'Adja meg a fizetési adatokat'
+	},
+	'id-id': {
+		'labelTotal': 'Total',
+		'labelAmount': 'Jumlah',
+		'labelPublicKey': 'Kunci Publik',
+		'submitButton': 'Masukkan info pembayaran'
+	},
+	'it-it': {
+		'labelTotal': 'Totale',
+		'labelAmount': 'Quantità',
+		'labelPublicKey': 'Chiave pubblica',
+		'submitButton': 'Inserisci le informazioni di pagamento'
 	},
 	'ja-jp': {
 		'labelTotal': '合計',
@@ -41,6 +65,12 @@ export default {
 		'labelPublicKey': '공개 키',
 		'submitButton': '결제 정보 입력'
 	},
+	'pl-pl': {
+		"labelTotal": "Całkowity",
+		"labelAmount": "Ilość",
+		"labelPublicKey": "Klucz publiczny",
+		"submitButton": "Wprowadź informacje o płatności"
+	},
 	'pt-br': {
 		'labelTotal': 'Total',
 		'labelAmount': 'Montante',
@@ -53,11 +83,23 @@ export default {
 		'labelPublicKey': 'Открытый ключ',
 		'submitButton': 'Введите платежную информацию'
 	},
+	'sv-se': {
+		'labelTotal': 'Total',
+		'labelAmount': 'Belopp',
+		'labelPublicKey': 'offentlig nyckel-',
+		'submitButton': 'Ange betalningsinfo'
+	},
 	'th-th': {
 		'labelTotal': 'Rwm',
 		'labelAmount': 'Cảnwn ngein',
 		'labelPublicKey': 'Khīy̒ s̄āṭhārṇa',
 		'submitButton': 'P̂xn k̄ĥxmūl kār chảra ngein'
+	},
+	'tr-tr': {
+		'labelTotal': 'Toplam',
+		'labelAmount': 'Tutar',
+		'labelPublicKey': 'Genel Anahtar',
+		'submitButton': 'Ödeme bilgilerini girin'
 	},
 	'zh-cn': {
 		'labelTotal': 'Zǒngjì',

@@ -57,7 +57,7 @@ npm i --save-dev stellar-checkout
   	type: String,
   	required: false
   },
-  lang: {   // Sets the culture used for localization. Supported cultures: 'en', 'de-DE', 'es-ES', 'it-IT', 'fr-FR', 'ja-JP', 'ko-KR', 'pt-BR', 'ru-RU', 'th-TH', 'zh-CN', 'zu-ZA'; 
+  lang: {   // Sets the culture used for localization. Supported cultures: 'en', 'cs-CZ', 'da-DK', 'de-DE', 'es-ES', 'fr-FR', 'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'pl-PL', 'pt-BR', 'ru-RU', 'sv-SE', 'th-TH', 'tr-TR', 'zh-CN', 'zu-ZA'; 
     type: String,
     required: false
   }, 
