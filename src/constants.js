@@ -47,5 +47,7 @@ export default {
 		NORMAL: 'NORMAL',
 		IN_PROGRESS: 'IN_PROGRESS',
 		PAYMENT_COMPLETE: 'PAYMENT_COMPLETE'
-	}
+	},
+	TIMEOUT: 120,
+	TIMER: null
 };

@@ -127,7 +127,8 @@ return /******/ (function(modules) { // webpackBootstrap
 		NORMAL: 'NORMAL',
 		IN_PROGRESS: 'IN_PROGRESS',
 		PAYMENT_COMPLETE: 'PAYMENT_COMPLETE'
-	}
+	},
+	TIMEOUT: 120
 });
 
 /***/ }),
@@ -2259,6 +2260,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 			this.options.redirectUrl = opts.redirectUrl;
 			this.options.onSubmit = opts.onSubmit;
 			this.options.stylesheet = opts.stylesheet;
+			this.options.timeout = opts.timeout || __WEBPACK_IMPORTED_MODULE_1__constants__["a" /* default */].TIMEOUT;
 			this.options.total = opts.total;
 
 			var self = this;
