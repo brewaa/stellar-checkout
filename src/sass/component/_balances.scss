@@ -1,0 +1,54 @@
+/// <reference path="../site.scss" />
+
+.sco_balances {
+    text-align: left;
+}
+
+.sco_balances_balance {
+    display: flex;
+    border-bottom: .0625rem solid #eee;
+}
+
+.sco_balances_balance > div {
+    padding: .4rem .8rem;
+    flex-basis: 33%;
+}
+
+.sco_balances_balance_label {
+    flex-grow: 1;
+    text-align: center;
+}
+
+.sco_balances_balance_asset_code {
+}
+
+.sco_balances_balance_asset_code.adorned {
+    background: #f8f8f8;
+    border-left: .0625rem solid #ddd;
+    border-right: .0625rem solid #ddd;
+    text-align: center;
+}
+
+.sco_balances_balance_bal {
+    flex-grow: 1;
+    text-align: right;
+}
+
+.sco_balances_balance_bal_asset_code {
+    font-size: .8rem;
+    font-weight: bold;
+    padding-left: .4rem;
+}
+
+.sco_balances_meta {
+    color: #a0a0a0;
+    font-size: .8rem;
+    padding: .4rem .4rem .4rem;
+    text-align: center;
+}
+
+.sco_balances_balance.sco_balances_balance_total .sco_balances_balance_asset_code,
+.sco_balances_balance.sco_balances_balance_total .sco_balances_balance_bal,
+.sco_balances_balance.sco_balances_balance_total .sco_balances_balance_label {
+    font-weight: bold;
+}

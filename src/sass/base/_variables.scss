@@ -1,0 +1,53 @@
+﻿// Media Queries
+$media-desktop: "screen and (min-device-width: 1200px)";
+$media-mobile-landscape: "screen and (min-device-width: 640px)";
+
+// Theme
+$theme-background-color: #0f62bd;
+
+// Dimensions
+$desktop-content-width: 76rem;
+
+// Colors
+$white: #fff;
+$black: #000;
+$lightgrey: #f8f8f8;
+$grey: #aaa;
+$darkgrey: #999;
+$red: #f80000;
+$green: #00c346;
+
+// Font weights
+$font-weight-light: 200;
+$font-weight-regular: 400;
+$font-weight-bold: 600;
+
+// Fixed Font
+$font-family: monospace, monospace;
+$font-size: 100%;
+$line-height: 1.6;
+
+// Font Size
+$font-size-small: .9rem;
+$font-size-smaller: .8rem;
+$font-size-smallest: .7rem;
+
+// Borders
+$border-radius: .4rem;
+$border-radius-halved: .2rem;
+$layout-border-color: #eee;
+$layout-border-stroke: solid;
+$layout-border-width: .0625rem;
+$layout-border: $layout-border-width $layout-border-stroke $layout-border-color;
+
+// Padding
+$gutter: 1.2rem;
+$padding: .8rem;
+$padding-vertical: .8rem 0;
+$padding-horizontal: 0 .8rem;
+$padding-halved: .4rem;
+$padding-halved-vertical: .4rem 0;
+$padding-halved-horizontal: 0 .4rem;
+
+// Animation
+$transition-speed: .32s;
