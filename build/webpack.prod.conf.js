@@ -123,6 +123,15 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       }
+    ]),
+
+    // copy the dist folder to /docs/demo
+    new CopyWebpackPlugin([
+      {
+        from: path.resolve(__dirname, '../dist'),
+        to: '../dist/demo',
+        ignore: ['.*']
+      }
     ])
   ]
 })

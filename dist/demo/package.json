@@ -1,0 +1,30 @@
+{
+  "name": "stellar-checkout",
+  "version": "1.0.40",
+  "description": "StellarCheckout.com Drop-in UI",
+  "main": "stellar-checkout.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/brewaa/stellar-checkout.git"
+  },
+  "keywords": [
+    "stellar checkout",
+    "blockchain checkout",
+    "stellar lumens",
+    "lumens",
+    "stellar",
+    "stellarbuildchallenge",
+    "stellar build challenge",
+    "crypto",
+    "crypto currency",
+    "crypto payments",
+    "crypto checkout",
+    "crypto payment gateway"
+  ],
+  "author": "brewaa",
+  "license": "GNU AGPLv3",
+  "bugs": {
+    "url": "https://github.com/brewaa/stellar-checkout/issues"
+  },
+  "homepage": "https://github.com/brewaa/stellar-checkout#readme"
+}
