@@ -194,8 +194,13 @@ export default {
 		NORMAL: 'NORMAL',
 		IN_PROGRESS: 'IN_PROGRESS',
 		PAYMENT_COMPLETE: 'PAYMENT_COMPLETE'
+<<<<<<< HEAD
 	},
 	TIMEOUT: 120,
 	TIMER: null
 };
 >>>>>>> parent of a4b59fd... no message
+=======
+	}
+};
+>>>>>>> parent of c80293d... no message

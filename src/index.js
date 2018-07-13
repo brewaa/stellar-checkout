@@ -17,7 +17,6 @@ export default {
 			this.options.redirectUrl = opts.redirectUrl;
 			this.options.onSubmit = opts.onSubmit;
 			this.options.stylesheet = opts.stylesheet;
-			this.options.timeout = opts.timeout || constants.TIMEOUT;
 			this.options.total = opts.total;
 
 			var self = this;
