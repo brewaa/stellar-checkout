@@ -129,7 +129,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     new CopyWebpackPlugin([
       {
         from: path.resolve(__dirname, '../dist'),
-        to: '../dist/demo',
+        to: '../docs/demo',
         ignore: ['.*']
       }
     ])
