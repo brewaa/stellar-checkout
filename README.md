@@ -9,9 +9,11 @@
   <br />
 </div>
 
-# StellarCheckout
+# StellarCheckout (BETA)
 
-StellarCheckout is an open source javascript plug-in for web sites. It allows merchants to accept payments for goods and services in lumens.
+StellarCheckout is a javascript plug-in for e-commerce web sites. It allows merchants to accept payments for goods and services in lumens.
+
+It's a javascript plugin with a responsive UI so it will work on any web site in modern browsers.
 
 NEW: Federation, Ledger Wallet Support
 
@@ -34,10 +36,16 @@ npm i --save-dev stellar-checkout
 - Drop-in responsive UI
 - Skinnable
 - Currency conversion support for 32 fiat currencies
+<<<<<<< HEAD
 - QR Codes
 - Ledger Wallet
+=======
+- QR Codes in various formats (JSON, XDR)
+- Robust validation
+>>>>>>> parent of a4b59fd... no message
 - Simple integration options
 - Demos & Documentation
+- Open source
 - Available via NPM and CDN
 
 ## Options

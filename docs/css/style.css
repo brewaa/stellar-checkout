@@ -48,11 +48,18 @@ html, body {
 }
 
 body {
+<<<<<<< HEAD
 	background: #f8f8f8;
+=======
+>>>>>>> parent of a4b59fd... no message
 	text-align: center;
 }
 
 .head {
+<<<<<<< HEAD
+=======
+	border-bottom: .0625rem solid #eee;
+>>>>>>> parent of a4b59fd... no message
 	display: none;
 	height: 3.2rem;
 }
@@ -62,17 +69,30 @@ body {
 }
 
 .container .margin {
+<<<<<<< HEAD
+=======
+	background: #f8f8f8;
+>>>>>>> parent of a4b59fd... no message
 	display: none;
 	flex-basis: 12rem;
 }
 
 .container .sidebar {
+<<<<<<< HEAD
+=======
+	background: #f8f8f8;
+>>>>>>> parent of a4b59fd... no message
 	display: none;
 	flex-basis: 20rem;
 }
 
 .container .main {
+<<<<<<< HEAD
 	flex-basis: 544px;
+=======
+	flex-basis: 34rem;
+	padding: .4rem;
+>>>>>>> parent of a4b59fd... no message
 	height: 100%;
 }
 
