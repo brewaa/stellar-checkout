@@ -9,9 +9,9 @@
   <br />
 </div>
 
-# StellarCheckout (BETA)
+# StellarCheckout
 
-StellarCheckout is a javascript plug-in for e-commerce web sites. It allows merchants to accept payments for goods and services in lumens.
+It's a javascript plug-in for e-commerce web sites. It allows merchants to accept payments for goods and services in lumens (XLM).
 
 It's a javascript plugin with a responsive UI so it will work on any web site in modern browsers.
 
@@ -33,13 +33,12 @@ npm i --save-dev stellar-checkout
 ```
 
 ## Features
-- Drop-in responsive UI
-- Skinnable
+- Drop-in responsive, Skinnable UI
 - Currency conversion support for 32 fiat currencies
-- QR Codes
-- Ledger Wallet
-- Simple integration options
-- Demos & Documentation
+- Localization (WIP)
+- Multiple payment methods including Ledger Wallet
+- Simple integration options for your web site
+- Demos & Documentation (WIP)
 - Open source
 - Available via NPM and CDN
 
@@ -47,47 +46,64 @@ npm i --save-dev stellar-checkout
 
 ```javascript
 {
-  currency: {		// DefaultValue: USD; ["AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "ZAR"],
-  	type: String,
-  	required: false
+  currency: {
+    type: String,
+    required: false,
+    default: 'USD',
+    options: ["AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "ZAR"]
   },
-  destinationKey: {	// The merchant's PublicKey/AccountID
-  	type: String,
-  	required: true
-  },
-  env: {		// This controls which Stellar network to use; Use 'production' for mainnet. Any value other than production will result in using test-net. Options: [production|*];
-  	type: String,
-  	required: false
-  },
-  lang: {   // Sets the culture used for localization. Supported cultures: 'en', 'cs-CZ', 'da-DK', 'de-DE', 'es-ES', 'fr-FR', 'hu-HU', 'id-ID', 'it-IT', 'ja-JP', 'ko-KR', 'pl-PL', 'pt-BR', 'ru-RU', 'sv-SE', 'th-TH', 'tr-TR', 'zh-CN', 'zu-ZA'; 
+  id: {
     type: String,
     required: false
+  },
+  lang: {
+    type: String,
+    required: false,
+    default: 'en',
+    options: [
+      'en',
+      'es-ES',
+      'ja-JP',
+      'ko-KR',
+      'ru-RU',
+      'zh-CN'
+    ]
   }, 
-  memo: {   // A field to record additional data related to a payment. E.g. OrderID, UserID
+  memo: {
+    type: String,
+    required: false
+  },  
+  network: {
+    type: String,
+    required: false
+    default: 'test',
+    options: ['public', 'test']
+  },
+  onSubmit: {
+    type: function,
+    required: false
+  },
+  redirectUrl: {
+    type: String,
+    required: false
+  },
+  stylesheet: {
+    type: String,
+    required: false
+  },
+  to: {
     type: String,
     required: true
-  },  
-  onSubmit: {		// Submit handler executed after a completing a transaction. Has access to error and payment data
-  	type: function,
-  	required: false
   },
-  redirectUrl: {	// The URL to redirect the user to after a successfully completed transaction
-  	type: String,
-  	required: false
-  },
-  stylesheet: {         // URL to a custom stylesheet
-        type: String,
-        required: false
-  },
-  total: {		// Order total in the currency specified
-  	type: decimal,
-  	required: true
+  total: {
+    type: decimal,
+    required: true
   }
 }
 ```
 
 ## Demo
-https://brewaa.github.io/stellar-checkout/demo.html
+https://brewaa.github.io/stellar-checkout/demo/index.html
 
 ## Basic Example
 See [Basic Configuration Example](https://github.com/brewaa/stellar-checkout/wiki/Basic-Configuration-Example) in the wiki.
@@ -99,7 +115,7 @@ See [Basic Configuration Example](https://github.com/brewaa/stellar-checkout/wik
 StellarCheckout.ui.render('#elem', {
   currency: 'GBP',
   total: '10',
-  destinationKey: 'GB5L45CNNM5I56YYH3FBA7QXUZGJL5CYR2GG7PS5WLT5FK4NEHXEUH73'
+  to: 'GB5L45CNNM5I56YYH3FBA7QXUZGJL5CYR2GG7PS5WLT5FK4NEHXEUH73'
 });
 </script>
 ```
