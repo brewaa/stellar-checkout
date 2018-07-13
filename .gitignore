@@ -1,9 +1,4 @@
 node_modules/
-<<<<<<< HEAD
 dist/package.json
 www/
 certgen.ps
-=======
-www/
-dist/package.json
->>>>>>> parent of a4b59fd... no message
