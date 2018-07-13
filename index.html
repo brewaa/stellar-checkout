@@ -24,7 +24,7 @@
         <input id="trxid" name="trxid" type="hidden" />
         <div id="elem"></div>
       </form>
-      <script src="stellar-checkout.js"></script>
+      <script src="stellar-checkout.min.js"></script>
       <script>
       StellarCheckout.ui.render('#elem', {
         currency: 'AUD',
@@ -35,9 +35,8 @@
         // network: 'public',
         // background: 'red',
         // lang: 'ja-JP',
-        stylesheet: 'static/test.css',
+        // stylesheet: 'static/test.css',
         // redirectUrl: '/some-other-page?refid=123',
-        lalala: 1,
         // onSubmit: function(err, result) {
         //    if (err) {
         //     // handle error condition

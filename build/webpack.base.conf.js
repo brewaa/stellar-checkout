@@ -29,7 +29,7 @@ module.exports = {
     publicPath: process.env.NODE_ENV === 'production'
       ? config.build.assetsPublicPath
       : config.dev.assetsPublicPath,
-    filename: 'stellar-checkout.js', //[name].[chunkhash]
+    filename: 'stellar-checkout.min.js', //[name].[chunkhash]
     library: 'StellarCheckout',
     libraryExport: 'default',
     libraryTarget: 'umd'

@@ -8,7 +8,7 @@
         .container {
           width: 640px;
         }
-      }</style></head><body><div class=container><form id=theForm action=/some-post-page method=post class=the_form><input id=trxid name=trxid type=hidden><div id=elem></div></form><script src=stellar-checkout.js></script><script>StellarCheckout.ui.render('#elem', {
+      }</style></head><body><div class=container><form id=theForm action=/some-post-page method=post class=the_form><input id=trxid name=trxid type=hidden><div id=elem></div></form><script src=stellar-checkout.min.js></script><script>StellarCheckout.ui.render('#elem', {
         currency: 'AUD',
         id: '000110097',
         total: '1',
@@ -17,9 +17,8 @@
         // network: 'public',
         // background: 'red',
         // lang: 'ja-JP',
-        stylesheet: 'static/test.css',
+        // stylesheet: 'static/test.css',
         // redirectUrl: '/some-other-page?refid=123',
-        lalala: 1,
         // onSubmit: function(err, result) {
         //    if (err) {
         //     // handle error condition

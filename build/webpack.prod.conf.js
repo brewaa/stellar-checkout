@@ -28,7 +28,7 @@ const webpackConfig = merge(baseWebpackConfig, {
     path: config.build.assetsRoot,
     // filename: utils.assetsPath('js/[name].[chunkhash].js'),
     // chunkFilename: utils.assetsPath('js/[id].[chunkhash].js')
-    filename: 'stellar-checkout.js', //[name].[chunkhash]
+    filename: 'stellar-checkout.min.js', //[name].[chunkhash]
     library: 'StellarCheckout',
     libraryExport: 'default',
     libraryTarget: 'umd'
