@@ -1,0 +1,33 @@
+/// <reference path="../site.scss">
+
+$button-blue: #08b5e5;
+
+.sco_button {
+    background: $button-blue;
+    border-color: $button-blue;
+    border-radius: 3px;
+    border-style: solid;
+    border-width: 1px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+    min-height: 28px;
+    line-height: 26px;
+    outline: none;
+    overflow: hidden;
+    padding: .4rem .8rem;
+    text-align: center;
+    text-overflow: ellipsis;
+    transition: .4s;
+    white-space: nowrap;
+    width: 100%;
+
+    &:active {
+        opacity: .7;
+    }
+}
+
+.sco button[disabled],
+.sco button:disabled {
+    opacity: 0.5;
+}

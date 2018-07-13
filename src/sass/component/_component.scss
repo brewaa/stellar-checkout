@@ -1,0 +1,263 @@
+/// <reference path="../site.scss" />
+
+$green: #3ba776;
+
+.sco_component {
+    padding: $padding .4rem;
+    text-align: left;
+
+    &--collapsed .sco_form,
+    &--collapsed &_results {
+        display: none!important;
+    }
+
+    &.sco_loaded {
+        display: block;
+    }
+
+    &.sco_loaded .sco_spinner {
+        display: none;
+    }
+
+    &.sco_loaded &_results {
+        display: block;
+    }
+
+    &_i {
+        background: #fff;
+        border: $layout-border;
+        border-radius: $border-radius;
+        font-size: $font-size-small;
+        line-height: $line-height;
+    }
+
+    &_text,
+    &_error {
+        padding: $padding;
+        p {
+            &:last-child {
+                margin-bottom: 0
+            }
+        }
+    }
+
+    &_error {
+        color: $red
+    }
+
+    & .sco_spinner {
+        display: inline-block;
+        padding: $padding;
+    }
+
+    &_title {
+        font-size: $font-size-small;
+        font-weight: bold;
+        letter-spacing: .025rem;
+        padding: $padding;
+        text-align: left;
+        text-transform: uppercase;
+
+        &_aside {
+            align-items: center;
+            display: flex;
+            float:right;
+            padding-left: .8rem;
+            &--collapsed {
+                display: none;
+            }
+            input[type=checkbox] {
+                margin-left: .8rem
+            }
+        }
+    }
+
+    &_heading {
+        font-weight: bold;
+        border-bottom: $layout-border;
+        padding: $padding;
+        text-align: left;
+    }
+
+    &_results {
+        border-top: $layout-border;
+        display: none;
+        padding: 0 $padding;
+
+        &_heading {
+            border-bottom: $layout-border;
+            display: flex;
+        }
+
+        &_heading > div {
+            padding: $padding;
+            text-align: right;
+        }
+
+        &_heading > div:last-child {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        &_heading:first-child {
+            font-weight: bold;
+            text-align: left;
+        }
+
+        &_heading div:first-child {
+            font-weight: bold;
+            min-width: 5.6rem;
+            text-align: left;
+        }
+    }
+
+    .sco_caption {
+        color: $grey;
+        font-size: $font-size-smallest;
+        padding: .2rem $padding;
+        text-align: center;
+        &--big {
+            font-size: 1.2rem
+        }
+        a {
+            color: $darkgrey;
+            text-decoration: underline;
+        }
+        input {
+            border: .0625rem solid #eee;
+            color: $darkgrey;
+            text-decoration: underline;
+            padding: .2rem .4rem;
+            width: 4.8rem;
+        }
+    }
+
+    &_qrcode {
+        padding: 0 $padding $padding;
+        text-align: center;
+        margin-bottom: $gutter;
+        &_i {
+            margin: auto;
+            min-width: 16rem;
+            width: 50%;
+        }
+        canvas {
+        }
+        .sco_caption {
+
+        }
+    }
+
+    &_footer {
+        font-weight: bold;
+        text-align: center;
+    }
+
+    /** COMPONENT - NETWORK_SELECTOR **/
+
+    &--network_selector {
+    }
+
+    .sco_network_tag {
+        font-weight: bold;
+        text-transform: uppercase;
+        &--test {
+            color: orange
+        }
+        &--public {
+            color: $green
+        }
+    }
+
+    .sco_selector {
+        display: flex;
+        border: $layout-border;
+        border-radius: $border-radius;
+
+        > * {
+            background: $white;
+            color: $black;
+            min-width: 4rem;
+            padding: 0 $padding-halved;
+            text-align: center;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        a.sco_selector_value--selected {
+            background: $green;
+            color: $white;
+        }
+    }
+
+
+
+    /** COMPONENT - ROW **/
+    
+    &_row {
+        font-size: $font-size-smallest;
+        padding: $padding;
+        padding-bottom: 0;
+        i {
+            font-weight: bold;
+        }
+    }
+
+    /** COMPONENT - BUTTON_ROW **/
+
+    &--button_row {
+        font-size: normal;
+        padding: $padding $padding;
+    }
+
+    &--button_group button {
+        margin-bottom: $padding;
+    }
+
+    /** COMPONENT - NOTICE **/
+
+    &--notice {
+        color: $grey;
+    }
+
+    &--notice &_i {
+        padding: $gutter;
+    }
+
+    &--notice .highlight {
+        color: $darkgrey;
+        font-weight: bold;
+    }
+
+    /** COMPONENT - TICKER **/
+
+    &--ticker {
+        .sco_component_title_aside {
+            .separator {
+                color: #eee;
+                padding: 0 .4rem;
+            }
+        }
+        .moniker {
+          display: inline-block;
+          padding-left:.2rem;
+        }
+    }
+
+    /** COMPONENT - FOOTER **/
+    &--footer {
+        border: 0;
+        .sco_component_i {
+            border: 0;
+            .sco_component_results {
+                border: 0;
+                    
+            }           
+        }
+    }
+
+}
+
