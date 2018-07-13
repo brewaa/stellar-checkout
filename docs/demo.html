@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEMO - Stellar Checkout</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+  	<div id="head" class="head"></div>
+  	<div id="container" class="container">
+  		<div class="margin"></div>
+  		<div class="main">
+  			<form id="form" class="the_form">
+	  			<div id="elem"></div>
+		  	</form>
+  		</div>
+  		<div class="sidebar"></div>
+  	</div>
+  	<script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js?x=2"></script> 
+    <!--<script type="text/javascript" src="../dist/stellar-checkout.min.js?x=2"></script>-->
+  	<script>
+  	StellarCheckout.ui.render('#elem', {
+  		total: '10',
+  		currency: 'AUD',
+  		destinationKey: 'GB5L45CNNM5I56YYH3FBA7QXUZGJL5CYR2GG7PS5WLT5FK4NEHXEUH73'
+  	});
+	</script>
+  </body>
+</html>
