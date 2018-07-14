@@ -11,15 +11,9 @@
 
 # StellarCheckout
 
-It's a javascript plug-in for e-commerce web sites. It allows merchants to accept payments for goods and services in lumens (XLM).
+An open source javascript plug-in for the stellar.org blockchain.
 
-It's a javascript plugin with a responsive UI so it will work on any web site in modern browsers.
-
-NEW: Federation, Ledger Wallet Support
-
-```
-WARNING: This project is a work in progress and may contain bugs and defects. Use at your own risk. :P
-```
+NEW FEATURES: Federation, Ledger Wallet Support
 
 ## Installation
 
@@ -115,7 +109,7 @@ See [Basic Configuration Example](https://github.com/brewaa/stellar-checkout/wik
 StellarCheckout.ui.render('#elem', {
   currency: 'GBP',
   total: '10',
-  to: 'GB5L45CNNM5I56YYH3FBA7QXUZGJL5CYR2GG7PS5WLT5FK4NEHXEUH73'
+  to: 'GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI'
 });
 </script>
 ```
