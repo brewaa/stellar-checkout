@@ -169,7 +169,6 @@ export default {
             ledgerVerified: true,
             publicKey: publicKey
           }
-          console.log(this.federation)
           this.ledgerVerificationInProgress = false
         })
         .catch(e => {
