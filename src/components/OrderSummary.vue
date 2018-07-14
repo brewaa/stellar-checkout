@@ -14,22 +14,22 @@
             <div class="sco_balances_balance">
               <div class="sco_balances_balance_label">Total</div>
               <div class="sco_balances_balance_asset_code adorned">{{dto.invoice.currency}}</div>
-              <div class="sco_balances_balance_bal">{{dto.meta.invoiceTotalFormatted}}</div>
+              <div class="sco_balances_balance_bal">{{stellarTicker.meta.invoiceTotalFormatted}}</div>
             </div>
             <div class="sco_balances_balance">
               <div class="sco_balances_balance_label">=</div>
               <div class="sco_balances_balance_asset_code adorned">{{dto.payment.asset.code}}</div>
-              <div class="sco_balances_balance_bal">{{dto.meta.invoicePriceInLumensFormatted}}</div>
+              <div class="sco_balances_balance_bal">{{stellarTicker.meta.invoicePriceInLumensFormatted}}</div>
             </div>
             <div class="sco_balances_balance sco_balances_balance_total">
               <div class="sco_balances_balance_label">Total</div>
               <div class="sco_balances_balance_bal">
-                {{dto.meta.invoicePriceInLumensFormatted}}
+                {{stellarTicker.meta.invoicePriceInLumensFormatted}}
                 <span class="sco_balances_balance_bal_asset_code">{{dto.payment.asset.code}}</span>
               </div>
             </div>
             <div class="sco_balances_meta">
-              {{dto.meta.currencyConversionDescription}}<br />
+              {{stellarTicker.meta.currencyConversionDescription}}<br />
               Last updated: {{stellarTicker.updated}}
             </div>
           </div>

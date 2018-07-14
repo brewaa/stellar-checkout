@@ -60,7 +60,7 @@ $green: #3ba776;
         &_aside {
             align-items: center;
             display: flex;
-            float:right;
+            float: right;
             padding-left: .8rem;
             &--collapsed {
                 display: none;
@@ -81,7 +81,13 @@ $green: #3ba776;
     &_results {
         border-top: $layout-border;
         display: none;
-        padding: 0 $padding;
+
+        &_aside {
+            align-items: center;
+            display: flex;
+            float: right;
+            padding-left: .8rem;
+        }
 
         &_heading {
             border-bottom: $layout-border;
@@ -130,6 +136,11 @@ $green: #3ba776;
             padding: .2rem .4rem;
             width: 4.8rem;
         }
+    }
+
+    .separator {
+        color: #eee;
+        padding: 0 .4rem;
     }
 
     &_qrcode {
@@ -183,6 +194,7 @@ $green: #3ba776;
         }
 
         a {
+            border-radius: .2rem;
             text-decoration: none;
         }
 
@@ -234,22 +246,24 @@ $green: #3ba776;
     /** COMPONENT - TICKER **/
 
     &--ticker {
-        .sco_component_title_aside {
-            .separator {
-                color: #eee;
-                padding: 0 .4rem;
-            }
+        .sco_component_results {
+            padding: $padding;
+            text-transform: uppercase;
+            text-align: left;
         }
         .moniker {
           display: inline-block;
           padding-left:.2rem;
         }
+        &_meta {
+
+        }
     }
 
     /** COMPONENT - FOOTER **/
     &--footer {
-        bqckground: red;
-        &_i {
+        .sco_component_i,
+        .sco_component_results {
             border: 0;    
         }
     }

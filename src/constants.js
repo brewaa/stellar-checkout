@@ -24,12 +24,6 @@ export default {
       order_id: null,
       total: null
     },
-    meta: {
-      currencyConversionDescription: null,
-      lumenPrice: null,
-      invoiceTotalFormatted: null,
-      invoicePriceInLumens: null
-    },
     payment: {
       amount: null,
       asset: {
@@ -137,6 +131,12 @@ export default {
         'rank': null,
         'symbol': null,
         'total_supply': null
+      },
+      meta: {
+        currencyConversionDescription: null,
+        lumenPrice: null,
+        invoiceTotalFormatted: null,
+        invoicePriceInLumens: null
       },
       updated: null
     }

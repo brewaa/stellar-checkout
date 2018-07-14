@@ -1,16 +1,11 @@
 /// <reference path="../site.scss">
 
-.sco_container, .stellar_checkout_container {
-    
-}
-
- .sco, .stellar_checkout {
-    // background-color: $theme-background-color;
+.stellar_checkout, .sco {
     box-sizing: border-box;
     position: relative;
     font-family: monospace, monospace;
     float: left;
-    padding: $padding;
+    // padding: $padding-halved;
     width: 100%;
     height: 100%;
 }

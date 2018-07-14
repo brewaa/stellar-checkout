@@ -52,7 +52,6 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import { getPublicKey } from 'services/ledger.stellar'
-import { validatePublicKey } from 'utils/validate'
 import { getFederatedAddress, isFederatedAddress } from 'utils/stellarsdk.helper'
 export default {
   props: {
@@ -120,8 +119,7 @@ export default {
         return
       }
       this.clearState()
-      var validPublicKey = validatePublicKey(null, input)
-      if (validPublicKey.result) {
+      if (window.StellarSdk.StrKey.isValidEd25519PublicKey(input)) {
         this.federation = {
           complete: true,
           publicKey: input

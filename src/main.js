@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import App from './App'
 import { FontAwesomeIcon } from 'assets/icons'
 import constants from 'app/constants'
@@ -26,8 +24,6 @@ export default {
           .then(e => {
             // Axios settings
             var axios = window.StellarSdk.axios
-            // axios.defaults.headers.common['RequestVerificationToken'] = window.__REQUEST_TOKEN__
-            // axios.defaults.withCredentials = true
 
             // Vue settings
             Vue.config.productionTip = false

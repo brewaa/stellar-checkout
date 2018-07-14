@@ -88,7 +88,6 @@ export function listenForPayment (network, dto, callback) {
           if (payment.to !== accountId) {
             return
           }
-          // var asset = (payment.asset_type === 'native') ? 'lumens' : payment.asset_code + ':' + payment.asset_issuer
           verifyPayment(network, now, ledgerHeight, dto, payment)
             .then(function (result) {
               if (result) {

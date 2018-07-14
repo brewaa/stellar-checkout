@@ -11,11 +11,11 @@ function extractStellarLumensTickerData (data) {
   var currencyConversionDescription = '1XLM = ' + replace(formatDecimal7(lumenPrice), ',', '') + '' + constants.SETTINGS.currency
   var invoicePriceInLumens = calculatePriceInLumens(constants.DTO.invoice.total, lumenPrice)
   var invoicePriceInLumensFormatted = replace(formatDecimal7(invoicePriceInLumens), ',', '')
-  constants.DTO.meta.currencyConversionDescription = currencyConversionDescription
-  constants.DTO.meta.invoicePriceInLumens = invoicePriceInLumens
-  constants.DTO.meta.invoicePriceInLumensFormatted = invoicePriceInLumensFormatted
-  constants.DTO.meta.invoiceTotalFormatted = formatCurrency(constants.DTO.invoice.total)
-  constants.DTO.meta.lumenPrice = lumenPrice
+  constants.TICKERS.stellar.meta.currencyConversionDescription = currencyConversionDescription
+  constants.TICKERS.stellar.meta.invoicePriceInLumens = invoicePriceInLumens
+  constants.TICKERS.stellar.meta.invoicePriceInLumensFormatted = invoicePriceInLumensFormatted
+  constants.TICKERS.stellar.meta.invoiceTotalFormatted = formatCurrency(constants.DTO.invoice.total)
+  constants.TICKERS.stellar.meta.lumenPrice = lumenPrice
   constants.DTO.payment.amount = formatDecimal7(invoicePriceInLumens)
   return constants.DTO
 }
