@@ -3,6 +3,7 @@ import {Localizer} from './localizer'
 
 export var cultures = [
   'en',
+  'en-AU',
   'es-ES',
   'ja-JP',
   'ko-KR',

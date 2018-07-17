@@ -35,7 +35,7 @@ export function fetchTransaction (network, txHash) {
 
 export function getFederatedAddress (addr) {
   var parts = addr && addr.toString().split('*')
-  if (parts.length <= 0) {
+  if (parts.length <= 1) {
     return null
   }
   return {
@@ -60,13 +60,60 @@ export function loadAccount (network, accountId) {
   })
 }
 
-export function listenForPayment (network, dto, callback) {
+// export function listenForPayment (network, dto, callback) {
+//   var server = new window.StellarSdk.Server(network.uri)
+//   var accountId = dto.payment.to
+//   var now = new Date()
+//   var ledgerHeight
+
+//   server.payments()
+//     .limit(1)
+//     .order('desc')
+//     .call()
+//     .then(function (response) {
+//       return response.records[0].transaction()
+//     })
+//     .then(function (lastTransaction) {
+//       ledgerHeight = lastTransaction.ledger_attr
+
+//       var payments = server
+//         .payments()
+//         .forAccount(accountId)
+//         .cursor('now')
+
+//       return payments
+//     }).then(function (payments) {
+//       var closeStream = payments.stream({
+//         onmessage: function (payment) {
+//           if (payment.to !== accountId) {
+//             return
+//           }
+//           verifyPayment(network, now, ledgerHeight, dto, payment)
+//             .then(function (result) {
+//               if (result) {
+//                 callback.call(this, null, payment)
+//                 closeStream()
+//               } else {
+//                 throw new Error('payment received. it wasn\'t our payment though...')
+//               }
+//             })
+//         },
+//         onerror: function (error) {
+//           console.error(error)
+//         }
+//       })
+
+//       return closeStream
+//     })
+// }
+
+export function getPaymentsForAccount (network, dto) {
   var server = new window.StellarSdk.Server(network.uri)
   var accountId = dto.payment.to
   var now = new Date()
   var ledgerHeight
 
-  server.payments()
+  return server.payments()
     .limit(1)
     .order('desc')
     .call()
@@ -81,29 +128,12 @@ export function listenForPayment (network, dto, callback) {
         .forAccount(accountId)
         .cursor('now')
 
-      return payments
-    }).then(function (payments) {
-      var closeStream = payments.stream({
-        onmessage: function (payment) {
-          if (payment.to !== accountId) {
-            return
-          }
-          verifyPayment(network, now, ledgerHeight, dto, payment)
-            .then(function (result) {
-              if (result) {
-                callback.call(this, null, payment)
-                closeStream()
-              } else {
-                throw new Error('payment received. it wasn\'t our payment though...')
-              }
-            })
-        },
-        onerror: function (error) {
-          console.error(error)
-        }
-      })
-
-      return closeStream
+      return {
+        accountId: accountId,
+        ledgerHeight: ledgerHeight,
+        now: now,
+        payments: payments
+      }
     })
 }
 
@@ -135,7 +165,7 @@ export function submitTransaction (network, transaction) {
 }
 
 export function verifyPayment (network, now, ledgerHeight, dto, payment) {
-  var amountIsEqual = false
+  // var amountIsEqual = false
   var ledgerHeightIsGood = false
   var destinationKeyIsEqual = false
   var memoIsEqual = false
@@ -147,13 +177,13 @@ export function verifyPayment (network, now, ledgerHeight, dto, payment) {
     .transaction(payment.transaction_hash)
     .call()
     .then(function (result) {
-      amountIsEqual = parseFloat(dto.payment.amount) === parseFloat(payment.amount)
+      // amountIsEqual = parseFloat(dto.payment.amount) === parseFloat(payment.amount)
       ledgerHeightIsGood = result.ledger_attr > ledgerHeight
       destinationKeyIsEqual = dto.payment.to === payment.to
       memoIsEqual = window.StellarSdk.hash(dto.payment.memo).toString('base64') === result.memo
       publicKeyIsEqual = dto.payment.from && payment.from === result.source_account
       timeLooksGood = Date.parse(result.created_at) >= now.getTime()
-      result = amountIsEqual && ledgerHeightIsGood && destinationKeyIsEqual && memoIsEqual && publicKeyIsEqual && timeLooksGood
+      result = ledgerHeightIsGood && destinationKeyIsEqual && memoIsEqual && publicKeyIsEqual && timeLooksGood // amountIsEqual &&
       return result
     }).catch(function (err) {
       console.log(err)

@@ -36,5 +36,7 @@ export function syncStellarLumensTickerData () {
         extractStellarLumensTickerData(data[0])
       }
       return response.data
+    }).catch(e => {
+      constants.TICKERS.stellar.error = e
     })
 }

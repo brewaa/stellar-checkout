@@ -27,7 +27,7 @@ export default {
 
             // Vue settings
             Vue.config.productionTip = false
-            Vue.component('icon', FontAwesomeIcon)
+            Vue.component('font-awesome-icon', FontAwesomeIcon)
             Vue.component(VueQrcode.name, VueQrcode)
             Vue.prototype.$http = axios
 
@@ -50,7 +50,7 @@ export default {
             constants.DTO.invoice.total = options.total
             constants.DTO.payment.asset = window.StellarSdk.Asset.native()
             constants.DTO.payment.fee = 0.00001
-            constants.DTO.payment.memo = options.memo || randomId(28)
+            constants.DTO.payment.memo = randomId(28) // options.memo ||
             constants.DTO.payment.memoType = window.StellarSdk.MemoHash
             constants.DTO.payment.to = options.to
 

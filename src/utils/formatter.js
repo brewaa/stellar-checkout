@@ -20,6 +20,20 @@ export function formatCurrency (num, locale, currency, appendCurrency) {
   }).format(num) + (appendCurrency ? ' ' + currency : '')
 }
 
+export function formatDate (date, locale) {
+  locale = locale || CULTURE
+  return new Intl.DateTimeFormat(locale, {
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    hour12: true,
+    timeZoneName: 'short'
+  }).format(date)
+}
+
 export function formatDecimal (num, locale, minimumFractionDigits, maximumFractionDigits) {
   locale = locale || CULTURE
   return new Intl.NumberFormat(locale, {

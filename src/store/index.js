@@ -21,23 +21,26 @@ const CURRENCY_SET = 'CURRENCY_SET'
 const DTO_SET = 'DTO_SET'
 const DTO_ERROR = 'DTO_ERROR'
 
+const FEDERATION_CLEAR = 'FEDERATION_CLEAR'
 const FEDERATION_SET = 'FEDERATION_SET'
 const FEDERATION_ERROR_SET = 'FEDERATION_ERROR_SET'
 
 const LEDGER_ERROR = 'LEDGER_ERROR'
+const LEDGER_UPDATE = 'LEDGER_UPDATE'
 
-const PAYMENT_OPTIONS_SET = 'PAYMENT_OPTIONS_SET'
+const PAYMENT_OPTIONS_CLEAR = 'PAYMENT_OPTIONS_CLEAR'
 const PAYMENT_OPTIONS_ERROR = 'PAYMENT_OPTIONS_ERROR'
+const PAYMENT_OPTIONS_SET = 'PAYMENT_OPTIONS_SET'
 
 const NETWORK_SET = 'NETWORK_SET'
 
-const TICKER_STELLAR_UPDATE = 'TICKER_STELLAR_UPDATE'
+const TICKER_STELLAR_SET = 'TICKER_STELLAR_SET'
+const TICKER_STELLAR_ERROR_SET = 'TICKER_STELLAR_ERROR_SET'
 
 const TRANSACTION_DETAILS_SET = 'TRANSACTION_DETAILS_SET'
 const TRANSACTION_DETAILS_ERROR_SET = 'TRANSACTION_DETAILS_ERROR_SET'
 
-const TRANSACTION_STATUS_SET = 'TRANSACTION_STATUS_SET'
-const TRANSACTION_STATUS_ERROR_SET = 'TRANSACTION_STATUS_ERROR_SET'
+const TRANSACTION_STATUS_UPDATE = 'TRANSACTION_STATUS_UPDATE'
 
 // STATE
 const state = {
@@ -74,37 +77,36 @@ const state = {
   transactionDetails: {
     complete: false,
     error: null,
+    result: null,
+    status: constants.TX_STATUS.federation,
+    success: false,
     transaction: null,
     transactionHash: null,
     transactionXdr: null
-  },
-  transactionStatus: {
-    complete: false,
-    error: null,
-    result: null,
-    status: constants.TX_STATUS.empty,
-    success: false
   }
 }
 
 // MUTATIONS
 const mutations = {
   [ACCOUNT_CONFIRMATION_CLEAR] (state, obj) {
-    state.accountConfirmation.account = null
-    state.accountConfirmation.complete = false
-    state.accountConfirmation.error = null
-    // state.dto.payment.from = ''
-    // state.dto.payment.from_stellar_address = ''
-    // state.dto.tx.hash = null
-    // state.dto.tx.xdr = null
-    state.transactionDetails.complete = false
-    state.paymentOptions.complete = false
+    merge(state.accountConfirmation, {
+      // account: null,
+      complete: false,
+      error: null
+    })
+    // state.transactionDetails.status = constants.TX_STATUS.account_confirmation_loading_account
   },
   [ACCOUNT_CONFIRMATION_SET] (state, obj) {
     merge(state.accountConfirmation, obj)
-    if (!state.accountConfirmation.complete) {
-      state.transactionDetails.complete = false
-      state.paymentOptions.complete = false
+    if (obj.complete) {
+      state.transactionDetails.status = constants.TX_STATUS.payment_options
+    } else {
+      merge(state.accountConfirmation, {
+        // account: null,
+        complete: false,
+        error: null
+      })
+      state.transactionDetails.status = constants.TX_STATUS.account_confirmation
     }
   },
   [ACCOUNT_CONFIRMATION_ERROR] (state, obj) {
@@ -122,6 +124,15 @@ const mutations = {
   [DTO_ERROR] (state, obj) {
     state.dto.error = obj
   },
+  [FEDERATION_CLEAR] (state, obj) {
+    merge(state.federation, {
+      complete: false,
+      error: null,
+      publicKey: null,
+      stellarAddress: null
+    })
+    state.transactionDetails.status = constants.TX_STATUS.federation
+  },
   [FEDERATION_SET] (state, obj) {
     merge(state.federation, obj)
     state.federation.complete = !obj.error && state.federation.complete
@@ -131,10 +142,14 @@ const mutations = {
       // todo: clear any states that depend on successful federation
     }
     state.dto.payment.from = state.federation.publicKey
-    if (!state.federation.complete) {
-      state.accountConfirmation.complete = false
-      state.transactionDetails.complete = false
-      state.paymentOptions.complete = false
+    if (!obj.complete) {
+      merge(state.federation, {
+        complete: false,
+        error: null,
+        publicKey: null,
+        stellarAddress: null
+      })
+      state.transactionDetails.status = constants.TX_STATUS.federation
     }
   },
   [FEDERATION_ERROR_SET] (state, obj) {
@@ -143,8 +158,40 @@ const mutations = {
   [LEDGER_ERROR] (state, obj) {
     state.federation.ledgerError = obj
   },
+  [LEDGER_UPDATE] (state, obj) {
+    merge(state.federation, obj)
+  },
+  [PAYMENT_OPTIONS_CLEAR] (state, obj) {
+    merge(state.paymentOptions, {
+      complete: false,
+      error: null,
+      method: null
+    })
+    // state.transactionDetails.status = constants.TX_STATUS.payment_options
+  },
   [PAYMENT_OPTIONS_SET] (state, obj) {
     merge(state.paymentOptions, obj)
+    if (obj.complete) {
+      switch (obj.method) {
+        case 'byo':
+        case 'tx_signer':
+          state.transactionDetails.status = constants.TX_STATUS.listening_for_transaction
+          break
+        case 'ledger':
+          state.transactionDetails.status = constants.TX_STATUS.ledger_confirmation_required
+          break
+        default:
+          state.transactionDetails.status = constants.TX_STATUS.payment_options
+          break
+      }
+    } else {
+      merge(state.paymentOptions, {
+        complete: false,
+        error: null,
+        method: null
+      })
+      state.transactionDetails.status = constants.TX_STATUS.payment_options
+    }
   },
   [PAYMENT_OPTIONS_ERROR] (state, obj) {
     state.paymentOptions.error = obj
@@ -153,9 +200,12 @@ const mutations = {
     var network = setNetwork(obj)
     state.network = network
   },
-  [TICKER_STELLAR_UPDATE] (state, obj) {
+  [TICKER_STELLAR_SET] (state, obj) {
     state.ticker.stellar.data = obj
     state.ticker.stellar.updated = new Date(Date.now())
+  },
+  [TICKER_STELLAR_ERROR_SET] (state, obj) {
+    state.ticker.stellar.error = obj
   },
   [TRANSACTION_DETAILS_SET] (state, obj) {
     merge(state.transactionDetails, obj)
@@ -163,11 +213,8 @@ const mutations = {
   [TRANSACTION_DETAILS_ERROR_SET] (state, obj) {
     state.transactionDetails.error = obj
   },
-  [TRANSACTION_STATUS_SET] (state, obj) {
-    merge(state.transactionStatus, obj)
-  },
-  [TRANSACTION_STATUS_ERROR_SET] (state, obj) {
-    state.transactionStatus.error = obj
+  [TRANSACTION_STATUS_UPDATE] (state, obj) {
+    state.transactionDetails.status = obj
   }
 }
 
@@ -201,6 +248,9 @@ const actions = ({
   dtoError ({ commit }, obj) {
     commit(DTO_ERROR, obj)
   },
+  federationClear ({ commit }, obj) {
+    commit(FEDERATION_CLEAR, obj)
+  },
   federationSet ({ commit }, obj) {
     commit(FEDERATION_SET, obj)
   },
@@ -209,6 +259,12 @@ const actions = ({
   },
   ledgerErrorSet ({ commit }, obj) {
     commit(LEDGER_ERROR, obj)
+  },
+  ledgerUpdate ({ commit }, obj) {
+    commit(LEDGER_UPDATE, obj)
+  },
+  paymentOptionsClear ({ commit }, obj) {
+    commit(PAYMENT_OPTIONS_CLEAR, obj)
   },
   paymentOptionsSet ({ commit }, obj) {
     commit(PAYMENT_OPTIONS_SET, obj)
@@ -219,16 +275,22 @@ const actions = ({
   networkSet ({ commit }, obj) {
     commit(NETWORK_SET, obj)
   },
-  updateStellarTicker ({ commit }, obj) {
+  stellarTickerUpdate ({ commit }, obj) {
     if (!obj) {
       syncStellarLumensTickerData()
         .then(data => {
           return data[0]
         })
-        .then(obj => commit(TICKER_STELLAR_UPDATE, obj))
+        .then(obj => commit(TICKER_STELLAR_SET, obj))
       return
     }
-    commit(TICKER_STELLAR_UPDATE, obj)
+    commit(TICKER_STELLAR_SET, obj)
+  },
+  stellarTickerSet ({ commit }, obj) {
+    commit(TICKER_STELLAR_SET, obj)
+  },
+  stellarTickerErrorSet ({ commit }, obj) {
+    commit(TICKER_STELLAR_ERROR_SET, obj)
   },
   transactionDetailsSet ({ commit }, obj) {
     commit(TRANSACTION_DETAILS_SET, obj)
@@ -236,11 +298,8 @@ const actions = ({
   transactionDetailsErrorSet ({ commit }, obj) {
     commit(TRANSACTION_DETAILS_ERROR_SET, obj)
   },
-  transactionStatusSet ({ commit }, obj) {
-    commit(TRANSACTION_STATUS_SET, obj)
-  },
-  transactionStatusErrorSet ({ commit }, obj) {
-    commit(TRANSACTION_STATUS_ERROR_SET, obj)
+  transactionStatusUpdate ({ commit }, obj) {
+    commit(TRANSACTION_STATUS_UPDATE, obj)
   }
 })
 

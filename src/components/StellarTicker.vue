@@ -1,9 +1,9 @@
 <template>
-  <div :class="['sco_component', 'sco_component--ticker', 'sco_loaded', { 'sco_component--collapsed': complete }]">
+  <div :class="['sco_component', 'sco_component--ticker', { 'sco_loaded': loaded, 'sco_component--collapsed': complete }]">
     <div class="sco_component_i">
       <div class="sco_component_title">
         Ticker
-        <div class="sco_component_title_aside">
+        <div class="sco_component_title_aside" v-show="loaded">
           <span class="currency_name sco_hidden">Stellar</span>
           <span class="moniker">XLM</span>
           <span class="separator">|</span>
@@ -13,24 +13,47 @@
         </div>
       </div>
       <div class="sco_component_results">
-        {{ stellarTicker.data.id }}
-        <div class="sco_component_results_aside">
-          <span class="currency_name sco_hidden">Stellar</span>
-          <span class="moniker">XLM</span>
-          <span class="separator">|</span>
-          <span class="price">{{ stellarTicker.data.price_btc | decimal8 }}</span>
-          <span class="moniker">BTC</span>
+        <div class="sco_component_results_row">
+          <div>{{ stellarTicker.data.id }}</div>
+          <div class="sco_component_results_row_aside">
+            <span class="currency_name sco_hidden">Stellar</span>
+            <span class="moniker">XLM</span>
+            <span class="separator">|</span>
+            <span class="price">{{ stellarTicker.data.price_btc | decimal8 }}</span>
+            <span class="moniker">BTC</span>
+          </div>
         </div>
+        <div class="sco_component_results_row sco_component_results_row--meta">
+          <div>Updated</div>
+          <div class="sco_component_results_row_aside">
+            {{stellarTicker.updated | date }}
+          </div>
+        </div>
+        <div class="sco_component_error" v-if="error"><p v-html="error"></p></div>
       </div>
+      <span class="sco_spinner">
+        <i class="fas fa-spinner fa-spin"></i>
+      </span>
     </div>
   </div>
 </template>
 <script>
 import { mapActions, mapGetters } from 'vuex'
-import { formatDecimal7, formatDecimal8, formatNiceNumber } from 'utils/formatter'
+import { formatDate, formatDecimal7, formatDecimal8, formatNiceNumber } from 'utils/formatter'
 import TWEEN from '@tweenjs/tween.js'
 export default {
   computed: {
+    error: {
+      get () {
+        return this.stellarTicker.error
+      },
+      set (value) {
+        this.setStellarTickerError(value)
+      }
+    },
+    loaded: function () {
+      return !isNaN(this.price)
+    },
     marketCap: function () {
       return this.stellarTicker.data['market_cap_' + this.currency.toLowerCase()]
     },
@@ -45,6 +68,7 @@ export default {
     },
     ...mapGetters([
       'currency',
+      'culture',
       'stellarTicker'
     ])
   },
@@ -54,6 +78,9 @@ export default {
     }
   },
   filters: {
+    date: function (date) {
+      return formatDate(date)
+    },
     decimal7: function (price) {
       return formatDecimal7(price)
     },
@@ -65,9 +92,8 @@ export default {
     }
   },
   created () {
-    var self = this
-    setInterval(function () {
-      self.updateStellarTicker()
+    setInterval(() => {
+      this.stellarTickerUpdate()
     }, 30000)
   },
   methods: {
@@ -91,7 +117,9 @@ export default {
         .start()
       animate()
     },
-    ...mapActions(['updateStellarTicker'])
+    ...mapActions([
+      'stellarTickerUpdate',
+      'stellarTickerErrorSet'])
   },
   watch: {
     price: function (newVal, oldVal) {

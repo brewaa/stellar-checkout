@@ -22,6 +22,7 @@
   </div>
 </template>
 <script>
+import constants from 'app/constants'
 import { mapActions, mapState } from 'vuex'
 import { getPublicKey } from 'services/ledger.stellar'
 import AccountDetails from 'components/AccountDetails'
@@ -44,9 +45,9 @@ export default {
       }
     },
     buttonText: function () {
-      var result = 'I confirm I am the owner of this account'
+      var result = 'Confirm'
       if (this.ledgerConnected) {
-        result = 'Confirm the account on your Ledger device'
+        result = 'Confirm on your Ledger device'
       }
       return result
     },
@@ -96,6 +97,7 @@ export default {
         getPublicKey(this.federation.ledgerBip32Path, false, true)
           .then(publicKey => {
             this.federation = {
+              complete: true,
               ledgerConfirmed: true
             }
             this.complete = true
@@ -114,27 +116,34 @@ export default {
     isLoaded: function () {
       this.title = '2. Confirm your account'
       this.loaded = true
+      this.transactionStatusUpdate(constants.TX_STATUS.account_confirmation)
     },
     ...mapActions([
       'accountLoad',
-      'accountConfirmationSet',
+      'accountConfirmationClear',
       'accountConfirmationError',
+      'accountConfirmationSet',
       'federationSet',
-      'ledgerErrorSet'])
+      'ledgerErrorSet',
+      'paymentOptionsClear',
+      'transactionStatusUpdate'])
   },
   watch: {
     federationComplete (newVal) {
-      if (!newVal) {
-        return
-      }
-      this.error = null
+      // if (!newVal) {
+      //   return
+      // }
+      this.accountConfirmationClear()
+      this.paymentOptionsClear()
+      // this.error = null
       this.loaded = false
       if (this.federation.error) {
-        this.error = self.federation.error
+        this.error = this.federation.error
         return
       }
       if (this.federation.publicKey) {
         setTimeout(e => {
+          this.transactionStatusUpdate(constants.TX_STATUS.account_confirmation_loading_account)
           this.accountLoad(this.federation.publicKey)
             .then(e => {
               this.isLoaded()

@@ -1,23 +1,6 @@
 /// <reference path="../site.scss" />
 .sco_form {
-    // border-top: $layout-border;
     padding: .4rem;
-    input[type=text],
-    textarea {
-        background: #f8f8f8;
-        border: 0;
-        font-family: monospace, monospace;
-        font-size: 1.25rem;
-        height: 100%;
-        outline: 0;
-        padding: .6rem .8rem;
-        width: 100%;
-        text-align: left;
-        &[disabled],
-        &:disabled {
-            color: #000;
-        }
-    }
     .sco_field {
         padding: .4rem .8rem;
         position: relative;
@@ -31,12 +14,29 @@
             text-transform: uppercase;
             width: 100%;
         }
-        &_input {
-          background: #f8f8f8;
-            border: $layout-border;
-            border-radius: .2rem;
+        input[type=text],
+        textarea {
+            background: $lightgrey;
+            border: 0;
             color: $black;
             font-family: $font-family;
+            font-size: 1rem;
+            height: 100%;
+            outline: 0;
+            padding: .6rem .8rem;
+            width: 100%;
+            text-align: left;
+            &[disabled],
+            &:disabled {
+                color: #000;
+            }
+            ::placeholder {
+                font-size: $font-size-small;
+            }
+        }
+        &_input {
+            border: $layout-border;
+            border-radius: .2rem;
             height: 4rem;
             position: relative;
             width: 100%;
@@ -46,7 +46,13 @@
             &--input {
                 height: 2.8rem;
             }
+            &--working {
+                .sco_spinner {
+                    display: block;
+                }
+            }
             .sco_spinner {
+                display: none;
                 position: absolute;
                 top: 30%;
                 right: .8rem;

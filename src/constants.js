@@ -75,40 +75,48 @@ export default {
   },
   STELLAR_SDK_URL: 'https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/0.8.2/stellar-sdk.js',
   TX_STATUS: {
-    empty: {
-      title: null,
+    federation: {
+      title: 'VERIFY_ADDRESS',
       desc: null
     },
-    created: {
-      title: 'Transaction created',
+    account_confirmation: {
+      title: 'CONFIRM_ACCOUNT',
+      desc: null
+    },
+    account_confirmation_loading_account: {
+      title: 'LOADING_ACCOUNT',
+      desc: null
+    },
+    payment_options: {
+      title: 'CHOOSE_PAYMENT_METHOD',
       desc: null
     },
     signed: {
-      title: 'Transaction signed...',
+      title: 'TRANSACTION_SIGNED',
       desc: null
     },
     error: {
-      title: 'Error',
+      title: 'ERROR',
       desc: null
     },
     ledger_confirmation_required: {
-      title: 'Waiting for confirmation on device...',
+      title: 'WAITING_FOR_CONFIRMATION_ON_DEVICE',
       desc: null
     },
     listening_for_transaction: {
-      title: 'Listening for transaction...',
+      title: 'LISTENING_FOR_TRANSACTION',
       desc: null
     },
     in_progress: {
-      title: 'Transaction in progress...',
+      title: 'TRANSACTION_IN_PROGRESS',
       desc: null
     },
     complete: {
-      title: 'Transaction complete',
+      title: 'TRANSACTION_COMPLETE',
       desc: null
     },
     redirecting: {
-      title: 'Transaction complete. You are being redirected...',
+      title: 'REDIRECT_IN_PROGRESS',
       desc: null
     }
   },
@@ -132,6 +140,7 @@ export default {
         'symbol': null,
         'total_supply': null
       },
+      error: null,
       meta: {
         currencyConversionDescription: null,
         lumenPrice: null,

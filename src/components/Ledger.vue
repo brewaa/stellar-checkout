@@ -1,6 +1,6 @@
 <template>
   <div class="sco_component sco_component--ledger">
-    <div class="sco_component_i" v-show="!federation.complete && !connected">
+    <div class="sco_component_i" v-show="!federationComplete && !connected">
       <form class="sco_form" v-on:submit.prevent>
         <div class="sco_component--button_row">
           <button class="sco_button" :disabled="!connected">
@@ -39,7 +39,10 @@ export default {
         return this.$store.state.federation.ledgerBip32Path
       },
       set (value) {
-        return this.federationSet({ ledgerBip32Path: value })
+        return this.ledgerUpdate({
+          complete: false,
+          ledgerBip32Path: value
+        })
       }
     },
     connected: {
@@ -58,16 +61,17 @@ export default {
         this.ledgerErrorSet(value)
       }
     },
-    federation: {
+    ledger: {
       get () {
         return this.$store.state.federation
       },
       set (value) {
-        this.federationSet(value)
+        this.ledgerUpdate(value)
       }
     },
     ...mapState({
       confirmed: state => state.federation.ledgerConfirmed,
+      federationComplete: state => state.federation.complete,
       publicKey: state => state.federation.publicKey,
       verified: state => state.federation.ledgerVerified,
       version: state => state.federation.ledgerAppVersion
@@ -87,14 +91,12 @@ export default {
   },
   methods: {
     ledgerConnect: function () {
-      // console.log('ledgerConnect')
-      var self = this
-      return open(1, 30)
+      return open(5, 5)
         .then(api => {
-          return new Promise(function (resolve, reject) {
+          return new Promise((resolve, reject) => {
             api.getAppConfiguration().then(result => {
-              self.connected = true
-              self.$emit(LEDGER_EVENT_CONNECTED, result)
+              this.connected = true
+              this.$emit(LEDGER_EVENT_CONNECTED, result)
               resolve(api)
             }).catch(err => {
               reject(err)
@@ -102,21 +104,21 @@ export default {
           })
         })
         .catch(err => {
-          self.connected = false
-          self.$emit(LEDGER_EVENT_DISCONNECTED, err)
+          this.connected = false
+          this.$emit(LEDGER_EVENT_DISCONNECTED, err)
           // this.$once(LEDGER_EVENT_CONNECTED, this.updateLedgerInfo)
           // self.error = err // don't pollute the state. this is fired every second. propogate connected state via <App /> ledgerConnected prop
         })
     },
     updateLedgerInfo: function (e) {
-      this.federation = {
+      this.ledger = {
         ledgerAppVersion: e.version,
         ledgerError: null
       }
     },
     ...mapActions([
-      'federationSet',
-      'ledgerErrorSet'])
+      'ledgerErrorSet',
+      'ledgerUpdate'])
   },
   watch: {
 

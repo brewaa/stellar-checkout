@@ -1,25 +1,68 @@
 <template>
-  <div :class="['sco_component', 'sco_component--transaction_details', { 'sco_loaded' : loaded }]" v-show="accountConfirmation.complete">
+  <div :class="['sco_component', 'sco_component--transaction_details', { 'sco_loaded' : loaded, 'sco_component--collapsed' : complete }]">
     <div class="sco_component_i">
-      <div class="sco_component_title">3. Transaction Details</div>
-      <div class="sco_component_results" v-show="loaded">
-        {{transactionDetails.transactionHash}}
-        <textarea class="sco_offscreen" v-model="transactionDetails.transactionXdr"></textarea>
+      <div class="sco_component_title">
+        <!-- <span class="sco_spinner1" v-if="!transactionDetails.success">
+          <i class="fas fa-spinner fa-spin"></i>
+        </span> -->
+        Transaction Details
+        <div class="sco_component_title_aside">
+          <input type="checkbox" v-model="complete" />
+        </div>
       </div>
-      <div class="sco_error_elem" v-if="error"><p>{{error}}</p></div>
-      <span class="sco_spinner">
-        <i class="fas fa-spinner fa-spin"></i>
-      </span>
+      <div class="sco_component_results">
+        <div class="sco_component_results_row">
+          <div>ID</div>
+          <div class="sco_component_results_row_aside">
+            #{{ dto.order_id || dto.invoice.id }}
+          </div>
+        </div>
+        <div class="sco_component_results_row">
+          <div>SUBTOTAL</div>
+          <div class="sco_component_results_row_aside">
+            {{stellarTicker.meta.invoiceTotalFormatted}} {{dto.invoice.currency}}
+          </div>
+        </div>
+        <div class="sco_component_results_row">
+          <div>TOTAL</div>
+          <div class="sco_component_results_row_aside">
+            {{stellarTicker.meta.invoicePriceInLumensFormatted}} {{dto.payment.asset.code}}
+          </div>
+        </div>
+        <div class="sco_component_results_row" v-if="transactionDetails.transaction">
+          <div>TX Hash</div>
+          <div class="sco_component_results_row_aside">
+            {{transactionDetails.transactionHash}}
+          </div>
+        </div>
+        <div class="sco_component_results_row" v-if="transactionDetails.transaction">
+          <div>TX XDR</div>
+          <div class="sco_component_results_row_aside">
+            <textarea ref="xdrEnvelope" v-model="transactionDetails.transactionXdr" readonly></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="sco_component_footer">
+        <div class="sco_component_results_row">
+          <div>Status</div>
+          <div class="sco_component_results_row_aside">
+            {{transactionDetails.status.title}}
+          </div>
+        </div>
+      </div>
+      <div class="sco_component_error" v-if="error">
+        <p>{{error}} <a href="#" @click.prevent="tryAgain">Try again...</a></p>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import constants from 'app/constants'
+// import constants from 'app/constants'
 import { mapActions, mapState } from 'vuex'
-import { buildTransaction } from 'utils/stellarsdk.helper'
+// import { buildTransaction, fetchTransaction } from 'utils/stellarsdk.helper'
 // import {copy} from 'utils/clipboard'
 export default {
-  components: {
+  props: {
   },
   computed: {
     complete: {
@@ -40,6 +83,14 @@ export default {
         this.transactionDetailsErrorSet(value)
       }
     },
+    paymentOptions: {
+      get () {
+        return this.$store.state.paymentOptions
+      },
+      set (value) {
+        this.paymentOptionsSet(value)
+      }
+    },
     transactionDetails: {
       get () {
         return this.$store.state.transactionDetails
@@ -48,76 +99,84 @@ export default {
         this.transactionDetailsSet(value)
       }
     },
-    transactionStatus: {
-      get () {
-        return this.$store.state.transactionStatus
-      },
-      set (value) {
-        this.transactionStatusSet(value)
-      }
-    },
     ...mapState({
       accountConfirmation: 'accountConfirmation',
       accountConfirmed: state => state.accountConfirmation.complete,
       dto: 'dto',
-      network: 'network'
+      network: 'network',
+      paymentOptionsComplete: state => state.paymentOptions.complete,
+      stellarTicker: state => state.ticker.stellar,
+      transactionSuccess: state => state.transactionDetails.success
     })
   },
   data () {
     return {
-      loaded: false,
-      xdr: null
+      loaded: false
     }
+  },
+  created () {
+    this.loaded = true
+    this.complete = true
   },
   methods: {
-    // copyToClipboard: function (e) {
-    // copy.call(this, this.transactionXdr)
+    // buildTransaction: function () {
+    //   buildTransaction(this.network, this.dto)
+    //     .then(result => {
+    //       this.transactionDetails = {
+    //         transaction: result,
+    //         transactionHash: result.hash().toString('hex'),
+    //         transactionXdr: result.toEnvelope().toXDR('base64')
+    //       }
+    //     }).catch(err => {
+    //       console.log(err)
+    //       this.error = err
+    //     })
     // },
-    load: function () {
-      buildTransaction(this.network, this.dto)
-        .then(result => {
-          this.transactionDetails = {
-            transaction: result,
-            transactionHash: result.hash().toString('hex'),
-            transactionXdr: result.toEnvelope().toXDR('base64')
-          }
-          this.transactionStatus = {
-            status: constants.TX_STATUS.created
-          }
-          // console.log(result)
-          // var xdr = new window.StellarSdk.xdr.Transaction({
-          //   sourceAccount: result.source,
-          //   fee: result.fee,
-          //   seqNum: result.sequence,
-          //   timeBounds: null,
-          //   memo: result.memo,
-          //   operations: result.operations,
-          //   ext: null
-          // })
-          // console.log(xdr)
-          this.loaded = true
-          this.complete = true
-        }).catch(err => {
-          console.log(err)
-          this.error = err
-        })
+    tryAgain: function () {
+      this.paymentOptions = {
+        complete: false
+      }
     },
     ...mapActions([
+      'paymentOptionsSet',
       'transactionDetailsSet',
-      'transactionDetailsErrorSet',
-      'transactionStatusSet'])
+      'transactionDetailsErrorSet'])
   },
   watch: {
-    accountConfirmed (newVal) {
-      if (!newVal) {
-        return
-      }
-      this.error = null
-      this.loaded = false
-      setTimeout(e => {
-        this.load()
-      }, 400)
-    }
+    // accountConfirmed (newVal) {
+    //   if (!newVal) {
+    //     return
+    //   }
+    //   // this.error = null
+    //   // this.loaded = false
+    //   setTimeout(e => {
+    //     this.buildTransaction()
+    //   }, 400)
+    // },
+    // paymentOptionsComplete (newVal) {
+    //   if (!newVal) {
+    //     return
+    //   }
+    //   console.log('paymentOptionsComplete')
+    //   // this.error = null
+    //   // this.loaded = true
+    //   setTimeout(e => {
+    //     this.transactionDetails = {
+    //       error: null,
+    //       status: this.paymentOptions.method === 'ledger' ? constants.TX_STATUS.ledger_in_progress : constants.TX_STATUS.listening_for_transaction
+    //     }
+    //   }, 400)
+    // },
+    // transactionSuccess (newVal) {
+    //   if (newVal) {
+    //     fetchTransaction(this.network, this.transactionDetails.result.hash)
+    //       .then(tx => {
+    //         this.transactionDetails = {
+    //           result: tx
+    //         }
+    //       })
+    //   }
+    // }
   }
 }
 </script>

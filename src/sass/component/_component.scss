@@ -30,17 +30,20 @@ $green: #3ba776;
         line-height: $line-height;
     }
 
+    &_footer {
+        border-top: $layout-border;
+    }
+
     &_text,
     &_error {
         padding: $padding;
         p {
-            &:last-child {
-                margin-bottom: 0
-            }
+            margin: 0
         }
     }
 
     &_error {
+        border-top: $layout-border;
         color: $red
     }
 
@@ -81,6 +84,34 @@ $green: #3ba776;
     &_results {
         border-top: $layout-border;
         display: none;
+
+        &_row {
+            border-bottom: $layout-border;
+            display: flex;
+            padding: $padding;
+            text-transform: uppercase;
+            &--meta {
+                color: $grey;
+            }
+            &:last-child {
+                border-bottom: 0;
+            }
+            &_aside {
+                flex-grow: 1;
+                text-align: right;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                textarea {
+                    margin-left: .8rem;
+                    height: 4rem;
+                    width: 96%;
+                }
+            }
+            div:first-child {
+                white-space: nowrap;
+            }
+        }
 
         &_aside {
             align-items: center;
@@ -159,10 +190,10 @@ $green: #3ba776;
         }
     }
 
-    &_footer {
-        font-weight: bold;
-        text-align: center;
-    }
+    // &_footer {
+    //     font-weight: bold;
+    //     text-align: center;
+    // }
 
     /** COMPONENT - NETWORK_SELECTOR **/
 
@@ -246,11 +277,11 @@ $green: #3ba776;
     /** COMPONENT - TICKER **/
 
     &--ticker {
-        .sco_component_results {
-            padding: $padding;
-            text-transform: uppercase;
-            text-align: left;
-        }
+        // .sco_component_results {
+        //     padding: $padding;
+        //     text-transform: uppercase;
+        //     text-align: left;
+        // }
         .moniker {
           display: inline-block;
           padding-left:.2rem;

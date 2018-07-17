@@ -6,6 +6,7 @@ const config = require('../config')
 const merge = require('webpack-merge')
 const baseWebpackConfig = require('./webpack.base.conf')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
+const FileManagerPlugin = require('filemanager-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
@@ -126,12 +127,19 @@ const webpackConfig = merge(baseWebpackConfig, {
     ]),
 
     // copy the dist folder to /docs/demo
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../dist'),
-        to: '../docs/demo'
-      }
-    ])
+    new FileManagerPlugin({
+      onEnd: [{
+          copy: [
+            { source: path.resolve(__dirname, '../dist'), destination: path.resolve(__dirname, '../docs/demo') }
+          ]
+        },
+        {
+          delete: [
+           path.resolve(__dirname, '../docs/demo/package.json'),
+           path.resolve(__dirname, '../docs/demo/readme.md')
+          ],
+      }]
+    })
   ]
 })
 

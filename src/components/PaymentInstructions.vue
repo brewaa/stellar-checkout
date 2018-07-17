@@ -1,20 +1,20 @@
 <template>
   <div :class="['sco_component', 'sco_component--payment_instructions', { 'sco_loaded' : loaded, 'sco_component--collapsed': complete }]" v-show="paymentOptionsComplete">
     <div class="sco_component_i">
-      <div class="sco_component_title">5. Instructions</div>
+      <textarea ref="xdrEnvelope" class="sco_offscreen" v-model="transactionDetails.transactionXdr" readonly></textarea>
+      <div class="sco_component_title">4. Instructions</div>
       <div class="sco_component_results" v-show="loaded">
         <div class="sco_component_text" v-show="paymentOptions.method === 'ledger'">
           <p>Please confirm the transaction on your Ledger Wallet device</p>
         </div>
         <div class="sco_component_text" v-show="paymentOptions.method === 'tx_signer'">
-          <p>The transaction XDR envelope has been copied to your clipboard. Paste this into the textarea provided in the Transaction Signer.</p>
+          <p>The transaction XDR envelope will be copied to your clipboard. Paste this into the textarea provided in the Transaction Signer.</p>
           <div class="sco_component--button_row">
             <button class="sco_button" @click.prevent="goToTxSigner">Go to Transaction Signer</button>
           </div>
         </div>
         <div v-show="paymentOptions.method === 'byo'">
-          <div class="sco_component_row">
-            <h4>Use your own wallet:</h4>
+          <div class="sco_component_text">
             <p>To complete this transaction, send a payment with the following details:</p>
           </div>
           <div class="sco_component_results_heading">
@@ -43,9 +43,6 @@
           </div>
           <div class="sco_component_results_heading">
             <div>Transaction XDR</div>
-          </div>
-          <div class="sco_component_row">
-            <textarea ref="xdrEnvelope" class="sco_offscreen" v-model="transactionDetails.transactionXdr" readonly></textarea>
           </div>
           <div class="sco_component_qrcode">
             <div class="sco_component_qrcode_i">
@@ -114,7 +111,6 @@ export default {
       if (!newVal) {
         return
       }
-      this.error = null
       this.loaded = false
       setTimeout(e => {
         this.loaded = true
