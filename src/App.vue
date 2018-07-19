@@ -9,7 +9,6 @@
     <PaymentInstructions />
     <Ledger v-on:ledgerconnected="onLedgerConnected"
       v-on:ledgerdisconnected="onLedgerDisconnected" />
-    <Footer />
   </div>
 </template>
 <script>
@@ -21,7 +20,6 @@ import Ledger from 'components/Ledger'
 import AccountConfirmation from 'components/AccountConfirmation'
 import PaymentOptions from 'components/PaymentOptions'
 import PaymentInstructions from 'components/PaymentInstructions'
-import Footer from 'components/Footer'
 export default {
   name: 'App',
   components: {
@@ -32,8 +30,7 @@ export default {
     Ledger,
     AccountConfirmation,
     PaymentOptions,
-    PaymentInstructions,
-    Footer
+    PaymentInstructions
   },
   created () {
   },

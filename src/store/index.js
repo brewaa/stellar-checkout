@@ -136,11 +136,6 @@ const mutations = {
   [FEDERATION_SET] (state, obj) {
     merge(state.federation, obj)
     state.federation.complete = !obj.error && state.federation.complete
-    // state.federation.publicKey = state.federation.ledgerPublicKey || state.federation.publicKey
-    if (state.federation.error) {
-      // state.dto.payment.from = publicKey
-      // todo: clear any states that depend on successful federation
-    }
     state.dto.payment.from = state.federation.publicKey
     if (!obj.complete) {
       merge(state.federation, {

@@ -108,6 +108,7 @@ export default {
   },
   methods: {
     doFederation: function () {
+      console.log('doFederation')
       this.federationClear()
       var input = this.input.trim()
       if (input.length === 0) {
@@ -143,13 +144,14 @@ export default {
             }
           })
           .catch(err => {
-            this.federationErrorSet(err)
+            console.log(err)
+            this.federationErrorSet('Error: network error')
           })
         return
       }
       var err = 'Error: could not resolve stellar address'
       this.federation = {
-        complete: false,
+        complete: true,
         error: err
       }
     },

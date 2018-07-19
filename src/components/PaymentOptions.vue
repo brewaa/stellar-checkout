@@ -101,23 +101,19 @@ export default {
         })
     },
     useAlternatePaymentMethod: function (method) {
-      // Build the transaction object
-      return this.buildTransaction()
-        .then(() => {
-          // Update state
-          this.paymentOptions = {
-            complete: true,
-            error: null,
-            method: method
-          }
-          // Update transaction status
-          this.transactionDetails = {
-            result: null,
-            status: constants.TX_STATUS.listening_for_transaction,
-            success: false
-          }
-        })
-        .then(() => getPaymentsForAccount(this.network, this.dto))
+      // Update state
+      this.paymentOptions = {
+        complete: true,
+        error: null,
+        method: method
+      }
+      // Update transaction status
+      this.transactionDetails = {
+        result: null,
+        status: constants.TX_STATUS.listening_for_transaction,
+        success: false
+      }
+      return getPaymentsForAccount(this.network, this.dto)
         .then(response => {
           console.log(constants.APP.name + ': LISTENING_FOR_PAYMENTS')
           this.closeStream = response.payments.stream({
@@ -164,8 +160,7 @@ export default {
         success: false
       }
       var bip32Path = this.federation.ledgerBip32Path
-      return this.buildTransaction()
-        .then(trx => getSignature(trx, bip32Path))
+      return getSignature(this.transactionDetails.transaction, bip32Path)
         .then(signature => {
           this.transactionStatusUpdate(constants.TX_STATUS.signed)
           return new Promise((resolve, reject) => {
@@ -239,11 +234,14 @@ export default {
   },
   watch: {
     accountConfirmationComplete (newVal) {
-      this.paymentOptionsClear()
       this.loaded = false
-      setTimeout(() => {
-        this.loaded = true
-      }, 400)
+      this.paymentOptionsClear()
+      this.buildTransaction()
+        .then(() => {
+          setTimeout(() => {
+            this.loaded = true
+          }, 400)
+        })
     }
   }
 }

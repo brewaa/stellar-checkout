@@ -11,10 +11,34 @@
         </div>
       </div>
       <div class="sco_component_results">
+        <div class="sco_component_results_row" v-if="transactionDetails.transaction">
+          <div>Hash</div>
+          <div class="sco_component_results_row_aside">
+            {{transactionDetails.transactionHash}}
+          </div>
+        </div>
+        <div class="sco_component_results_row sco_offscreen" v-if="transactionDetails.transaction">
+          <div>TX XDR</div>
+          <div class="sco_component_results_row_aside">
+            <textarea ref="xdrEnvelope" v-model="transactionDetails.transactionXdr" readonly></textarea>
+          </div>
+        </div>
         <div class="sco_component_results_row">
           <div>ID</div>
           <div class="sco_component_results_row_aside">
-            #{{ dto.order_id || dto.invoice.id }}
+            #{{ dto.invoice.id }}
+          </div>
+        </div>
+        <div class="sco_component_results_row">
+          <div>To</div>
+          <div class="sco_component_results_row_aside">
+            {{ dto.payment.to }}
+          </div>
+        </div>
+        <div class="sco_component_results_row">
+          <div>From</div>
+          <div class="sco_component_results_row_aside">
+            {{ dto.payment.from }}
           </div>
         </div>
         <div class="sco_component_results_row">
@@ -27,18 +51,6 @@
           <div>TOTAL</div>
           <div class="sco_component_results_row_aside">
             {{stellarTicker.meta.invoicePriceInLumensFormatted}} {{dto.payment.asset.code}}
-          </div>
-        </div>
-        <div class="sco_component_results_row" v-if="transactionDetails.transaction">
-          <div>TX Hash</div>
-          <div class="sco_component_results_row_aside">
-            {{transactionDetails.transactionHash}}
-          </div>
-        </div>
-        <div class="sco_component_results_row" v-if="transactionDetails.transaction">
-          <div>TX XDR</div>
-          <div class="sco_component_results_row_aside">
-            <textarea ref="xdrEnvelope" v-model="transactionDetails.transactionXdr" readonly></textarea>
           </div>
         </div>
       </div>

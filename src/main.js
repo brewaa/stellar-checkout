@@ -50,7 +50,8 @@ export default {
             constants.DTO.invoice.total = options.total
             constants.DTO.payment.asset = window.StellarSdk.Asset.native()
             constants.DTO.payment.fee = 0.00001
-            constants.DTO.payment.memo = randomId(28) // options.memo ||
+            constants.DTO.payment.from = opts.from
+            constants.DTO.payment.memo = randomId(28)
             constants.DTO.payment.memoType = window.StellarSdk.MemoHash
             constants.DTO.payment.to = options.to
 

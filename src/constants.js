@@ -21,7 +21,6 @@ export default {
     invoice: {
       currency: 'USD',
       id: null,
-      order_id: null,
       total: null
     },
     payment: {
@@ -51,7 +50,7 @@ export default {
     uri: null
   },
   OPTIONS: {
-    currency: null,
+    from: null,
     id: null,
     lang: null,
     memo: null,
@@ -60,9 +59,6 @@ export default {
     redirectUrl: null,
     selector: null,
     stylesheet: null,
-    style: {
-      background: null
-    },
     timeout: null,
     to: null,
     total: null
