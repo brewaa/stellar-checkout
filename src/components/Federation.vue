@@ -27,20 +27,20 @@
               <div class="sco_field_input sco_field_input--input">
                 <input id="sco_federation_input"
                   autocomplete="off"
-                  placeholder="E.g. bob*yourhomedomain.org"
+                  placeholder=""
                   ref="input"
                   type="text"
                   v-model="input" />
                 <span class="sco_spinner"></span>
               </div>
-              <div class="sco_field_note">Stellar addresses are divided into two parts separated by <i>*</i>, the username and the domain. For example: <i>bob*stellar.org</i>. If you don't have a stellar address, you can just enter your public key.</div>
+              <div class="sco_field_note">Stellar addresses are divided into two parts separated by <i>*</i>, the username and the domain. For example: <i>you*stellarcheckout.com</i>. If you don't have a stellar address, you can just enter your public key.</div>
             </div>
             <div class="sco_component--button_row">
-              <button class="sco_button"
+              <input class="sco_button"
                 @click="doFederation"
-                :disabled="!input || complete">
-                {{ buttonText }}
-              </button>
+                :disabled="!input || complete"
+                type="submit"
+                :value="buttonText" />
             </div>
           </form>
           <div class="sco_component_error" v-if="federation.error"><p v-html="federation.error"></p></div>
@@ -92,9 +92,10 @@ export default {
         this.federationSet(value)
       }
     },
-    ...mapState(['network'])
+    ...mapState(['dto', 'network'])
   },
   created () {
+    this.input = this.dto.payment.from || ''
     setTimeout(() => {
       this.loaded = true
     }, 1200)
@@ -108,7 +109,6 @@ export default {
   },
   methods: {
     doFederation: function () {
-      console.log('doFederation')
       this.federationClear()
       var input = this.input.trim()
       if (input.length === 0) {
@@ -184,6 +184,7 @@ export default {
   },
   watch: {
     network () {
+      this.complete = false
       setTimeout(e => {
         this.doFederation()
       }, 400)

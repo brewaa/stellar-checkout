@@ -3,6 +3,9 @@
     <div class="sco_component_i">
       <div class="sco_component_title">
         Ticker
+        <span class="sco_spinner">
+          <i class="fas fa-spinner fa-spin"></i>
+        </span>
         <div class="sco_component_title_aside" v-show="loaded">
           <span class="currency_name sco_hidden">Stellar</span>
           <span class="moniker">XLM</span>
@@ -31,9 +34,6 @@
         </div>
         <div class="sco_component_error" v-if="error"><p v-html="error"></p></div>
       </div>
-      <span class="sco_spinner">
-        <i class="fas fa-spinner fa-spin"></i>
-      </span>
     </div>
   </div>
 </template>

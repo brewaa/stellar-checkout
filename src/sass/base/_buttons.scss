@@ -27,6 +27,8 @@ $button-blue: #08b5e5;
     }
 }
 
+.sco input[type=submit]:disabled,
+.sco input[type=button]:disabled,
 .sco button[disabled],
 .sco button:disabled {
     opacity: 0.5;

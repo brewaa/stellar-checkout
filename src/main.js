@@ -37,12 +37,11 @@ export default {
             constants.NETWORK.network = network.network
             constants.NETWORK.uri = network.uri
 
+            // CULTURE
+            var culture = options.lang
+
             // CURRENCY
             var currency = options.currency
-            constants.SETTINGS.currency = currency
-
-            // CULTURE
-            constants.SETTINGS.culture = options.lang
 
             // DTO
             constants.DTO.invoice.id = options.id
@@ -55,15 +54,26 @@ export default {
             constants.DTO.payment.memoType = window.StellarSdk.MemoHash
             constants.DTO.payment.to = options.to
 
+            // SETTINGS
+            constants.SETTINGS.culture = culture
+            constants.SETTINGS.currency = currency
+            constants.SETTINGS.showNetworkSelector = options.showNetworkSelector
+            constants.SETTINGS.showTicker = options.showTicker
+
             // Vue
             var app = new Vue({
               store,
               ...App
             })
 
-            return l10n.init(options.lang)
-              .then(syncStellarLumensTickerData())
-              .then(data => {
+            return new Promise((resolve) => {
+              syncStellarLumensTickerData()
+                .then(data => {
+                  resolve(data)
+                })
+            })
+              .then(l10n.init(options.lang))
+              .then(() => {
                 app.$mount(options.selector)
               })
           })

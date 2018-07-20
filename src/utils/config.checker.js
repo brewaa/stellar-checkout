@@ -13,10 +13,10 @@ function checkCurrency (options) {
   })
 };
 
-function checkFrom (to) {
+function checkFrom (from) {
   return new Promise(function (resolve, reject) {
-    if (!window.StellarSdk.StrKey.isValidEd25519PublicKey(to)) {
-      console.log(constants.APP.name + ': [from] is not a valid destination public key;')
+    if (from && typeof from !== 'string' && !window.StellarSdk.StrKey.isValidEd25519PublicKey(from)) {
+      console.log(constants.APP.name + ': [from] is not a valid public key;')
     }
     resolve(true)
   })
@@ -24,7 +24,7 @@ function checkFrom (to) {
 
 function checkTo (to) {
   return new Promise(function (resolve, reject) {
-    if (!window.StellarSdk.StrKey.isValidEd25519PublicKey(to)) {
+    if (to && typeof to !== 'string' && !window.StellarSdk.StrKey.isValidEd25519PublicKey(to)) {
       reject(new Error(constants.APP.name + ': [to] is not a valid destination public key;'))
     }
     resolve(true)

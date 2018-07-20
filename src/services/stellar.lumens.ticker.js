@@ -31,6 +31,7 @@ export function syncStellarLumensTickerData () {
     .then(response => {
       var data = response.data
       if (data.length > 0) {
+        constants.TICKERS.stellar.counter++
         constants.TICKERS.stellar.data = data[0]
         constants.TICKERS.stellar.updated = new Date(Date.now())
         extractStellarLumensTickerData(data[0])

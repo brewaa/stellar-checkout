@@ -15,6 +15,9 @@ const ACCOUNT_CONFIRMATION_CLEAR = 'ACCOUNT_CONFIRMATION_CLEAR'
 const ACCOUNT_CONFIRMATION_SET = 'ACCOUNT_CONFIRMATION_SET'
 const ACCOUNT_CONFIRMATION_ERROR = 'ACCOUNT_CONFIRMATION_ERROR'
 
+const ACCOUNT_FROM_SET = 'ACCOUNT_FROM_SET'
+const ACCOUNT_TO_SET = 'ACCOUNT_TO_SET'
+
 const CULTURE_SET = 'CULTURE_SET'
 const CURRENCY_SET = 'CURRENCY_SET'
 
@@ -49,6 +52,8 @@ const state = {
     complete: false,
     error: null
   },
+  accountFrom: null,
+  accountTo: null,
   cultures: cultures,
   currencies: constants.CURRENCIES,
   dto: constants.DTO,
@@ -111,6 +116,12 @@ const mutations = {
   },
   [ACCOUNT_CONFIRMATION_ERROR] (state, obj) {
     state.accountConfirmation.error = obj
+  },
+  [ACCOUNT_FROM_SET] (state, obj) {
+    state.accountFrom = obj
+  },
+  [ACCOUNT_TO_SET] (state, obj) {
+    state.accountTo = obj
   },
   [CULTURE_SET] (state, obj) {
     state.settings.culture = obj
@@ -230,6 +241,12 @@ const actions = ({
         commit(ACCOUNT_CONFIRMATION_SET, { account: account })
         return account
       })
+  },
+  accountFromSet ({ commit }, obj) {
+    commit(ACCOUNT_FROM_SET, obj)
+  },
+  accountToSet ({ commit }, obj) {
+    commit(ACCOUNT_TO_SET, obj)
   },
   cultureSet ({ commit }, obj) {
     commit(CULTURE_SET, obj)

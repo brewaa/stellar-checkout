@@ -7,7 +7,9 @@ export default {
   },
   SETTINGS: {
     culture: 'en',
-    currency: 'USD'
+    currency: 'USD',
+    showNetworkSelector: false,
+    showTicker: false
   },
   CURRENCIES: ['AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'IDR', 'ILS', 'INR', 'JPY', 'KRW', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PKR', 'PLN', 'RUB', 'SEK', 'SGD', 'THB', 'TRY', 'TWD', 'USD', 'ZAR'],
   CLASS: {
@@ -58,6 +60,8 @@ export default {
     onSubmit: null,
     redirectUrl: null,
     selector: null,
+    showNetworkSelector: false,
+    showTicker: false,
     stylesheet: null,
     timeout: null,
     to: null,
@@ -119,6 +123,7 @@ export default {
   TICKERS: {
     stellar: {
       url: 'https://www.stellarcheckout.com/api/tickers/stellar',
+      counter: 0,
       data: {
         '24h_volume_usd': null,
         'available_supply': null,

@@ -28,6 +28,12 @@ $green: #3ba776;
         border-radius: $border-radius;
         font-size: $font-size-small;
         line-height: $line-height;
+        position: relative;
+
+        & .sco_spinner {
+            display: inline-block;
+            padding: $padding;
+        }
     }
 
     &_footer {
@@ -49,7 +55,6 @@ $green: #3ba776;
 
     & .sco_spinner {
         display: inline-block;
-        padding: $padding;
     }
 
     &_title {
@@ -59,6 +64,10 @@ $green: #3ba776;
         padding: $padding;
         text-align: left;
         text-transform: uppercase;
+
+        .sco_spinner {
+            padding: 0 $padding-halved;
+        }
 
         &_aside {
             align-items: center;
@@ -297,6 +306,11 @@ $green: #3ba776;
         .sco_component_results {
             border: 0;    
         }
+    }
+
+    /* COMPONENT - FEDERATION */
+    &--federation .sco_component_i {
+        // min-height: 300px;
     }
 
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="sco stellar_checkout">
-    <NetworkSelector />
-    <StellarTicker />
+    <NetworkSelector v-show="settings.showNetworkSelector" />
+    <StellarTicker v-show="settings.showTicker" />
     <TransactionDetails />
     <Federation :ledger-connected="ledgerConnected" />
     <AccountConfirmation :ledger-connected="ledgerConnected" />
@@ -20,6 +20,7 @@ import Ledger from 'components/Ledger'
 import AccountConfirmation from 'components/AccountConfirmation'
 import PaymentOptions from 'components/PaymentOptions'
 import PaymentInstructions from 'components/PaymentInstructions'
+import { mapState } from 'vuex'
 export default {
   name: 'App',
   components: {
@@ -32,7 +33,10 @@ export default {
     PaymentOptions,
     PaymentInstructions
   },
-  created () {
+  computed: {
+    ...mapState([
+      'settings'
+    ])
   },
   data () {
     return {

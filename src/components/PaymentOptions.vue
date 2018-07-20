@@ -6,7 +6,7 @@
           <input type="checkbox" v-model="complete" :disabled="!paymentOptions.complete" />
         </div>
       </div>
-      <div class="sco_component_results" v-show="loaded">
+      <div class="sco_component_results" v-show="loaded && !error">
         <div class="sco_component--button_row" v-show="ledgerConnected">
           <button class="sco_button" @click.prevent="signWithLedger">Sign with Ledger Wallet</button>
         </div>
@@ -17,7 +17,7 @@
           <button class="sco_button" @click.prevent="useAlternatePaymentMethod('byo')">Use my own wallet</button>
         </div>
       </div>
-      <div class="sco_component_error" v-if="error"><p>{{error}}</p></div>
+      <div class="sco_component_error" v-if="loaded &&  error"><p>{{error}}</p></div>
       <span class="sco_spinner">
         <i class="fas fa-spinner fa-spin"></i>
       </span>
@@ -87,66 +87,24 @@ export default {
   },
   methods: {
     buildTransaction: function () {
-      return buildTransaction(this.network, this.dto)
-        .then(trx => {
-          this.transactionDetails = {
-            transaction: trx,
-            transactionHash: trx.hash().toString('hex'),
-            transactionXdr: trx.toEnvelope().toXDR('base64')
-          }
-          this.transactionStatus = {
-            status: constants.TX_STATUS.created
-          }
-          return trx
-        })
-    },
-    useAlternatePaymentMethod: function (method) {
-      // Update state
-      this.paymentOptions = {
-        complete: true,
-        error: null,
-        method: method
-      }
-      // Update transaction status
-      this.transactionDetails = {
-        result: null,
-        status: constants.TX_STATUS.listening_for_transaction,
-        success: false
-      }
-      return getPaymentsForAccount(this.network, this.dto)
-        .then(response => {
-          console.log(constants.APP.name + ': LISTENING_FOR_PAYMENTS')
-          this.closeStream = response.payments.stream({
-            onmessage: (payment) => {
-              if (payment.to !== response.accountId) {
-                return
-              }
-              verifyPayment(this.network, response.now, response.ledgerHeight, this.dto, payment)
-                .then(result => {
-                  if (result) {
-                    console.log(constants.APP.name + ': TRANSACTION_COMPLETE')
-                    console.log(result)
-                    this.transactionDetails = {
-                      complete: true,
-                      error: null,
-                      result: result,
-                      status: constants.TX_STATUS.complete,
-                      success: true
-                    }
-                    setTimeout(() => {
-                      this.submitHandler(null, result)
-                    }, 800)
-                    this.closeStream()
-                  } else {
-                    throw new Error('Payment received. it wasn\'t our payment though...')
-                  }
-                })
-            },
-            onerror: error => {
-              console.error(error)
+      if (this.validateDto()) {
+        return buildTransaction(this.network, this.dto)
+          .then(trx => {
+            this.transactionDetails = {
+              transaction: trx,
+              transactionHash: trx.hash().toString('hex'),
+              transactionXdr: trx.toEnvelope().toXDR('base64')
             }
+            this.transactionStatus = {
+              status: constants.TX_STATUS.created
+            }
+            return trx
+          }).catch(e => {
+            this.error = e
           })
-        })
+      } else {
+        return Promise.resolve(0)
+      }
     },
     signWithLedger: function () {
       this.paymentOptions = { // set early, it shows the instructions panel
@@ -224,6 +182,67 @@ export default {
       } else {
         // Show the default payment complete dialog
       }
+    },
+    useAlternatePaymentMethod: function (method) {
+      // Update state
+      this.paymentOptions = {
+        complete: true,
+        error: null,
+        method: method
+      }
+      // Update transaction status
+      this.transactionDetails = {
+        result: null,
+        status: constants.TX_STATUS.listening_for_transaction,
+        success: false
+      }
+      return getPaymentsForAccount(this.network, this.dto)
+        .then(response => {
+          console.log(constants.APP.name + ': LISTENING_FOR_PAYMENTS')
+          this.closeStream = response.payments.stream({
+            onmessage: (payment) => {
+              if (payment.to !== response.accountId) {
+                return
+              }
+              verifyPayment(this.network, response.now, response.ledgerHeight, this.dto, payment)
+                .then(result => {
+                  if (result) {
+                    console.log(constants.APP.name + ': TRANSACTION_COMPLETE')
+                    console.log(result)
+                    this.transactionDetails = {
+                      complete: true,
+                      error: null,
+                      result: result,
+                      status: constants.TX_STATUS.complete,
+                      success: true
+                    }
+                    setTimeout(() => {
+                      this.submitHandler(null, result)
+                    }, 800)
+                    this.closeStream()
+                  } else {
+                    throw new Error('Payment received. it wasn\'t our payment though...')
+                  }
+                })
+            },
+            onerror: error => {
+              console.error(error)
+            }
+          })
+        })
+    },
+    validateDto: function () {
+      var from = this.dto.payment.from
+      if (!window.StellarSdk.StrKey.isValidEd25519PublicKey(from)) {
+        this.error = '[from] is not a valid destination public key'
+        return false
+      }
+      var to = this.dto.payment.to
+      if (!window.StellarSdk.StrKey.isValidEd25519PublicKey(to)) {
+        this.error = '[to] is not a valid destination public key'
+        return false
+      }
+      return true
     },
     ...mapActions([
       'paymentOptionsClear',
