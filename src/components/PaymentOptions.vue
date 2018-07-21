@@ -63,6 +63,14 @@ export default {
         this.paymentOptionsSet(value)
       }
     },
+    transaction: {
+      get () {
+        return this.$store.state.transaction
+      },
+      set (value) {
+        this.transactionSet(value)
+      }
+    },
     transactionDetails: {
       get () {
         return this.$store.state.transactionDetails
@@ -86,24 +94,49 @@ export default {
     }
   },
   methods: {
-    buildTransaction: function () {
+    buildTransaction: async function () {
       if (this.validateDto()) {
-        return buildTransaction(this.network, this.dto)
-          .then(trx => {
-            this.transactionDetails = {
-              transaction: trx,
-              transactionHash: trx.hash().toString('hex'),
-              transactionXdr: trx.toEnvelope().toXDR('base64')
-            }
-            this.transactionStatus = {
-              status: constants.TX_STATUS.created
-            }
-            return trx
-          }).catch(e => {
-            this.error = e
-          })
-      } else {
-        return Promise.resolve(0)
+        var trx = await buildTransaction(
+          this.network,
+          this.dto.payment.to,
+          this.dto.payment.from,
+          this.dto.payment.asset,
+          this.dto.payment.amount,
+          this.dto.payment.memo)
+
+        this.transaction = {
+          current: trx
+        }
+
+        // this.transactionDetails = {
+        //   transaction: trx,
+        //   transactionHash: trx.hash().toString('hex'),
+        //   transactionXdr: trx.toEnvelope().toXDR('base64')
+        // }
+        this.transactionStatus = {
+          status: constants.TX_STATUS.created
+        }
+        // return buildTrx(
+        //   this.network,
+        //   this.dto.payment.to,
+        //   this.dto.payment.from,
+        //   this.dto.payment.asset,
+        //   this.dto.payment.amount,
+        //   this.dto.payment.memo)
+        //   .then(trx => {
+        //     this.transactionDetails = {
+        //       transaction: trx,
+        //       transactionHash: trx.hash().toString('hex'),
+        //       transactionXdr: trx.toEnvelope().toXDR('base64')
+        //     }
+        //     this.transactionStatus = {
+        //       status: constants.TX_STATUS.created
+        //     }
+        //     return trx
+        //   }).catch(e => {
+        //     console.log(e)
+        //     this.error = e
+        //   })
       }
     },
     signWithLedger: function () {
@@ -113,34 +146,38 @@ export default {
         method: 'ledger'
       }
       this.transactionDetails = {
-        result: null,
         status: constants.TX_STATUS.ledger_confirmation_required,
         success: false
       }
       var bip32Path = this.federation.ledgerBip32Path
-      return getSignature(this.transactionDetails.transaction, bip32Path)
+      return getSignature(this.transaction.current, bip32Path)
         .then(signature => {
           this.transactionStatusUpdate(constants.TX_STATUS.signed)
           return new Promise((resolve, reject) => {
-            var hash = this.transactionDetails.transaction.hash()
+            var hash = this.transaction.currentHash()
             var keyPair = window.StellarSdk.Keypair.fromPublicKey(this.dto.payment.from)
             if (keyPair.verify(hash, signature)) {
               var hint = keyPair.signatureHint()
               var decorated = new window.StellarSdk.xdr.DecoratedSignature({ hint: hint, signature: signature })
-              this.transactionDetails.transaction.signatures.push(decorated)
+              this.transaction.current.signatures.push(decorated)
               setTimeout(() => {
                 this.transactionStatusUpdate(constants.TX_STATUS.in_progress)
               }, 400)
-              return submitTransaction(this.network, this.transactionDetails.transaction)
+              return submitTransaction(this.network, this.transaction.current)
                 .then(transaction => {
                   console.log(constants.APP.name + ': TRANSACTION_COMPLETE: SUCCESS')
                   console.log(transaction)
                   this.transactionDetails = {
                     complete: true,
                     error: null,
-                    result: transaction,
                     status: constants.TX_STATUS.complete,
                     success: true
+                  }
+                  this.transaction.results.push(transaction)
+                  this.transaction = {
+                    current: null,
+                    currentHash: null,
+                    currenctXdr: null
                   }
                   setTimeout(() => {
                     resolve(transaction)
@@ -192,7 +229,6 @@ export default {
       }
       // Update transaction status
       this.transactionDetails = {
-        result: null,
         status: constants.TX_STATUS.listening_for_transaction,
         success: false
       }
@@ -249,6 +285,7 @@ export default {
       'paymentOptionsSet',
       'paymentOptionsError',
       'transactionDetailsSet',
+      'transactionSet',
       'transactionStatusUpdate'])
   },
   watch: {

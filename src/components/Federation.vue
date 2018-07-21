@@ -1,7 +1,19 @@
 <template>
-  <div :class="['sco_component', 'sco_component--federation', { 'sco_loaded' : loaded, 'sco_component--collapsed': federation.complete }]">
+  <div>
+    <FederationInput title="To"
+      placeholder-text="Enter recipient address..."
+      :use-ledger="false"
+      v-model="federationResponseTo"
+      v-on:federation="handleFederationResponseTo" />
+    <FederationInput title="From"
+      placeholder-text="Enter your address..."
+      :ledger-connected="ledgerConnected"
+      :use-ledger="true"
+      v-model="federationResponseFrom"
+      v-on:federation="handleFederationResponseFrom" />
+    <div :class="['sco_component', 'sco_component--federation', { 'sco_loaded' : loaded, 'sco_component--collapsed': federation.complete }]">
       <div class="sco_component_i">
-        <div class="sco_component_title">1. Verify your address
+        <div class="sco_component_title">{{title}}
           <div class="sco_component_title_aside">
             <input type="checkbox" v-model="complete" :disabled="!complete" />
           </div>
@@ -20,7 +32,7 @@
             </div>
           </form>
           <form class="sco_form" v-on:submit.prevent v-show="!ledgerConnected">
-            <div class="sco_field">
+            <section class="sco_field">
               <label for="sco_federation_input" class="sco_field_label">Enter your Stellar Address
                 <!-- <i class="fa fa-question-circle" /> -->
               </label>
@@ -34,7 +46,7 @@
                 <span class="sco_spinner"></span>
               </div>
               <div class="sco_field_note">Stellar addresses are divided into two parts separated by <i>*</i>, the username and the domain. For example: <i>you*stellarcheckout.com</i>. If you don't have a stellar address, you can just enter your public key.</div>
-            </div>
+            </section>
             <div class="sco_component--button_row">
               <input class="sco_button"
                 @click="doFederation"
@@ -50,18 +62,27 @@
         </span>
       </div>
     </div>
+  </div>
 </template>
 <script>
-// import constants from 'app/constants'
+import merge from 'lodash.merge'
 import { mapActions, mapState } from 'vuex'
 import { getPublicKey } from 'services/ledger.stellar'
 import { getFederatedAddress, isFederatedAddress } from 'utils/stellarsdk.helper'
+import FederationInput from 'components/FederationInput'
 export default {
   props: {
+    title: {
+      type: String,
+      default: '1. Verify your address'
+    },
     ledgerConnected: {
       type: Boolean,
       default: false
     }
+  },
+  components: {
+    FederationInput
   },
   computed: {
     buttonText: function () {
@@ -102,13 +123,15 @@ export default {
   },
   data () {
     return {
+      federationResponseFrom: {},
+      federationResponseTo: {},
       ledgerVerificationInProgress: false,
       loaded: false,
       input: ''
     }
   },
   methods: {
-    doFederation: function () {
+    doFederation: async function () {
       this.federationClear()
       var input = this.input.trim()
       if (input.length === 0) {
@@ -126,27 +149,39 @@ export default {
         if (!addr) {
           return
         }
-        window.StellarSdk.FederationServer
-          .createForDomain(addr.homeDomain)
-          .then(federationServer => {
-            // todo: resolve DKIF, show extended verification results, secure tick etc.
-            // var host = 'federation._stellardomainkey.' + addr.homeDomain
-            // window.browser.dns.resolve(host).then(e => {
-            //   console.log(e)
-            // })
-            return federationServer.resolveAddress(addr.handle)
-          })
-          .then(federationRecord => {
-            this.federation = {
-              complete: true,
-              publicKey: federationRecord.account_id,
-              stellarAddress: federationRecord.stellar_address
-            }
-          })
-          .catch(err => {
-            console.log(err)
-            this.federationErrorSet('Error: network error')
-          })
+        try {
+          var fedSvr = await window.StellarSdk.FederationServer.createForDomain(addr.homeDomain)
+          var fedRecord = fedSvr.resolveAddress(addr.handle)
+          this.federation = {
+            complete: true,
+            publicKey: fedRecord.account_id,
+            stellarAddress: fedRecord.stellar_address
+          }
+        } catch (err) {
+          console.log(err)
+          this.federationErrorSet('Error: network error')
+        }
+        // window.StellarSdk.FederationServer
+        //   .createForDomain(addr.homeDomain)
+        //   .then(federationServer => {
+        //     // todo: resolve DKIF, show extended verification results, secure tick etc.
+        //     // var host = 'federation._stellardomainkey.' + addr.homeDomain
+        //     // window.browser.dns.resolve(host).then(e => {
+        //     //   console.log(e)
+        //     // })
+        //     return federationServer.resolveAddress(addr.handle)
+        //   })
+        //   .then(federationRecord => {
+        //     this.federation = {
+        //       complete: true,
+        //       publicKey: federationRecord.account_id,
+        //       stellarAddress: federationRecord.stellar_address
+        //     }
+        //   })
+        //   .catch(err => {
+        //     console.log(err)
+        //     this.federationErrorSet('Error: network error')
+        //   })
         return
       }
       var err = 'Error: could not resolve stellar address'
@@ -154,6 +189,31 @@ export default {
         complete: true,
         error: err
       }
+    },
+    handleFederationResponseFrom: function (e) {
+      var x = merge(this.federationResponseFrom, e)
+      this.accountFromSet(x.publicKey)
+        .catch(err => {
+          this.showError(err)
+        })
+      console.log(this.federationResponseFrom)
+    },
+    handleFederationResponseTo: function (e) {
+      var x = merge(this.federationResponseTo, e)
+      // this.federation = {
+      //   // complete: true,
+      //   publicKey: x.publicKey,
+      //   stellarAddress: x.stellarAddress
+      // }
+      this.accountToSet(x.publicKey)
+        .then(e => {
+          console.log(e)
+          // this.showResults()
+        })
+        .catch(err => {
+          this.showError(err)
+        })
+      console.log(this.federationResponseTo)
     },
     ledgerVerify: function () {
       this.ledgerVerificationInProgress = true
@@ -175,7 +235,16 @@ export default {
           this.ledgerVerificationInProgress = false
         })
     },
+    showError: function (err) {
+      var msg = 'Error'
+      if (err.response && err.response.status === 404) {
+        msg += `: account cannot be found on the ${this.networkName.toUpperCase()} network`
+      }
+      this.error = msg
+    },
     ...mapActions([
+      'accountFromSet',
+      'accountToSet',
       'federationClear',
       'federationSet',
       'federationErrorSet',

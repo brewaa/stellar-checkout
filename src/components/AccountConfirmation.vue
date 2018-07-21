@@ -7,8 +7,8 @@
         </div>
       </div>
       <div class="sco_component_results" v-if="!error">
-        <AccountDetails :account="accountConfirmation.account" v-if="accountConfirmation.account" />
-        <form class="sco_form" v-show="accountConfirmation.account">
+        <AccountDetails :account="accountFrom.account" v-if="accountFrom.account" />
+        <form class="sco_form" v-show="accountFrom">
           <div class="sco_component--button_row">
             <button class="sco_button" @click="confirmClick" :disabled="awaitingConfirmation || accountConfirmation.complete">{{buttonText}}</button>
           </div>
@@ -78,6 +78,7 @@ export default {
       }
     },
     ...mapState({
+      accountFrom: state => state.accountFrom,
       federationComplete: state => state.federation.complete,
       networkName: state => state.network.name
     })
@@ -119,7 +120,7 @@ export default {
       this.transactionStatusUpdate(constants.TX_STATUS.account_confirmation)
     },
     ...mapActions([
-      'accountLoad',
+      'accountFromSet',
       'accountConfirmationClear',
       'accountConfirmationError',
       'accountConfirmationSet',
@@ -144,15 +145,14 @@ export default {
       if (this.federation.publicKey) {
         setTimeout(e => {
           this.transactionStatusUpdate(constants.TX_STATUS.account_confirmation_loading_account)
-          this.accountLoad(this.federation.publicKey)
+          this.accountFromSet(this.federation.publicKey)
             .then(e => {
               this.isLoaded()
             })
             .catch(err => {
               var msg = 'Error'
-              var css = 'sco_network_tag sco_network_tag--' + this.networkName.toLowerCase()
-              if (err.response && err.response.status === 404) { // window.StellarSdk.NotFoundError ?
-                msg += ': account cannot be found on the <span class="' + css + '">' + this.networkName + '</span> network'
+              if (err.response && err.response.status === 404) {
+                msg += `: account cannot be found on the ${this.networkName.toUpperCase()} network`
               }
               this.error = msg
               this.isLoaded()

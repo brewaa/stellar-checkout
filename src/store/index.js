@@ -40,6 +40,8 @@ const NETWORK_SET = 'NETWORK_SET'
 const TICKER_STELLAR_SET = 'TICKER_STELLAR_SET'
 const TICKER_STELLAR_ERROR_SET = 'TICKER_STELLAR_ERROR_SET'
 
+const TRANSACTION_SET = 'TRANSACTION_SET'
+
 const TRANSACTION_DETAILS_SET = 'TRANSACTION_DETAILS_SET'
 const TRANSACTION_DETAILS_ERROR_SET = 'TRANSACTION_DETAILS_ERROR_SET'
 
@@ -48,12 +50,33 @@ const TRANSACTION_STATUS_UPDATE = 'TRANSACTION_STATUS_UPDATE'
 // STATE
 const state = {
   accountConfirmation: {
-    account: null,
     complete: false,
     error: null
   },
-  accountFrom: null,
-  accountTo: null,
+  accountFrom: {
+    account: null,
+    complete: false,
+    error: null,
+    ledgerAppVersion: null,
+    ledgerBip32Path: '44\'/148\'/0\'',
+    ledgerConfirmed: false,
+    ledgerError: null,
+    ledgerVerified: false,
+    publicKey: null,
+    stellarAddress: null
+  },
+  accountTo: {
+    account: null,
+    complete: false,
+    error: null,
+    ledgerAppVersion: null,
+    ledgerBip32Path: '44\'/148\'/0\'',
+    ledgerConfirmed: false,
+    ledgerError: null,
+    ledgerVerified: false,
+    publicKey: null,
+    stellarAddress: null
+  },
   cultures: cultures,
   currencies: constants.CURRENCIES,
   dto: constants.DTO,
@@ -78,6 +101,12 @@ const state = {
   settings: constants.SETTINGS,
   ticker: {
     stellar: constants.TICKERS.stellar
+  },
+  transaction: {
+    current: null,
+    currentHash: null,
+    currentXdr: null,
+    results: []
   },
   transactionDetails: {
     complete: false,
@@ -118,10 +147,10 @@ const mutations = {
     state.accountConfirmation.error = obj
   },
   [ACCOUNT_FROM_SET] (state, obj) {
-    state.accountFrom = obj
+    merge(state.accountFrom, obj)
   },
   [ACCOUNT_TO_SET] (state, obj) {
-    state.accountTo = obj
+    merge(state.accountTo, obj)
   },
   [CULTURE_SET] (state, obj) {
     state.settings.culture = obj
@@ -213,6 +242,9 @@ const mutations = {
   [TICKER_STELLAR_ERROR_SET] (state, obj) {
     state.ticker.stellar.error = obj
   },
+  [TRANSACTION_SET] (state, obj) {
+    merge(state.transaction, obj)
+  },
   [TRANSACTION_DETAILS_SET] (state, obj) {
     merge(state.transactionDetails, obj)
   },
@@ -235,18 +267,26 @@ const actions = ({
   accountConfirmationSet ({ commit }, obj) {
     commit(ACCOUNT_CONFIRMATION_SET, obj)
   },
-  accountLoad ({ commit }, publicKey) {
+  // accountLoad ({ commit }, publicKey) {
+  //   return loadAccount(state.network, publicKey)
+  //     .then(account => {
+  //       commit(ACCOUNT_CONFIRMATION_SET, { account: account })
+  //       return account
+  //     })
+  // },
+  accountFromSet ({ commit }, publicKey) {
     return loadAccount(state.network, publicKey)
       .then(account => {
-        commit(ACCOUNT_CONFIRMATION_SET, { account: account })
+        commit(ACCOUNT_FROM_SET, { account: account })
         return account
       })
   },
-  accountFromSet ({ commit }, obj) {
-    commit(ACCOUNT_FROM_SET, obj)
-  },
-  accountToSet ({ commit }, obj) {
-    commit(ACCOUNT_TO_SET, obj)
+  accountToSet ({ commit }, publicKey) {
+    return loadAccount(state.network, publicKey)
+      .then(account => {
+        commit(ACCOUNT_TO_SET, { account: account })
+        return account
+      })
   },
   cultureSet ({ commit }, obj) {
     commit(CULTURE_SET, obj)
@@ -303,6 +343,13 @@ const actions = ({
   },
   stellarTickerErrorSet ({ commit }, obj) {
     commit(TICKER_STELLAR_ERROR_SET, obj)
+  },
+  transactionSet ({ commit }, obj) {
+    if (obj.current) {
+      obj.currentHash = obj.current.hash().toString('hex')
+      obj.currentXdr = obj.current.toEnvelope().toXDR('base64')
+    }
+    commit(TRANSACTION_SET, obj)
   },
   transactionDetailsSet ({ commit }, obj) {
     commit(TRANSACTION_DETAILS_SET, obj)

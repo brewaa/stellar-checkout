@@ -44,7 +44,8 @@ $green: #3ba776;
     &_error {
         padding: $padding;
         p {
-            margin: 0
+            margin: 0;
+            padding: $padding;
         }
     }
 

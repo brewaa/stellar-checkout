@@ -20,7 +20,7 @@ import Ledger from 'components/Ledger'
 import AccountConfirmation from 'components/AccountConfirmation'
 import PaymentOptions from 'components/PaymentOptions'
 import PaymentInstructions from 'components/PaymentInstructions'
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 export default {
   name: 'App',
   components: {
@@ -35,11 +35,22 @@ export default {
   },
   computed: {
     ...mapState([
+      'dto',
       'settings'
     ])
   },
+  created () {
+    if (this.dto.payment.to) {
+      this.accountToSet(this.dto.payment.to)
+        .catch(err => {
+          console.log(err)
+          this.error = `Error: account cannot be found on the ${this.networkName}</span> network`
+        })
+    }
+  },
   data () {
     return {
+      error: null,
       ledgerConnected: false
     }
   },
@@ -49,7 +60,8 @@ export default {
     },
     onLedgerDisconnected: function (e) {
       this.ledgerConnected = false
-    }
+    },
+    ...mapActions(['accountToSet'])
   }
 }
 </script>

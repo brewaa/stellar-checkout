@@ -1,32 +1,56 @@
-export function buildTransaction (network, dto) {
+// export function buildTransaction (network, to, from, asset, amount, memo) {
+//   var server = new window.StellarSdk.Server(network.uri)
+//   var transaction
+//   return server.loadAccount(to)
+//     .catch(err => {
+//       throw new Error('The destination account does not exist!', err)
+//     }).then(() => {
+//       return server.loadAccount(from)
+//     }).then(sourceAccount => {
+//       var payment = window.StellarSdk.Operation.payment({
+//         destination: to,
+//         asset: asset,
+//         amount: amount
+//       })
+//       var builder = new window.StellarSdk
+//         .TransactionBuilder(sourceAccount)
+//         .addOperation(payment)
+//       if (memo) {
+//         memo = window.StellarSdk.hash(memo)
+//         builder.addMemo(window.StellarSdk.Memo.hash(memo))
+//       }
+//       transaction = builder.build()
+//       return transaction
+//     })
+// };
+
+export async function buildTransaction (network, to, from, asset, amount, memo) {
   var server = new window.StellarSdk.Server(network.uri)
-  var destinationId = dto.payment.to
-  var transaction
+  var destinationAcc = await server.loadAccount(to)
+  if (!destinationAcc) {
+    throw new Error('destination account does not exist')
+  }
+  var sourceAcc = await server.loadAccount(from)
+  if (!sourceAcc) {
+    throw new Error('source account does not exist')
+  }
+  var payment = window.StellarSdk.Operation.payment({
+    destination: to,
+    asset: asset,
+    amount: amount
+  })
+  var builder = new window.StellarSdk
+    .TransactionBuilder(sourceAcc)
+    .addOperation(payment)
+  if (memo) {
+    var memoHash = window.StellarSdk.hash(memo)
+    builder.addMemo(window.StellarSdk.Memo.hash(memoHash))
+  }
+  var transaction = await builder.build()
+  return transaction
+}
 
-  return server.loadAccount(destinationId)
-    .catch(window.StellarSdk.NotFoundError, function (error) {
-      throw new Error('The destination account does not exist!', error)
-    }).then(function () {
-      return server.loadAccount(dto.payment.from)
-    }).then(function (sourceAccount) {
-      var builder = new window.StellarSdk
-        .TransactionBuilder(sourceAccount)
-        .addOperation(window.StellarSdk.Operation.payment({
-          destination: destinationId,
-          asset: dto.payment.asset,
-          amount: dto.payment.amount
-        }))
-      if (dto.payment.memo) {
-        var memo = dto.payment.memo
-        memo = window.StellarSdk.hash(memo)
-        builder.addMemo(window.StellarSdk.Memo.hash(memo))
-      }
-      transaction = builder.build()
-      return transaction
-    })
-};
-
-export function fetchTransaction (network, txHash) {
+export async function fetchTransaction (network, txHash) {
   var server = new window.StellarSdk.Server(network.uri)
   return server.transactions()
     .transaction(txHash)
@@ -53,7 +77,7 @@ export function isFederatedAddress (addr) {
   return addr && addr.toString().split('*').length > 1
 }
 
-export function loadAccount (network, accountId) {
+export async function loadAccount (network, accountId) {
   var server = new window.StellarSdk.Server(network.uri)
   return server.loadAccount(accountId).catch(window.StellarSdk.NotFoundError, function (error) {
     throw new Error('The destination account does not exist!', error)

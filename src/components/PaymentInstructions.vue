@@ -1,7 +1,7 @@
 <template>
   <div :class="['sco_component', 'sco_component--payment_instructions', { 'sco_loaded' : loaded, 'sco_component--collapsed': complete }]" v-show="paymentOptionsComplete">
     <div class="sco_component_i">
-      <textarea ref="xdrEnvelope" class="sco_offscreen" v-model="transactionDetails.transactionXdr" readonly></textarea>
+      <textarea ref="xdrEnvelope" class="sco_offscreen" v-model="transaction.currentXdr" readonly></textarea>
       <div class="sco_component_title">4. Instructions</div>
       <div class="sco_component_results" v-show="loaded">
         <div class="sco_component_text" v-show="paymentOptions.method === 'ledger'">
@@ -46,9 +46,9 @@
           </div>
           <div class="sco_component_qrcode">
             <div class="sco_component_qrcode_i">
-              <qrcode :value="transactionDetails.transactionXdr"
+              <qrcode :value="transaction.currentXdr"
                 :options="{ size: 256 }"
-                v-show="transactionDetails.transactionXdr"
+                v-show="transaction.currentXdr"
                  @click.prevent="copyXdrToClipboard">
               </qrcode>
               <button class="sco_button" @click.prevent="copyXdrToClipboard">Copy Transaction XDR</button>
@@ -85,7 +85,7 @@ export default {
       dto: 'dto',
       network: 'network',
       paymentOptionsComplete: state => state.paymentOptions.complete,
-      transactionDetails: 'transactionDetails'
+      transaction: 'transaction'
     })
   },
   data () {
@@ -101,7 +101,7 @@ export default {
     },
     goToTxSigner: function () {
       this.copyXdrToClipboard()
-      window.open('https://www.stellar.org/laboratory/#txsigner?xdr=' + this.transactionDetails.transactionXdr + '&network=' + this.network.name, '_blank')
+      window.open('https://www.stellar.org/laboratory/#txsigner?xdr=' + this.transaction.currentXdr + '&network=' + this.network.name, '_blank')
     },
     ...mapActions([
       'paymentOptionsSet'])
