@@ -7,22 +7,24 @@ function calculatePriceInLumens (invoiceTotal, lumenPrice) {
 }
 
 function extractStellarLumensTickerData (data) {
-  var lumenPrice = data['price_' + constants.SETTINGS.currency.toLowerCase()]
-  var currencyConversionDescription = '1XLM = ' + replace(formatDecimal7(lumenPrice), ',', '') + '' + constants.SETTINGS.currency
-  var invoicePriceInLumens = calculatePriceInLumens(constants.DTO.invoice.total, lumenPrice)
+  var total = constants.OPTIONS.total
+  var currency = constants.OPTIONS.currency
+  var lumenPrice = data['price_' + currency.toLowerCase()]
+  var currencyConversionDescription = '1XLM = ' + replace(formatDecimal7(lumenPrice), ',', '') + '' + currency
+  var invoicePriceInLumens = calculatePriceInLumens(total, lumenPrice)
   var invoicePriceInLumensFormatted = replace(formatDecimal7(invoicePriceInLumens), ',', '')
   constants.TICKERS.stellar.meta.currencyConversionDescription = currencyConversionDescription
   constants.TICKERS.stellar.meta.invoicePriceInLumens = invoicePriceInLumens
   constants.TICKERS.stellar.meta.invoicePriceInLumensFormatted = invoicePriceInLumensFormatted
-  constants.TICKERS.stellar.meta.invoiceTotalFormatted = formatCurrency(constants.DTO.invoice.total)
+  constants.TICKERS.stellar.meta.invoiceTotalFormatted = formatCurrency(constants.OPTIONS.total)
   constants.TICKERS.stellar.meta.lumenPrice = lumenPrice
-  constants.DTO.payment.amount = formatDecimal7(invoicePriceInLumens)
+  constants.OPTIONS.amount = formatDecimal7(invoicePriceInLumens)
   return constants.DTO
 }
 
 export function fetchStellarLumensTickerData () {
   var url = constants.TICKERS.stellar.url
-  var currency = constants.SETTINGS.currency.toLowerCase().replace('usd', '')
+  var currency = constants.OPTIONS.currency.toLowerCase().replace('usd', '')
   return window.StellarSdk.axios.get(url, { params: { currency: currency } })
 }
 
@@ -36,8 +38,8 @@ export function syncStellarLumensTickerData () {
         constants.TICKERS.stellar.updated = new Date(Date.now())
         extractStellarLumensTickerData(data[0])
       }
-      return response.data
+      return data
     }).catch(e => {
-      constants.TICKERS.stellar.error = e
+      constants.TICKERS.stellar.error = e.message
     })
 }

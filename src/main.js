@@ -5,7 +5,7 @@ import constants from 'app/constants'
 import Css from 'sass/site.scss'
 import merge from 'lodash.merge'
 import l10n from 'l10n'
-import {randomId} from 'utils/generator'
+// import {randomId} from 'utils/generator'
 import {setNetwork} from 'utils/stellarsdk.helper'
 import store from 'store'
 import {syncStellarLumensTickerData} from 'services/stellar.lumens.ticker'
@@ -38,27 +38,26 @@ export default {
             constants.NETWORK.uri = network.uri
 
             // CULTURE
-            var culture = options.lang
+            // var culture = options.culture
 
             // CURRENCY
-            var currency = options.currency
+            // var currency = options.currency
 
             // DTO
-            constants.DTO.invoice.id = options.id
-            constants.DTO.invoice.currency = currency
-            constants.DTO.invoice.total = options.total
-            constants.DTO.payment.asset = window.StellarSdk.Asset.native()
-            constants.DTO.payment.fee = 0.00001
-            constants.DTO.payment.from = opts.from
-            constants.DTO.payment.memo = randomId(28)
-            constants.DTO.payment.memoType = window.StellarSdk.MemoHash
-            constants.DTO.payment.to = options.to
+            // constants.DTO.invoice.id = options.id
+            // constants.DTO.invoice.currency = currency
+            // constants.DTO.invoice.total = options.total
+            // constants.DTO.payment.asset = window.StellarSdk.Asset.native()
+            // constants.DTO.payment.from = opts.from
+            // constants.DTO.payment.memo = randomId(28)
+            // constants.DTO.payment.memoType = window.StellarSdk.MemoHash
+            // constants.DTO.payment.to = options.to
 
             // SETTINGS
-            constants.SETTINGS.culture = culture
-            constants.SETTINGS.currency = currency
-            constants.SETTINGS.showNetworkSelector = options.showNetworkSelector
-            constants.SETTINGS.showTicker = options.showTicker
+            // constants.SETTINGS.culture = options.culture
+            // constants.SETTINGS.currency = options.currency
+            // constants.SETTINGS.showNetworkSelector = options.showNetworkSelector
+            // constants.SETTINGS.showTicker = options.showTicker
 
             // Vue
             var app = new Vue({

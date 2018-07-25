@@ -32,15 +32,15 @@ function checkTo (to) {
 };
 
 function checkCulture (options) {
-  var lang = options.lang || ''
-  var errMsg = constants.APP.name + ': [lang] not supported. falling back to \'en\'. allowed cultures: ' + cultures.join(', ') + ';'
+  var lang = options.culture || ''
+  var errMsg = constants.APP.name + ': [culture] not supported. falling back to \'en\'. allowed cultures: ' + cultures.join(', ') + ';'
   return new Promise(function (resolve, reject) {
     var culturesLowerCase = cultures.map(function (value) {
       return value.toLowerCase()
     })
     if (typeof lang === 'string' && lang.length > 0 && culturesLowerCase.indexOf(lang.toLowerCase()) === -1) {
       console.log(errMsg)
-      options.lang = constants.SETTINGS.culture
+      options.culture = 'en'
     }
     resolve(true)
   })

@@ -29,6 +29,7 @@ import constants from 'app/constants'
 import { mapActions, mapState } from 'vuex'
 import { getSignature } from 'services/ledger.stellar'
 import { buildTransaction, getPaymentsForAccount, submitTransaction, verifyPayment } from 'utils/stellarsdk.helper'
+import {randomId} from 'utils/generator'
 import { useRedirectUrl } from 'utils/url'
 export default {
   props: {
@@ -68,44 +69,42 @@ export default {
         return this.$store.state.transaction
       },
       set (value) {
-        this.transactionSet(value)
-      }
-    },
-    transactionDetails: {
-      get () {
-        return this.$store.state.transactionDetails
-      },
-      set (value) {
-        this.transactionDetailsSet(value)
+        this.transactionSave(value)
       }
     },
     ...mapState({
       accountConfirmationComplete: state => state.accountConfirmation.complete,
-      dto: 'dto',
+      // dto: 'dto',
       federation: 'federation',
       network: 'network',
-      options: 'options'
+      options: 'options',
+      stellarTicker: 'stellarTicker'
     })
   },
   data () {
     return {
       closeStream: null,
-      loaded: false
+      loaded: false,
+      from: null,
+      to: null,
+      memo: null
     }
   },
   methods: {
     buildTransaction: async function () {
-      if (this.validateDto()) {
-        var trx = await buildTransaction(
-          this.network,
-          this.dto.payment.to,
-          this.dto.payment.from,
-          this.dto.payment.asset,
-          this.dto.payment.amount,
-          this.dto.payment.memo)
-
+      if (this.validate()) {
+        this.from = this.federation.accountFrom.account.account_id
+        this.to = this.federation.accountTo.account.account_id
+        this.memo = randomId(28)
         this.transaction = {
-          current: trx
+          status: constants.TX_STATUS.created,
+          tx: await buildTransaction(
+            this.network,
+            this.to,
+            this.from,
+            window.StellarSdk.Asset.native(),
+            this.options.amount,
+            this.memo)
         }
 
         // this.transactionDetails = {
@@ -113,9 +112,9 @@ export default {
         //   transactionHash: trx.hash().toString('hex'),
         //   transactionXdr: trx.toEnvelope().toXDR('base64')
         // }
-        this.transactionStatus = {
-          status: constants.TX_STATUS.created
-        }
+        // this.transactionStatus = {
+        //   status: constants.TX_STATUS.created
+        // }
         // return buildTrx(
         //   this.network,
         //   this.dto.payment.to,
@@ -145,40 +144,42 @@ export default {
         error: null,
         method: 'ledger'
       }
-      this.transactionDetails = {
-        status: constants.TX_STATUS.ledger_confirmation_required,
-        success: false
+      this.transactionReset()
+      this.transaction = {
+        status: constants.TX_STATUS.ledger_confirmation_required
       }
       var bip32Path = this.federation.ledgerBip32Path
-      return getSignature(this.transaction.current, bip32Path)
+      return getSignature(this.transaction.tx, bip32Path)
         .then(signature => {
           this.transactionStatusUpdate(constants.TX_STATUS.signed)
           return new Promise((resolve, reject) => {
-            var hash = this.transaction.currentHash()
-            var keyPair = window.StellarSdk.Keypair.fromPublicKey(this.dto.payment.from)
+            var hash = this.transaction.tx.hash()
+            var keyPair = window.StellarSdk.Keypair.fromPublicKey(this.federation.accountFrom.account.account_id)
             if (keyPair.verify(hash, signature)) {
               var hint = keyPair.signatureHint()
               var decorated = new window.StellarSdk.xdr.DecoratedSignature({ hint: hint, signature: signature })
-              this.transaction.current.signatures.push(decorated)
+              this.transaction.tx.signatures.push(decorated)
               setTimeout(() => {
                 this.transactionStatusUpdate(constants.TX_STATUS.in_progress)
               }, 400)
-              return submitTransaction(this.network, this.transaction.current)
+              return submitTransaction(this.network, this.transaction.tx)
                 .then(transaction => {
                   console.log(constants.APP.name + ': TRANSACTION_COMPLETE: SUCCESS')
                   console.log(transaction)
-                  this.transactionDetails = {
-                    complete: true,
-                    error: null,
+                  this.transaction = {
                     status: constants.TX_STATUS.complete,
                     success: true
                   }
-                  this.transaction.results.push(transaction)
-                  this.transaction = {
-                    current: null,
-                    currentHash: null,
-                    currenctXdr: null
-                  }
+                  this.transaction.result = transaction
+                  this.transactionResultsUpdate(this.transaction)
+                  this.transactionReset()
+                  // = {
+                  //   result: null,
+                  //   // results: null // don't wipe this out
+                  //   tx: null,
+                  //   hash: null,
+                  //   xdr: null
+                  // }
                   setTimeout(() => {
                     resolve(transaction)
                     this.submitHandler(null, transaction)
@@ -189,7 +190,7 @@ export default {
           })
         }).catch(err => {
           console.log(err)
-          this.transactionDetails = {
+          this.transaction = {
             error: err.toString(),
             status: constants.TX_STATUS.error
           }
@@ -232,7 +233,7 @@ export default {
         status: constants.TX_STATUS.listening_for_transaction,
         success: false
       }
-      return getPaymentsForAccount(this.network, this.dto)
+      return getPaymentsForAccount(this.network, this.to)
         .then(response => {
           console.log(constants.APP.name + ': LISTENING_FOR_PAYMENTS')
           this.closeStream = response.payments.stream({
@@ -240,7 +241,7 @@ export default {
               if (payment.to !== response.accountId) {
                 return
               }
-              verifyPayment(this.network, response.now, response.ledgerHeight, this.dto, payment)
+              verifyPayment(this.network, response.now, response.ledgerHeight, this.from, this.to, this.memo, payment)
                 .then(result => {
                   if (result) {
                     console.log(constants.APP.name + ': TRANSACTION_COMPLETE')
@@ -267,13 +268,18 @@ export default {
           })
         })
     },
-    validateDto: function () {
-      var from = this.dto.payment.from
+    validate: function () {
+      var amount = this.options.amount
+      if (isNaN(amount) || parseFloat(amount) <= 0) {
+        this.error = '[amount] is invalid'
+        return false
+      }
+      var from = this.federation.accountFrom.account.account_id
       if (!window.StellarSdk.StrKey.isValidEd25519PublicKey(from)) {
         this.error = '[from] is not a valid destination public key'
         return false
       }
-      var to = this.dto.payment.to
+      var to = this.federation.accountTo.account.account_id
       if (!window.StellarSdk.StrKey.isValidEd25519PublicKey(to)) {
         this.error = '[to] is not a valid destination public key'
         return false
@@ -284,8 +290,10 @@ export default {
       'paymentOptionsClear',
       'paymentOptionsSet',
       'paymentOptionsError',
-      'transactionDetailsSet',
-      'transactionSet',
+      'transactionReset',
+      'transactionSave',
+      'transactionErrorSave',
+      'transactionResultsUpdate',
       'transactionStatusUpdate'])
   },
   watch: {
@@ -298,6 +306,9 @@ export default {
             this.loaded = true
           }, 400)
         })
+    },
+    stellarTicker () {
+      this.buildTransaction()
     }
   }
 }

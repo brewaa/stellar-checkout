@@ -5,12 +5,6 @@ export default {
     name: 'stellar-checkout.js',
     version: ''
   },
-  SETTINGS: {
-    culture: 'en',
-    currency: 'USD',
-    showNetworkSelector: false,
-    showTicker: false
-  },
   CURRENCIES: ['AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'IDR', 'ILS', 'INR', 'JPY', 'KRW', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PKR', 'PLN', 'RUB', 'SEK', 'SGD', 'THB', 'TRY', 'TWD', 'USD', 'ZAR'],
   CLASS: {
     copied: 'sco_copied',
@@ -52,9 +46,14 @@ export default {
     uri: null
   },
   OPTIONS: {
+    asset: function () {
+      return window.StellarSdk.Asset.native()
+    },
+    amount: null,
+    culture: null,
+    currency: null,
     from: null,
     id: null,
-    lang: null,
     memo: null,
     network: null,
     onSubmit: null,

@@ -1,12 +1,12 @@
 <template>
-  <div :class="['sco_component', 'sco_component--federation', { 'sco_loaded' : loaded, 'sco_component--collapsed':complete }]">
+  <div :class="['sco_component', 'sco_component--federation', { 'sco_loaded' : loaded, 'sco_component--collapsed': complete }]">
       <div class="sco_component_i">
         <div class="sco_component_title">{{title}}
           <div class="sco_component_title_aside">
             <span class="sco_icon">
               <i class="fas fa-question-circle"></i>
             </span>
-            <input type="checkbox" v-model="complete" :disabled="!complete" />
+            <input type="checkbox" v-model="isComplete" :disabled="!complete" />
           </div>
         </div>
         <div class="sco_component_results">
@@ -24,7 +24,7 @@
           </form>
           <form class="sco_form" v-on:submit.prevent v-show="!showLedger">
             <section class="sco_field">
-              <label for="sco_federation_input" class="sco_field_label">Stellar address
+              <label for="sco_federation_input" class="sco_field_label" v-if="labelText">{{labelText}}
                 <!-- <i class="fa fa-question-circle" /> -->
               </label>
               <div class="sco_field_input sco_field_input--input">
@@ -36,7 +36,7 @@
                   v-model="input" />
                 <span class="sco_spinner"></span>
               </div>
-              <div class="sco_field_note">Enter a stellar address OR public key into this field</div>
+              <div class="sco_field_note" v-if="noteText">{{noteText}}</div>
             </section>
             <div class="sco_component--button_row">
               <input class="sco_button"
@@ -46,11 +46,11 @@
                 :value="buttonText" />
             </div>
           </form>
-          <div class="sco_component_error" v-if="error"><p v-html="error"></p></div>
         </div>
         <span class="sco_spinner">
           <i class="fas fa-spinner fa-spin"></i>
         </span>
+        <div class="sco_component_error" v-if="error" v-html="error"></div>
       </div>
     </div>
 </template>
@@ -61,16 +61,34 @@ import { getFederatedAddress, isFederatedAddress } from 'utils/stellarsdk.helper
 const FEDERATION_EVENT = 'federation'
 export default {
   props: {
-    title: {
-      type: String,
-      default: '1. Verify your address'
+    account: {
+      type: Object
     },
-    placeholderText: {
+    errorMsg: {
+      type: String
+    },
+    query: {
+      type: String
+    },
+    labelText: {
       type: String
     },
     ledgerConnected: {
       type: Boolean,
       default: false
+    },
+    network: {
+      type: String
+    },
+    noteText: {
+      type: String
+    },
+    placeholderText: {
+      type: String
+    },
+    title: {
+      type: String,
+      default: '1. Verify your address'
     },
     useLedger: {
       type: Boolean,
@@ -83,7 +101,7 @@ export default {
   computed: {
     buttonText: function () {
       var result = 'Enter stellar address'
-      if (this.input.trim().length > 0) {
+      if (typeof this.input === 'string' && this.input.trim().length > 0) {
         result = 'Verify stellar address'
       }
       if (this.complete) {
@@ -91,11 +109,26 @@ export default {
       }
       return result
     },
+    isComplete: {
+      get () {
+        return this.complete
+      },
+      set (value) {
+        this.complete = value
+        this.$emit(FEDERATION_EVENT, merge({}, this.$data))
+      }
+    },
     showLedger: function () {
       return this.useLedger && this.ledgerConnected
     }
   },
   created () {
+    if (typeof this.input === 'string' && this.input.length > 0) {
+      this.doFederation().then(() => {
+        this.loaded = true
+      })
+      return
+    }
     setTimeout(() => {
       this.loaded = true
     }, 1200)
@@ -104,18 +137,24 @@ export default {
     return {
       complete: false,
       error: null,
+      ledgerBip32Path: '44\'/148\'/0\'',
       ledgerVerificationInProgress: false,
       ledgerVerified: false,
       loaded: false,
-      input: '',
+      input: this.query,
       publicKey: null,
       stellarAddress: null
     }
   },
   methods: {
     doFederation: async function () {
-      var input = this.input.trim()
+      this.isComplete = false
+      this.error = null
+      this.loaded = false
+      var input = this.input ? this.input.trim() : ''
       if (input.length === 0) {
+        this.loaded = true
+        this.$emit(FEDERATION_EVENT, merge({}, this.$data))
         return
       }
       if (window.StellarSdk.StrKey.isValidEd25519PublicKey(input)) {
@@ -131,37 +170,52 @@ export default {
         }
         try {
           var fedSvr = await window.StellarSdk.FederationServer.createForDomain(addr.homeDomain)
-          var fedRecord = fedSvr.resolveAddress(addr.handle)
+          var fedRecord = await fedSvr.resolveAddress(addr.handle)
           this.complete = true
           this.publicKey = fedRecord.account_id
           this.stellarAddress = fedRecord.stellar_address
+          this.$emit(FEDERATION_EVENT, merge({}, this.$data))
         } catch (err) {
-          console.log(err)
-          this.error = 'Error: network error'
+          this.error = 'Error: could not resolve stellar address'
+          this.loaded = true
+          this.$emit(FEDERATION_EVENT, merge({}, err))
         }
-        this.$emit(FEDERATION_EVENT, this.$data)
         return
       }
-      var err = 'Error: could not resolve stellar address'
-      this.complete = true
+      var err = 'Error: invalid address'
       this.error = err
-      this.$emit(FEDERATION_EVENT, this.$data)
+      this.loaded = true
+      this.$emit(FEDERATION_EVENT, merge({}, this.$data))
     },
     ledgerVerify: function () {
       this.ledgerVerificationInProgress = true
-      getPublicKey(this.federation.ledgerBip32Path, true, false)
+      getPublicKey(this.ledgerBip32Path, true, false)
         .then(publicKey => {
           this.complete = true
           this.ledgerVerified = true
           this.publicKey = publicKey
           this.ledgerVerificationInProgress = false
-          this.$emit(FEDERATION_EVENT, this.$data)
+          this.$emit(FEDERATION_EVENT, merge({}, this.$data))
         })
         .catch(e => {
           console.log(e)
           this.error = e.message
           this.ledgerVerificationInProgress = false
         })
+    }
+  },
+  watch: {
+    account (newVal) {
+      this.loaded = true
+      this.complete = true
+    },
+    errorMsg (newVal) {
+      this.isComplete = false
+      this.loaded = true
+      this.error = newVal
+    },
+    network () {
+      this.doFederation()
     }
   }
 }

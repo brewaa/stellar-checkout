@@ -1,7 +1,7 @@
 <template>
   <div class="sco stellar_checkout">
-    <NetworkSelector v-show="settings.showNetworkSelector" />
-    <StellarTicker v-show="settings.showTicker" />
+    <NetworkSelector v-show="options.showNetworkSelector" />
+    <StellarTicker v-show="options.showTicker" />
     <TransactionDetails />
     <Federation :ledger-connected="ledgerConnected" />
     <AccountConfirmation :ledger-connected="ledgerConnected" />
@@ -36,17 +36,17 @@ export default {
   computed: {
     ...mapState([
       'dto',
-      'settings'
+      'options'
     ])
   },
   created () {
-    if (this.dto.payment.to) {
-      this.accountToSet(this.dto.payment.to)
-        .catch(err => {
-          console.log(err)
-          this.error = `Error: account cannot be found on the ${this.networkName}</span> network`
-        })
-    }
+    // if (this.dto.payment.to) {
+    //   this.accountToSet(this.dto.payment.to)
+    //     .catch(err => {
+    //       console.log(err)
+    //       this.error = `Error: [to] param. Account cannot be found on the ${this.networkName}</span> network`
+    //     })
+    // }
   },
   data () {
     return {

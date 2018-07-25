@@ -7,8 +7,8 @@
         </div>
       </div>
       <div class="sco_component_results" v-if="!error">
-        <AccountDetails :account="accountFrom.account" v-if="accountFrom.account" />
-        <form class="sco_form" v-show="accountFrom">
+        <AccountDetails :account="federation.accountFrom.account" v-if="federation.accountFrom.account" />
+        <form class="sco_form" v-show="federation.accountFrom.account">
           <div class="sco_component--button_row">
             <button class="sco_button" @click="confirmClick" :disabled="awaitingConfirmation || accountConfirmation.complete">{{buttonText}}</button>
           </div>
@@ -63,7 +63,7 @@ export default {
     },
     error: {
       get () {
-        return this.federationError || this.$store.state.accountConfirmation.error
+        return this.$store.state.accountConfirmation.error
       },
       set (value) {
         this.accountConfirmationError(value)
@@ -131,34 +131,32 @@ export default {
   },
   watch: {
     federationComplete (newVal) {
-      // if (!newVal) {
-      //   return
-      // }
-      this.accountConfirmationClear()
-      this.paymentOptionsClear()
-      // this.error = null
+      // this.accountConfirmationClear()
+      // this.paymentOptionsClear()
       this.loaded = false
-      if (this.federation.error) {
-        this.error = this.federation.error
+      if (!newVal) {
         return
       }
-      if (this.federation.publicKey) {
-        setTimeout(e => {
-          this.transactionStatusUpdate(constants.TX_STATUS.account_confirmation_loading_account)
-          this.accountFromSet(this.federation.publicKey)
-            .then(e => {
-              this.isLoaded()
-            })
-            .catch(err => {
-              var msg = 'Error'
-              if (err.response && err.response.status === 404) {
-                msg += `: account cannot be found on the ${this.networkName.toUpperCase()} network`
-              }
-              this.error = msg
-              this.isLoaded()
-            })
-        }, 400)
-      }
+      setTimeout(() => {
+        this.isLoaded()
+      }, 400)
+      // if (this.federation.publicKey) {
+      //   setTimeout(e => {
+      //     this.transactionStatusUpdate(constants.TX_STATUS.account_confirmation_loading_account)
+      //     this.accountFromSet(this.federation.publicKey)
+      //       .then(e => {
+      //         this.isLoaded()
+      //       })
+      //       .catch(err => {
+      //         var msg = 'Error'
+      //         if (err.response && err.response.status === 404) {
+      //           msg += `: account cannot be found on the ${this.networkName.toUpperCase()} network`
+      //         }
+      //         this.error = msg
+      //         this.isLoaded()
+      //       })
+      //   }, 400)
+      // }
     }
   }
 }

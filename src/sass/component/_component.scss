@@ -179,11 +179,6 @@ $green: #3ba776;
         }
     }
 
-    .separator {
-        color: #eee;
-        padding: 0 .4rem;
-    }
-
     &_qrcode {
         padding: 0 $padding $padding;
         text-align: center;
@@ -287,17 +282,13 @@ $green: #3ba776;
     /** COMPONENT - TICKER **/
 
     &--ticker {
-        // .sco_component_results {
-        //     padding: $padding;
-        //     text-transform: uppercase;
-        //     text-align: left;
-        // }
-        .moniker {
+        .currency,
+        .price {
           display: inline-block;
-          padding-left:.2rem;
+          padding: 0 .2rem;
         }
-        &_meta {
-
+        .separator {
+            color: #eee;
         }
     }
 

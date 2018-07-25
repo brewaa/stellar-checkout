@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import merge from 'lodash.merge'
+import clone from 'lodash.clone'
 
 import constants from 'app/constants'
 import {cultures} from 'l10n'
@@ -40,12 +41,24 @@ const NETWORK_SET = 'NETWORK_SET'
 const TICKER_STELLAR_SET = 'TICKER_STELLAR_SET'
 const TICKER_STELLAR_ERROR_SET = 'TICKER_STELLAR_ERROR_SET'
 
-const TRANSACTION_SET = 'TRANSACTION_SET'
-
-const TRANSACTION_DETAILS_SET = 'TRANSACTION_DETAILS_SET'
-const TRANSACTION_DETAILS_ERROR_SET = 'TRANSACTION_DETAILS_ERROR_SET'
-
+const TRANSACTION_RESET = 'TRANSACTION_RESET'
+const TRANSACTION_SAVE = 'TRANSACTION_SAVE'
+const TRANSACTION_ERROR_SAVE = 'TRANSACTION_ERROR_SAVE'
+const TRANSACTION_RESULTS_UPDATE = 'TRANSACTION_RESULTS_UPDATE'
 const TRANSACTION_STATUS_UPDATE = 'TRANSACTION_STATUS_UPDATE'
+
+var federationResponse = {
+  account: null,
+  complete: false,
+  error: null,
+  ledgerAppVersion: null,
+  ledgerBip32Path: '44\'/148\'/0\'',
+  ledgerConfirmed: false,
+  ledgerError: null,
+  ledgerVerified: false,
+  publicKey: null,
+  stellarAddress: null
+}
 
 // STATE
 const state = {
@@ -53,43 +66,21 @@ const state = {
     complete: false,
     error: null
   },
-  accountFrom: {
-    account: null,
-    complete: false,
-    error: null,
-    ledgerAppVersion: null,
-    ledgerBip32Path: '44\'/148\'/0\'',
-    ledgerConfirmed: false,
-    ledgerError: null,
-    ledgerVerified: false,
-    publicKey: null,
-    stellarAddress: null
-  },
-  accountTo: {
-    account: null,
-    complete: false,
-    error: null,
-    ledgerAppVersion: null,
-    ledgerBip32Path: '44\'/148\'/0\'',
-    ledgerConfirmed: false,
-    ledgerError: null,
-    ledgerVerified: false,
-    publicKey: null,
-    stellarAddress: null
-  },
   cultures: cultures,
   currencies: constants.CURRENCIES,
   dto: constants.DTO,
   federation: {
+    accountFrom: clone(federationResponse),
+    accountTo: clone(federationResponse),
     complete: false,
-    error: null,
-    ledgerAppVersion: null,
-    ledgerBip32Path: '44\'/148\'/0\'',
-    ledgerConfirmed: false,
-    ledgerError: null,
-    ledgerVerified: false,
-    publicKey: null,
-    stellarAddress: null
+    error: null
+    // ledgerAppVersion: null,
+    // ledgerBip32Path: '44\'/148\'/0\'',
+    // ledgerConfirmed: false,
+    // ledgerError: null,
+    // ledgerVerified: false,
+    // publicKey: null,
+    // stellarAddress: null
   },
   options: constants.OPTIONS,
   network: constants.NETWORK,
@@ -98,26 +89,20 @@ const state = {
     error: null,
     method: null
   },
-  settings: constants.SETTINGS,
+  // settings: constants.SETTINGS,
   ticker: {
     stellar: constants.TICKERS.stellar
   },
   transaction: {
-    current: null,
-    currentHash: null,
-    currentXdr: null,
-    results: []
-  },
-  transactionDetails: {
-    complete: false,
     error: null,
+    hash: null,
     result: null,
-    status: constants.TX_STATUS.federation,
     success: false,
-    transaction: null,
-    transactionHash: null,
-    transactionXdr: null
-  }
+    status: constants.TX_STATUS.federation,
+    tx: null,
+    xdr: null
+  },
+  transactionResults: []
 }
 
 // MUTATIONS
@@ -128,29 +113,29 @@ const mutations = {
       complete: false,
       error: null
     })
-    // state.transactionDetails.status = constants.TX_STATUS.account_confirmation_loading_account
+    // state.transaction.status = constants.TX_STATUS.account_confirmation_loading_account
   },
   [ACCOUNT_CONFIRMATION_SET] (state, obj) {
     merge(state.accountConfirmation, obj)
     if (obj.complete) {
-      state.transactionDetails.status = constants.TX_STATUS.payment_options
+      state.transaction.status = constants.TX_STATUS.payment_options
     } else {
       merge(state.accountConfirmation, {
         // account: null,
         complete: false,
         error: null
       })
-      state.transactionDetails.status = constants.TX_STATUS.account_confirmation
+      state.transaction.status = constants.TX_STATUS.account_confirmation
     }
   },
   [ACCOUNT_CONFIRMATION_ERROR] (state, obj) {
     state.accountConfirmation.error = obj
   },
   [ACCOUNT_FROM_SET] (state, obj) {
-    merge(state.accountFrom, obj)
+    state.federation.accountFrom.account = obj
   },
   [ACCOUNT_TO_SET] (state, obj) {
-    merge(state.accountTo, obj)
+    state.federation.accountTo.account = obj
   },
   [CULTURE_SET] (state, obj) {
     state.settings.culture = obj
@@ -167,24 +152,40 @@ const mutations = {
   [FEDERATION_CLEAR] (state, obj) {
     merge(state.federation, {
       complete: false,
-      error: null,
-      publicKey: null,
-      stellarAddress: null
+      error: null
+      // publicKey: null,
+      // stellarAddress: null
     })
-    state.transactionDetails.status = constants.TX_STATUS.federation
+    state.transaction.status = constants.TX_STATUS.federation
   },
   [FEDERATION_SET] (state, obj) {
     merge(state.federation, obj)
-    state.federation.complete = !obj.error && state.federation.complete
-    state.dto.payment.from = state.federation.publicKey
-    if (!obj.complete) {
+    var fed = state.federation
+    var accFrom = fed.accountFrom
+    var accTo = fed.accountTo
+    var isComplete = !obj.error &&
+      accFrom.account &&
+      accTo.account &&
+      obj.complete
+    state.federation.complete = isComplete
+    if (!isComplete) {
       merge(state.federation, {
         complete: false,
-        error: null,
-        publicKey: null,
-        stellarAddress: null
+        error: null
+        // publicKey: null,
+        // stellarAddress: null
       })
-      state.transactionDetails.status = constants.TX_STATUS.federation
+      merge(state.accountConfirmation, {
+        // account: null,
+        complete: false,
+        error: null
+      })
+      merge(state.paymentOptions, {
+        complete: false,
+        error: null,
+        method: null
+      })
+      state.transaction.status = constants.TX_STATUS.federation
     }
   },
   [FEDERATION_ERROR_SET] (state, obj) {
@@ -202,7 +203,7 @@ const mutations = {
       error: null,
       method: null
     })
-    // state.transactionDetails.status = constants.TX_STATUS.payment_options
+    // state.transaction.status = constants.TX_STATUS.payment_options
   },
   [PAYMENT_OPTIONS_SET] (state, obj) {
     merge(state.paymentOptions, obj)
@@ -210,13 +211,13 @@ const mutations = {
       switch (obj.method) {
         case 'byo':
         case 'tx_signer':
-          state.transactionDetails.status = constants.TX_STATUS.listening_for_transaction
+          state.transaction.status = constants.TX_STATUS.listening_for_transaction
           break
         case 'ledger':
-          state.transactionDetails.status = constants.TX_STATUS.ledger_confirmation_required
+          state.transaction.status = constants.TX_STATUS.ledger_confirmation_required
           break
         default:
-          state.transactionDetails.status = constants.TX_STATUS.payment_options
+          state.transaction.status = constants.TX_STATUS.payment_options
           break
       }
     } else {
@@ -225,7 +226,7 @@ const mutations = {
         error: null,
         method: null
       })
-      state.transactionDetails.status = constants.TX_STATUS.payment_options
+      state.transaction.status = constants.TX_STATUS.payment_options
     }
   },
   [PAYMENT_OPTIONS_ERROR] (state, obj) {
@@ -242,17 +243,21 @@ const mutations = {
   [TICKER_STELLAR_ERROR_SET] (state, obj) {
     state.ticker.stellar.error = obj
   },
-  [TRANSACTION_SET] (state, obj) {
+  [TRANSACTION_RESET] (state, obj) {
+    state.transaction.error = null
+    state.transaction.success = false
+  },
+  [TRANSACTION_SAVE] (state, obj) {
     merge(state.transaction, obj)
   },
-  [TRANSACTION_DETAILS_SET] (state, obj) {
-    merge(state.transactionDetails, obj)
+  [TRANSACTION_ERROR_SAVE] (state, obj) {
+    state.transaction.error = obj
   },
-  [TRANSACTION_DETAILS_ERROR_SET] (state, obj) {
-    state.transactionDetails.error = obj
+  [TRANSACTION_RESULTS_UPDATE] (state, obj) {
+    state.transactionResults.push(obj)
   },
   [TRANSACTION_STATUS_UPDATE] (state, obj) {
-    state.transactionDetails.status = obj
+    state.transaction.status = obj
   }
 }
 
@@ -274,17 +279,17 @@ const actions = ({
   //       return account
   //     })
   // },
-  accountFromSet ({ commit }, publicKey) {
-    return loadAccount(state.network, publicKey)
+  accountFromSet ({ commit }, federationResponse) {
+    return loadAccount(state.network, federationResponse.publicKey)
       .then(account => {
-        commit(ACCOUNT_FROM_SET, { account: account })
+        commit(ACCOUNT_FROM_SET, account)
         return account
       })
   },
-  accountToSet ({ commit }, publicKey) {
-    return loadAccount(state.network, publicKey)
+  accountToSet ({ commit }, federationResponse) {
+    return loadAccount(state.network, federationResponse.publicKey)
       .then(account => {
-        commit(ACCOUNT_TO_SET, { account: account })
+        commit(ACCOUNT_TO_SET, account)
         return account
       })
   },
@@ -344,18 +349,21 @@ const actions = ({
   stellarTickerErrorSet ({ commit }, obj) {
     commit(TICKER_STELLAR_ERROR_SET, obj)
   },
-  transactionSet ({ commit }, obj) {
-    if (obj.current) {
-      obj.currentHash = obj.current.hash().toString('hex')
-      obj.currentXdr = obj.current.toEnvelope().toXDR('base64')
+  transactionReset ({ commit }, obj) {
+    commit(TRANSACTION_RESET, obj)
+  },
+  transactionSave ({ commit }, obj) {
+    if (obj.tx) {
+      obj.hash = obj.tx.hash().toString('hex')
+      obj.xdr = obj.tx.toEnvelope().toXDR('base64')
     }
-    commit(TRANSACTION_SET, obj)
+    commit(TRANSACTION_SAVE, obj)
   },
-  transactionDetailsSet ({ commit }, obj) {
-    commit(TRANSACTION_DETAILS_SET, obj)
+  transactionErrorSave ({ commit }, obj) {
+    commit(TRANSACTION_ERROR_SAVE, obj)
   },
-  transactionDetailsErrorSet ({ commit }, obj) {
-    commit(TRANSACTION_DETAILS_ERROR_SET, obj)
+  transactionResultsUpdate ({ commit }, obj) {
+    commit(TRANSACTION_RESULTS_UPDATE, obj)
   },
   transactionStatusUpdate ({ commit }, obj) {
     commit(TRANSACTION_STATUS_UPDATE, obj)
@@ -365,10 +373,10 @@ const actions = ({
 // GETTERS
 const getters = ({
   culture: (state) => {
-    return state.settings.culture
+    return state.options.culture
   },
   currency: (state) => {
-    return state.settings.currency
+    return state.options.currency
   },
   network: (state) => {
     return state.network

@@ -8,10 +8,9 @@
         </span>
         <div class="sco_component_title_aside" v-show="loaded">
           <span class="currency_name sco_hidden">Stellar</span>
-          <span class="moniker">XLM</span>
+          <span class="currency">XLM</span>/<span class="currency">{{ currency }}</span>
           <span class="separator">|</span>
           <span class="price">${{ price | decimal7 }}</span>
-          <span class="moniker">{{ currency }}</span>
           <input type="checkbox" v-model="complete" />
         </div>
       </div>
@@ -20,10 +19,10 @@
           <div>{{ stellarTicker.data.id }}</div>
           <div class="sco_component_results_row_aside">
             <span class="currency_name sco_hidden">Stellar</span>
-            <span class="moniker">XLM</span>
+            <span class="currency">XLM</span>
             <span class="separator">|</span>
             <span class="price">{{ stellarTicker.data.price_btc | decimal8 }}</span>
-            <span class="moniker">BTC</span>
+            <span class="currency">BTC</span>
           </div>
         </div>
         <div class="sco_component_results_row sco_component_results_row--meta">
@@ -32,8 +31,8 @@
             {{stellarTicker.updated | date }}
           </div>
         </div>
-        <div class="sco_component_error" v-if="error"><p v-html="error"></p></div>
       </div>
+      <div class="sco_component_error" v-if="error" v-html="error"></div>
     </div>
   </div>
 </template>
