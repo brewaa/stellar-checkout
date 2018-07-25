@@ -1,7 +1,7 @@
 <template>
   <div :class="['sco_component', 'sco_component--payment_instructions', { 'sco_loaded' : loaded, 'sco_component--collapsed': complete }]" v-show="paymentOptionsComplete">
     <div class="sco_component_i">
-      <textarea ref="xdrEnvelope" class="sco_offscreen" v-model="transaction.currentXdr" readonly></textarea>
+      <textarea ref="xdrEnvelope" class="sco_offscreen" v-model="transaction.xdr" readonly></textarea>
       <div class="sco_component_title">4. Instructions</div>
       <div class="sco_component_results" v-show="loaded">
         <div class="sco_component_text" v-show="paymentOptions.method === 'ledger'">
@@ -17,38 +17,38 @@
           <div class="sco_component_text">
             <p>To complete this transaction, send a payment with the following details:</p>
           </div>
-          <div class="sco_component_results_heading">
+          <div class="sco_component_results_heading" v-if="federation.accountTo.account">
             <div>To</div>
-            <div>{{dto.payment.to}}</div>
+            <div>{{federation.accountTo.account.account_id}}</div>
           </div>
           <div class="sco_component_results_heading">
             <div>Amount</div>
-            <div>{{dto.payment.amount}}</div>
+            <div>{{options.amount}}</div>
           </div>
           <div class="sco_component_results_heading">
             <div>Asset</div>
-            <div>{{dto.payment.asset.code}}</div>
+            <div>{{options.asset().code}}</div>
           </div>
           <div class="sco_component_results_heading">
             <div>Memo</div>
-            <div>{{dto.payment.memo}}</div>
+            <div>{{options.memo}}</div>
           </div>
           <div class="sco_component_results_heading">
             <div>Memo type</div>
-            <div>{{dto.payment.memoType}}</div>
+            <div>{{options.memoHash()}}</div>
           </div>
-          <div class="sco_component_results_heading">
+          <div class="sco_component_results_heading" v-if="federation.accountFrom.account">
             <div>From</div>
-            <div>{{dto.payment.from}}</div>
+            <div>{{federation.accountFrom.account.account_id}}</div>
           </div>
           <div class="sco_component_results_heading">
             <div>Transaction XDR</div>
           </div>
           <div class="sco_component_qrcode">
             <div class="sco_component_qrcode_i">
-              <qrcode :value="transaction.currentXdr"
+              <qrcode :value="transaction.xdr"
                 :options="{ size: 256 }"
-                v-show="transaction.currentXdr"
+                v-show="transaction.xdr"
                  @click.prevent="copyXdrToClipboard">
               </qrcode>
               <button class="sco_button" @click.prevent="copyXdrToClipboard">Copy Transaction XDR</button>
@@ -82,8 +82,9 @@ export default {
       }
     },
     ...mapState({
-      dto: 'dto',
+      federation: 'federation',
       network: 'network',
+      options: 'options',
       paymentOptionsComplete: state => state.paymentOptions.complete,
       transaction: 'transaction'
     })

@@ -1,7 +1,7 @@
 <template>
   <div class="sco stellar_checkout">
-    <NetworkSelector v-show="options.showNetworkSelector" />
-    <StellarTicker v-show="options.showTicker" />
+    <NetworkSelector v-if="options.showNetworkSelector" />
+    <StellarTicker v-if="options.showTicker" />
     <TransactionDetails />
     <Federation :ledger-connected="ledgerConnected" />
     <AccountConfirmation :ledger-connected="ledgerConnected" />

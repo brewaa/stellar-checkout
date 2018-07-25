@@ -16,10 +16,21 @@
         </span> -->
         Transaction Details
         <div class="sco_component_title_aside">
+          <span class="price">{{stellarTicker.meta.invoiceTotalFormatted}}</span>
+          <span class="currency">{{options.currency}}</span>
+          <span class="separator">/</span>
+          <span class="price">{{stellarTicker.meta.invoicePriceInLumensFormatted}}</span>
+          <span class="currency">{{options.asset().code}}</span>
           <input type="checkbox" v-model="complete" />
         </div>
       </div>
       <div class="sco_component_results">
+        <div class="sco_component_results_row">
+          <div>Merchant Ref</div>
+          <div class="sco_component_results_row_aside">
+            #{{ options.id }}
+          </div>
+        </div>
         <div class="sco_component_results_row" v-if="transaction.tx">
           <div>Hash</div>
           <div class="sco_component_results_row_aside">
@@ -30,12 +41,6 @@
           <div>TX XDR</div>
           <div class="sco_component_results_row_aside">
             <textarea ref="xdrEnvelope" v-model="transaction.xdr" readonly></textarea>
-          </div>
-        </div>
-        <div class="sco_component_results_row">
-          <div>ID</div>
-          <div class="sco_component_results_row_aside">
-            #{{ options.id }}
           </div>
         </div>
         <div class="sco_component_results_row">
@@ -53,13 +58,15 @@
         <div class="sco_component_results_row">
           <div>SUBTOTAL</div>
           <div class="sco_component_results_row_aside">
-            {{stellarTicker.meta.invoiceTotalFormatted}} {{options.currency}}
+            {{stellarTicker.meta.invoiceTotalFormatted}}
+            <span class="currency">{{options.currency}}</span>
           </div>
         </div>
         <div class="sco_component_results_row">
           <div>TOTAL</div>
           <div class="sco_component_results_row_aside">
-            {{stellarTicker.meta.invoicePriceInLumensFormatted}} {{options.asset().code}}
+            {{stellarTicker.meta.invoicePriceInLumensFormatted}}
+            <span class="currency">{{options.asset().code}}</span>
           </div>
         </div>
       </div>

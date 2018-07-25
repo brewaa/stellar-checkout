@@ -36,12 +36,14 @@ export default {
   computed: {
     bip32Path: {
       get () {
-        return this.$store.state.federation.ledgerBip32Path
+        return this.$store.state.federation.accountFrom.ledgerBip32Path
       },
       set (value) {
         return this.ledgerUpdate({
           complete: false,
-          ledgerBip32Path: value
+          accountFrom: {
+            ledgerBip32Path: value
+          }
         })
       }
     },

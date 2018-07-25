@@ -16,6 +16,35 @@ import VueQrcode from '@xkeshi/vue-qrcode'
 export default {
   name: constants.APP.name,
   ui: {
+    /**
+     * Represents a book.
+     * @constructor
+     * @param {string} selector - the selector of the target element where StellarCheckout will be appended to the DOM
+     * @param {string} opts - OPTIONS: {
+        asset: function () {
+          return window.StellarSdk.Asset.native()
+        },
+        amount: null,
+        culture: null,
+        currency: null,
+        from: null,
+        id: null,
+        memo: null,
+        memoHash: function () {
+          return window.StellarSdk.MemoHash
+        },
+        network: null,
+        onSubmit: null,
+        redirectUrl: null,
+        selector: null,
+        showNetworkSelector: false,
+        showTicker: false,
+        stylesheet: null,
+        timeout: null,
+        to: null,
+        total: null
+      }
+     */
     render: function (selector, opts) {
       document.addEventListener('DOMContentLoaded', () => {
         var options = merge(constants.OPTIONS, opts)

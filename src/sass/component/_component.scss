@@ -82,6 +82,16 @@ $green: #3ba776;
                 margin-left: .8rem
             }
         }
+
+        .separator {
+            color: #eee;
+        }
+
+        .currency,
+        .price {
+          display: inline-block;
+          padding: 0 .2rem;
+        }
     }
 
     &_heading {
@@ -282,14 +292,7 @@ $green: #3ba776;
     /** COMPONENT - TICKER **/
 
     &--ticker {
-        .currency,
-        .price {
-          display: inline-block;
-          padding: 0 .2rem;
-        }
-        .separator {
-            color: #eee;
-        }
+        
     }
 
     /** COMPONENT - FOOTER **/

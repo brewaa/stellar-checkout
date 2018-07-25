@@ -55,6 +55,9 @@ export default {
     from: null,
     id: null,
     memo: null,
+    memoHash: function () {
+      return window.StellarSdk.MemoHash
+    },
     network: null,
     onSubmit: null,
     redirectUrl: null,
