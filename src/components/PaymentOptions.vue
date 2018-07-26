@@ -106,36 +106,6 @@ export default {
             this.options.amount,
             this.memo)
         }
-
-        // this.transactionDetails = {
-        //   transaction: trx,
-        //   transactionHash: trx.hash().toString('hex'),
-        //   transactionXdr: trx.toEnvelope().toXDR('base64')
-        // }
-        // this.transactionStatus = {
-        //   status: constants.TX_STATUS.created
-        // }
-        // return buildTrx(
-        //   this.network,
-        //   this.dto.payment.to,
-        //   this.dto.payment.from,
-        //   this.dto.payment.asset,
-        //   this.dto.payment.amount,
-        //   this.dto.payment.memo)
-        //   .then(trx => {
-        //     this.transactionDetails = {
-        //       transaction: trx,
-        //       transactionHash: trx.hash().toString('hex'),
-        //       transactionXdr: trx.toEnvelope().toXDR('base64')
-        //     }
-        //     this.transactionStatus = {
-        //       status: constants.TX_STATUS.created
-        //     }
-        //     return trx
-        //   }).catch(e => {
-        //     console.log(e)
-        //     this.error = e
-        //   })
       }
     },
     signWithLedger: function () {
@@ -167,19 +137,12 @@ export default {
                   console.log(constants.APP.name + ': TRANSACTION_COMPLETE: SUCCESS')
                   console.log(transaction)
                   this.transaction = {
+                    result: transaction,
                     status: constants.TX_STATUS.complete,
                     success: true
                   }
-                  this.transaction.result = transaction
                   this.transactionResultsUpdate(this.transaction)
                   this.transactionReset()
-                  // = {
-                  //   result: null,
-                  //   // results: null // don't wipe this out
-                  //   tx: null,
-                  //   hash: null,
-                  //   xdr: null
-                  // }
                   setTimeout(() => {
                     resolve(transaction)
                     this.submitHandler(null, transaction)
@@ -229,7 +192,7 @@ export default {
         method: method
       }
       // Update transaction status
-      this.transactionDetails = {
+      this.transaction = {
         status: constants.TX_STATUS.listening_for_transaction,
         success: false
       }
@@ -242,19 +205,19 @@ export default {
                 return
               }
               verifyPayment(this.network, response.now, response.ledgerHeight, this.from, this.to, this.memo, payment)
-                .then(result => {
-                  if (result) {
+                .then(transaction => {
+                  if (transaction) {
                     console.log(constants.APP.name + ': TRANSACTION_COMPLETE')
-                    console.log(result)
-                    this.transactionDetails = {
-                      complete: true,
-                      error: null,
-                      result: result,
+                    console.log(transaction)
+                    this.transaction = {
+                      result: transaction,
                       status: constants.TX_STATUS.complete,
                       success: true
                     }
+                    this.transactionResultsUpdate(this.transaction)
+                    this.transactionReset()
                     setTimeout(() => {
-                      this.submitHandler(null, result)
+                      this.submitHandler(null, transaction)
                     }, 800)
                     this.closeStream()
                   } else {

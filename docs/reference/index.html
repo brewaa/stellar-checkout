@@ -90,12 +90,13 @@
     <article>
       <h1>StellarCheckout</h1><p>An open source javascript plug-in for the stellar.org blockchain.</p>
 <h2>Installation</h2><pre class="prettyprint source"><code>npm i --save-dev stellar-checkout</code></pre><h2>CDN</h2><pre class="prettyprint source"><code>&lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/stellar-checkout/stellar-checkout.min.js&quot;>&lt;/script></code></pre><h2>Features</h2><ul>
-<li>Drop-in responsive, Skinnable UI</li>
+<li>Send &amp; receive payments in Lumens (XLM)</li>
+<li>Responsive, Skinnable UI</li>
 <li>Currency conversion support for 32 fiat currencies</li>
 <li>Federation client</li>
 <li>Ledger Wallet integration</li>
 <li>Localization (WIP)</li>
-<li>Simple integration options for your web site</li>
+<li>Simple integration options</li>
 <li>Demos &amp; Documentation (WIP)</li>
 <li>Open source</li>
 <li>Available via NPM and CDN</li>
@@ -155,7 +156,7 @@
     required: true
   },
   total: {
-    type: decimal,
+    type: Decimal,
     required: true
   }
 }</code></pre><h2>Reference</h2><p><a href="https://brewaa.github.io/stellar-checkout/reference/index.html">https://brewaa.github.io/stellar-checkout/reference/index.html</a></p>

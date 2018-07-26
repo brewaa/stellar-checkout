@@ -14,12 +14,13 @@ npm i --save-dev stellar-checkout
 ```
 
 ## Features
-- Drop-in responsive, Skinnable UI
+- Send & receive payments in Lumens (XLM)
+- Responsive, Skinnable UI
 - Currency conversion support for 32 fiat currencies
 - Federation client
 - Ledger Wallet integration
 - Localization (WIP)
-- Simple integration options for your web site
+- Simple integration options
 - Demos & Documentation (WIP)
 - Open source
 - Available via NPM and CDN
@@ -82,7 +83,7 @@ npm i --save-dev stellar-checkout
     required: true
   },
   total: {
-    type: decimal,
+    type: Decimal,
     required: true
   }
 }

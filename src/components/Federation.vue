@@ -39,14 +39,6 @@ export default {
     FederationInput
   },
   computed: {
-    // error: {
-    //   get () {
-    //     return this.$store.state.federation.error
-    //   },
-    //   set (value) {
-    //     this.federationErrorSet(value)
-    //   }
-    // },
     federation: {
       get () {
         return this.$store.state.federation
@@ -70,10 +62,6 @@ export default {
   methods: {
     handleFederationResponseFrom: function (e) {
       var x = merge(this.federationResponseFrom, e)
-      // if (x.error) {
-      //   this.error = x.error
-      //   return
-      // }
       if (!x.complete) {
         this.federation = {
           complete: false
@@ -93,10 +81,6 @@ export default {
     },
     handleFederationResponseTo: function (e) {
       var x = merge(this.federationResponseTo, e)
-      // if (x.error) {
-      //   this.error = x.error
-      //   return
-      // }
       if (!x.complete) {
         this.federation = {
           complete: false
