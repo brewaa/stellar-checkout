@@ -65,6 +65,14 @@ npm i --save-dev stellar-checkout
     type: String,
     required: false
   },
+  showNetworkSelector: {
+    type: Boolean,
+    required: false
+  },
+  showTicker: {
+    type: Boolean,
+    required: false
+  },
   stylesheet: {
     type: String,
     required: false
@@ -80,7 +88,7 @@ npm i --save-dev stellar-checkout
 }
 ```
 
-## Reference Documentation
+## Reference
 
 [https://brewaa.github.io/stellar-checkout/reference/index.html](https://brewaa.github.io/stellar-checkout/reference/index.html)
 
