@@ -26,7 +26,7 @@
       </form>
       <script src="stellar-checkout.min.js"></script>
       <script>
-      StellarCheckout.ui.render('#elem', {
+      StellarCheckout.render('#elem', {
         culture: 'en-AU',
         currency: 'AUD',
         // from: 'GDT34VGS4JJE7STTVN3FLYCXRDEMIPJCPDLRZS26LVC2GVRTE5UYCRCO',
@@ -34,8 +34,8 @@
         memo: 'SCO TEST',
         // network: 'public',
         // redirectUrl: '/some-other-page?refid=123',
-        // showNetworkSelector: true,
-        // showTicker: 1,
+        showNetworkSelector: true,
+        showTicker: 1,
         // stylesheet: 'static/test.css',
         to: 'GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI',
         total: '1',

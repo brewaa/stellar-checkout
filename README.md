@@ -1,19 +1,6 @@
-<div align="center">
-  <a href="https://www.stellar.org/">
-    <img alt="" src="https://raw.githubusercontent.com/brewaa/stellar-checkout/master/docs/i/stellar/stellar-rocket@2x.png?x=6" /> <br/>
-    <img alt="" src="https://raw.githubusercontent.com/brewaa/stellar-checkout/master/docs/i/stellar/STELLAR-logo.png?x=3" />
-  </a>
-  <br/>
-  <strong>a #StellarBuildChallenge entry (2018)</strong>
-  <br />
-  <br />
-</div>
-
 # StellarCheckout
 
 An open source javascript plug-in for the stellar.org blockchain.
-
-NEW FEATURES: Federation, Ledger Wallet Support
 
 ## Installation
 
@@ -29,8 +16,9 @@ npm i --save-dev stellar-checkout
 ## Features
 - Drop-in responsive, Skinnable UI
 - Currency conversion support for 32 fiat currencies
+- Federation client
+- Ledger Wallet integration
 - Localization (WIP)
-- Multiple payment methods including Ledger Wallet
 - Simple integration options for your web site
 - Demos & Documentation (WIP)
 - Open source
@@ -40,17 +28,7 @@ npm i --save-dev stellar-checkout
 
 ```javascript
 {
-  currency: {
-    type: String,
-    required: false,
-    default: 'USD',
-    options: ["AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "ZAR"]
-  },
-  id: {
-    type: String,
-    required: false
-  },
-  lang: {
+  culture: {
     type: String,
     required: false,
     default: 'en',
@@ -63,6 +41,16 @@ npm i --save-dev stellar-checkout
       'zh-CN'
     ]
   }, 
+  currency: {
+    type: String,
+    required: false,
+    default: 'USD',
+    options: ["AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "ZAR"]
+  },
+  id: {
+    type: String,
+    required: false
+  },
   memo: {
     type: String,
     required: false
@@ -96,8 +84,12 @@ npm i --save-dev stellar-checkout
 }
 ```
 
+## Reference Documentation
+
+[https://brewaa.github.io/stellar-checkout/reference/index.html](https://brewaa.github.io/stellar-checkout/reference/index.html)
+
 ## Demo
-https://brewaa.github.io/stellar-checkout/demo/index.html
+[https://brewaa.github.io/stellar-checkout/demo/index.html](https://brewaa.github.io/stellar-checkout/demo/index.html)
 
 ## Basic Example
 See [Basic Configuration Example](https://github.com/brewaa/stellar-checkout/wiki/Basic-Configuration-Example) in the wiki.

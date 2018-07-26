@@ -11,8 +11,8 @@
     "e2e": "node test/e2e/runner.js",
     "test": "npm run unit && npm run e2e",
     "lint": "eslint --ext .js,.vue src test/unit test/e2e/specs",
-    "jsdoc": "jsdoc dist/stellar-checkout.min.js --destination docs/StellarCheckout/",
-    "build": "node build/build.js"
+    "docs": "jsdoc ./src/ -d ./docs/reference/ -r ./README.md -c ./.jsdoc.json",
+    "build": "node build/build.js && npm run docs"
   },
   "dependencies": {},
   "devDependencies": {
@@ -63,6 +63,7 @@
     "jsdoc": "^3.5.5",
     "lodash.clone": "^4.5.0",
     "lodash.merge": "^4.6.1",
+    "minami": "^1.2.3",
     "moment": "^2.22.2",
     "nightwatch": "^1.0.6",
     "node-notifier": "^5.1.2",
