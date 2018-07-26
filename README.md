@@ -98,7 +98,7 @@ See [Basic Configuration Example](https://github.com/brewaa/stellar-checkout/wik
 <div id="elem"></div>
 <script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js"></script>
 <script>
-StellarCheckout.ui.render('#elem', {
+StellarCheckout.render('#elem', {
   currency: 'GBP',
   total: '10',
   to: 'GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI'
