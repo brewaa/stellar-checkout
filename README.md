@@ -51,10 +51,6 @@ npm i --save-dev stellar-checkout
     type: String,
     required: false
   },
-  memo: {
-    type: String,
-    required: false
-  },  
   network: {
     type: String,
     required: false
