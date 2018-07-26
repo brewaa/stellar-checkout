@@ -39,15 +39,6 @@ export default {
       'options'
     ])
   },
-  created () {
-    // if (this.dto.payment.to) {
-    //   this.accountToSet(this.dto.payment.to)
-    //     .catch(err => {
-    //       console.log(err)
-    //       this.error = `Error: [to] param. Account cannot be found on the ${this.networkName}</span> network`
-    //     })
-    // }
-  },
   data () {
     return {
       error: null,

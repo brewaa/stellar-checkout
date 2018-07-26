@@ -74,7 +74,6 @@ export default {
     },
     ...mapState({
       accountConfirmationComplete: state => state.accountConfirmation.complete,
-      // dto: 'dto',
       federation: 'federation',
       network: 'network',
       options: 'options',

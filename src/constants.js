@@ -1,44 +1,30 @@
 export default {
   APP: {
-    brand: 'StellarCheckout',
     domain: 'stellarcheckout.com',
-    name: 'stellar-checkout.js',
-    version: ''
+    name: 'StellarCheckout'
   },
   CURRENCIES: ['AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'IDR', 'ILS', 'INR', 'JPY', 'KRW', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PKR', 'PLN', 'RUB', 'SEK', 'SGD', 'THB', 'TRY', 'TWD', 'USD', 'ZAR'],
-  CLASS: {
-    copied: 'sco_copied',
-    error: 'sco_error',
-    hidden: 'sco_hidden',
-    loaded: 'sco_loaded',
-    valid: 'sco_valid'
-  },
-  DTO: {
-    invoice: {
-      currency: 'USD',
-      id: null,
-      total: null
-    },
-    payment: {
-      amount: null,
-      asset: {
-        code: null
-      },
-      fee: null,
-      from: null,
-      from_stellar_address: null,
-      memo: null,
-      memoType: null,
-      to: null
-    }
-  },
+  // DTO: {
+  //   invoice: {
+  //     currency: 'USD',
+  //     id: null,
+  //     total: null
+  //   },
+  //   payment: {
+  //     amount: null,
+  //     asset: {
+  //       code: null
+  //     },
+  //     fee: null,
+  //     from: null,
+  //     from_stellar_address: null,
+  //     memo: null,
+  //     memoType: null,
+  //     to: null
+  //   }
+  // },
   ENTITY: {
     tick: '&#10003;'
-  },
-  MESSAGE_TYPE: {
-    ERROR: 'ERROR',
-    INFO: 'INFO',
-    WARNING: 'WARNING'
   },
   NETWORK: {
     name: 'test',
@@ -68,12 +54,6 @@ export default {
     timeout: null,
     to: null,
     total: null
-  },
-  SELECTOR: {
-    clipBoardInput: '.sco_txt',
-    errorElem: '.sco_error_elem',
-    fieldErrorMessage: '.sco_error_message',
-    spinner: '.sco_spinner'
   },
   STELLAR_SDK_URL: 'https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/0.8.2/stellar-sdk.js',
   TX_STATUS: {

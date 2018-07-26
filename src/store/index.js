@@ -4,10 +4,10 @@ import merge from 'lodash.merge'
 import clone from 'lodash.clone'
 
 import constants from 'app/constants'
-import {cultures} from 'l10n'
+import { cultures } from 'l10n'
 
 import { loadAccount, setNetwork } from 'utils/stellarsdk.helper'
-import {syncStellarLumensTickerData} from 'services/stellar.lumens.ticker'
+import { syncStellarLumensTickerData } from 'services/stellar.lumens.ticker'
 
 Vue.use(Vuex)
 
@@ -21,9 +21,6 @@ const ACCOUNT_TO_SET = 'ACCOUNT_TO_SET'
 
 const CULTURE_SET = 'CULTURE_SET'
 const CURRENCY_SET = 'CURRENCY_SET'
-
-const DTO_SET = 'DTO_SET'
-const DTO_ERROR = 'DTO_ERROR'
 
 const FEDERATION_CLEAR = 'FEDERATION_CLEAR'
 const FEDERATION_SET = 'FEDERATION_SET'
@@ -68,19 +65,11 @@ const state = {
   },
   cultures: cultures,
   currencies: constants.CURRENCIES,
-  dto: constants.DTO,
   federation: {
     accountFrom: clone(federationResponse),
     accountTo: clone(federationResponse),
     complete: false,
     error: null
-    // ledgerAppVersion: null,
-    // ledgerBip32Path: '44\'/148\'/0\'',
-    // ledgerConfirmed: false,
-    // ledgerError: null,
-    // ledgerVerified: false,
-    // publicKey: null,
-    // stellarAddress: null
   },
   options: constants.OPTIONS,
   network: constants.NETWORK,
@@ -89,7 +78,6 @@ const state = {
     error: null,
     method: null
   },
-  // settings: constants.SETTINGS,
   ticker: {
     stellar: constants.TICKERS.stellar
   },
@@ -109,11 +97,9 @@ const state = {
 const mutations = {
   [ACCOUNT_CONFIRMATION_CLEAR] (state, obj) {
     merge(state.accountConfirmation, {
-      // account: null,
       complete: false,
       error: null
     })
-    // state.transaction.status = constants.TX_STATUS.account_confirmation_loading_account
   },
   [ACCOUNT_CONFIRMATION_SET] (state, obj) {
     merge(state.accountConfirmation, obj)
@@ -121,7 +107,6 @@ const mutations = {
       state.transaction.status = constants.TX_STATUS.payment_options
     } else {
       merge(state.accountConfirmation, {
-        // account: null,
         complete: false,
         error: null
       })
@@ -143,18 +128,10 @@ const mutations = {
   [CURRENCY_SET] (state, obj) {
     state.settings.currency = obj
   },
-  [DTO_SET] (state, obj) {
-    merge(state.dto, obj)
-  },
-  [DTO_ERROR] (state, obj) {
-    state.dto.error = obj
-  },
   [FEDERATION_CLEAR] (state, obj) {
     merge(state.federation, {
       complete: false,
       error: null
-      // publicKey: null,
-      // stellarAddress: null
     })
     state.transaction.status = constants.TX_STATUS.federation
   },
@@ -172,11 +149,8 @@ const mutations = {
       merge(state.federation, {
         complete: false,
         error: null
-        // publicKey: null,
-        // stellarAddress: null
       })
       merge(state.accountConfirmation, {
-        // account: null,
         complete: false,
         error: null
       })
@@ -203,7 +177,6 @@ const mutations = {
       error: null,
       method: null
     })
-    // state.transaction.status = constants.TX_STATUS.payment_options
   },
   [PAYMENT_OPTIONS_SET] (state, obj) {
     merge(state.paymentOptions, obj)
@@ -272,13 +245,6 @@ const actions = ({
   accountConfirmationSet ({ commit }, obj) {
     commit(ACCOUNT_CONFIRMATION_SET, obj)
   },
-  // accountLoad ({ commit }, publicKey) {
-  //   return loadAccount(state.network, publicKey)
-  //     .then(account => {
-  //       commit(ACCOUNT_CONFIRMATION_SET, { account: account })
-  //       return account
-  //     })
-  // },
   accountFromSet ({ commit }, federationResponse) {
     return loadAccount(state.network, federationResponse.publicKey)
       .then(account => {
@@ -298,12 +264,6 @@ const actions = ({
   },
   currencySet ({ commit }, obj) {
     commit(CURRENCY_SET, obj)
-  },
-  dtoSet ({ commit }, obj) {
-    commit(DTO_SET, obj)
-  },
-  dtoError ({ commit }, obj) {
-    commit(DTO_ERROR, obj)
   },
   federationClear ({ commit }, obj) {
     commit(FEDERATION_CLEAR, obj)
