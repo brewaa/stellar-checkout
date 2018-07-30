@@ -17,9 +17,9 @@
         <div class="title">Transaction</div>
         <div class="feature">
           <span class="price">{{stellarTicker.meta.total}}</span>
-          <span class="currency">{{options.currency}}</span>
+          <span class="currency">{{options.currency }}</span>
           <span class="separator">/</span>
-          <span class="price">{{stellarTicker.meta.amount}}</span>
+          <span class="price">{{stellarTicker.meta.amount | decimal }}</span>
           <span class="currency">{{options.asset().code}}</span>
         </div>
         <div class="complete_icon">
@@ -99,6 +99,7 @@
 </template>
 <script>
 import constants from 'app/constants'
+import { formatDecimal } from 'utils/formatter'
 import { mapActions, mapState } from 'vuex'
 import CountdownTimer from 'components/CountdownTimer'
 export default {
@@ -134,6 +135,11 @@ export default {
   },
   created () {
     this.loaded = true
+  },
+  filters: {
+    decimal: function (input) {
+      return formatDecimal(input)
+    }
   },
   methods: {
     onCountdownEnd: function () {
