@@ -7,7 +7,7 @@ import constants from 'app/constants'
 import { cultures } from 'l10n'
 
 import { loadAccount, setNetwork } from 'utils/stellarsdk.helper'
-import { syncStellarLumensTickerData } from 'services/stellar.lumens.ticker'
+import { extractStellarLumensTickerData, fetchStellarLumensTickerData } from 'services/stellar.lumens.ticker'
 
 Vue.use(Vuex)
 
@@ -38,11 +38,13 @@ const NETWORK_SET = 'NETWORK_SET'
 const TICKER_STELLAR_SET = 'TICKER_STELLAR_SET'
 const TICKER_STELLAR_ERROR_SET = 'TICKER_STELLAR_ERROR_SET'
 
-const TRANSACTION_RESET = 'TRANSACTION_RESET'
 const TRANSACTION_SAVE = 'TRANSACTION_SAVE'
 const TRANSACTION_ERROR_SAVE = 'TRANSACTION_ERROR_SAVE'
 const TRANSACTION_RESULTS_UPDATE = 'TRANSACTION_RESULTS_UPDATE'
 const TRANSACTION_STATUS_UPDATE = 'TRANSACTION_STATUS_UPDATE'
+
+const TIMER_START = 'TIMER_START'
+const TIMER_STOP = 'TIMER_STOP'
 
 var federationResponse = {
   account: null,
@@ -81,7 +83,11 @@ const state = {
   ticker: {
     stellar: constants.TICKERS.stellar
   },
+  timer: {
+    durationInSeconds: 0
+  },
   transaction: {
+    amount: null,
     error: null,
     hash: null,
     result: null,
@@ -210,15 +216,30 @@ const mutations = {
     state.network = network
   },
   [TICKER_STELLAR_SET] (state, obj) {
-    state.ticker.stellar.data = obj
-    state.ticker.stellar.updated = new Date(Date.now())
+    var data = obj.data
+    if (data.length > 0) {
+      state.ticker.stellar.counter++
+      state.ticker.stellar.data = data[0]
+      state.ticker.stellar.updated = new Date(Date.now())
+      var meta = extractStellarLumensTickerData(state.options.total, state.options.currency, data[0])
+      merge(state.ticker.stellar.meta, meta)
+      state.transaction.amount = meta.amount
+    }
   },
   [TICKER_STELLAR_ERROR_SET] (state, obj) {
     state.ticker.stellar.error = obj
   },
-  [TRANSACTION_RESET] (state, obj) {
-    state.transaction.error = null
-    state.transaction.success = false
+  [TIMER_START] (state, obj) {
+    state.timer.durationInSeconds = 300
+  },
+  [TIMER_STOP] (state, obj) {
+    state.timer.durationInSeconds = 0
+    // The timer is only started from PaymentOptions so it makes sense to just do something simple here
+    merge(state.paymentOptions, {
+      complete: false,
+      error: 'Error: Timer has expired. The allowed time to complete the transaction has expired.',
+      method: null
+    })
   },
   [TRANSACTION_SAVE] (state, obj) {
     merge(state.transaction, obj)
@@ -294,11 +315,13 @@ const actions = ({
   },
   stellarTickerUpdate ({ commit }, obj) {
     if (!obj) {
-      syncStellarLumensTickerData()
-        .then(data => {
-          return data[0]
+      fetchStellarLumensTickerData()
+        .then(response => {
+          commit(TICKER_STELLAR_SET, response)
         })
-        .then(obj => commit(TICKER_STELLAR_SET, obj))
+        .catch(e => {
+          state.ticker.stellar.error = e
+        })
       return
     }
     commit(TICKER_STELLAR_SET, obj)
@@ -309,8 +332,11 @@ const actions = ({
   stellarTickerErrorSet ({ commit }, obj) {
     commit(TICKER_STELLAR_ERROR_SET, obj)
   },
-  transactionReset ({ commit }, obj) {
-    commit(TRANSACTION_RESET, obj)
+  timerStart ({ commit }, obj) {
+    commit(TIMER_START, obj)
+  },
+  timerStop ({ commit }, obj) {
+    commit(TIMER_STOP, obj)
   },
   transactionSave ({ commit }, obj) {
     if (obj.tx) {

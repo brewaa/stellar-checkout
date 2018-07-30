@@ -4,25 +4,6 @@ export default {
     name: 'StellarCheckout'
   },
   CURRENCIES: ['AUD', 'BRL', 'CAD', 'CHF', 'CLP', 'CNY', 'CZK', 'DKK', 'EUR', 'GBP', 'HKD', 'HUF', 'IDR', 'ILS', 'INR', 'JPY', 'KRW', 'MXN', 'MYR', 'NOK', 'NZD', 'PHP', 'PKR', 'PLN', 'RUB', 'SEK', 'SGD', 'THB', 'TRY', 'TWD', 'USD', 'ZAR'],
-  // DTO: {
-  //   invoice: {
-  //     currency: 'USD',
-  //     id: null,
-  //     total: null
-  //   },
-  //   payment: {
-  //     amount: null,
-  //     asset: {
-  //       code: null
-  //     },
-  //     fee: null,
-  //     from: null,
-  //     from_stellar_address: null,
-  //     memo: null,
-  //     memoType: null,
-  //     to: null
-  //   }
-  // },
   ENTITY: {
     tick: '&#10003;'
   },
@@ -35,13 +16,12 @@ export default {
     asset: function () {
       return window.StellarSdk.Asset.native()
     },
-    amount: null,
     culture: null,
     currency: null,
     from: null,
     id: null,
     memo: null,
-    memoHash: function () {
+    memoType: function () {
       return window.StellarSdk.MemoHash
     },
     network: null,
@@ -125,10 +105,10 @@ export default {
       },
       error: null,
       meta: {
-        currencyConversionDescription: null,
+        amount: null,
+        description: null,
         lumenPrice: null,
-        invoiceTotalFormatted: null,
-        invoicePriceInLumens: null
+        total: null
       },
       updated: null
     }

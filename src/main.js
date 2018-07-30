@@ -8,11 +8,9 @@ import l10n from 'l10n'
 // import {randomId} from 'utils/generator'
 import {setNetwork} from 'utils/stellarsdk.helper'
 import store from 'store'
-import {syncStellarLumensTickerData} from 'services/stellar.lumens.ticker'
 import {validateConfig} from 'utils/config.checker'
 import Vue from 'vue'
 import VueQrcode from '@xkeshi/vue-qrcode'
-
 /**
  * @exports StellarCheckout
  */
@@ -40,7 +38,7 @@ StellarCheckout.ui.render('#elem', {
    * @param {string} opts.from - The sender's address. A federated stellar address OR a public key.
    * @param {string} opts.id - An optional reference ID supplied by the merchant
    * @param {string} opts.network - The Stellar.org network. Options: [ 'public', 'test']
-   * @param {callback} opts.onSubmit - A function that will container the transaction result. Uses error first pattern.
+   * @param {callback} opts.onSubmit - A callback function that will contain the transaction results. Uses error first callback pattern.
    * @param {string} opts.redirectUrl - A URL that the user will be redirected to upon completing a successful transaction.
    * @param {boolean} opts.showNetworkSelector - Shows the network selector component. Options: [true, false]
    * @param {boolean} opts.showTicker - Show the XLM ticker component Options: [true, false]
@@ -69,10 +67,11 @@ StellarCheckout.ui.render('#elem', {
             ...App
           })
           return new Promise((resolve) => {
-            syncStellarLumensTickerData()
-              .then(data => {
-                resolve(data)
-              })
+            // syncStellarLumensTickerData()
+            //   .then(data => {
+            //     resolve(data)
+            //   })
+            resolve()
           })
             .then(l10n.init(options.lang))
             .then(() => {

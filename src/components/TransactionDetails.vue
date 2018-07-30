@@ -14,13 +14,15 @@
         <!-- <span class="sco_spinner1" v-if="!transactionDetails.success">
           <i class="fas fa-spinner fa-spin"></i>
         </span> -->
-        Transaction Details
-        <div class="sco_component_title_aside">
-          <span class="price">{{stellarTicker.meta.invoiceTotalFormatted}}</span>
+        <div class="title">Transaction</div>
+        <div class="feature">
+          <span class="price">{{stellarTicker.meta.total}}</span>
           <span class="currency">{{options.currency}}</span>
           <span class="separator">/</span>
-          <span class="price">{{stellarTicker.meta.invoicePriceInLumensFormatted}}</span>
+          <span class="price">{{stellarTicker.meta.amount}}</span>
           <span class="currency">{{options.asset().code}}</span>
+        </div>
+        <div class="complete_icon">
           <input type="checkbox" v-model="complete" />
         </div>
       </div>
@@ -58,14 +60,14 @@
         <div class="sco_component_results_row">
           <div>SUBTOTAL</div>
           <div class="sco_component_results_row_aside">
-            {{stellarTicker.meta.invoiceTotalFormatted}}
+            {{stellarTicker.meta.total}}
             <span class="currency">{{options.currency}}</span>
           </div>
         </div>
         <div class="sco_component_results_row">
           <div>TOTAL</div>
           <div class="sco_component_results_row_aside">
-            {{stellarTicker.meta.invoicePriceInLumensFormatted}}
+            {{stellarTicker.meta.amount}}
             <span class="currency">{{options.asset().code}}</span>
           </div>
         </div>
@@ -74,7 +76,17 @@
         <div class="sco_component_results_row">
           <div>Status</div>
           <div class="sco_component_results_row_aside">
+            <span v-if="transaction.success" v-html="tick"></span>
             {{transaction.status.title}}
+          </div>
+        </div>
+      </div>
+      <div class="sco_component_footer" v-if="timer.durationInSeconds > 0">
+        <div class="sco_component_results_row">
+          <div>Time remaining</div>
+          <div class="sco_component_results_row_aside">
+            <CountdownTimer :time="timer.durationInSeconds * 1000"
+              v-on:countdownend="onCountdownEnd"></CountdownTimer>
           </div>
         </div>
       </div>
@@ -82,18 +94,21 @@
       <div class="sco_component_error nottoowide" v-if="error">
         <button class="sco_button" href="#" @click.prevent="tryAgain">Try again...</button>
       </div>
-      <div class="sco_component_error nottoowide" v-if="error">
-        <button class="sco_button" href="#" @click.prevent="tryAgain">Try again...</button>
-      </div>
     </div>
   </div>
 </template>
 <script>
+import constants from 'app/constants'
 import { mapActions, mapState } from 'vuex'
+import CountdownTimer from 'components/CountdownTimer'
 export default {
   props: {
   },
+  components: {
+    CountdownTimer
+  },
   computed: {
+    tick: () => constants.ENTITY.tick,
     transaction: {
       get () {
         return this.$store.state.transaction
@@ -107,7 +122,8 @@ export default {
       error: state => state.transaction.error,
       options: 'options',
       network: 'network',
-      stellarTicker: state => state.ticker.stellar
+      stellarTicker: state => state.ticker.stellar,
+      timer: 'timer'
     })
   },
   data () {
@@ -120,12 +136,16 @@ export default {
     this.loaded = true
   },
   methods: {
+    onCountdownEnd: function () {
+      this.timerStop()
+    },
     tryAgain: function () {
       this.paymentOptions = {
         complete: false
       }
     },
     ...mapActions([
+      'timerStop',
       'transactionSave'])
   },
   watch: {

@@ -1,11 +1,14 @@
 <template>
   <div :class="['sco_component', 'sco_component--federation', { 'sco_loaded' : loaded, 'sco_component--collapsed': complete }]">
       <div class="sco_component_i">
-        <div class="sco_component_title">{{title}}
-          <div class="sco_component_title_aside">
+        <div class="sco_component_title">
+          <div class="title">{{title}}</div>
+          <div class="feature">
             <span class="sco_icon">
               <i class="fas fa-question-circle"></i>
             </span>
+          </div>
+          <div class="complete_icon">
             <input type="checkbox" v-model="isComplete" :disabled="!complete" />
           </div>
         </div>

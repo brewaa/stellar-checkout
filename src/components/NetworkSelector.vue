@@ -2,7 +2,7 @@
   <div class="sco_component sco_component--network_selector">
     <div class="sco_component_i">
       <div class="sco_component_title">
-        Network
+        <div class="title">Network</div>
         <div class="sco_component_title_aside">
           <div class="sco_network_selector sco_selector">
             <a :class="['sco_selector_value', 'sco_selector_value--off', { 'sco_selector_value--selected': isTestNetwork }]" @click="click" data-value="test">test</a>

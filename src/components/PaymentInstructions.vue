@@ -2,7 +2,9 @@
   <div :class="['sco_component', 'sco_component--payment_instructions', { 'sco_loaded' : loaded, 'sco_component--collapsed': complete }]" v-show="paymentOptionsComplete">
     <div class="sco_component_i">
       <textarea ref="xdrEnvelope" class="sco_offscreen" v-model="transaction.xdr" readonly></textarea>
-      <div class="sco_component_title">4. Instructions</div>
+      <div class="sco_component_title">
+        <div class="title">4. Instructions</div>
+      </div>
       <div class="sco_component_results" v-show="loaded">
         <div class="sco_component_text" v-show="paymentOptions.method === 'ledger'">
           <p>Please confirm the transaction on your Ledger Wallet device</p>
@@ -31,11 +33,11 @@
           </div>
           <div class="sco_component_results_heading">
             <div>Memo</div>
-            <div>{{options.memo}}</div>
+            <div>{{transaction.memo}}</div>
           </div>
           <div class="sco_component_results_heading">
             <div>Memo type</div>
-            <div>{{options.memoHash()}}</div>
+            <div>{{options.memoType()}}</div>
           </div>
           <div class="sco_component_results_heading" v-if="federation.accountFrom.account">
             <div>From</div>

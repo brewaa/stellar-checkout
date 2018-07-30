@@ -2,15 +2,17 @@
   <div :class="['sco_component', 'sco_component--ticker', { 'sco_loaded': loaded, 'sco_component--collapsed': complete }]">
     <div class="sco_component_i">
       <div class="sco_component_title">
-        Ticker
+        <div class="title">Ticker</div>
         <span class="sco_spinner">
           <i class="fas fa-spinner fa-spin"></i>
         </span>
-        <div class="sco_component_title_aside" v-show="loaded">
+        <div class="feature" v-show="loaded">
           <span class="currency_name sco_hidden">Stellar</span>
           <span class="currency">XLM</span>/<span class="currency">{{ currency }}</span>
           <span class="separator">|</span>
           <span class="price">${{ price | decimal7 }}</span>
+        </div>
+        <div class="complete_icon" v-show="loaded">
           <input type="checkbox" v-model="complete" />
         </div>
       </div>
@@ -91,6 +93,7 @@ export default {
     }
   },
   created () {
+    this.stellarTickerUpdate()
     setInterval(() => {
       this.stellarTickerUpdate()
     }, 30000)

@@ -1,8 +1,9 @@
 <template>
   <div :class="['sco_component', 'sco_component--account_confirmation', { 'sco_loaded' : loaded, 'sco_component--collapsed': accountConfirmation.complete }]" v-show="federation.complete">
     <div class="sco_component_i">
-      <div class="sco_component_title">{{title}}
-        <div class="sco_component_title_aside">
+      <div class="sco_component_title">
+        <div class="title">{{title}}</div>
+        <div class="complete_icon">
           <input type="checkbox" v-model="complete" :disabled="!complete" />
         </div>
       </div>
@@ -99,7 +100,9 @@ export default {
           .then(publicKey => {
             this.federation = {
               complete: true,
-              ledgerConfirmed: true
+              accountFrom: {
+                ledgerConfirmed: true
+              }
             }
             this.complete = true
             this.awaitingConfirmation = false
@@ -131,32 +134,13 @@ export default {
   },
   watch: {
     federationComplete (newVal) {
-      // this.accountConfirmationClear()
-      // this.paymentOptionsClear()
-      this.loaded = false
       if (!newVal) {
         return
       }
+      this.loaded = false
       setTimeout(() => {
         this.isLoaded()
       }, 400)
-      // if (this.federation.publicKey) {
-      //   setTimeout(e => {
-      //     this.transactionStatusUpdate(constants.TX_STATUS.account_confirmation_loading_account)
-      //     this.accountFromSet(this.federation.publicKey)
-      //       .then(e => {
-      //         this.isLoaded()
-      //       })
-      //       .catch(err => {
-      //         var msg = 'Error'
-      //         if (err.response && err.response.status === 404) {
-      //           msg += `: account cannot be found on the ${this.networkName.toUpperCase()} network`
-      //         }
-      //         this.error = msg
-      //         this.isLoaded()
-      //       })
-      //   }, 400)
-      // }
     }
   }
 }

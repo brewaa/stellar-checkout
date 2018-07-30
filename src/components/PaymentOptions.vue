@@ -1,8 +1,9 @@
 <template>
   <div :class="['sco_component', 'sco_component--payment_options', { 'sco_loaded' : loaded, 'sco_component--collapsed': complete }]" v-show="accountConfirmationComplete">
     <div class="sco_component_i">
-      <div class="sco_component_title">3. Payment method
-        <div class="sco_component_title_aside">
+      <div class="sco_component_title">
+        <div class="title">3. Payment method</div>
+        <div class="complete_icon">
           <input type="checkbox" v-model="complete" :disabled="!paymentOptions.complete" />
         </div>
       </div>
@@ -94,6 +95,7 @@ export default {
       if (this.validate()) {
         this.from = this.federation.accountFrom.account.account_id
         this.to = this.federation.accountTo.account.account_id
+        this.amount = this.transaction.amount
         this.memo = randomId(28)
         this.transaction = {
           status: constants.TX_STATUS.created,
@@ -102,7 +104,7 @@ export default {
             this.to,
             this.from,
             window.StellarSdk.Asset.native(),
-            this.options.amount,
+            this.amount,
             this.memo)
         }
       }
@@ -113,9 +115,10 @@ export default {
         error: null,
         method: 'ledger'
       }
-      this.transactionReset()
       this.transaction = {
-        status: constants.TX_STATUS.ledger_confirmation_required
+        error: null,
+        status: constants.TX_STATUS.ledger_confirmation_required,
+        success: false
       }
       var bip32Path = this.federation.ledgerBip32Path
       return getSignature(this.transaction.tx, bip32Path)
@@ -141,7 +144,6 @@ export default {
                     success: true
                   }
                   this.transactionResultsUpdate(this.transaction)
-                  this.transactionReset()
                   setTimeout(() => {
                     resolve(transaction)
                     this.submitHandler(null, transaction)
@@ -184,6 +186,7 @@ export default {
       }
     },
     useAlternatePaymentMethod: function (method) {
+      this.timerStart()
       // Update state
       this.paymentOptions = {
         complete: true,
@@ -192,6 +195,7 @@ export default {
       }
       // Update transaction status
       this.transaction = {
+        error: null,
         status: constants.TX_STATUS.listening_for_transaction,
         success: false
       }
@@ -203,7 +207,7 @@ export default {
               if (payment.to !== response.accountId) {
                 return
               }
-              verifyPayment(this.network, response.now, response.ledgerHeight, this.from, this.to, this.memo, payment)
+              verifyPayment(this.network, response.now, response.ledgerHeight, this.to, this.from, this.amount, this.memo, payment)
                 .then(transaction => {
                   if (transaction) {
                     console.log(constants.APP.name + ': TRANSACTION_COMPLETE')
@@ -214,11 +218,11 @@ export default {
                       success: true
                     }
                     this.transactionResultsUpdate(this.transaction)
-                    this.transactionReset()
                     setTimeout(() => {
                       this.submitHandler(null, transaction)
                     }, 800)
                     this.closeStream()
+                    this.timerStop()
                   } else {
                     throw new Error('Payment received. it wasn\'t our payment though...')
                   }
@@ -226,12 +230,13 @@ export default {
             },
             onerror: error => {
               console.error(error)
+              this.timerStop()
             }
           })
         })
     },
     validate: function () {
-      var amount = this.options.amount
+      var amount = this.transaction.amount
       if (isNaN(amount) || parseFloat(amount) <= 0) {
         this.error = '[amount] is invalid'
         return false
@@ -252,7 +257,8 @@ export default {
       'paymentOptionsClear',
       'paymentOptionsSet',
       'paymentOptionsError',
-      'transactionReset',
+      'timerStart',
+      'timerStop',
       'transactionSave',
       'transactionErrorSave',
       'transactionResultsUpdate',

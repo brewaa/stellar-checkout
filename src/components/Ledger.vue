@@ -1,6 +1,6 @@
 <template>
   <div class="sco_component sco_component--ledger">
-    <div class="sco_component_i" v-show="!federationComplete && !connected">
+    <div class="sco_component_i" v-show="!federation.complete && !connected">
       <form class="sco_form" v-on:submit.prevent>
         <div class="sco_component--button_row">
           <button class="sco_button" :disabled="!connected">
@@ -57,13 +57,13 @@ export default {
     },
     error: {
       get () {
-        return this.$store.state.federation.ledgerError
+        return this.$store.state.federation.accountFrom.ledgerError
       },
       set (value) {
         this.ledgerErrorSet(value)
       }
     },
-    ledger: {
+    federation: {
       get () {
         return this.$store.state.federation
       },
@@ -72,11 +72,10 @@ export default {
       }
     },
     ...mapState({
-      confirmed: state => state.federation.ledgerConfirmed,
-      federationComplete: state => state.federation.complete,
-      publicKey: state => state.federation.publicKey,
-      verified: state => state.federation.ledgerVerified,
-      version: state => state.federation.ledgerAppVersion
+      confirmed: state => state.federation.accountFrom.ledgerConfirmed,
+      publicKey: state => state.federation.accountFrom.publicKey,
+      verified: state => state.federation.accountFrom.ledgerVerified,
+      version: state => state.federation.accountFrom.ledgerAppVersion
     })
   },
   data () {
@@ -113,7 +112,7 @@ export default {
         })
     },
     updateLedgerInfo: function (e) {
-      this.ledger = {
+      this.federation = {
         ledgerAppVersion: e.version,
         ledgerError: null
       }

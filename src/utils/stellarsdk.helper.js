@@ -113,28 +113,36 @@ export function submitTransaction (network, transaction) {
     })
 }
 
-export function verifyPayment (network, now, ledgerHeight, to, from, memo, payment) {
-  // var amountIsEqual = false
+export function verifyPayment (network, now, ledgerHeight, to, from, amount, memo, payment) {
+  var amountIsEqual = false
   var ledgerHeightIsGood = false
   var destinationKeyIsEqual = false
   var memoIsEqual = false
   var publicKeyIsEqual = false
   var timeLooksGood = false
   var server = new window.StellarSdk.Server(network.uri)
-
   return server.transactions()
     .transaction(payment.transaction_hash)
     .call()
-    .then(function (result) {
-      // amountIsEqual = parseFloat(dto.payment.amount) === parseFloat(payment.amount)
-      ledgerHeightIsGood = result.ledger_attr > ledgerHeight
+    .then(function (response) {
+      amountIsEqual = parseFloat(amount) === parseFloat(payment.amount)
+      ledgerHeightIsGood = response.ledger_attr > ledgerHeight
       destinationKeyIsEqual = to === payment.to
-      memoIsEqual = window.StellarSdk.hash(memo).toString('base64') === result.memo
-      publicKeyIsEqual = from && payment.from === result.source_account
-      timeLooksGood = Date.parse(result.created_at) >= now.getTime()
-      result = ledgerHeightIsGood && destinationKeyIsEqual && memoIsEqual && publicKeyIsEqual && timeLooksGood // amountIsEqual &&
-      return result
-    }).catch(function (err) {
+      memoIsEqual = window.StellarSdk.hash(memo).toString('base64') === response.memo
+      publicKeyIsEqual = from && payment.from === response.source_account
+      timeLooksGood = Date.parse(response.created_at) >= now.getTime()
+      var result = amountIsEqual && ledgerHeightIsGood && destinationKeyIsEqual && memoIsEqual && publicKeyIsEqual && timeLooksGood
+      console.log(response)
+      console.log(`to ${to}`)
+      console.log(`payment.to ${payment.to}`)
+      console.log(`amountIsEqual ${amountIsEqual}`)
+      console.log(`ledgerHeightIsGood ${ledgerHeightIsGood}`)
+      console.log(`destinationKeyIsEqual ${destinationKeyIsEqual}`)
+      console.log(`memoIsEqual ${memoIsEqual}`)
+      console.log(`timeLooksGood ${timeLooksGood}`)
+      console.log(result)
+      return response
+    }).catch(err => {
       console.log(err)
     })
 }

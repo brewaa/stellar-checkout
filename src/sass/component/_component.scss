@@ -59,22 +59,49 @@ $green: #3ba776;
     }
 
     &_title {
+        display: flex;
+        flex-wrap: wrap;
         font-size: $font-size-small;
         font-weight: bold;
-        letter-spacing: .025rem;
-        padding: $padding;
+        // letter-spacing: .025rem;
+        line-height: 3.6;
         text-align: left;
         text-transform: uppercase;
 
         .sco_spinner {
             padding: 0 $padding-halved;
+            text-decoration: center;
+            width: 2.4rem;
+        }
+
+        .title {
+            flex-grow: 1;
+            padding: 0 $padding;
+        }
+
+        .feature {
+            flex-grow: 1;
+            padding: 0 $padding;
+            text-align: right;
+        }
+
+        .complete_icon {
+            width: 2.4rem;
+            text-align: center;
+            input[type=checkbox] {
+                height: 100%;
+                margin: 0;
+                outline: 0;
+                padding: 0;
+                width: 50%;
+            }
         }
 
         &_aside {
             align-items: center;
+            align-content: center;
             display: flex;
-            float: right;
-            padding-left: .8rem;
+            padding: 0 $padding;
             &--collapsed {
                 display: none;
             }
@@ -84,14 +111,14 @@ $green: #3ba776;
         }
 
         .separator {
-            color: #eee;
+            font-weight: normal;
         }
 
-        .currency,
-        .price {
-          display: inline-block;
-          padding: 0 .2rem;
-        }
+        // .currency,
+        // .price {
+        //   display: inline-block;
+        //   padding: 0 .2rem;
+        // }
     }
 
     &_heading {
@@ -213,6 +240,7 @@ $green: #3ba776;
     /** COMPONENT - NETWORK_SELECTOR **/
 
     &--network_selector {
+        
     }
 
     .sco_network_tag {
@@ -230,7 +258,8 @@ $green: #3ba776;
         display: flex;
         border: $layout-border;
         border-radius: $border-radius;
-
+        line-height: 1.8;
+        
         > * {
             background: $white;
             color: $black;
