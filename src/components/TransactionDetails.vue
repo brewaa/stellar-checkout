@@ -11,9 +11,6 @@
   <div :class="['sco_component', 'sco_component--transaction_details', { 'sco_loaded' : loaded, 'sco_component--collapsed' : complete }]">
     <div class="sco_component_i">
       <div class="sco_component_title">
-        <!-- <span class="sco_spinner1" v-if="!transactionDetails.success">
-          <i class="fas fa-spinner fa-spin"></i>
-        </span> -->
         <div class="title">Transaction</div>
         <div class="feature">
           <span class="price">{{stellarTicker.meta.total}}</span>
@@ -76,6 +73,9 @@
         <div class="sco_component_results_row">
           <div>Status</div>
           <div class="sco_component_results_row_aside">
+            <span class="spinner" v-if="paymentOptions.method && !transaction.complete">
+              <i class="fas fa-spinner fa-spin"></i>
+            </span>
             <span v-if="transaction.success" v-html="tick"></span>
             {{transaction.status.title}}
           </div>
@@ -119,10 +119,11 @@ export default {
       }
     },
     ...mapState({
-      federation: 'federation',
       error: state => state.transaction.error,
-      options: 'options',
+      federation: 'federation',
       network: 'network',
+      options: 'options',
+      paymentOptions: 'paymentOptions',
       stellarTicker: state => state.ticker.stellar,
       timer: 'timer'
     })
@@ -143,7 +144,7 @@ export default {
   },
   methods: {
     onCountdownEnd: function () {
-      this.timerStop()
+      this.timerExpired()
     },
     tryAgain: function () {
       this.paymentOptions = {
@@ -151,7 +152,7 @@ export default {
       }
     },
     ...mapActions([
-      'timerStop',
+      'timerExpired',
       'transactionSave'])
   },
   watch: {

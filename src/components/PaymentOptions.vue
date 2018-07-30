@@ -116,6 +116,7 @@ export default {
         method: 'ledger'
       }
       this.transaction = {
+        complete: false,
         error: null,
         status: constants.TX_STATUS.ledger_confirmation_required,
         success: false
@@ -139,6 +140,7 @@ export default {
                   console.log(constants.APP.name + ': TRANSACTION_COMPLETE: SUCCESS')
                   console.log(transaction)
                   this.transaction = {
+                    complete: true,
                     result: transaction,
                     status: constants.TX_STATUS.complete,
                     success: true
@@ -155,6 +157,7 @@ export default {
         }).catch(err => {
           console.log(err)
           this.transaction = {
+            complete: true,
             error: err.toString(),
             status: constants.TX_STATUS.error
           }
@@ -195,6 +198,7 @@ export default {
       }
       // Update transaction status
       this.transaction = {
+        complete: false,
         error: null,
         status: constants.TX_STATUS.listening_for_transaction,
         success: false
@@ -213,6 +217,7 @@ export default {
                     console.log(constants.APP.name + ': TRANSACTION_COMPLETE')
                     console.log(transaction)
                     this.transaction = {
+                      complete: true,
                       result: transaction,
                       status: constants.TX_STATUS.complete,
                       success: true
@@ -230,7 +235,13 @@ export default {
             },
             onerror: error => {
               console.error(error)
+              this.closeStream()
               this.timerStop()
+              this.transaction = {
+                complete: true,
+                error: error.message,
+                status: constants.TX_STATUS.error
+              }
             }
           })
         })

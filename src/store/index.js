@@ -43,6 +43,7 @@ const TRANSACTION_ERROR_SAVE = 'TRANSACTION_ERROR_SAVE'
 const TRANSACTION_RESULTS_UPDATE = 'TRANSACTION_RESULTS_UPDATE'
 const TRANSACTION_STATUS_UPDATE = 'TRANSACTION_STATUS_UPDATE'
 
+const TIMER_EXPIRED = 'TIMER_EXPIRED'
 const TIMER_START = 'TIMER_START'
 const TIMER_STOP = 'TIMER_STOP'
 
@@ -88,6 +89,7 @@ const state = {
   },
   transaction: {
     amount: null,
+    complete: false,
     error: null,
     hash: null,
     result: null,
@@ -229,17 +231,19 @@ const mutations = {
   [TICKER_STELLAR_ERROR_SET] (state, obj) {
     state.ticker.stellar.error = obj
   },
-  [TIMER_START] (state, obj) {
-    state.timer.durationInSeconds = 300
-  },
-  [TIMER_STOP] (state, obj) {
+  [TIMER_EXPIRED] (state, obj) {
     state.timer.durationInSeconds = 0
-    // The timer is only started from PaymentOptions so it makes sense to just do something simple here
     merge(state.paymentOptions, {
       complete: false,
       error: 'Error: Timer has expired. The allowed time to complete the transaction has expired.',
       method: null
     })
+  },
+  [TIMER_START] (state, obj) {
+    state.timer.durationInSeconds = 300
+  },
+  [TIMER_STOP] (state, obj) {
+    state.timer.durationInSeconds = 0
   },
   [TRANSACTION_SAVE] (state, obj) {
     merge(state.transaction, obj)
@@ -331,6 +335,9 @@ const actions = ({
   },
   stellarTickerErrorSet ({ commit }, obj) {
     commit(TICKER_STELLAR_ERROR_SET, obj)
+  },
+  timerExpired ({ commit }, obj) {
+    commit(TIMER_EXPIRED, obj)
   },
   timerStart ({ commit }, obj) {
     commit(TIMER_START, obj)

@@ -17,7 +17,7 @@ export default {
       return window.StellarSdk.Asset.native()
     },
     culture: null,
-    currency: null,
+    currency: 'USD',
     from: null,
     id: null,
     memo: null,
@@ -112,7 +112,5 @@ export default {
       },
       updated: null
     }
-  },
-  TIMEOUT: 60,
-  TIMER: null
+  }
 }

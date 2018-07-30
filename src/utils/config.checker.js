@@ -7,7 +7,6 @@ function checkCurrency (options) {
   return new Promise(function (resolve, reject) {
     if (currency === '' || typeof currency !== 'string' || constants.CURRENCIES.indexOf(currency) === -1) {
       console.log(constants.APP.name + ' [currency] not supported. allowed currencies: ' + constants.CURRENCIES.join(', ') + '')
-      options.currency = constants.SETTINGS.currency
     }
     resolve(options)
   })
@@ -118,4 +117,4 @@ export function validateConfig (options) {
         checkTotal(options.total)
       ])
     })
-};
+}
