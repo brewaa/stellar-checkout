@@ -1,0 +1,5 @@
+$notAfter = [datetime]::Today.AddYears(2) 
+$thumb = (New-SelfSignedCertificate -CertStoreLocation cert:\localmachine\my -DnsName 'localhost', 'sco' -KeyExportPolicy Exportable -Provider "Microsoft Enhanced RSA and AES Cryptographic Provider" -NotAfter $notAfter).Thumbprint 
+$pwd = 'SuperS3cret!' 
+$SSpwd = ConvertTo-SecureString -String $pwd -Force -AsPlainText 
+Export-PfxCertificate -cert "cert:\localmachine\my\$thumb" -FilePath "C:\inetpub\wwwroot\sco\MyDevCert.pfx" -Password $SSpwd
