@@ -1,5 +1,5 @@
 import App from './App'
-import { FontAwesomeIcon } from 'assets/icons'
+import Icons from 'assets/icons'
 import constants from 'app/constants'
 // eslint-disable-next-line no-unused-vars
 import Css from 'sass/site.scss'
@@ -56,7 +56,7 @@ var StellarCheckout = {
           var axios = window.StellarSdk.axios
           // Vue settings
           Vue.config.productionTip = false
-          Vue.component('font-awesome-icon', FontAwesomeIcon)
+          Vue.component('icon', Icons)
           Vue.component(VueQrcode.name, VueQrcode)
           Vue.prototype.$http = axios
           // Set stellar network (options.[public|test])

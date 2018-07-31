@@ -5,7 +5,7 @@
           <div class="title">{{title}}</div>
           <div class="feature">
             <span class="sco_icon">
-              <i class="fas fa-question-circle"></i>
+              <icon icon="question-circle"></icon>
             </span>
           </div>
           <div class="complete_icon">
@@ -37,7 +37,9 @@
                   ref="input"
                   type="text"
                   v-model="input" />
-                <span class="sco_spinner"></span>
+                <span class="sco_spinner">
+                  <icon icon="spinner" spin pulse></icon>
+                </span>
               </div>
               <div class="sco_field_note" v-if="noteText">{{noteText}}</div>
             </section>
@@ -51,7 +53,7 @@
           </form>
         </div>
         <span class="sco_spinner">
-          <i class="fas fa-spinner fa-spin"></i>
+          <icon icon="spinner" spin pulse></icon>
         </span>
         <div class="sco_component_error" v-if="error" v-html="error"></div>
       </div>

@@ -63,7 +63,7 @@
       </div>
       <div class="sco_component_error" v-if="error"><p>{{error}}</p></div>
       <span class="sco_spinner">
-        <i class="fas fa-spinner fa-spin"></i>
+        <icon icon="spinner" spin pulse></icon>
       </span>
     </div>
   </div>

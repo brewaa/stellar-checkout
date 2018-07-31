@@ -74,7 +74,7 @@
           <div>Status</div>
           <div class="sco_component_results_row_aside">
             <span class="spinner" v-if="paymentOptions.method && !transaction.complete">
-              <i class="fas fa-spinner fa-spin"></i>
+              <icon icon="spinner" spin pulse></icon>
             </span>
             <span v-if="transaction.success" v-html="tick"></span>
             {{transaction.status.title}}

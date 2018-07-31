@@ -1,15 +1,14 @@
-import fontawesome from '@fortawesome/fontawesome'
-// import { library } from '@fortawesome/fontawesome-svg-core'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons/faQuestionCircle'
 import { faSpinner } from '@fortawesome/free-solid-svg-icons/faSpinner'
 
-import FontAwesomeIcon from '@fortawesome/vue-fontawesome'
+// dom.watch()
 
-fontawesome.library.add(
+library.add(
   faQuestionCircle,
   faSpinner
 )
 
-export {
-  FontAwesomeIcon
-}
+export default FontAwesomeIcon

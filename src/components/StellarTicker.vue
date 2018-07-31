@@ -4,7 +4,7 @@
       <div class="sco_component_title">
         <div class="title">Ticker</div>
         <span class="sco_spinner">
-          <i class="fas fa-spinner fa-spin"></i>
+          <icon icon="spinner" spin pulse></icon>
         </span>
         <div class="feature" v-show="loaded">
           <span class="currency_name sco_hidden">Stellar</span>
