@@ -7,6 +7,7 @@ import { cultures } from 'l10n'
 
 import { loadAccount, setNetwork } from 'utils/stellarsdk.helper'
 import { extractStellarLumensTickerData, fetchStellarLumensTickerData } from 'services/stellar.lumens.ticker'
+import { randomId } from 'utils/generator'
 
 Vue.use(Vuex)
 
@@ -88,9 +89,16 @@ const state = {
   },
   transaction: {
     amount: null,
+    asset: function () {
+      return window.StellarSdk.Asset.native()
+    },
     complete: false,
     error: null,
     hash: null,
+    memo: randomId(28),
+    memoType: function () {
+      return window.StellarSdk.MemoHash
+    },
     result: null,
     success: false,
     status: constants.TX_STATUS.federation,

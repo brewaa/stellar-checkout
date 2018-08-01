@@ -13,11 +13,8 @@
       <div class="sco_component_title">
         <div class="title">Transaction</div>
         <div class="feature">
-          <span class="price">{{stellarTicker.meta.total}}</span>
+          <span class="price">{{options.amount | currency }}</span>
           <span class="currency">{{options.currency }}</span>
-          <span class="separator">/</span>
-          <span class="price">{{stellarTicker.meta.amount | decimal }}</span>
-          <span class="currency">{{options.asset().code}}</span>
         </div>
         <div class="complete_icon">
           <input type="checkbox" v-model="complete" />
@@ -55,17 +52,17 @@
           </div>
         </div>
         <div class="sco_component_results_row">
-          <div>SUBTOTAL</div>
+          <div>Amount</div>
           <div class="sco_component_results_row_aside">
-            {{stellarTicker.meta.total}}
-            <span class="currency">{{options.currency}}</span>
+            {{options.amount | currency}}
+            <span class="currency">{{ options.currency }}</span>
           </div>
         </div>
         <div class="sco_component_results_row">
-          <div>TOTAL</div>
+          <div>Total</div>
           <div class="sco_component_results_row_aside">
             {{stellarTicker.meta.amount}}
-            <span class="currency">{{options.asset().code}}</span>
+            <span class="currency">{{transaction.asset().code}}</span>
           </div>
         </div>
       </div>
@@ -99,7 +96,7 @@
 </template>
 <script>
 import constants from 'app/constants'
-import { formatDecimal } from 'utils/formatter'
+import { formatCurrency } from 'utils/formatter'
 import { mapActions, mapState } from 'vuex'
 import CountdownTimer from 'components/CountdownTimer'
 export default {
@@ -125,6 +122,7 @@ export default {
       options: 'options',
       paymentOptions: 'paymentOptions',
       stellarTicker: state => state.ticker.stellar,
+      transaction: 'transaction',
       timer: 'timer'
     })
   },
@@ -138,8 +136,8 @@ export default {
     this.loaded = true
   },
   filters: {
-    decimal: function (input) {
-      return formatDecimal(input)
+    currency: function (input) {
+      return formatCurrency(input)
     }
   },
   methods: {

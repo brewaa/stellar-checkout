@@ -135,6 +135,7 @@ $green: #3ba776;
         &_row {
             border-bottom: $layout-border;
             display: flex;
+            font-size: $font-size-small;
             padding: $padding;
             text-transform: uppercase;
             &--meta {

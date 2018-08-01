@@ -25,11 +25,11 @@
           </div>
           <div class="sco_component_results_heading">
             <div>Amount</div>
-            <div>{{options.amount}}</div>
+            <div>{{transaction.amount}}</div>
           </div>
           <div class="sco_component_results_heading">
             <div>Asset</div>
-            <div>{{options.asset().code}}</div>
+            <div>{{transaction.asset().code}}</div>
           </div>
           <div class="sco_component_results_heading">
             <div>Memo</div>
@@ -37,7 +37,7 @@
           </div>
           <div class="sco_component_results_heading">
             <div>Memo type</div>
-            <div>{{options.memoType()}}</div>
+            <div>{{transaction.memoType()}}</div>
           </div>
           <div class="sco_component_results_heading" v-if="federation.accountFrom.account">
             <div>From</div>

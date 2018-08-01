@@ -14,17 +14,10 @@ export default {
   },
   OPTIONS: {
     amount: null,
-    asset: function () {
-      return window.StellarSdk.Asset.native()
-    },
     culture: null,
     currency: 'USD',
     from: null,
     id: null,
-    memo: null,
-    memoType: function () {
-      return window.StellarSdk.MemoHash
-    },
     network: null,
     onSubmit: null,
     redirectUrl: null,

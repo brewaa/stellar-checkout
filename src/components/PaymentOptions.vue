@@ -30,7 +30,6 @@ import constants from 'app/constants'
 import { mapActions, mapState } from 'vuex'
 import { getSignature } from 'services/ledger.stellar'
 import { buildTransaction, getPaymentsForAccount, submitTransaction, verifyPayment } from 'utils/stellarsdk.helper'
-import {randomId} from 'utils/generator'
 import { useRedirectUrl } from 'utils/url'
 export default {
   props: {
@@ -93,17 +92,18 @@ export default {
   methods: {
     buildTransaction: async function () {
       if (this.validate()) {
+        this.asset = this.transaction.asset()
         this.from = this.federation.accountFrom.account.account_id
         this.to = this.federation.accountTo.account.account_id
         this.amount = this.transaction.amount
-        this.memo = randomId(28)
+        this.memo = this.transaction.memo
         this.transaction = {
           status: constants.TX_STATUS.created,
           tx: await buildTransaction(
             this.network,
             this.to,
             this.from,
-            window.StellarSdk.Asset.native(),
+            this.asset,
             this.amount,
             this.memo)
         }
