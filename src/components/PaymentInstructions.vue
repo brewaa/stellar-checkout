@@ -1,5 +1,5 @@
 <template>
-  <div :class="['sco_component', 'sco_component--payment_instructions', { 'sco_loaded' : loaded, 'sco_component--collapsed': complete }]" v-show="paymentOptionsComplete">
+  <div :class="['sco_component', 'sco_component--payment_instructions', { 'sco_loaded' : loaded, 'sco_component--collapsed': complete }]" v-show="paymentOptionsComplete && !transaction.success">
     <div class="sco_component_i">
       <textarea ref="xdrEnvelope" class="sco_offscreen" v-model="transaction.xdr" readonly></textarea>
       <div class="sco_component_title">

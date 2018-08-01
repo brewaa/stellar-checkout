@@ -6,16 +6,16 @@ function calculatePriceInLumens (invoiceTotal, lumenPrice) {
   return invoiceTotal / lumenPrice
 }
 
-export function extractStellarLumensTickerData (total, currency, data) {
+export function extractStellarLumensTickerData (amount, currency, data) {
   var lumenPrice = data['price_' + currency.toLowerCase()]
   var currencyConversionDescription = '1XLM = ' + replace(formatDecimal7(lumenPrice), ',', '') + '' + currency
-  var invoicePriceInLumens = calculatePriceInLumens(total, lumenPrice)
+  var invoicePriceInLumens = calculatePriceInLumens(amount, lumenPrice)
   var invoicePriceInLumensFormatted = replace(formatDecimal7(invoicePriceInLumens), ',', '')
   var result = {
     amount: invoicePriceInLumensFormatted,
     description: currencyConversionDescription,
     lumenPrice: lumenPrice,
-    total: formatCurrency(constants.OPTIONS.total)
+    total: formatCurrency(constants.OPTIONS.amount)
   }
   return result
 }

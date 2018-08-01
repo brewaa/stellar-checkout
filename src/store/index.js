@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import merge from 'lodash.merge'
-import clone from 'lodash.clone'
+import { clone, merge } from 'lodash-es'
 
 import constants from 'app/constants'
 import { cultures } from 'l10n'
@@ -223,7 +222,7 @@ const mutations = {
       state.ticker.stellar.counter++
       state.ticker.stellar.data = data[0]
       state.ticker.stellar.updated = new Date(Date.now())
-      var meta = extractStellarLumensTickerData(state.options.total, state.options.currency, data[0])
+      var meta = extractStellarLumensTickerData(state.options.amount, state.options.currency, data[0])
       merge(state.ticker.stellar.meta, meta)
       state.transaction.amount = meta.amount
     }

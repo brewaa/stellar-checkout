@@ -13,6 +13,7 @@ export default {
     uri: null
   },
   OPTIONS: {
+    amount: null,
     asset: function () {
       return window.StellarSdk.Asset.native()
     },
@@ -32,8 +33,7 @@ export default {
     showTicker: false,
     stylesheet: null,
     timeout: null,
-    to: null,
-    total: null
+    to: null
   },
   STELLAR_SDK_URL: 'https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/0.8.2/stellar-sdk.js',
   TX_STATUS: {

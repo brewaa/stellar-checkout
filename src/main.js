@@ -3,7 +3,7 @@ import Icons from 'assets/icons'
 import constants from 'app/constants'
 // eslint-disable-next-line no-unused-vars
 import Css from 'sass/site.scss'
-import merge from 'lodash.merge'
+import { merge } from 'lodash-es'
 import l10n from 'l10n'
 // import {randomId} from 'utils/generator'
 import {setNetwork} from 'utils/stellarsdk.helper'
@@ -24,8 +24,8 @@ var StellarCheckout = {
     <script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js"></script>
     <script>
     StellarCheckout.render('#elem', {
-      currency: 'GBP',
-      total: '10',
+      amount: '9.97',
+      currency: 'AUD',
       to: 'GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI'
     });
     </script>
@@ -66,14 +66,7 @@ var StellarCheckout = {
             store,
             ...App
           })
-          return new Promise((resolve) => {
-            // syncStellarLumensTickerData()
-            //   .then(data => {
-            //     resolve(data)
-            //   })
-            resolve()
-          })
-            .then(l10n.init(options.lang))
+          return l10n.init(options.lang)
             .then(() => {
               app.$mount(options.selector)
             })

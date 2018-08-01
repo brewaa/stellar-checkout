@@ -34,6 +34,14 @@ module.exports = {
     libraryExport: 'default',
     libraryTarget: 'umd'
   },
+  externals: {
+    lodash: {
+      commonjs: 'lodash',
+      commonjs2: 'lodash',
+      amd: 'lodash',
+      root: '_'
+    }
+  },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
     alias: {

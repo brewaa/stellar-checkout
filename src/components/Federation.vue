@@ -1,5 +1,5 @@
 <template>
-  <div class="sco_component_group">
+  <div class="sco_component_group" v-show="!transaction.success">
      <FederationInput :query="options.to"
       :account="federation.accountTo.account"
       :error-msg="federationResponseToError"
@@ -25,7 +25,7 @@
   </div>
 </template>
 <script>
-import merge from 'lodash.merge'
+import { merge } from 'lodash-es'
 import { mapActions, mapState } from 'vuex'
 import FederationInput from 'components/FederationInput'
 export default {
@@ -49,7 +49,8 @@ export default {
     },
     ...mapState([
       'network',
-      'options'])
+      'options',
+      'transaction'])
   },
   data () {
     return {

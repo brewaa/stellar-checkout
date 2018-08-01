@@ -9,6 +9,7 @@
           width: 640px;
         }
       }</style></head><body><div class=container><form id=theForm action=/some-post-page method=post class=the_form><input id=trxid name=trxid type=hidden><div id=elem></div></form><script src=stellar-checkout.min.js></script><script>StellarCheckout.render('#elem', {
+        amount: '19.97',
         culture: 'en-AU',
         // currency: 'AUD',
         // from: 'GDT34VGS4JJE7STTVN3FLYCXRDEMIPJCPDLRZS26LVC2GVRTE5UYCRCO',
@@ -20,7 +21,6 @@
         showTicker: 1,
         // stylesheet: 'static/test.css',
         to: 'GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI',
-        total: '19.97',
         // onSubmit: function(err, result) {
         //    if (err) {
         //     // handle error condition

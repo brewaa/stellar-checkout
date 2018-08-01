@@ -1,5 +1,5 @@
 <template>
-  <div :class="['sco_component', 'sco_component--account_confirmation', { 'sco_loaded' : loaded, 'sco_component--collapsed': accountConfirmation.complete }]" v-show="federation.complete">
+  <div :class="['sco_component', 'sco_component--account_confirmation', { 'sco_loaded' : loaded, 'sco_component--collapsed': accountConfirmation.complete }]" v-show="federation.complete && !transaction.success">
     <div class="sco_component_i">
       <div class="sco_component_title">
         <div class="title">{{title}}</div>
@@ -81,7 +81,8 @@ export default {
     ...mapState({
       accountFrom: state => state.accountFrom,
       federationComplete: state => state.federation.complete,
-      networkName: state => state.network.name
+      networkName: state => state.network.name,
+      transaction: 'transaction'
     })
   },
   data () {

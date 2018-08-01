@@ -22,7 +22,6 @@ You have to serve the script over HTTPS to use Ledger Wallet. Ledger wallet uses
 - Currency conversion support for 32 fiat currencies
 - Federation client
 - Ledger Wallet integration
-- Localization (WIP)
 - Simple integration options
 - Demos & Documentation (WIP)
 - Open source
@@ -32,17 +31,16 @@ You have to serve the script over HTTPS to use Ledger Wallet. Ledger wallet uses
 
 ```javascript
 {
+  amount: {
+    type: Decimal,
+    required: true
+  },
   culture: {
     type: String,
     required: false,
     default: 'en',
     options: [
-      'en',
-      'es-ES',
-      'ja-JP',
-      'ko-KR',
-      'ru-RU',
-      'zh-CN'
+      'en'
     ]
   }, 
   currency: {
@@ -80,14 +78,6 @@ You have to serve the script over HTTPS to use Ledger Wallet. Ledger wallet uses
   stylesheet: {
     type: String,
     required: false
-  },
-  to: {
-    type: String,
-    required: true
-  },
-  total: {
-    type: Decimal,
-    required: true
   }
 }
 ```
@@ -107,8 +97,8 @@ See [Basic Configuration Example](https://github.com/brewaa/stellar-checkout/wik
 <script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js"></script>
 <script>
 StellarCheckout.render('#elem', {
+  amount: '10',
   currency: 'GBP',
-  total: '10',
   to: 'GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI'
 });
 </script>

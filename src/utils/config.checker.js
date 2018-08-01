@@ -2,6 +2,21 @@ import constants from 'app/constants'
 import {cultures} from 'l10n'
 import loader from './loader'
 
+function checkAmount (amount) {
+  return new Promise(function (resolve, reject) {
+    if (!amount) {
+      reject(new Error(constants.APP.name + ': [amount] is required;'))
+    }
+    if (isNaN(amount)) {
+      reject(new Error(constants.APP.name + ': [amount] must be numeric;'))
+    }
+    if (amount <= 0) {
+      reject(new Error(constants.APP.name + ': [amount] must be greater than zero;'))
+    }
+    resolve(true)
+  })
+};
+
 function checkCurrency (options) {
   var currency = options.currency || ''
   return new Promise(function (resolve, reject) {
@@ -87,34 +102,19 @@ function checkStyleSheet (stylesheet) {
   })
 };
 
-function checkTotal (total) {
-  return new Promise(function (resolve, reject) {
-    if (!total) {
-      reject(new Error(constants.APP.name + ': [total] is required;'))
-    }
-    if (isNaN(total)) {
-      reject(new Error(constants.APP.name + ': [total] must be numeric;'))
-    }
-    if (total <= 0) {
-      reject(new Error(constants.APP.name + ': [total] must be greater than zero;'))
-    }
-    resolve(true)
-  })
-};
-
 export function validateConfig (options) {
   return loader.Js(constants.STELLAR_SDK_URL)
     .then(checkStyleSheet(options.stylesheet))
     .then(function () {
       return Promise.all([
+        checkAmount(options.amount),
         checkSelector(options),
         checkCurrency(options),
         checkFrom(options.from),
         checkTo(options.to),
         checkCulture(options),
         checkMemo(options.memo),
-        checkOnSubmit(options.onSubmit),
-        checkTotal(options.total)
+        checkOnSubmit(options.onSubmit)
       ])
     })
 }

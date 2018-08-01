@@ -44,11 +44,11 @@
               <div class="sco_field_note" v-if="noteText">{{noteText}}</div>
             </section>
             <div class="sco_component--button_row">
-              <input class="sco_button"
+              <button class="sco_button"
                 @click="doFederation"
                 :disabled="!input || complete"
-                type="submit"
-                :value="buttonText" />
+                type="submit">{{buttonText}}
+              </button>
             </div>
           </form>
         </div>
@@ -60,7 +60,7 @@
     </div>
 </template>
 <script>
-import merge from 'lodash.merge'
+import { merge } from 'lodash-es'
 import { getPublicKey } from 'services/ledger.stellar'
 import { getFederatedAddress, isFederatedAddress } from 'utils/stellarsdk.helper'
 const FEDERATION_EVENT = 'federation'

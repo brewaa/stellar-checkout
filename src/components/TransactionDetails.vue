@@ -24,12 +24,6 @@
         </div>
       </div>
       <div class="sco_component_results">
-        <div class="sco_component_results_row">
-          <div>Merchant Ref</div>
-          <div class="sco_component_results_row_aside">
-            #{{ options.id }}
-          </div>
-        </div>
         <div class="sco_component_results_row" v-if="transaction.tx">
           <div>Hash</div>
           <div class="sco_component_results_row_aside">
@@ -52,6 +46,12 @@
           <div>From</div>
           <div class="sco_component_results_row_aside" v-if="federation.accountFrom.account">
             {{ federation.accountFrom.account.account_id }}
+          </div>
+        </div>
+        <div class="sco_component_results_row" v-if="options.id">
+          <div>Merchant Ref</div>
+          <div class="sco_component_results_row_aside">
+            #{{ options.id }}
           </div>
         </div>
         <div class="sco_component_results_row">
@@ -156,6 +156,13 @@ export default {
       'transactionSave'])
   },
   watch: {
+    // transaction (newVal) {
+    //   if (newVal.success) {
+    //     setTimeout(e => {
+    //       this.complete = false
+    //     }, 1000)
+    //   }
+    // }
     // paymentOptionsComplete (newVal) {
     //   if (!newVal) {
     //     return
