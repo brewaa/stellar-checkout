@@ -1,4 +1,4 @@
-3<template>
+<template>
   <div :class="['sco_component', 'sco_component--payment_options', { 'sco_loaded' : loaded, 'sco_component--collapsed': complete }]" v-show="accountConfirmationComplete && !transaction.success">
     <div class="sco_component_i">
       <div class="sco_component_title">
