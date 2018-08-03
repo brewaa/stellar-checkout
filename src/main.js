@@ -33,6 +33,7 @@ var StellarCheckout = {
    * @function render
    * @param {string} selector - The selector of the target element where StellarCheckout will be added to the DOM.
    * @param {object} opts - A configuration object.
+   * @param {decimal} opts.amount - The invoice/order amount in the fiat currency specified in opts.currency
    * @param {string} opts.culture - Options: ['en', 'es-ES', 'ja-JP', 'ko-KR', 'ru-RU', 'zh-CN']
    * @param {string} opts.currency - Options: ["AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "ZAR"]
    * @param {string} opts.from - The sender's address. A federated stellar address OR a public key.
@@ -44,7 +45,6 @@ var StellarCheckout = {
    * @param {boolean} opts.showTicker - Show the XLM ticker component Options: [true, false]
    * @param {string} opts.stylesheet - Allows overriding of the default styles. Must be a valid URL to a stylesheet document.
    * @param {string} opts.to - The recipient's address. A federated stellar address OR a public key.
-   * @param {decimal} opts.total - The invoice/order total in the fiat currency specified in opts.currency
    */
   render: function (selector, opts) {
     document.addEventListener('DOMContentLoaded', () => {
