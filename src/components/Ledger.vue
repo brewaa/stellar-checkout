@@ -57,7 +57,7 @@ export default {
     },
     error: {
       get () {
-        return this.$store.state.federation.accountFrom.ledgerError
+        return this.$store.state.federation.ledgerError
       },
       set (value) {
         this.ledgerErrorSet(value)
@@ -75,7 +75,7 @@ export default {
       confirmed: state => state.federation.accountFrom.ledgerConfirmed,
       publicKey: state => state.federation.accountFrom.publicKey,
       verified: state => state.federation.accountFrom.ledgerVerified,
-      version: state => state.federation.accountFrom.ledgerAppVersion
+      version: state => state.federation.ledgerAppVersion
     })
   },
   data () {

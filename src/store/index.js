@@ -5,7 +5,7 @@ import { clone, merge } from 'lodash-es'
 import constants from 'app/constants'
 import { cultures } from 'l10n'
 
-import { loadAccount, setNetwork } from 'utils/stellarsdk.helper'
+import { setNetwork } from 'utils/stellarsdk.helper'
 import { extractStellarLumensTickerData, fetchStellarLumensTickerData } from 'services/stellar.lumens.ticker'
 import { randomId } from 'utils/generator'
 
@@ -56,8 +56,54 @@ var federationResponse = {
   ledgerConfirmed: false,
   ledgerError: null,
   ledgerVerified: false,
+  ledgerVerificationInProgress: false,
   publicKey: null,
   stellarAddress: null
+}
+
+function toggleFederationComplete (complete) {
+  var fed = state.federation
+  var accFrom = fed.accountFrom
+  var accTo = fed.accountTo
+  var isComplete = !fed.error &&
+    accFrom.account !== null &&
+    accTo.account !== null &&
+    complete
+  state.federation.complete = isComplete
+  if (!isComplete) {
+    merge(state.federation, {
+      complete: false,
+      error: null
+    })
+    merge(state.accountConfirmation, {
+      complete: false,
+      error: null
+    })
+    merge(state.paymentOptions, {
+      complete: false,
+      error: null,
+      method: null
+    })
+    state.transaction.status = constants.TX_STATUS.federation
+  }
+}
+
+function toggleAccountConfirmationComplete (complete) {
+  state.accountConfirmation.complete = complete
+  if (complete) {
+    state.transaction.status = constants.TX_STATUS.payment_options
+  } else {
+    merge(state.accountConfirmation, {
+      complete: false,
+      error: null
+    })
+    merge(state.paymentOptions, {
+      complete: false,
+      error: null,
+      method: null
+    })
+    state.transaction.status = constants.TX_STATUS.account_confirmation
+  }
 }
 
 // STATE
@@ -72,7 +118,9 @@ const state = {
     accountFrom: clone(federationResponse),
     accountTo: clone(federationResponse),
     complete: false,
-    error: null
+    error: null,
+    ledgerAppVersion: null,
+    ledgerError: null
   },
   options: constants.OPTIONS,
   network: constants.NETWORK,
@@ -115,27 +163,22 @@ const mutations = {
       complete: false,
       error: null
     })
+    toggleAccountConfirmationComplete(false)
   },
   [ACCOUNT_CONFIRMATION_SET] (state, obj) {
     merge(state.accountConfirmation, obj)
-    if (obj.complete) {
-      state.transaction.status = constants.TX_STATUS.payment_options
-    } else {
-      merge(state.accountConfirmation, {
-        complete: false,
-        error: null
-      })
-      state.transaction.status = constants.TX_STATUS.account_confirmation
-    }
+    toggleAccountConfirmationComplete(obj.complete)
   },
   [ACCOUNT_CONFIRMATION_ERROR] (state, obj) {
     state.accountConfirmation.error = obj
   },
   [ACCOUNT_FROM_SET] (state, obj) {
-    state.federation.accountFrom.account = obj
+    merge(state.federation.accountFrom, obj)
+    toggleFederationComplete(obj.complete)
   },
   [ACCOUNT_TO_SET] (state, obj) {
-    state.federation.accountTo.account = obj
+    merge(state.federation.accountTo, obj)
+    toggleFederationComplete(obj.complete)
   },
   [CULTURE_SET] (state, obj) {
     state.settings.culture = obj
@@ -148,34 +191,11 @@ const mutations = {
       complete: false,
       error: null
     })
-    state.transaction.status = constants.TX_STATUS.federation
+    toggleFederationComplete(false)
   },
   [FEDERATION_SET] (state, obj) {
     merge(state.federation, obj)
-    var fed = state.federation
-    var accFrom = fed.accountFrom
-    var accTo = fed.accountTo
-    var isComplete = !obj.error &&
-      accFrom.account &&
-      accTo.account &&
-      obj.complete
-    state.federation.complete = isComplete
-    if (!isComplete) {
-      merge(state.federation, {
-        complete: false,
-        error: null
-      })
-      merge(state.accountConfirmation, {
-        complete: false,
-        error: null
-      })
-      merge(state.paymentOptions, {
-        complete: false,
-        error: null,
-        method: null
-      })
-      state.transaction.status = constants.TX_STATUS.federation
-    }
+    toggleFederationComplete(obj.complete)
   },
   [FEDERATION_ERROR_SET] (state, obj) {
     state.federation.error = obj
@@ -198,11 +218,11 @@ const mutations = {
     if (obj.complete) {
       switch (obj.method) {
         case 'byo':
-        case 'tx_signer':
-          state.transaction.status = constants.TX_STATUS.listening_for_transaction
-          break
         case 'ledger':
           state.transaction.status = constants.TX_STATUS.ledger_confirmation_required
+          break
+        case 'tx_signer':
+          state.transaction.status = constants.TX_STATUS.listening_for_transaction
           break
         default:
           state.transaction.status = constants.TX_STATUS.payment_options
@@ -277,20 +297,48 @@ const actions = ({
   accountConfirmationSet ({ commit }, obj) {
     commit(ACCOUNT_CONFIRMATION_SET, obj)
   },
-  accountFromSet ({ commit }, federationResponse) {
-    return loadAccount(state.network, federationResponse.publicKey)
-      .then(account => {
-        commit(ACCOUNT_FROM_SET, account)
-        return account
-      })
+  accountFromSet ({ commit }, obj) {
+    commit(ACCOUNT_FROM_SET, obj)
   },
-  accountToSet ({ commit }, federationResponse) {
-    return loadAccount(state.network, federationResponse.publicKey)
-      .then(account => {
-        commit(ACCOUNT_TO_SET, account)
-        return account
-      })
+  accountToSet ({ commit }, obj) {
+    commit(ACCOUNT_TO_SET, obj)
   },
+  // accountFromSet ({ commit }, federationResponse) {
+  //   console.log(federationResponse)
+  //   var accFrom = merge(state.federation.accountFrom, federationResponse)
+  //   accFrom.account = null
+  //   commit(FEDERATION_SET, {
+  //     accountFrom: accFrom,
+  //     complete: false
+  //   })
+  //   return loadAccount(state.network, federationResponse.publicKey)
+  //     .then(account => {
+  //       accFrom.account = account
+  //       accFrom.complete = true
+  //       commit(ACCOUNT_FROM_SET, accFrom)
+  //     })
+  // },
+  // accountToSet ({ commit }, federationResponse) {
+  //   console.log(federationResponse)
+  //   state.federation.complete = false
+  //   var accTo = merge(state.federation.accountTo, federationResponse)
+  //   return new Promise(function (resolve, reject) {
+  //     if (federationResponse.publicKey) {
+  //       return loadAccount(state.network, federationResponse.publicKey)
+  //         .then(account => {
+  //           accTo.account = account
+  //           commit(ACCOUNT_TO_SET, accTo)
+  //           commit(FEDERATION_SET, { complete: state.federation.accountTo.complete && state.federation.accountFrom.complete})
+  //           resolve(accTo)
+  //         }).catch(err => {
+  //           reject(err)
+  //         })
+  //     }
+  //     commit(ACCOUNT_TO_SET, accTo)
+  //     commit(FEDERATION_SET, { complete: state.federation.accountTo.complete && state.federation.accountFrom.complete})
+  //     resolve(accTo)
+  //   })
+  // },
   cultureSet ({ commit }, obj) {
     commit(CULTURE_SET, obj)
   },

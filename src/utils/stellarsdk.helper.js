@@ -140,7 +140,7 @@ export function verifyPayment (network, now, ledgerHeight, to, from, amount, mem
       console.log(`destinationKeyIsEqual ${destinationKeyIsEqual}`)
       console.log(`memoIsEqual ${memoIsEqual}`)
       console.log(`timeLooksGood ${timeLooksGood}`)
-      console.log(result)
+      console.log(`result ${result}`)
       return response
     }).catch(err => {
       console.log(err)

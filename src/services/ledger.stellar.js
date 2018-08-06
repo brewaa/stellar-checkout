@@ -41,7 +41,7 @@ export function getPublicKey (bip32Path, verifyKeyPair, confirmAddress) {
 
 export function getSignature (transaction, bip32Path) {
   bip32Path = bip32Path || '44\'/148\'/0\''
-  return open(10, 10).then(api => {
+  return open(10, 150).then(api => {
     return api.signTransaction(bip32Path, transaction.signatureBase()).then(result => {
       return result.signature
     })

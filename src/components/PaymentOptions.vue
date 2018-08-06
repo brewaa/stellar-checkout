@@ -1,13 +1,13 @@
 <template>
-  <div :class="['sco_component', 'sco_component--payment_options', { 'sco_loaded' : loaded, 'sco_component--collapsed': complete }]" v-show="accountConfirmationComplete && !transaction.success">
+  <div :class="[baseCssClass(), 'sco_component--payment_options']" v-show="accountConfirmationComplete && !transaction.success">
     <div class="sco_component_i">
       <div class="sco_component_title">
         <div class="title">3. Payment method</div>
         <div class="complete_icon">
-          <input type="checkbox" v-model="complete" :disabled="!paymentOptions.complete" />
+          <input type="checkbox" v-model="isComplete" :disabled="!isComplete" />
         </div>
       </div>
-      <div class="sco_component_results" v-show="loaded && !error">
+      <div class="sco_component_results" v-show="loaded">
         <div class="sco_component--button_row" v-show="ledgerConnected">
           <button class="sco_button" @click.prevent="signWithLedger">Sign with Ledger Wallet</button>
         </div>
@@ -18,7 +18,10 @@
           <button class="sco_button" @click.prevent="useAlternatePaymentMethod('byo')">Use my own wallet</button>
         </div>
       </div>
-      <div class="sco_component_error" v-if="loaded &&  error"><p>{{error}}</p></div>
+      <div class="sco_component_error" v-if="this.error">
+        <icon icon="exclamation-circle"></icon>
+        <span v-html="error"></span>
+      </div>
       <span class="sco_spinner">
         <icon icon="spinner" spin pulse></icon>
       </span>
@@ -31,6 +34,7 @@ import { mapActions, mapState } from 'vuex'
 import { getSignature } from 'services/ledger.stellar'
 import { buildTransaction, getPaymentsForAccount, submitTransaction, verifyPayment } from 'utils/stellarsdk.helper'
 import { useRedirectUrl } from 'utils/url'
+import BaseComponent from 'components/.base.component.mixin'
 export default {
   props: {
     ledgerConnected: {
@@ -38,22 +42,36 @@ export default {
     }
   },
   computed: {
-    complete: {
+    // complete: {
+    //   get () {
+    //     return this.$store.state.paymentOptions.complete
+    //   },
+    //   set (value) {
+    //     this.paymentOptionsSet({
+    //       complete: value
+    //     })
+    //   }
+    // },
+    // error: {
+    //   get () {
+    //     return this.$store.state.paymentOptions.error
+    //   },
+    //   set (value) {
+    //     this.paymentOptionsError(value)
+    //   }
+    // },
+    isComplete: {
       get () {
-        return this.$store.state.paymentOptions.complete
+        return this.complete
       },
       set (value) {
-        this.paymentOptionsSet({
-          complete: value
-        })
-      }
-    },
-    error: {
-      get () {
-        return this.$store.state.paymentOptions.error
-      },
-      set (value) {
-        this.paymentOptionsError(value)
+        this.complete = value
+        this.paymentOptionsSet({ complete: value })
+        if (!value) {
+          if (this.closeStream) {
+            this.closeStream()
+          }
+        }
       }
     },
     paymentOptions: {
@@ -82,21 +100,24 @@ export default {
   },
   data () {
     return {
+      asset: null,
       closeStream: null,
-      loaded: false,
       from: null,
-      to: null,
-      memo: null
+      memo: null,
+      to: null
     }
   },
+  mixins: [
+    BaseComponent
+  ],
   methods: {
     buildTransaction: async function () {
       if (this.validate()) {
+        this.amount = this.transaction.amount
         this.asset = this.transaction.asset()
         this.from = this.federation.accountFrom.account.account_id
-        this.to = this.federation.accountTo.account.account_id
-        this.amount = this.transaction.amount
         this.memo = this.transaction.memo
+        this.to = this.federation.accountTo.account.account_id
         this.transaction = {
           status: constants.TX_STATUS.created,
           tx: await buildTransaction(
@@ -110,6 +131,8 @@ export default {
       }
     },
     signWithLedger: function () {
+      this.complete = true
+      this.error = null
       this.paymentOptions = { // set early, it shows the instructions panel
         complete: true,
         error: null,
@@ -155,9 +178,10 @@ export default {
             reject(new Error('Bad signature'))
           })
         }).catch(err => {
-          console.log(err)
+          this.isComplete = false
+          this.error = err.message
           this.transaction = {
-            complete: true,
+            complete: false,
             error: err.toString(),
             status: constants.TX_STATUS.error
           }
@@ -189,6 +213,7 @@ export default {
       }
     },
     useAlternatePaymentMethod: function (method) {
+      this.complete = true
       this.timerStart()
       // Update state
       this.paymentOptions = {
@@ -202,6 +227,9 @@ export default {
         error: null,
         status: constants.TX_STATUS.listening_for_transaction,
         success: false
+      }
+      if (this.closeStream) {
+        this.closeStream()
       }
       return getPaymentsForAccount(this.network, this.to)
         .then(response => {
@@ -277,13 +305,15 @@ export default {
   },
   watch: {
     accountConfirmationComplete (newVal) {
+      if (!newVal) {
+        return
+      }
+      this.complete = false
       this.loaded = false
       this.paymentOptionsClear()
       this.buildTransaction()
         .then(() => {
-          setTimeout(() => {
-            this.loaded = true
-          }, 400)
+          this.loaded = true
         })
     },
     stellarTicker () {

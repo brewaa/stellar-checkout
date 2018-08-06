@@ -1,5 +1,5 @@
 <template>
-  <div :class="['sco_component', 'sco_component--payment_instructions', { 'sco_loaded' : loaded, 'sco_component--collapsed': complete }]" v-show="paymentOptionsComplete && !transaction.success">
+  <div :class="[baseCssClass(), 'sco_component--payment_instructions']" v-show="paymentOptionsComplete && !transaction.success">
     <div class="sco_component_i">
       <textarea ref="xdrEnvelope" class="sco_offscreen" v-model="transaction.xdr" readonly></textarea>
       <div class="sco_component_title">
@@ -61,7 +61,10 @@
           <a @click.prevent>Choose a different payment method</a>
         </div> -->
       </div>
-      <div class="sco_component_error" v-if="error"><p>{{error}}</p></div>
+      <div class="sco_component_error" v-if="error">
+          <icon icon="exclamation-circle"></icon>
+          <span v-html="error"></span>
+        </div>
       <span class="sco_spinner">
         <icon icon="spinner" spin pulse></icon>
       </span>
@@ -71,6 +74,7 @@
 <script>
 import { mapActions, mapState } from 'vuex'
 import { copy } from 'utils/clipboard'
+import BaseComponent from 'components/.base.component.mixin'
 export default {
   props: {
   },
@@ -98,6 +102,9 @@ export default {
       loaded: false
     }
   },
+  mixins: [
+    BaseComponent
+  ],
   methods: {
     copyXdrToClipboard: function () {
       copy.call(this, this.$refs.xdrEnvelope)

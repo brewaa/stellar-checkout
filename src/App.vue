@@ -20,7 +20,7 @@ import Ledger from 'components/Ledger'
 import AccountConfirmation from 'components/AccountConfirmation'
 import PaymentOptions from 'components/PaymentOptions'
 import PaymentInstructions from 'components/PaymentInstructions'
-import { mapActions, mapState } from 'vuex'
+import { mapState } from 'vuex'
 export default {
   name: 'App',
   components: {
@@ -51,8 +51,7 @@ export default {
     },
     onLedgerDisconnected: function (e) {
       this.ledgerConnected = false
-    },
-    ...mapActions(['accountToSet'])
+    }
   }
 }
 </script>

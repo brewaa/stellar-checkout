@@ -1,13 +1,13 @@
 <template>
-  <div :class="['sco_component', 'sco_component--account_confirmation', { 'sco_loaded' : loaded, 'sco_component--collapsed': accountConfirmation.complete }]" v-show="federation.complete && !transaction.success">
+  <div :class="[baseCssClass(), 'sco_component--account_confirmation']" v-show="federationComplete && !transaction.success">
     <div class="sco_component_i">
       <div class="sco_component_title">
         <div class="title">{{title}}</div>
         <div class="complete_icon">
-          <input type="checkbox" v-model="complete" :disabled="!complete" />
+          <input type="checkbox" v-model="isComplete" :disabled="!isComplete" />
         </div>
       </div>
-      <div class="sco_component_results" v-if="!error">
+      <div class="sco_component_results">
         <AccountDetails :account="federation.accountFrom.account" v-if="federation.accountFrom.account" />
         <form class="sco_form" v-show="federation.accountFrom.account">
           <div class="sco_component--button_row">
@@ -15,7 +15,10 @@
           </div>
         </form>
       </div>
-      <div class="sco_component_error" v-if="error"><p v-html="error"></p></div>
+      <div class="sco_component_error" v-if="error">
+        <icon icon="exclamation-circle"></icon>
+        <span v-html="error"></span>
+      </div>
       <span class="sco_spinner">
         <icon icon="spinner" spin pulse></icon>
       </span>
@@ -27,6 +30,7 @@ import constants from 'app/constants'
 import { mapActions, mapState } from 'vuex'
 import { getPublicKey } from 'services/ledger.stellar'
 import AccountDetails from 'components/AccountDetails'
+import BaseComponent from 'components/.base.component.mixin'
 export default {
   props: {
     ledgerConnected: {
@@ -52,22 +56,15 @@ export default {
       }
       return result
     },
-    complete: {
+    isComplete: {
       get () {
         return this.$store.state.accountConfirmation.complete
       },
       set (value) {
+        this.complete = value
         this.accountConfirmationSet({
           complete: value
         })
-      }
-    },
-    error: {
-      get () {
-        return this.$store.state.accountConfirmation.error
-      },
-      set (value) {
-        this.accountConfirmationError(value)
       }
     },
     federation: {
@@ -79,7 +76,7 @@ export default {
       }
     },
     ...mapState({
-      accountFrom: state => state.accountFrom,
+      accountFrom: state => state.federation.accountFrom,
       federationComplete: state => state.federation.complete,
       networkName: state => state.network.name,
       transaction: 'transaction'
@@ -88,10 +85,12 @@ export default {
   data () {
     return {
       awaitingConfirmation: false,
-      loaded: false,
       title: '2. Loading account details...'
     }
   },
+  mixins: [
+    BaseComponent
+  ],
   methods: {
     confirmClick: function (e) {
       e.preventDefault()
@@ -105,8 +104,11 @@ export default {
                 ledgerConfirmed: true
               }
             }
-            this.complete = true
+            this.accountConfirmation = {
+              complete: true
+            }
             this.awaitingConfirmation = false
+            this.complete = true
           })
           .catch(e => {
             console.log(e)
@@ -114,8 +116,11 @@ export default {
             this.awaitingConfirmation = false
           })
       } else {
-        this.complete = true
+        this.accountConfirmation = {
+          complete: true
+        }
         this.awaitingConfirmation = false
+        this.complete = true
       }
     },
     isLoaded: function () {
@@ -124,9 +129,8 @@ export default {
       this.transactionStatusUpdate(constants.TX_STATUS.account_confirmation)
     },
     ...mapActions([
-      'accountFromSet',
-      'accountConfirmationClear',
-      'accountConfirmationError',
+      // 'accountConfirmationClear',
+      // 'accountConfirmationError',
       'accountConfirmationSet',
       'federationSet',
       'ledgerErrorSet',
@@ -139,6 +143,7 @@ export default {
         return
       }
       this.loaded = false
+      this.complete = false
       setTimeout(() => {
         this.isLoaded()
       }, 400)

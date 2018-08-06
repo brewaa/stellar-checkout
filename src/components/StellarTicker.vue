@@ -34,7 +34,10 @@
           </div>
         </div>
       </div>
-      <div class="sco_component_error" v-if="error" v-html="error"></div>
+      <div class="sco_component_error" v-if="this.error">
+        <icon icon="exclamation-circle"></icon>
+        <span v-html="error"></span>
+      </div>
     </div>
   </div>
 </template>

@@ -8,7 +8,7 @@
 }
 </style>
 <template>
-  <div :class="['sco_component', 'sco_component--transaction_details', { 'sco_loaded' : loaded, 'sco_component--collapsed' : complete }]">
+  <div :class="[baseCssClass(), 'sco_component--transaction_details']">
     <div class="sco_component_i">
       <div class="sco_component_title">
         <div class="title">Transaction</div>
@@ -87,7 +87,10 @@
           </div>
         </div>
       </div>
-      <div class="sco_component_error" v-if="error" v-html="error"></div>
+      <div class="sco_component_error" v-if="this.error">
+        <icon icon="exclamation-circle"></icon>
+        <span v-html="error"></span>
+      </div>
       <div class="sco_component_error nottoowide" v-if="error">
         <button class="sco_button" href="#" @click.prevent="tryAgain">Try again...</button>
       </div>
@@ -98,6 +101,7 @@
 import constants from 'app/constants'
 import { formatCurrency } from 'utils/formatter'
 import { mapActions, mapState } from 'vuex'
+import BaseComponent from 'components/.base.component.mixin'
 import CountdownTimer from 'components/CountdownTimer'
 export default {
   props: {
@@ -116,7 +120,7 @@ export default {
       }
     },
     ...mapState({
-      error: state => state.transaction.error,
+      errorMsg: this.error = state => state.transaction.error,
       federation: 'federation',
       network: 'network',
       options: 'options',
@@ -140,6 +144,9 @@ export default {
       return formatCurrency(input)
     }
   },
+  mixins: [
+    BaseComponent
+  ],
   methods: {
     onCountdownEnd: function () {
       this.timerExpired()
