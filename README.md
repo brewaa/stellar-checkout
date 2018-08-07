@@ -109,7 +109,7 @@ StellarCheckout.render('#elem', {
 More examples can be found in the wiki. [View Examples](https://github.com/brewaa/stellar-checkout/wiki/Examples)
 
 ## Disclaimer
-StellarCheckout is not affiliated nor endorsed by the Stellar Development Foundation. 
+StellarCheckout is not affiliated with nor endorsed by the Stellar Development Foundation. 
 StellarCheckout is an independant open source contribution to the Stellar Build Challenge.
 
 ## Tip Jar
