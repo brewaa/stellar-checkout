@@ -110,7 +110,7 @@ More examples can be found in the wiki. [View Examples](https://github.com/brewa
 
 ## Disclaimer
 StellarCheckout is not affiliated with nor endorsed by the Stellar Development Foundation. 
-StellarCheckout is an independant open source contribution to the Stellar Build Challenge.
+StellarCheckout is an independent open source contribution to the Stellar Build Challenge.
 
 ## Tip Jar
 
