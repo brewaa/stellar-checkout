@@ -103,7 +103,7 @@ function checkStyleSheet (stylesheet) {
 };
 
 export function validateConfig (options) {
-  return loader.Js(constants.STELLAR_SDK_URL)
+  return loader.Js(constants.STELLAR_SDK_URL, window.StellarSdk)
     .then(checkStyleSheet(options.stylesheet))
     .then(function () {
       return Promise.all([

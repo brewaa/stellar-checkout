@@ -3,7 +3,7 @@ import Icons from 'assets/icons'
 import constants from 'app/constants'
 // eslint-disable-next-line no-unused-vars
 import Css from 'sass/site.scss'
-import { merge } from 'lodash-es'
+import { clone, merge } from 'lodash-es'
 import l10n from 'l10n'
 import {setNetwork} from 'utils/stellarsdk.helper'
 import store from 'store'
@@ -43,11 +43,12 @@ var StellarCheckout = {
    * @param {boolean} opts.showNetworkSelector - Shows the network selector component. Options: [true, false]
    * @param {boolean} opts.showTicker - Show the XLM ticker component Options: [true, false]
    * @param {string} opts.stylesheet - Allows overriding of the default styles. Must be a valid URL to a stylesheet document.
-   * @param {string} opts.to - The recipient's address. A federated stellar address OR a public key.
+   * @param {string} opts.to - The recipient's address. A federated stellar address OR a public key. This should be set to an account controlled by the merchant.
    */
   render: function (selector, opts) {
     document.addEventListener('DOMContentLoaded', () => {
-      var options = merge(constants.OPTIONS, opts)
+      var o = clone(opts)
+      var options = merge(constants.OPTIONS, o)
       options.selector = selector
       validateConfig(options)
         .then(e => {

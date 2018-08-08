@@ -24,6 +24,7 @@
         <input id="trxid" name="trxid" type="hidden" />
         <div id="elem"></div>
       </form>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/0.8.2/stellar-sdk.js"></script>
       <script src="stellar-checkout.min.js"></script>
       <script>
       StellarCheckout.render('#elem', {
@@ -32,7 +33,6 @@
         // currency: 'AUD',
         // from: 'GDT34VGS4JJE7STTVN3FLYCXRDEMIPJCPDLRZS26LVC2GVRTE5UYCRCO',
         id: '000110097',
-        memo: 'SCO TEST',
         network: 'public',
         // redirectUrl: '/some-other-page?refid=123',
         showNetworkSelector: true,
