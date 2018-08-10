@@ -1,7 +1,7 @@
 <template>
   <div :class="[baseCssClass(), 'sco_component--federation']">
       <div class="sco_component_i">
-        <div class="sco_component_title">
+        <div class="sco_component_header">
           <div class="title">{{title}}</div>
           <div class="complete_icon">
             <input type="checkbox" v-model="isComplete" :disabled="!isComplete" />
@@ -30,7 +30,7 @@
                   ref="input"
                   type="text"
                   v-model="input" />
-                <span class="sco_spinner">
+                <span class="sco_field_input_spinner">
                   <icon icon="spinner" spin pulse></icon>
                 </span>
               </div>
@@ -45,7 +45,7 @@
             </div>
           </form>
         </div>
-        <span class="sco_spinner">
+        <span class="sco_component_spinner">
           <icon icon="spinner" spin pulse></icon>
         </span>
         <div class="sco_component_error" v-if="error">

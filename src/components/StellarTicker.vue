@@ -1,9 +1,9 @@
 <template>
   <div :class="['sco_component', 'sco_component--ticker', { 'sco_loaded': loaded, 'sco_component--collapsed': complete }]">
     <div class="sco_component_i">
-      <div class="sco_component_title">
+      <div class="sco_component_header">
         <div class="title">Ticker</div>
-        <span class="sco_spinner">
+        <span class="sco_component_spinner">
           <icon icon="spinner" spin pulse></icon>
         </span>
         <div class="feature" v-show="loaded">
@@ -17,9 +17,9 @@
         </div>
       </div>
       <div class="sco_component_results">
-        <div class="sco_component_results_row">
+        <div class="sco_component_row">
           <div>{{ stellarTicker.data.id }}</div>
-          <div class="sco_component_results_row_aside">
+          <div class="sco_component_row_aside">
             <span class="currency_name sco_hidden">Stellar</span>
             <span class="currency">XLM</span>
             <span class="separator">|</span>
@@ -27,9 +27,9 @@
             <span class="currency">BTC</span>
           </div>
         </div>
-        <div class="sco_component_results_row sco_component_results_row--meta">
+        <div class="sco_component_row sco_component_row--meta">
           <div>Updated</div>
-          <div class="sco_component_results_row_aside">
+          <div class="sco_component_row_aside">
             {{stellarTicker.updated | date }}
           </div>
         </div>

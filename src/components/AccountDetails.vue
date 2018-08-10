@@ -1,17 +1,14 @@
 <template>
-  <div class="sco_component_results_data">
-    <div class="sco_component_results_heading">
-      <div>AccountID</div>
-      <div>{{account.id }}</div>
+  <div class="sco_component--account_details">
+    <div class="sco_component_row">
+      <div>ID</div>
+      <div class="sco_component_row_aside">{{account.id }}</div>
     </div>
-    <div class="sco_balances">
-      <div class="sco_component_heading">Balances</div>
-      <div class="sco_balances_balance" v-for="bal in filteredBalances" :key="bal.asset_code">
-        <div class="sco_balances_balance_asset_code">{{bal | assetCode}}</div>
-        <div class="sco_balances_balance_bal">
-          {{bal.balance | decimal7}}
-          <span class="sco_balances_balance_bal_asset_code">{{bal | assetCode}}</span>
-        </div>
+    <div class="sco_component_results_heading"><div>Balances</div></div>
+    <div class="sco_component_row" v-for="bal in filteredBalances" :key="bal.asset_code">
+      <div>{{bal | assetCode}}</div>
+      <div class="sco_component_row_aside">
+        {{bal.balance | decimal7}}<span class="currency">{{bal | assetCode}}</span>
       </div>
     </div>
   </div>

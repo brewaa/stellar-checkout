@@ -60,15 +60,6 @@ function checkCulture (options) {
   })
 };
 
-function checkMemo (memo) {
-  return new Promise(function (resolve, reject) {
-    if (memo && typeof memo !== 'string') {
-      reject(new Error(constants.APP.name + ': [memo] field must be a string;'))
-    }
-    resolve(true)
-  })
-};
-
 function checkOnSubmit (onSubmit) {
   return new Promise(function (resolve, reject) {
     if (onSubmit && typeof onSubmit !== 'function') {
@@ -103,7 +94,7 @@ function checkStyleSheet (stylesheet) {
 };
 
 export function validateConfig (options) {
-  return loader.Js(constants.STELLAR_SDK_URL, window.StellarSdk)
+  return loader.Js(constants.STELLAR_SDK_URL)
     .then(checkStyleSheet(options.stylesheet))
     .then(function () {
       return Promise.all([
@@ -113,7 +104,6 @@ export function validateConfig (options) {
         checkFrom(options.from),
         checkTo(options.to),
         checkCulture(options),
-        checkMemo(options.memo),
         checkOnSubmit(options.onSubmit)
       ])
     })

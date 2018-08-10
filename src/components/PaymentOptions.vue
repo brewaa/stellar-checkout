@@ -1,7 +1,7 @@
 <template>
   <div :class="[baseCssClass(), 'sco_component--payment_options']" v-show="accountConfirmationComplete && !transaction.success">
     <div class="sco_component_i">
-      <div class="sco_component_title">
+      <div class="sco_component_header">
         <div class="title">3. Payment method</div>
         <div class="complete_icon">
           <input type="checkbox" v-model="isComplete" :disabled="!isComplete" />
@@ -22,7 +22,7 @@
         <icon icon="exclamation-circle"></icon>
         <span v-html="error"></span>
       </div>
-      <span class="sco_spinner">
+      <span class="sco_component_spinner">
         <icon icon="spinner" spin pulse></icon>
       </span>
     </div>

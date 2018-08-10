@@ -46,12 +46,10 @@
             &--input {
                 height: 2.8rem;
             }
-            &--working {
-                .sco_spinner {
-                    display: block;
-                }
+            &--working &_spinner {
+                display: block;
             }
-            .sco_spinner {
+            &_spinner {
                 display: none;
                 position: absolute;
                 top: 30%;

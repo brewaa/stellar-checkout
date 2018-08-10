@@ -2,14 +2,14 @@
   <div :class="[baseCssClass(), 'sco_component--payment_instructions']" v-show="paymentOptionsComplete && !transaction.success">
     <div class="sco_component_i">
       <textarea ref="xdrEnvelope" class="sco_offscreen" v-model="transaction.xdr" readonly></textarea>
-      <div class="sco_component_title">
+      <div class="sco_component_header">
         <div class="title">4. Instructions</div>
       </div>
       <div class="sco_component_results" v-show="loaded">
-        <div class="sco_component_text" v-show="paymentOptions.method === 'ledger'">
+        <div class="sco_component_text" v-if="paymentOptions.method === 'ledger'">
           <p>Please confirm the transaction on your Ledger Wallet device</p>
         </div>
-        <div class="sco_component_text" v-show="paymentOptions.method === 'tx_signer'">
+        <div class="sco_component_text" v-if="paymentOptions.method === 'tx_signer'">
           <p>The transaction XDR envelope will be copied to your clipboard. Paste this into the textarea provided in the Transaction Signer.</p>
           <div class="sco_component--button_row">
             <button class="sco_button" @click.prevent="goToTxSigner">Go to Transaction Signer</button>
@@ -19,31 +19,31 @@
           <div class="sco_component_text">
             <p>To complete this transaction, send a payment with the following details:</p>
           </div>
-          <div class="sco_component_results_heading" v-if="federation.accountTo.account">
+          <div class="sco_component_row" v-if="federation.accountTo.account">
             <div>To</div>
-            <div>{{federation.accountTo.account.account_id}}</div>
+            <div class="sco_component_row_aside">{{federation.accountTo.account.account_id}}</div>
           </div>
-          <div class="sco_component_results_heading">
+          <div class="sco_component_row">
             <div>Amount</div>
-            <div>{{transaction.amount}}</div>
+            <div class="sco_component_row_aside">{{transaction.amount}}</div>
           </div>
-          <div class="sco_component_results_heading">
+          <div class="sco_component_row">
             <div>Asset</div>
-            <div>{{transaction.asset().code}}</div>
+            <div class="sco_component_row_aside">{{transaction.asset().code}}</div>
           </div>
-          <div class="sco_component_results_heading">
+          <div class="sco_component_row">
             <div>Memo</div>
-            <div>{{transaction.memo}}</div>
+            <div class="sco_component_row_aside">{{transaction.memo}}</div>
           </div>
-          <div class="sco_component_results_heading">
-            <div>Memo type</div>
-            <div>{{transaction.memoType()}}</div>
+          <div class="sco_component_row">
+            <div>Memo Type</div>
+            <div class="sco_component_row_aside">{{transaction.memoType()}}</div>
           </div>
-          <div class="sco_component_results_heading" v-if="federation.accountFrom.account">
+          <div class="sco_component_row" v-if="federation.accountFrom.account">
             <div>From</div>
-            <div>{{federation.accountFrom.account.account_id}}</div>
+            <div class="sco_component_row_aside">{{federation.accountFrom.account.account_id}}</div>
           </div>
-          <div class="sco_component_results_heading">
+          <div class="sco_component_row">
             <div>Transaction XDR</div>
           </div>
           <div class="sco_component_qrcode">
@@ -65,7 +65,7 @@
           <icon icon="exclamation-circle"></icon>
           <span v-html="error"></span>
         </div>
-      <span class="sco_spinner">
+      <span class="sco_component_spinner">
         <icon icon="spinner" spin pulse></icon>
       </span>
     </div>

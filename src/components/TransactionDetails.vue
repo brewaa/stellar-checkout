@@ -10,7 +10,7 @@
 <template>
   <div :class="[baseCssClass(), 'sco_component--transaction_details']">
     <div class="sco_component_i">
-      <div class="sco_component_title">
+      <div class="sco_component_header">
         <div class="title">Transaction</div>
         <div class="feature">
           <span class="price">{{options.amount | currency }}</span>
@@ -21,55 +21,53 @@
         </div>
       </div>
       <div class="sco_component_results">
-        <div class="sco_component_results_row" v-if="transaction.tx">
+        <div class="sco_component_row" v-if="transaction.tx">
           <div>Hash</div>
-          <div class="sco_component_results_row_aside">
+          <div class="sco_component_row_aside">
             {{transaction.hash}}
           </div>
         </div>
-        <div class="sco_component_results_row sco_offscreen" v-if="transaction.xdr">
+        <div class="sco_component_row sco_offscreen" v-if="transaction.xdr">
           <div>TX XDR</div>
-          <div class="sco_component_results_row_aside">
+          <div class="sco_component_row_aside">
             <textarea ref="xdrEnvelope" v-model="transaction.xdr" readonly></textarea>
           </div>
         </div>
-        <div class="sco_component_results_row">
+        <div class="sco_component_row">
           <div>To</div>
-          <div class="sco_component_results_row_aside" v-if="federation.accountTo.account">
+          <div class="sco_component_row_aside" v-if="federation.accountTo.account">
             {{ federation.accountTo.account.account_id }}
           </div>
         </div>
-        <div class="sco_component_results_row">
+        <div class="sco_component_row">
           <div>From</div>
-          <div class="sco_component_results_row_aside" v-if="federation.accountFrom.account">
+          <div class="sco_component_row_aside" v-if="federation.accountFrom.account">
             {{ federation.accountFrom.account.account_id }}
           </div>
         </div>
-        <div class="sco_component_results_row" v-if="options.id">
+        <div class="sco_component_row" v-if="options.id">
           <div>Merchant Ref</div>
-          <div class="sco_component_results_row_aside">
+          <div class="sco_component_row_aside">
             #{{ options.id }}
           </div>
         </div>
-        <div class="sco_component_results_row">
+        <div class="sco_component_row">
           <div>Amount</div>
-          <div class="sco_component_results_row_aside">
+          <div class="sco_component_row_aside">
             {{options.amount | currency}}
             <span class="currency">{{ options.currency }}</span>
           </div>
         </div>
-        <div class="sco_component_results_row">
+        <div class="sco_component_row">
           <div>Total</div>
-          <div class="sco_component_results_row_aside">
+          <div class="sco_component_row_aside">
             {{stellarTicker.meta.amount}}
             <span class="currency">{{transaction.asset().code}}</span>
           </div>
         </div>
-      </div>
-      <div class="sco_component_footer">
-        <div class="sco_component_results_row">
+        <div class="sco_component_row">
           <div>Status</div>
-          <div class="sco_component_results_row_aside">
+          <div class="sco_component_row_aside">
             <span class="spinner" v-if="paymentOptions.method && !transaction.complete">
               <icon icon="spinner" spin pulse></icon>
             </span>
@@ -77,11 +75,9 @@
             {{transaction.status.title}}
           </div>
         </div>
-      </div>
-      <div class="sco_component_footer" v-if="timer.durationInSeconds > 0">
-        <div class="sco_component_results_row">
+        <div class="sco_component_row sco_component_footer" v-if="timer.durationInSeconds > 0">
           <div>Time remaining</div>
-          <div class="sco_component_results_row_aside">
+          <div class="sco_component_row_aside">
             <CountdownTimer :time="timer.durationInSeconds * 1000"
               v-on:countdownend="onCountdownEnd"></CountdownTimer>
           </div>
@@ -159,39 +155,6 @@ export default {
     ...mapActions([
       'timerExpired',
       'transactionSave'])
-  },
-  watch: {
-    // transaction (newVal) {
-    //   if (newVal.success) {
-    //     setTimeout(e => {
-    //       this.complete = false
-    //     }, 1000)
-    //   }
-    // }
-    // paymentOptionsComplete (newVal) {
-    //   if (!newVal) {
-    //     return
-    //   }
-    //   console.log('paymentOptionsComplete')
-    //   // this.error = null
-    //   // this.loaded = true
-    //   setTimeout(e => {
-    //     this.transaction = {
-    //       error: null,
-    //       status: this.paymentOptions.method === 'ledger' ? constants.TX_STATUS.ledger_in_progress : constants.TX_STATUS.listening_for_transaction
-    //     }
-    //   }, 400)
-    // },
-    // transactionSuccess (newVal) {
-    //   if (newVal) {
-    //     fetchTransaction(this.network, this.transactionDetails.result.hash)
-    //       .then(tx => {
-    //         this.transaction = {
-    //           result: tx
-    //         }
-    //       })
-    //   }
-    // }
   }
 }
 </script>
