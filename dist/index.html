@@ -22,17 +22,17 @@
         showTicker: 1,
         // stylesheet: 'static/test.css',
         to: 'GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI',
-        onSubmit: function(err, result) {
-           if (err) {
-            // handle error condition
-            console.log(error);
-            return;
-           }
-           // result contains transaction info
-           // manually submit the form
-           console.log(result);
-           var trxid = theForm.querySelector('#trxid');
-           trxid.value = result.transaction_hash;
-           // theForm.submit();
-         }
+        // onSubmit: function(err, result) {
+        //    if (err) {
+        //     // handle error condition
+        //     console.log(error);
+        //     return;
+        //    }
+        //    // result contains transaction info
+        //    // manually submit the form
+        //    console.log(result);
+        //    var trxid = theForm.querySelector('#trxid');
+        //    trxid.value = result.transaction_hash;
+        //    theForm.submit();
+        //  }
       });</script></div></body></html>

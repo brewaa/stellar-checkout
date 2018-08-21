@@ -38,8 +38,8 @@ var StellarCheckout = {
    * @param {string} opts.from - The sender's address. A federated stellar address OR a public key.
    * @param {string} opts.id - An optional reference ID supplied by the merchant
    * @param {string} opts.network - The Stellar.org network. Options: [ 'custom', public', 'test' ]
-   * @param {string} opts.networkUri - A valid URI of a custom Horizon server end point
    * @param {string} opts.networkPassphrase - A pass phrase for the custom network
+   * @param {string} opts.networkUri - A valid URI of a custom Horizon server end point
    * @param {callback} opts.onSubmit - A callback function that will contain the transaction results. Uses error first callback pattern.
    * @param {string} opts.redirectUrl - A URL that the user will be redirected to upon completing a successful transaction.
    * @param {boolean} opts.showNetworkSelector - Shows the network selector component. Options: [true, false]
