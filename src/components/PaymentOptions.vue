@@ -207,7 +207,6 @@ export default {
         }, 800)
       } else if (this.options.onSubmit && typeof this.options.onSubmit === 'function') {
         // Call the onSubmit callback
-        console.log(result)
         this.options.onSubmit.call(this, null, result)
       } else {
         // Show the default payment complete dialog
