@@ -65,22 +65,22 @@
             <span class="currency">{{transaction.asset().code}}</span>
           </div>
         </div>
-        <div class="sco_component_row">
-          <div>Status</div>
-          <div class="sco_component_row_aside">
-            <span class="spinner" v-if="paymentOptions.method && !transaction.complete">
-              <icon icon="spinner" spin pulse></icon>
-            </span>
-            <span v-if="transaction.success" v-html="tick"></span>
-            {{transaction.status.title}}
-          </div>
+      </div>
+      <div class="sco_component_row sco_component_row--footer">
+        <div>Status</div>
+        <div class="sco_component_row_aside">
+          <span class="spinner" v-if="paymentOptions.method && !transaction.complete">
+            <icon icon="spinner" spin pulse></icon>
+          </span>
+          <span v-if="transaction.success" v-html="tick"></span>
+          {{transaction.status.title}}
         </div>
-        <div class="sco_component_row sco_component_footer" v-if="timer.durationInSeconds > 0">
-          <div>Time remaining</div>
-          <div class="sco_component_row_aside">
-            <CountdownTimer :time="timer.durationInSeconds * 1000"
-              v-on:countdownend="onCountdownEnd"></CountdownTimer>
-          </div>
+      </div>
+      <div class="sco_component_row sco_component_row--footer" v-if="timer.durationInSeconds > 0">
+        <div>Time remaining</div>
+        <div class="sco_component_row_aside">
+          <CountdownTimer :time="timer.durationInSeconds * 1000"
+            v-on:countdownend="onCountdownEnd"></CountdownTimer>
         </div>
       </div>
       <div class="sco_component_error" v-if="this.error">

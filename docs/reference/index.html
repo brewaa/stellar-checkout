@@ -124,9 +124,17 @@
   },
   network: {
     type: String,
-    required: false
+    required: false,
     default: 'test',
-    options: ['public', 'test']
+    options: [ 'custom', 'public', 'test' ]
+  },
+  networkUri: {
+    type: String,
+    required: [network] === 'custom'
+  },
+  networkPassphrase: {
+    type: String,
+    required: [network] === 'custom'
   },
   onSubmit: {
     type: function,

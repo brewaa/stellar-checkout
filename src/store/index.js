@@ -35,6 +35,8 @@ const PAYMENT_OPTIONS_SET = 'PAYMENT_OPTIONS_SET'
 
 const NETWORK_SET = 'NETWORK_SET'
 
+const OPTIONS_SET = 'OPTIONS_SET'
+
 const TICKER_STELLAR_SET = 'TICKER_STELLAR_SET'
 const TICKER_STELLAR_ERROR_SET = 'TICKER_STELLAR_ERROR_SET'
 
@@ -241,8 +243,11 @@ const mutations = {
     state.paymentOptions.error = obj
   },
   [NETWORK_SET] (state, obj) {
-    var network = setNetwork(obj)
+    var network = setNetwork(obj.name, obj.uri, obj.passphrase)
     state.network = network
+  },
+  [OPTIONS_SET] (state, obj) {
+    merge(state.options, obj)
   },
   [TICKER_STELLAR_SET] (state, obj) {
     var data = obj.data
@@ -371,6 +376,9 @@ const actions = ({
   },
   networkSet ({ commit }, obj) {
     commit(NETWORK_SET, obj)
+  },
+  optionsSet ({ commit }, obj) {
+    commit(OPTIONS_SET, obj)
   },
   stellarTickerUpdate ({ commit }, obj) {
     if (!obj) {

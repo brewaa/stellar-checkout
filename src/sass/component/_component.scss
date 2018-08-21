@@ -93,8 +93,9 @@ $green: #3ba776;
     }
 
     /* Footer */
-    &_footer {
-    }
+    // &_footer {
+    //     border-top: $layout-border;
+    // }
 
     /* Results */
     &_results {
@@ -131,6 +132,10 @@ $green: #3ba776;
         grid-template-columns: 12% 1fr;
         padding: $padding;
         text-transform: uppercase;
+        &--footer {
+            border-bottom: 0;
+            border-top: $layout-border;
+        }
         &--meta {
             color: $grey;
         }
@@ -198,16 +203,20 @@ $green: #3ba776;
         border: $layout-border;
         border-radius: $border-radius;
         line-height: 1.8;
+        overflow: hidden;
         > * {
             background: $white;
+            border-left: $layout-border;
             color: $black;
             min-width: 4rem;
             padding: 0 $padding-halved;
             text-align: center;
         }
         a {
-            border-radius: .2rem;
             text-decoration: none;
+            &:first-child {
+                border-left: 0;
+            }
         }
         a.sco_selector_value--selected {
             background: $green;

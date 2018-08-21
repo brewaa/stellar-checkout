@@ -22,6 +22,7 @@ You have to serve the script over HTTPS to use Ledger Wallet. Ledger wallet uses
 - Currency conversion support for 32 fiat currencies
 - Federation client
 - Ledger Wallet integration
+- Multiple networks (test, public and custom)
 - Simple integration options
 - Demos & Documentation (WIP)
 - Open source
@@ -55,9 +56,17 @@ You have to serve the script over HTTPS to use Ledger Wallet. Ledger wallet uses
   },
   network: {
     type: String,
-    required: false
+    required: false,
     default: 'test',
-    options: ['public', 'test']
+    options: [ 'custom', 'public', 'test' ]
+  },
+  networkUri: {
+    type: String,
+    required: [network] === 'custom'
+  },
+  networkPassphrase: {
+    type: String,
+    required: [network] === 'custom'
   },
   onSubmit: {
     type: function,

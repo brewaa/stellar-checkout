@@ -36,6 +36,29 @@ function checkFrom (from) {
   })
 };
 
+function checkNetwork (network, networkUri, networkPassphrase) {
+  return new Promise(function (resolve, reject) {
+    var networks = [
+      'custom',
+      'public',
+      'test'
+    ]
+    var fallbackTxt = 'falling back to [test] network'
+    if (network && (typeof network !== 'string' || networks.indexOf(network) === -1)) {
+      console.log(`${constants.APP.name}: [network] unsupported; allowed networks: ${networks.join(', ')}; ${fallbackTxt}`)
+    }
+    if (network && typeof network === 'string' && network === 'custom') {
+      if (!networkUri || typeof networkUri !== 'string') {
+        console.log(`${constants.APP.name}: [networkUri] is required for custom networks; ${fallbackTxt}`)
+      }
+      if (!networkPassphrase || typeof networkPassphrase !== 'string') {
+        console.log(`${constants.APP.name}: [networkPassphrase] is required for custom networks; ${fallbackTxt}`)
+      }
+    }
+    resolve(true)
+  })
+};
+
 function checkTo (to) {
   return new Promise(function (resolve, reject) {
     if (to && typeof to !== 'string' && !window.StellarSdk.StrKey.isValidEd25519PublicKey(to)) {
@@ -102,6 +125,7 @@ export function validateConfig (options) {
         checkSelector(options),
         checkCurrency(options),
         checkFrom(options.from),
+        checkNetwork(options.network, options.networkUri, options.networkPassphrase),
         checkTo(options.to),
         checkCulture(options),
         checkOnSubmit(options.onSubmit)

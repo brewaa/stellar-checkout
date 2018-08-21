@@ -171,7 +171,7 @@ export default {
                   this.transactionResultsUpdate(this.transaction)
                   setTimeout(() => {
                     resolve(transaction)
-                    this.submitHandler(null, transaction)
+                    this.submitHandler(null, this.$store.state)
                   }, 800)
                 })
             }
@@ -207,6 +207,7 @@ export default {
         }, 800)
       } else if (this.options.onSubmit && typeof this.options.onSubmit === 'function') {
         // Call the onSubmit callback
+        console.log(result)
         this.options.onSubmit.call(this, null, result)
       } else {
         // Show the default payment complete dialog
@@ -252,7 +253,7 @@ export default {
                     }
                     this.transactionResultsUpdate(this.transaction)
                     setTimeout(() => {
-                      this.submitHandler(null, transaction)
+                      this.submitHandler(null, this.$store.state)
                     }, 800)
                     this.closeStream()
                     this.timerStop()

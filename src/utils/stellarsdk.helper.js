@@ -86,21 +86,29 @@ export function getPaymentsForAccount (network, publicKey) {
     })
 }
 
-export function setNetwork (network) {
-  network = network || 'test'
+export function setNetwork (networkName, networkUri, networkPassphrase) {
+  var n = networkName || 'test'
+  var name
   var uri
-  var stellarNetwork = window.StellarSdk.Network
-  if ((typeof network === 'string' && network.toLowerCase() === 'production') ||
-    (typeof network === 'string' && network.toLowerCase() === 'public')) {
+  var sn = window.StellarSdk.Network
+  if (typeof n === 'string' && n.toLowerCase() === 'custom' &&
+    typeof networkUri === 'string' && typeof networkPassphrase === 'string') {
+    name = 'custom'
+    uri = networkUri
+    sn.use(new window.StellarSdk.Network(networkPassphrase))
+  } else if ((typeof n === 'string' && n.toLowerCase() === 'production') ||
+    (typeof n === 'string' && n.toLowerCase() === 'public')) {
+    name = 'public'
     uri = 'https://horizon.stellar.org'
-    stellarNetwork.usePublicNetwork()
+    sn.usePublicNetwork()
   } else {
+    name = 'test'
     uri = 'https://horizon-testnet.stellar.org'
-    stellarNetwork.useTestNetwork()
+    sn.useTestNetwork()
   }
   return {
-    name: network,
-    network: stellarNetwork.current(),
+    name: name,
+    network: sn.current(),
     uri: uri
   }
 }

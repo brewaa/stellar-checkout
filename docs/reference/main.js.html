@@ -124,7 +124,9 @@ var StellarCheckout = {
    * @param {string} opts.currency - Options: ["AUD", "BRL", "CAD", "CHF", "CLP", "CNY", "CZK", "DKK", "EUR", "GBP", "HKD", "HUF", "IDR", "ILS", "INR", "JPY", "KRW", "MXN", "MYR", "NOK", "NZD", "PHP", "PKR", "PLN", "RUB", "SEK", "SGD", "THB", "TRY", "TWD", "ZAR"]
    * @param {string} opts.from - The sender's address. A federated stellar address OR a public key.
    * @param {string} opts.id - An optional reference ID supplied by the merchant
-   * @param {string} opts.network - The Stellar.org network. Options: [ 'public', 'test']
+   * @param {string} opts.network - The Stellar.org network. Options: [ 'custom', public', 'test' ]
+   * @param {string} opts.networkUri - A valid URI of a custom Horizon server end point
+   * @param {string} opts.networkPassphrase - A pass phrase for the custom network
    * @param {callback} opts.onSubmit - A callback function that will contain the transaction results. Uses error first callback pattern.
    * @param {string} opts.redirectUrl - A URL that the user will be redirected to upon completing a successful transaction.
    * @param {boolean} opts.showNetworkSelector - Shows the network selector component. Options: [true, false]
@@ -147,7 +149,7 @@ var StellarCheckout = {
           Vue.component(VueQrcode.name, VueQrcode)
           Vue.prototype.$http = axios
           // Set stellar network (options.[public|test])
-          merge(constants.NETWORK, setNetwork(options.network))
+          merge(constants.NETWORK, setNetwork(options.network, options.networkUri, options.networkPassphrase))
           // Vue
           var app = new Vue({
             store,

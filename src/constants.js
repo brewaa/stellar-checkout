@@ -19,6 +19,8 @@ export default {
     from: null,
     id: null,
     network: null,
+    networkUri: null,
+    networkPassphrase: null,
     onSubmit: null,
     redirectUrl: null,
     selector: null,
