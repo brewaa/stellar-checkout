@@ -1,5 +1,5 @@
 <template>
-  <div :class="['sco_component', 'sco_component--ticker', { 'sco_loaded': loaded, 'sco_component--collapsed': complete }]">
+  <div :class="[baseCssClass(), 'sco_component--ticker']">
     <div class="sco_component_i">
       <div class="sco_component_header">
         <div class="title">Ticker</div>
@@ -45,19 +45,20 @@
 import { mapActions, mapGetters } from 'vuex'
 import { formatDate, formatDecimal7, formatDecimal8, formatNiceNumber } from 'utils/formatter'
 import TWEEN from '@tweenjs/tween.js'
+import BaseComponent from 'components/.base.component.mixin'
 export default {
   computed: {
-    error: {
-      get () {
-        return this.stellarTicker.error
-      },
-      set (value) {
-        this.setStellarTickerError(value)
-      }
-    },
-    loaded: function () {
-      return !isNaN(this.price)
-    },
+    // error: {
+    //   get () {
+    //     return this.stellarTicker.error
+    //   },
+    //   set (value) {
+    //     this.setStellarTickerError(value)
+    //   }
+    // },
+    // loaded: function () {
+    //   return !isNaN(this.price)
+    // },
     marketCap: function () {
       return this.stellarTicker.data['market_cap_' + this.currency.toLowerCase()]
     },
@@ -96,12 +97,23 @@ export default {
     }
   },
   created () {
-    this.stellarTickerUpdate()
+    this.run()
     setInterval(() => {
-      this.stellarTickerUpdate()
+      this.complete = false
+      this.loaded = false
+      this.run()
     }, 30000)
   },
+  mixins: [
+    BaseComponent
+  ],
   methods: {
+    run: function () {
+      this.stellarTickerUpdate().then(() => {
+        this.complete = true
+        this.loaded = true
+      })
+    },
     tweenPrice: function (startValue, endValue) {
       return this.tween(startValue, endValue, this.price)
     },
@@ -123,8 +135,7 @@ export default {
       animate()
     },
     ...mapActions([
-      'stellarTickerUpdate',
-      'stellarTickerErrorSet'])
+      'stellarTickerUpdate'])
   },
   watch: {
     price: function (newVal, oldVal) {
