@@ -38,7 +38,6 @@ const NETWORK_SET = 'NETWORK_SET'
 const OPTIONS_SET = 'OPTIONS_SET'
 
 const TICKER_STELLAR_SET = 'TICKER_STELLAR_SET'
-const TICKER_STELLAR_ERROR_SET = 'TICKER_STELLAR_ERROR_SET'
 
 const TRANSACTION_SAVE = 'TRANSACTION_SAVE'
 const TRANSACTION_ERROR_SAVE = 'TRANSACTION_ERROR_SAVE'
@@ -260,9 +259,6 @@ const mutations = {
       state.transaction.amount = meta.amount
     }
   },
-  [TICKER_STELLAR_ERROR_SET] (state, obj) {
-    state.ticker.stellar.error = obj
-  },
   [TIMER_EXPIRED] (state, obj) {
     state.timer.durationInSeconds = 0
     merge(state.paymentOptions, {
@@ -381,23 +377,25 @@ const actions = ({
     commit(OPTIONS_SET, obj)
   },
   stellarTickerUpdate ({ commit }, obj) {
-    if (!obj) {
-      fetchStellarLumensTickerData()
-        .then(response => {
-          commit(TICKER_STELLAR_SET, response)
-        })
-        .catch(e => {
-          state.ticker.stellar.error = e
-        })
-      return
-    }
-    commit(TICKER_STELLAR_SET, obj)
+    return new Promise(function (resolve, reject) {
+      if (!obj) {
+        fetchStellarLumensTickerData()
+          .then(response => {
+            commit(TICKER_STELLAR_SET, response)
+            resolve(response)
+          })
+          .catch(e => {
+            state.ticker.stellar.error = e
+            reject(e)
+          })
+        return
+      }
+      commit(TICKER_STELLAR_SET, obj)
+      resolve(obj)
+    })
   },
   stellarTickerSet ({ commit }, obj) {
     commit(TICKER_STELLAR_SET, obj)
-  },
-  stellarTickerErrorSet ({ commit }, obj) {
-    commit(TICKER_STELLAR_ERROR_SET, obj)
   },
   timerExpired ({ commit }, obj) {
     commit(TIMER_EXPIRED, obj)
