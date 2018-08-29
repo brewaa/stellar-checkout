@@ -8,7 +8,7 @@
     <div class="sco_component_row" v-for="bal in filteredBalances" :key="bal.asset_code">
       <div>{{bal | assetCode}}</div>
       <div class="sco_component_row_aside">
-        {{bal.balance | decimal7}}<span class="currency">{{bal | assetCode}}</span>
+        {{bal.balance | decimal7}} <span class="currency">{{bal | assetCode}}</span>
       </div>
     </div>
   </div>
