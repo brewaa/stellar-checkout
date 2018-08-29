@@ -1,5 +1,5 @@
 <template>
-  <div :class="[baseCssClass(), 'sco_component--ticker']">
+  <div :class="[baseCssClass(), 'sco_component--ticker', 'sco_component--bestill']">
     <div class="sco_component_i">
       <div class="sco_component_header">
         <div class="title">Ticker</div>
@@ -48,17 +48,6 @@ import TWEEN from '@tweenjs/tween.js'
 import BaseComponent from 'components/.base.component.mixin'
 export default {
   computed: {
-    // error: {
-    //   get () {
-    //     return this.stellarTicker.error
-    //   },
-    //   set (value) {
-    //     this.setStellarTickerError(value)
-    //   }
-    // },
-    // loaded: function () {
-    //   return !isNaN(this.price)
-    // },
     marketCap: function () {
       return this.stellarTicker.data['market_cap_' + this.currency.toLowerCase()]
     },
@@ -99,7 +88,7 @@ export default {
   created () {
     this.run()
     setInterval(() => {
-      this.complete = false
+      // this.complete = false
       this.loaded = false
       this.run()
     }, 30000)
@@ -110,7 +99,7 @@ export default {
   methods: {
     run: function () {
       this.stellarTickerUpdate().then(() => {
-        this.complete = true
+        this.complete = !this.complete ? this.complete : true
         this.loaded = true
       })
     },
