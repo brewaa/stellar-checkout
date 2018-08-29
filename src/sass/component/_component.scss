@@ -92,11 +92,6 @@ $green: #3ba776;
         }
     }
 
-    /* Footer */
-    // &_footer {
-    //     border-top: $layout-border;
-    // }
-
     /* Results */
     &_results {
         border-top: $layout-border;
@@ -113,16 +108,16 @@ $green: #3ba776;
                     text-overflow: ellipsis;
                 }
             }
-            // &:first-child {
-            //     font-weight: bold;
-            //     text-align: left;
-            // }
             div:first-child {
                 font-weight: bold;
                 min-width: 5.6rem;
                 text-align: left;
             }
         }
+    }
+
+    &.sco_component--bestill &_results {
+        display: block;
     }
 
     /* Row */
@@ -159,7 +154,7 @@ $green: #3ba776;
     }
 
     /* QRCode */
-    &_qrcode {
+    .sco_qrcode {
         padding: 0 $padding $padding;
         text-align: center;
         margin-bottom: $gutter;
