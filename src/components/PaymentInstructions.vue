@@ -46,8 +46,8 @@
           <div class="sco_component_row">
             <div>Transaction XDR</div>
           </div>
-          <div class="sco_component_qrcode">
-            <div class="sco_component_qrcode_i">
+          <div class="sco_qrcode">
+            <div class="sco_qrcode_i">
               <qrcode :value="transaction.xdr"
                 :options="{ size: 256 }"
                 v-show="transaction.xdr"
