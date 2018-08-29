@@ -119,7 +119,13 @@ More examples can be found in the wiki. [View Examples](https://github.com/brewa
 
 ## Disclaimer
 StellarCheckout is not affiliated with nor endorsed by the Stellar Development Foundation. 
-StellarCheckout is an independent open source contribution to the Stellar Build Challenge.
+StellarCheckout is an independent open source contribution to the Stellar network.
+
+## 3rd Party Services
+
+This plug-in uses the StellarCheckout.com API.
+
+See https://github.com/brewaa/stellarcheckout.com OR browse the API explorer for a list of end points https://www.stellarcheckout.com/swagger/
 
 ## Tip Jar
 
