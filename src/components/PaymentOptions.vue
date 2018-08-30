@@ -8,15 +8,17 @@
         </div>
       </div>
       <div class="sco_component_results" v-show="loaded">
-        <div class="sco_component--button_row" v-show="ledgerConnected">
-          <button class="sco_button" @click.prevent="signWithLedger">Sign with Ledger Wallet</button>
-        </div>
-        <div class="sco_component--button_row" v-show="!ledgerConnected">
-          <button class="sco_button" @click.prevent="useAlternatePaymentMethod('tx_signer')">Use Transaction Signer</button>
-        </div>
-        <div class="sco_component--button_row" v-show="!ledgerConnected">
-          <button class="sco_button" @click.prevent="useAlternatePaymentMethod('byo')">Use my own wallet</button>
-        </div>
+        <form class="sco_form">
+          <div class="sco_component--button_row" v-show="ledgerConnected">
+            <button class="sco_button" @click.prevent="signWithLedger">Sign with Ledger Wallet</button>
+          </div>
+          <div class="sco_component--button_row" v-show="!ledgerConnected">
+            <button class="sco_button" @click.prevent="useAlternatePaymentMethod('tx_signer')">Use Transaction Signer</button>
+          </div>
+          <div class="sco_component--button_row" v-show="!ledgerConnected">
+            <button class="sco_button" @click.prevent="useAlternatePaymentMethod('byo')">Use my own wallet</button>
+          </div>
+        </form>
       </div>
       <div class="sco_component_error" v-if="this.error">
         <icon icon="exclamation-circle"></icon>
