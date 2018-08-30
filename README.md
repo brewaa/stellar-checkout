@@ -129,7 +129,7 @@ See https://github.com/brewaa/stellarcheckout.com OR browse the API explorer for
 
 ## Tip Jar
 
-###XLM:### GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI
+**XLM:** GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI
 
 <a href="#readme">
   <img alt="" src="https://raw.githubusercontent.com/brewaa/stellar-checkout/master/docs/i/stellar/not-for-profit@2x.png" />
