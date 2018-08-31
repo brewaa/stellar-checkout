@@ -208,6 +208,7 @@ $green: #3ba776;
             text-align: center;
         }
         a {
+            cursor: pointer;
             text-decoration: none;
             &:first-child {
                 border-left: 0;
