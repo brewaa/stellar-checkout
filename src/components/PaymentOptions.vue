@@ -2,7 +2,7 @@
   <div :class="[baseCssClass(), 'sco_component--payment_options']" v-show="accountConfirmationComplete && !transaction.success">
     <div class="sco_component_i">
       <div class="sco_component_header">
-        <div class="title">3. Payment method</div>
+        <div class="title">Payment method</div>
         <div class="complete_icon">
           <input type="checkbox" v-model="isComplete" :disabled="!isComplete" />
         </div>

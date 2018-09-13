@@ -86,7 +86,7 @@ export default {
   data () {
     return {
       awaitingConfirmation: false,
-      title: '2. Loading account details...'
+      title: 'Loading account details...'
     }
   },
   mixins: [
@@ -125,7 +125,7 @@ export default {
       }
     },
     isLoaded: function () {
-      this.title = '2. Confirm your account'
+      this.title = 'Confirm your account'
       this.loaded = true
       this.transactionStatusUpdate(constants.TX_STATUS.account_confirmation)
     },

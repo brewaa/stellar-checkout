@@ -1,7 +1,8 @@
 <template>
   <div class="sco_component_group" v-show="!transaction.success">
      <FederationInput :query="options.to"
-      placeholder-text="Enter recipient address..."
+      label-text="stellar address or public key"
+      placeholder-text="Recipient address..."
       title="To"
       :use-ledger="false"
       v-model="federation.accountTo"
@@ -12,7 +13,7 @@
       :ledger-connected="ledgerConnected"
       noteText=""
       placeholder-text="Your stellar address..."
-      title="1. Verify your address"
+      :title="fromTitle"
       :use-ledger="true"
       v-model="federation.accountFrom"
       v-on:federation="handleFederationResponseFrom" />
@@ -32,6 +33,9 @@ export default {
     FederationInput
   },
   computed: {
+    fromTitle: function () {
+      return !this.options.to ? 'From' : 'Verify your address'
+    },
     ...mapState([
       'federation',
       'network',

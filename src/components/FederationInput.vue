@@ -3,6 +3,7 @@
       <div class="sco_component_i">
         <div class="sco_component_header">
           <div class="title">{{title}}</div>
+          <div class="feature">{{feature}}</div>
           <div class="complete_icon">
             <input type="checkbox" v-model="isComplete" :disabled="!isComplete" />
           </div>
@@ -132,6 +133,7 @@ export default {
   data () {
     return {
       account: null,
+      feature: null,
       ledgerAppVersion: null,
       ledgerBip32Path: '44\'/148\'/0\'',
       ledgerConfirmed: false,
@@ -167,6 +169,7 @@ export default {
         try {
           this.account = await loadAccount(this.network, input)
           this.complete = true
+          this.feature = input
           this.publicKey = input
           this.$emit(FEDERATION_EVENT, merge(this.value, this.$data))
         } catch (err) {
@@ -186,6 +189,7 @@ export default {
           var fedRecord = await fedSvr.resolveAddress(addr.handle)
           this.account = await loadAccount(this.network, fedRecord.account_id)
           this.complete = true
+          this.feature = fedRecord.stellar_address
           this.publicKey = fedRecord.account_id
           this.stellarAddress = fedRecord.stellar_address
           this.$emit(FEDERATION_EVENT, merge(this.value, this.$data))
@@ -206,6 +210,7 @@ export default {
         .then(async publicKey => {
           this.account = await loadAccount(this.network, publicKey)
           this.complete = true
+          this.feature = publicKey
           this.ledgerVerified = true
           this.publicKey = publicKey
           this.ledgerVerificationInProgress = false

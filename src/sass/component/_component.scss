@@ -63,6 +63,7 @@ $green: #3ba776;
 
         .title {
             padding: $padding;
+            white-space: nowrap;
             &_spinner {
                 padding: 0 $padding-halved;
                 text-decoration: center;
@@ -71,9 +72,11 @@ $green: #3ba776;
         }
 
         .feature {
-            padding: $padding;
             flex-grow: 1;
+            overflow: hidden;
+            padding: $padding;
             text-align: right;
+            text-overflow: ellipsis;
         }
 
         .complete_icon {

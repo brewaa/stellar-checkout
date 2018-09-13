@@ -1,4 +1,5 @@
 import constants from 'app/constants'
+import options from 'app/options'
 import {formatCurrency, formatDecimal7} from 'utils/formatter'
 import {replace} from 'utils/string'
 
@@ -15,13 +16,13 @@ export function extractStellarLumensTickerData (amount, currency, data) {
     amount: invoicePriceInLumensFormatted,
     description: currencyConversionDescription,
     lumenPrice: lumenPrice,
-    total: formatCurrency(constants.OPTIONS.amount)
+    total: formatCurrency(options.amount)
   }
   return result
 }
 
 export function fetchStellarLumensTickerData () {
   var url = constants.TICKERS.stellar.url
-  var currency = constants.OPTIONS.currency.toLowerCase().replace('usd', '')
+  var currency = options.currency.toLowerCase().replace('usd', '')
   return window.StellarSdk.axios.get(url, { params: { currency: currency } })
 }

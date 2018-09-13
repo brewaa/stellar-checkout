@@ -5,6 +5,7 @@ import constants from 'app/constants'
 import Css from 'sass/site.scss'
 import { clone, merge } from 'lodash-es'
 import l10n from 'l10n'
+import RenderOptions from 'app/options'
 import {setNetwork} from 'utils/stellarsdk.helper'
 import store from 'store'
 import {validateConfig} from 'utils/config.checker'
@@ -50,7 +51,7 @@ var StellarCheckout = {
   render: function (selector, opts) {
     document.addEventListener('DOMContentLoaded', () => {
       var o = clone(opts)
-      var options = merge(constants.OPTIONS, o)
+      var options = merge(this.renderOptions, o)
       options.selector = selector
       validateConfig(options)
         .then(e => {
@@ -74,7 +75,11 @@ var StellarCheckout = {
             })
         })
     })
-  }
+  },
+  /**
+   * The options object for the render method
+   */
+  renderOptions: RenderOptions
 }
 
 export default StellarCheckout

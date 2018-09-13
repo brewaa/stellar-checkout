@@ -3,7 +3,7 @@
     <div class="sco_component_i">
       <textarea ref="xdrEnvelope" class="sco_offscreen" v-model="transaction.xdr" readonly></textarea>
       <div class="sco_component_header">
-        <div class="title">4. Instructions</div>
+        <div class="title">Instructions</div>
       </div>
       <div class="sco_component_results" v-show="loaded">
         <div class="sco_component_text" v-if="paymentOptions.method === 'ledger'">

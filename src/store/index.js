@@ -4,6 +4,7 @@ import { clone, merge } from 'lodash-es'
 
 import constants from 'app/constants'
 import { cultures } from 'l10n'
+import options from 'app/options'
 
 import { setNetwork } from 'utils/stellarsdk.helper'
 import { extractStellarLumensTickerData, fetchStellarLumensTickerData } from 'services/stellar.lumens.ticker'
@@ -123,7 +124,7 @@ const state = {
     ledgerAppVersion: null,
     ledgerError: null
   },
-  options: constants.OPTIONS,
+  options: options,
   network: constants.NETWORK,
   paymentOptions: {
     complete: false,

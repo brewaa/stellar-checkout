@@ -62,7 +62,8 @@ function checkNetwork (network, networkUri, networkPassphrase) {
 function checkTo (to) {
   return new Promise(function (resolve, reject) {
     if (to && typeof to !== 'string' && !window.StellarSdk.StrKey.isValidEd25519PublicKey(to)) {
-      reject(new Error(constants.APP.name + ': [to] is not a valid destination public key;'))
+      // reject(new Error(constants.APP.name + ': [to] is not a valid destination public key;'))
+      console.log(constants.APP.name + ': [to] is not a valid public key;')
     }
     resolve(true)
   })
