@@ -8,10 +8,10 @@
       v-on:federation="handleFederationResponseTo"
       v-show="!options.to" />
     <FederationInput :query="options.from"
-      label-text="Enter your stellar address"
+      label-text="stellar address or public key"
       :ledger-connected="ledgerConnected"
-      noteText="Stellar addresses are divided into two parts separated by *, the username and the domain. For example: you*stellarcheckout.com. If you don't have a stellar address, you can just enter your public key."
-      placeholder-text="Enter your address..."
+      noteText=""
+      placeholder-text="Your stellar address..."
       title="1. Verify your address"
       :use-ledger="true"
       v-model="federation.accountFrom"
