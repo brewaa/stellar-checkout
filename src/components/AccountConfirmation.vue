@@ -130,8 +130,6 @@ export default {
       this.transactionStatusUpdate(constants.TX_STATUS.account_confirmation)
     },
     ...mapActions([
-      // 'accountConfirmationClear',
-      // 'accountConfirmationError',
       'accountConfirmationSet',
       'federationSet',
       'ledgerErrorSet',
