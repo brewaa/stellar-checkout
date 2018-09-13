@@ -111,7 +111,7 @@ export default {
     },
     goToTxSigner: function () {
       this.copyXdrToClipboard()
-      window.open('https://www.stellar.org/laboratory/#txsigner?xdr=' + this.transaction.currentXdr + '&network=' + this.network.name, '_blank')
+      window.open('https://www.stellar.org/laboratory/#txsigner?xdr=' + this.transaction.xdr + '&network=' + this.network.name, '_blank')
     },
     ...mapActions([
       'paymentOptionsSet'])
