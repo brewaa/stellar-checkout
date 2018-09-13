@@ -61,6 +61,7 @@ export default {
       return this.stellarTicker.data['24h_volume_' + this.currency.toLowerCase()]
     },
     ...mapGetters([
+      'amount',
       'currency',
       'culture',
       'stellarTicker'
@@ -127,6 +128,16 @@ export default {
       'stellarTickerUpdate'])
   },
   watch: {
+    amount: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.run()
+      }
+    },
+    currency: function (newVal, oldVal) {
+      if (newVal !== oldVal) {
+        this.run()
+      }
+    },
     price: function (newVal, oldVal) {
       this.tweenPrice(oldVal, newVal)
     },

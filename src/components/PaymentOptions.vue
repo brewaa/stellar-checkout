@@ -1,5 +1,5 @@
 <template>
-  <div :class="[baseCssClass(), 'sco_component--payment_options']" v-show="accountConfirmationComplete && !transaction.success">
+  <div :class="[baseCssClass(), 'sco_component--payment_options']" v-show="amountComplete && !transaction.success">
     <div class="sco_component_i">
       <div class="sco_component_header">
         <div class="title">Payment method</div>
@@ -44,24 +44,6 @@ export default {
     }
   },
   computed: {
-    // complete: {
-    //   get () {
-    //     return this.$store.state.paymentOptions.complete
-    //   },
-    //   set (value) {
-    //     this.paymentOptionsSet({
-    //       complete: value
-    //     })
-    //   }
-    // },
-    // error: {
-    //   get () {
-    //     return this.$store.state.paymentOptions.error
-    //   },
-    //   set (value) {
-    //     this.paymentOptionsError(value)
-    //   }
-    // },
     isComplete: {
       get () {
         return this.complete
@@ -93,7 +75,7 @@ export default {
       }
     },
     ...mapState({
-      accountConfirmationComplete: state => state.accountConfirmation.complete,
+      amountComplete: state => state.amount && state.amount > 0,
       federation: 'federation',
       network: 'network',
       options: 'options',
@@ -132,7 +114,7 @@ export default {
         }
       }
     },
-    signWithLedger: function () {
+    signWithLedger: async function () {
       this.complete = true
       this.error = null
       this.paymentOptions = { // set early, it shows the instructions panel
@@ -146,6 +128,7 @@ export default {
         status: constants.TX_STATUS.ledger_confirmation_required,
         success: false
       }
+      await this.buildTransaction()
       var bip32Path = this.federation.ledgerBip32Path
       return getSignature(this.transaction.tx, bip32Path)
         .then(signature => {
@@ -214,7 +197,7 @@ export default {
         // Show the default payment complete dialog
       }
     },
-    useAlternatePaymentMethod: function (method) {
+    useAlternatePaymentMethod: async function (method) {
       this.complete = true
       this.timerStart()
       // Update state
@@ -233,6 +216,7 @@ export default {
       if (this.closeStream) {
         this.closeStream()
       }
+      await this.buildTransaction()
       return getPaymentsForAccount(this.network, this.to)
         .then(response => {
           console.log(constants.APP.name + ': LISTENING_FOR_PAYMENTS')
@@ -306,17 +290,19 @@ export default {
       'transactionStatusUpdate'])
   },
   watch: {
-    accountConfirmationComplete (newVal) {
+    amountComplete (newVal) {
       if (!newVal) {
         return
       }
       this.complete = false
       this.loaded = false
       this.paymentOptionsClear()
-      this.buildTransaction()
-        .then(() => {
-          this.loaded = true
-        })
+      // setTimeout(() => {
+      //   this.buildTransaction()
+      //     .then(() => {
+      this.loaded = true
+      //     })
+      // }, 400)
     },
     stellarTicker () {
       this.buildTransaction()

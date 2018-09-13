@@ -21,8 +21,8 @@ export function extractStellarLumensTickerData (amount, currency, data) {
   return result
 }
 
-export function fetchStellarLumensTickerData () {
+export function fetchStellarLumensTickerData (currency) {
   var url = constants.TICKERS.stellar.url
-  var currency = options.currency.toLowerCase().replace('usd', '')
+  currency = typeof currency === 'string' ? currency.toLowerCase().replace('usd', '') : ''
   return window.StellarSdk.axios.get(url, { params: { currency: currency } })
 }

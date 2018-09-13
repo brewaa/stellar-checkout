@@ -5,6 +5,7 @@
     <TransactionDetails />
     <Federation :ledger-connected="ledgerConnected" />
     <AccountConfirmation :ledger-connected="ledgerConnected" />
+    <Amount />
     <PaymentOptions :ledger-connected="ledgerConnected" />
     <PaymentInstructions />
     <Ledger v-on:ledgerconnected="onLedgerConnected"
@@ -16,6 +17,7 @@ import NetworkSelector from 'components/NetworkSelector'
 import StellarTicker from 'components/StellarTicker'
 import TransactionDetails from 'components/TransactionDetails'
 import Federation from 'components/Federation'
+import Amount from 'components/Amount'
 import Ledger from 'components/Ledger'
 import AccountConfirmation from 'components/AccountConfirmation'
 import PaymentOptions from 'components/PaymentOptions'
@@ -28,6 +30,7 @@ export default {
     StellarTicker,
     TransactionDetails,
     Federation,
+    Amount,
     Ledger,
     AccountConfirmation,
     PaymentOptions,
@@ -35,7 +38,6 @@ export default {
   },
   computed: {
     ...mapState([
-      'dto',
       'options'
     ])
   },

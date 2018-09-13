@@ -61,6 +61,15 @@ $green: #3ba776;
         text-align: left;
         text-transform: uppercase;
 
+        &--has-form {
+            grid-template-columns: auto 1fr;
+            .sco_input--money {
+            }
+            .currency_toggler {
+                display: inline-block;
+            }
+        }
+
         .title {
             padding: $padding;
             white-space: nowrap;
@@ -72,7 +81,6 @@ $green: #3ba776;
         }
 
         .feature {
-            flex-grow: 1;
             overflow: hidden;
             padding: $padding;
             text-align: right;

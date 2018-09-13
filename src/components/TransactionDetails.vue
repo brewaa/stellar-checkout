@@ -13,8 +13,8 @@
       <div class="sco_component_header">
         <div class="title">Transaction</div>
         <div class="feature">
-          <span class="price">{{options.amount | currency }}</span>
-          <span class="currency">{{options.currency }}</span>
+          <span class="price">{{amount | currency }}</span>
+          <span class="currency">{{ currency }}</span>
         </div>
         <div class="complete_icon">
           <input type="checkbox" v-model="complete" />
@@ -54,14 +54,14 @@
         <div class="sco_component_row">
           <div>Amount</div>
           <div class="sco_component_row_aside">
-            {{options.amount | currency}}
-            <span class="currency">{{ options.currency }}</span>
+            {{amount | currency}}
+            <span class="currency">{{ currency }}</span>
           </div>
         </div>
         <div class="sco_component_row">
           <div>Total</div>
           <div class="sco_component_row_aside">
-            {{stellarTicker.meta.amount}}
+            {{transaction.amount}}
             <span class="currency">{{transaction.asset().code}}</span>
           </div>
         </div>
@@ -116,6 +116,8 @@ export default {
       }
     },
     ...mapState({
+      amount: 'amount',
+      currency: 'currency',
       errorMsg: this.error = state => state.transaction.error,
       federation: 'federation',
       network: 'network',

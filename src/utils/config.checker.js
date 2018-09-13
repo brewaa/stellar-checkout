@@ -4,13 +4,13 @@ import loader from './loader'
 
 function checkAmount (amount) {
   return new Promise(function (resolve, reject) {
-    if (!amount) {
-      reject(new Error(constants.APP.name + ': [amount] is required;'))
-    }
-    if (isNaN(amount)) {
+    // if (!amount) {
+    //   reject(new Error(constants.APP.name + ': [amount] is required;'))
+    // }
+    if (amount && isNaN(amount)) {
       reject(new Error(constants.APP.name + ': [amount] must be numeric;'))
     }
-    if (amount <= 0) {
+    if (amount && amount <= 0) {
       reject(new Error(constants.APP.name + ': [amount] must be greater than zero;'))
     }
     resolve(true)

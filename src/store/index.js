@@ -20,6 +20,8 @@ const ACCOUNT_CONFIRMATION_ERROR = 'ACCOUNT_CONFIRMATION_ERROR'
 const ACCOUNT_FROM_SET = 'ACCOUNT_FROM_SET'
 const ACCOUNT_TO_SET = 'ACCOUNT_TO_SET'
 
+const AMOUNT_SET = 'AMOUNT_SET'
+
 const CULTURE_SET = 'CULTURE_SET'
 const CURRENCY_SET = 'CURRENCY_SET'
 
@@ -114,7 +116,9 @@ const state = {
     complete: false,
     error: null
   },
+  amount: options.amount || 0,
   cultures: cultures,
+  currency: options.currency,
   currencies: constants.CURRENCIES,
   federation: {
     accountFrom: clone(federationResponse),
@@ -182,11 +186,14 @@ const mutations = {
     merge(state.federation.accountTo, obj)
     toggleFederationComplete(obj.complete)
   },
+  [AMOUNT_SET] (state, obj) {
+    state.amount = obj
+  },
   [CULTURE_SET] (state, obj) {
-    state.settings.culture = obj
+    state.culture = obj
   },
   [CURRENCY_SET] (state, obj) {
-    state.settings.currency = obj
+    state.currency = obj
   },
   [FEDERATION_CLEAR] (state, obj) {
     merge(state.federation, {
@@ -255,7 +262,7 @@ const mutations = {
       state.ticker.stellar.counter++
       state.ticker.stellar.data = data[0]
       state.ticker.stellar.updated = new Date(Date.now())
-      var meta = extractStellarLumensTickerData(state.options.amount, state.options.currency, data[0])
+      var meta = extractStellarLumensTickerData(state.amount, state.currency, data[0])
       merge(state.ticker.stellar.meta, meta)
       state.transaction.amount = meta.amount
     }
@@ -305,42 +312,9 @@ const actions = ({
   accountToSet ({ commit }, obj) {
     commit(ACCOUNT_TO_SET, obj)
   },
-  // accountFromSet ({ commit }, federationResponse) {
-  //   console.log(federationResponse)
-  //   var accFrom = merge(state.federation.accountFrom, federationResponse)
-  //   accFrom.account = null
-  //   commit(FEDERATION_SET, {
-  //     accountFrom: accFrom,
-  //     complete: false
-  //   })
-  //   return loadAccount(state.network, federationResponse.publicKey)
-  //     .then(account => {
-  //       accFrom.account = account
-  //       accFrom.complete = true
-  //       commit(ACCOUNT_FROM_SET, accFrom)
-  //     })
-  // },
-  // accountToSet ({ commit }, federationResponse) {
-  //   console.log(federationResponse)
-  //   state.federation.complete = false
-  //   var accTo = merge(state.federation.accountTo, federationResponse)
-  //   return new Promise(function (resolve, reject) {
-  //     if (federationResponse.publicKey) {
-  //       return loadAccount(state.network, federationResponse.publicKey)
-  //         .then(account => {
-  //           accTo.account = account
-  //           commit(ACCOUNT_TO_SET, accTo)
-  //           commit(FEDERATION_SET, { complete: state.federation.accountTo.complete && state.federation.accountFrom.complete})
-  //           resolve(accTo)
-  //         }).catch(err => {
-  //           reject(err)
-  //         })
-  //     }
-  //     commit(ACCOUNT_TO_SET, accTo)
-  //     commit(FEDERATION_SET, { complete: state.federation.accountTo.complete && state.federation.accountFrom.complete})
-  //     resolve(accTo)
-  //   })
-  // },
+  amountSet ({ commit }, obj) {
+    commit(AMOUNT_SET, obj)
+  },
   cultureSet ({ commit }, obj) {
     commit(CULTURE_SET, obj)
   },
@@ -377,10 +351,10 @@ const actions = ({
   optionsSet ({ commit }, obj) {
     commit(OPTIONS_SET, obj)
   },
-  stellarTickerUpdate ({ commit }, obj) {
+  stellarTickerUpdate ({ commit, state }, obj) {
     return new Promise(function (resolve, reject) {
       if (!obj) {
-        fetchStellarLumensTickerData()
+        fetchStellarLumensTickerData(state.currency)
           .then(response => {
             commit(TICKER_STELLAR_SET, response)
             resolve(response)
@@ -427,11 +401,14 @@ const actions = ({
 
 // GETTERS
 const getters = ({
+  amount: (state) => {
+    return state.amount
+  },
   culture: (state) => {
-    return state.options.culture
+    return state.culture
   },
   currency: (state) => {
-    return state.options.currency
+    return state.currency
   },
   network: (state) => {
     return state.network
