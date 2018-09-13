@@ -34,7 +34,7 @@ You have to serve the script over HTTPS to use Ledger Wallet. Ledger wallet uses
 {
   amount: {
     type: Decimal,
-    required: true
+    required: false
   },
   culture: {
     type: String,
