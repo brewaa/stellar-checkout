@@ -1,5 +1,5 @@
 <template>
-  <div :class="[baseCssClass(), 'sco_component--amount']" v-show="accountConfirmationComplete && !transaction.success">
+  <div :class="[baseCssClass(), 'sco_component--amount']" v-show="!transaction.success">
     <div class="sco_component_i">
       <div class="sco_component_header sco_component_header--has-form">
         <div class="title">Amount</div>

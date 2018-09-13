@@ -3,9 +3,9 @@
     <NetworkSelector v-if="options.showNetworkSelector" />
     <StellarTicker v-show="options.showTicker" />
     <TransactionDetails />
+    <Amount />
     <Federation :ledger-connected="ledgerConnected" />
     <AccountConfirmation :ledger-connected="ledgerConnected" />
-    <Amount />
     <PaymentOptions :ledger-connected="ledgerConnected" />
     <PaymentInstructions />
     <Ledger v-on:ledgerconnected="onLedgerConnected"

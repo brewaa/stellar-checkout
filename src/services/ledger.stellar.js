@@ -30,7 +30,7 @@ export function getPublicKey (bip32Path, verifyKeyPair, confirmAddress) {
   bip32Path = bip32Path || '44\'/148\'/0\''
   verifyKeyPair = verifyKeyPair || true
   confirmAddress = confirmAddress || false
-  return open(10, 10).then(api => {
+  return open(10, 30).then(api => {
     return api.getPublicKey(bip32Path, verifyKeyPair, confirmAddress).then(result => {
       return new Promise(function (resolve) {
         resolve(result.publicKey)

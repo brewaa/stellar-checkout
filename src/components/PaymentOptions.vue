@@ -1,5 +1,5 @@
 <template>
-  <div :class="[baseCssClass(), 'sco_component--payment_options']" v-show="amountComplete && !transaction.success">
+  <div :class="[baseCssClass(), 'sco_component--payment_options']" v-show="showComponent && !transaction.success">
     <div class="sco_component_i">
       <div class="sco_component_header">
         <div class="title">Payment method</div>
@@ -75,10 +75,14 @@ export default {
       }
     },
     ...mapState({
-      amountComplete: state => state.amount && state.amount > 0,
       federation: 'federation',
       network: 'network',
       options: 'options',
+      showComponent: state => state.federation.accountFrom.account &&
+        state.federation.accountTo.account &&
+        state.accountConfirmation.complete &&
+        state.amount &&
+        state.amount > 0,
       stellarTicker: 'stellarTicker'
     })
   },
@@ -290,7 +294,7 @@ export default {
       'transactionStatusUpdate'])
   },
   watch: {
-    amountComplete (newVal) {
+    showComponent (newVal) {
       if (!newVal) {
         return
       }
