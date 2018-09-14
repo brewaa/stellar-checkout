@@ -2,6 +2,8 @@
 
 An open source javascript plug-in for the stellar.org blockchain.
 
+[https://www.stellarcheckout.com/demo](https://www.stellarcheckout.com/demo)
+
 ## Installation
 
 ```
