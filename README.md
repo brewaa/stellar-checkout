@@ -2,9 +2,9 @@
 
 An open source javascript plug-in for the stellar.org blockchain.
 
-[https://www.stellarcheckout.com/demo](https://www.stellarcheckout.com/demo)
+https://www.stellarcheckout.com/demo
 
-https://www.stellarcheckout.com/demo?network=public&amount=99.97&currency=AUD&to=GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI&from=GDT34VGS4JJE7STTVN3FLYCXRDEMIPJCPDLRZS26LVC2GVRTE5UYCRCO
+https://www.stellarcheckout.com/demo?network=test&amount=99.97&currency=AUD&to=GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI&from=GDT34VGS4JJE7STTVN3FLYCXRDEMIPJCPDLRZS26LVC2GVRTE5UYCRCO
 
 ## Installation
 
@@ -97,13 +97,13 @@ You have to serve the script over HTTPS to use Ledger Wallet. Ledger wallet uses
 
 ## Reference
 
-[https://brewaa.github.io/stellar-checkout/reference/index.html](https://brewaa.github.io/stellar-checkout/reference/index.html)
+https://brewaa.github.io/stellar-checkout/reference/index.html
 
 ## Demo
-[https://brewaa.github.io/stellar-checkout/demo/index.html](https://brewaa.github.io/stellar-checkout/demo/index.html)
+https://brewaa.github.io/stellar-checkout/demo/index.html
 
 ## Demo (web site integrated)
-[https://www.stellarcheckout.com/demo](https://www.stellarcheckout.com/demo)
+https://www.stellarcheckout.com/demo
 
 
 ## Basic Example
