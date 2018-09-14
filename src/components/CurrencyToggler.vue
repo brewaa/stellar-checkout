@@ -1,5 +1,5 @@
 <template>
-  <div class="currency_toggler">
+  <div class="sco_component_toggler sco_component_toggler--currency">
     <select v-if="currencies.length > 0" v-model="currency">
       <option v-for="c in currencies" :value="c" :key="c" :selected="c == currency">{{c}}</option>
     </select>

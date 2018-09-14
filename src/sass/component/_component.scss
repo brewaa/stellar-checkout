@@ -63,11 +63,6 @@ $green: #3ba776;
 
         &--has-form {
             grid-template-columns: auto 1fr;
-            .sco_input--money {
-            }
-            .currency_toggler {
-                display: inline-block;
-            }
         }
 
         .title {
@@ -200,6 +195,15 @@ $green: #3ba776;
         }
     }
 
+    /* Amount */    
+    .sco_input--amount {
+    }
+
+    /* Toggler */
+    &_toggler {
+        display: inline-block;
+    }
+
     /** COMPONENT - NETWORK_SELECTOR **/
     &--network_selector {
     }
@@ -239,5 +243,4 @@ $green: #3ba776;
     &--button_group button {
         margin-bottom: $padding;
     }
-
 }

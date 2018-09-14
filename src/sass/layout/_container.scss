@@ -8,7 +8,15 @@
     font-family: monospace, monospace;
     width: 100%;
     height: 100%;
-    text-align: left
+    text-align: left;
+
+    input,
+    input[type=text],
+    select,
+    textarea {
+        font-size: 1rem;
+        padding: 0 .2rem;
+    }
 }
 
 .sco *, .sco *:before, .sco *:after {
