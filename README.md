@@ -4,7 +4,7 @@ An open source javascript plug-in for the stellar.org blockchain.
 
 [https://www.stellarcheckout.com/demo](https://www.stellarcheckout.com/demo)
 
-[asdsad](https://www.stellarcheckout.com/demo?network=public&amount=99.97&currency=AUD&to=GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI&from=GDT34VGS4JJE7STTVN3FLYCXRDEMIPJCPDLRZS26LVC2GVRTE5UYCRCO)
+[](https://www.stellarcheckout.com/demo?network=public&amount=99.97&currency=AUD&to=GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI&from=GDT34VGS4JJE7STTVN3FLYCXRDEMIPJCPDLRZS26LVC2GVRTE5UYCRCO)
 
 ## Installation
 
