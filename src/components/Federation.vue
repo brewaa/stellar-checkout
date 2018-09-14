@@ -1,19 +1,19 @@
 <template>
   <div class="sco_component_group" v-show="!transaction.success">
      <FederationInput :query="options.to"
+      :allowEdit="!options.to"
       label-text="stellar address or public key"
       placeholder-text="Recipient address..."
       title="To"
       :use-ledger="false"
       v-model="federation.accountTo"
-      v-on:federation="handleFederationResponseTo"
-      v-show="!options.to" />
+      v-on:federation="handleFederationResponseTo" />
     <FederationInput :query="options.from"
       label-text="stellar address or public key"
       :ledger-connected="ledgerConnected"
       noteText=""
       placeholder-text="Your stellar address..."
-      :title="fromTitle"
+      title="From"
       :use-ledger="true"
       v-model="federation.accountFrom"
       v-on:federation="handleFederationResponseFrom" />

@@ -132,7 +132,6 @@ $green: #3ba776;
         display: grid;
         grid-template-columns: 12% 1fr;
         padding: $padding;
-        text-transform: uppercase;
         &--footer {
             border-bottom: 0;
             border-top: $layout-border;
@@ -197,6 +196,13 @@ $green: #3ba776;
 
     /* Amount */    
     .sco_input--amount {
+        text-align: right;
+    }
+
+    input[type=number]::-webkit-inner-spin-button, 
+    input[type=number]::-webkit-outer-spin-button { 
+      -webkit-appearance: none; 
+      margin: 0; 
     }
 
     /* Toggler */

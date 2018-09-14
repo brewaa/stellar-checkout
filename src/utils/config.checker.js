@@ -17,6 +17,21 @@ function checkAmount (amount) {
   })
 };
 
+function checkCulture (options) {
+  var lang = options.culture || ''
+  var errMsg = constants.APP.name + ': [culture] not supported. falling back to \'en\'. allowed cultures: ' + cultures.join(', ') + ';'
+  return new Promise(function (resolve, reject) {
+    var culturesLowerCase = cultures.map(function (value) {
+      return value.toLowerCase()
+    })
+    if (typeof lang === 'string' && lang.length > 0 && culturesLowerCase.indexOf(lang.toLowerCase()) === -1) {
+      console.log(errMsg)
+      options.culture = 'en'
+    }
+    resolve(true)
+  })
+};
+
 function checkCurrency (options) {
   var currency = options.currency || ''
   return new Promise(function (resolve, reject) {
@@ -64,21 +79,6 @@ function checkTo (to) {
     if (to && typeof to !== 'string' && !window.StellarSdk.StrKey.isValidEd25519PublicKey(to)) {
       // reject(new Error(constants.APP.name + ': [to] is not a valid destination public key;'))
       console.log(constants.APP.name + ': [to] is not a valid public key;')
-    }
-    resolve(true)
-  })
-};
-
-function checkCulture (options) {
-  var lang = options.culture || ''
-  var errMsg = constants.APP.name + ': [culture] not supported. falling back to \'en\'. allowed cultures: ' + cultures.join(', ') + ';'
-  return new Promise(function (resolve, reject) {
-    var culturesLowerCase = cultures.map(function (value) {
-      return value.toLowerCase()
-    })
-    if (typeof lang === 'string' && lang.length > 0 && culturesLowerCase.indexOf(lang.toLowerCase()) === -1) {
-      console.log(errMsg)
-      options.culture = 'en'
     }
     resolve(true)
   })

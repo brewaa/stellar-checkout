@@ -22,20 +22,20 @@
             </div>
           </form>
           <form class="sco_form" v-on:submit.prevent v-show="!showLedger">
-            <section class="sco_field">
+            <section class="sco_field" v-if="!account && allowEdit">
               <label for="sco_federation_input" class="sco_field_label" v-if="labelText">{{labelText}}</label>
-              <div class="sco_field_input sco_field_input--input">
-                <input id="sco_federation_input"
-                  autocomplete="off"
-                  :placeholder="placeholderText"
-                  ref="input"
-                  type="text"
-                  v-model="input" />
-                <span class="sco_field_input_spinner">
-                  <icon icon="spinner" spin pulse></icon>
-                </span>
-              </div>
-              <div class="sco_field_note" v-if="noteText">{{noteText}}</div>
+                <div class="sco_field_input sco_field_input--input">
+                  <input id="sco_federation_input"
+                    autocomplete="off"
+                    :placeholder="placeholderText"
+                    ref="input"
+                    type="text"
+                    v-model="input" />
+                  <span class="sco_field_input_spinner">
+                    <icon icon="spinner" spin pulse></icon>
+                  </span>
+                </div>
+                <div class="sco_field_note" v-if="noteText">{{noteText}}</div>
             </section>
             <div class="sco_component--button_row">
               <button class="sco_button"
@@ -67,6 +67,10 @@ export default {
   props: {
     query: {
       type: String
+    },
+    allowEdit: {
+      type: Boolean,
+      default: true
     },
     labelText: {
       type: String

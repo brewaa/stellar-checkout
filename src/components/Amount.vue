@@ -3,9 +3,13 @@
     <div class="sco_component_i">
       <div class="sco_component_header sco_component_header--has-form">
         <div class="title">Amount</div>
-        <div class="feature">
-          <input v-model="localAmount" class="sco_input--amount" />
-          <CurrencyToggler />
+        <div class="feature" v-if="!value">
+          <input v-model="localAmount" class="sco_input--amount" type="number" />
+          <CurrencyToggler :value="options.currency" />
+        </div>
+        <div class="feature" v-if="value">
+          <input class="sco_input--amount" :value="value" disabled />
+          <CurrencyToggler :value="options.currency" disabled="disabled" />
         </div>
         <!-- <div class="complete_icon" v-show="loaded">
           <input type="checkbox" v-model="complete" />
@@ -23,6 +27,9 @@ import { mapActions, mapState } from 'vuex'
 import BaseComponent from 'components/.base.component.mixin'
 import CurrencyToggler from 'components/CurrencyToggler'
 export default {
+  props: {
+    value: String
+  },
   components: {
     CurrencyToggler
   },
@@ -39,13 +46,19 @@ export default {
       return this.$store.state.transaction
     },
     ...mapState({
-      accountConfirmationComplete: state => state.accountConfirmation.complete
+      accountConfirmationComplete: state => state.accountConfirmation.complete,
+      options: 'options'
     })
   },
   data () {
     return {
-      localAmount: null,
+      localAmount: this.value,
       complete: true
+    }
+  },
+  created () {
+    if (this.value) {
+      this.amount = this.value
     }
   },
   mixins: [
