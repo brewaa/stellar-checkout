@@ -105,7 +105,6 @@ https://brewaa.github.io/stellar-checkout/demo/index.html
 ## Demo (web site integrated)
 https://www.stellarcheckout.com/demo
 
-
 ## Basic Example
 See [Basic Configuration Example](https://github.com/brewaa/stellar-checkout/wiki/Basic-Configuration-Example) in the wiki.
 
@@ -134,6 +133,12 @@ StellarCheckout is an independent open source contribution to the Stellar networ
 This plug-in uses the StellarCheckout.com API.
 
 See https://github.com/brewaa/stellarcheckout.com OR browse the API explorer for a list of end points https://www.stellarcheckout.com/swagger/
+
+## Payment Verification ##
+Additional verification should be implemented on the server.
+The only way this can be achieved is by using the submit handler.
+The submit handler will dump the entire $state of the application at the time the transaction was processed.
+This data should be saved server side and verified independently.
 
 ## Tip Jar
 
