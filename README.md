@@ -16,6 +16,7 @@ npm i --save-dev stellar-checkout
 ```
 <script type="text/javascript" src="https://unpkg.com/stellar-checkout/stellar-checkout.min.js"></script>
 ```
+NOTE: Use a specific version when loading via CDN. The latest version may contain breaking changes.
 
 ## HTTPS
 You have to serve the script over HTTPS to use Ledger Wallet. Ledger wallet uses U2F which will fail without HTTPS.
