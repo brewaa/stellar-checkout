@@ -124,21 +124,22 @@ StellarCheckout.render('#elem', {
 
 More examples can be found in the wiki. [View Examples](https://github.com/brewaa/stellar-checkout/wiki/Examples)
 
-## Disclaimer
-StellarCheckout is not affiliated with nor endorsed by the Stellar Development Foundation. 
-StellarCheckout is an independent open source contribution to the Stellar network.
-
 ## 3rd Party Services
 
 This plug-in uses the StellarCheckout.com API.
 
-See https://github.com/brewaa/stellarcheckout.com OR browse the API explorer for a list of end points https://www.stellarcheckout.com/swagger/
+Browse the API explorer for a list of end points - https://www.stellarcheckout.com/swagger/
+View the stellarcheckout.com source - https://github.com/brewaa/stellarcheckout.com OR 
 
 ## Payment Verification ##
 Additional verification should be implemented on the server.
 The only way this can be achieved is by using the submit handler.
 The submit handler will dump the entire $state of the application at the time the transaction was processed.
 This data should be saved server side and verified independently.
+
+## Disclaimer
+StellarCheckout is not affiliated with nor endorsed by the Stellar Development Foundation. 
+StellarCheckout is an independent open source contribution to the Stellar network.
 
 ## Tip Jar
 
