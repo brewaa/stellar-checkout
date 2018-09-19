@@ -1,7 +1,7 @@
 export default {
   amount: null,
   culture: null,
-  currency: 'USD',
+  currency: null,
   from: null,
   id: null,
   network: null,

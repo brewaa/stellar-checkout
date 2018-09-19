@@ -196,6 +196,7 @@ $green: #3ba776;
 
     /* Amount */    
     .sco_input--amount {
+        border: $layout-border;
         text-align: right;
     }
 
@@ -208,6 +209,9 @@ $green: #3ba776;
     /* Toggler */
     &_toggler {
         display: inline-block;
+        &--currency {
+            border: $layout-border;
+        }
     }
 
     /** COMPONENT - NETWORK_SELECTOR **/

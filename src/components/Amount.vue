@@ -3,17 +3,14 @@
     <div class="sco_component_i">
       <div class="sco_component_header sco_component_header--has-form">
         <div class="title">Amount</div>
-        <div class="feature" v-if="!value">
-          <input v-model="localAmount" class="sco_input--amount" type="number" />
-          <CurrencyToggler :value="options.currency" />
+        <div class="feature">
+          <input v-model="localAmount" class="sco_input--amount" type="number" step="0.1" v-if="!value" />
+          <input class="sco_input--amount" :value="value" v-if="value" disabled />
+          <CurrencyToggler v-if="!amount && !currency" />
+          <select v-if="amount || currency" disabled>
+            <option :value="currency">{{options.currency}}</option>
+          </select>
         </div>
-        <div class="feature" v-if="value">
-          <input class="sco_input--amount" :value="value" disabled />
-          <CurrencyToggler :value="options.currency" disabled="disabled" />
-        </div>
-        <!-- <div class="complete_icon" v-show="loaded">
-          <input type="checkbox" v-model="complete" />
-        </div> -->
       </div>
       <div class="sco_component_error" v-if="this.error">
         <icon icon="exclamation-circle"></icon>
@@ -28,6 +25,7 @@ import BaseComponent from 'components/.base.component.mixin'
 import CurrencyToggler from 'components/CurrencyToggler'
 export default {
   props: {
+    currency: String,
     value: String
   },
   components: {

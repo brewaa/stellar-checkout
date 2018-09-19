@@ -117,7 +117,7 @@ export default {
     },
     ...mapState({
       amount: 'amount',
-      currency: 'currency',
+      currency: state => state.currency ? state.currency : 'USD',
       errorMsg: this.error = state => state.transaction.error,
       federation: 'federation',
       network: 'network',

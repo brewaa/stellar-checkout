@@ -8,8 +8,9 @@ function calculatePriceInLumens (invoiceTotal, lumenPrice) {
 }
 
 export function extractStellarLumensTickerData (amount, currency, data) {
-  var lumenPrice = data['price_' + currency.toLowerCase()]
-  var currencyConversionDescription = '1XLM = ' + replace(formatDecimal7(lumenPrice), ',', '') + '' + currency
+  var cur = typeof currency === 'string' ? currency : 'USD'
+  var lumenPrice = data['price_' + cur.toLowerCase()]
+  var currencyConversionDescription = '1XLM = ' + replace(formatDecimal7(lumenPrice), ',', '') + '' + cur
   var invoicePriceInLumens = calculatePriceInLumens(amount, lumenPrice)
   var invoicePriceInLumensFormatted = replace(formatDecimal7(invoicePriceInLumens), ',', '')
   var result = {
@@ -23,6 +24,6 @@ export function extractStellarLumensTickerData (amount, currency, data) {
 
 export function fetchStellarLumensTickerData (currency) {
   var url = constants.TICKERS.stellar.url
-  currency = typeof currency === 'string' ? currency.toLowerCase().replace('usd', '') : ''
-  return window.StellarSdk.axios.get(url, { params: { currency: currency } })
+  var cur = typeof currency === 'string' ? currency.toLowerCase().replace('usd', '') : ''
+  return window.StellarSdk.axios.get(url, { params: { currency: cur } })
 }

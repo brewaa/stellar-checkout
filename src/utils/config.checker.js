@@ -35,7 +35,10 @@ function checkCulture (options) {
 function checkCurrency (options) {
   var currency = options.currency || ''
   return new Promise(function (resolve, reject) {
-    if (currency === '' || typeof currency !== 'string' || constants.CURRENCIES.indexOf(currency) === -1) {
+    if (typeof currency !== 'string' || currency === '') {
+      console.log(constants.APP.name + ' [currency] not supplied. Default currency is USD.')
+    }
+    if (typeof currency === 'string' && currency.length > 0 && constants.CURRENCIES.indexOf(currency) === -1) {
       console.log(constants.APP.name + ' [currency] not supported. allowed currencies: ' + constants.CURRENCIES.join(', ') + '')
     }
     resolve(options)

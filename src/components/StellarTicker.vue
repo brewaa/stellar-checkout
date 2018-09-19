@@ -42,7 +42,7 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters } from 'vuex'
+import { mapActions, mapGetters, mapState } from 'vuex'
 import { formatDate, formatDecimal7, formatDecimal8, formatNiceNumber } from 'utils/formatter'
 import TWEEN from '@tweenjs/tween.js'
 import BaseComponent from 'components/.base.component.mixin'
@@ -62,10 +62,12 @@ export default {
     },
     ...mapGetters([
       'amount',
-      'currency',
       'culture',
       'stellarTicker'
-    ])
+    ]),
+    ...mapState({
+      'currency': state => state.currency ? state.currency : 'USD'
+    })
   },
   data () {
     return {
@@ -87,7 +89,6 @@ export default {
     }
   },
   created () {
-    this.run()
     setInterval(() => {
       // this.complete = false
       this.loaded = false

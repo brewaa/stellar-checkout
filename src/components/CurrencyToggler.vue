@@ -20,7 +20,8 @@ export default {
   computed: {
     currency: {
       get () {
-        return this.$store.state.currency
+        var cur = this.$store.state.currency
+        return cur || 'USD'
       },
       set (value) {
         this.currencySet(value)
