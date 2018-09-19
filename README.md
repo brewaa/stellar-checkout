@@ -128,8 +128,8 @@ More examples can be found in the wiki. [View Examples](https://github.com/brewa
 
 This plug-in uses the StellarCheckout.com API.
 
-Browse the API explorer for a list of end points - https://www.stellarcheckout.com/swagger/
-View the stellarcheckout.com source - https://github.com/brewaa/stellarcheckout.com OR 
+- Browse the API explorer for a list of end points - https://www.stellarcheckout.com/swagger/
+- View the stellarcheckout.com source - https://github.com/brewaa/stellarcheckout.com OR 
 
 ## Payment Verification ##
 Additional verification should be implemented on the server.
