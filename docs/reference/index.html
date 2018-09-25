@@ -89,7 +89,8 @@
       <h1>StellarCheckout</h1><p>An open source javascript plug-in for the stellar.org blockchain.</p>
 <p>https://<a href="http://www.stellarcheckout.com/demo">www.stellarcheckout.com/demo</a></p>
 <p>https://<a href="http://www.stellarcheckout.com/demo?network=test&amp;amount=99.97&amp;currency=AUD&amp;to=GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI&amp;from=GDT34VGS4JJE7STTVN3FLYCXRDEMIPJCPDLRZS26LVC2GVRTE5UYCRCO">www.stellarcheckout.com/demo?network=test&amp;amount=99.97&amp;currency=AUD&amp;to=GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI&amp;from=GDT34VGS4JJE7STTVN3FLYCXRDEMIPJCPDLRZS26LVC2GVRTE5UYCRCO</a></p>
-<h2>Installation</h2><pre class="prettyprint source"><code>npm i --save-dev stellar-checkout</code></pre><h2>CDN</h2><pre class="prettyprint source"><code>&lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/stellar-checkout/stellar-checkout.min.js&quot;>&lt;/script></code></pre><h2>HTTPS</h2><p>You have to serve the script over HTTPS to use Ledger Wallet. Ledger wallet uses U2F which will fail without HTTPS.</p>
+<h2>Installation</h2><pre class="prettyprint source"><code>npm i --save-dev stellar-checkout</code></pre><h2>CDN</h2><pre class="prettyprint source"><code>&lt;script type=&quot;text/javascript&quot; src=&quot;https://unpkg.com/stellar-checkout/stellar-checkout.min.js&quot;>&lt;/script></code></pre><p>NOTE: Use a specific version when loading via CDN. The latest version may contain breaking changes.</p>
+<h2>HTTPS</h2><p>You must serve the script over HTTPS to use Ledger Wallet. Ledger wallet uses U2F which will fail without HTTPS.</p>
 <h2>Features</h2><ul>
 <li>Send &amp; receive payments in Lumens (XLM)</li>
 <li>Responsive, Skinnable UI</li>
@@ -172,10 +173,17 @@ StellarCheckout.render('#elem', {
   to: 'GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI'
 });
 &lt;/script></code></pre><h2>Wiki</h2><p>More examples can be found in the wiki. <a href="https://github.com/brewaa/stellar-checkout/wiki/Examples">View Examples</a></p>
+<h2>3rd Party Services</h2><p>This plug-in uses the StellarCheckout.com API.</p>
+<ul>
+<li>Browse the API explorer for a list of end points - https://<a href="http://www.stellarcheckout.com/swagger/">www.stellarcheckout.com/swagger/</a></li>
+<li>View the stellarcheckout.com source - https://github.com/brewaa/stellarcheckout.com</li>
+</ul>
+<h2>Payment Verification</h2><p>Additional verification should be implemented on the server.
+The only way this can be achieved is by using the submit handler.
+The submit handler will dump the entire $state of the application at the time the transaction was processed.
+This data should be saved server side and verified independently.</p>
 <h2>Disclaimer</h2><p>StellarCheckout is not affiliated with nor endorsed by the Stellar Development Foundation. 
 StellarCheckout is an independent open source contribution to the Stellar network.</p>
-<h2>3rd Party Services</h2><p>This plug-in uses the StellarCheckout.com API.</p>
-<p>See https://github.com/brewaa/stellarcheckout.com OR browse the API explorer for a list of end points https://<a href="http://www.stellarcheckout.com/swagger/">www.stellarcheckout.com/swagger/</a></p>
 <h2>Tip Jar</h2><p><strong>XLM:</strong> GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI</p>
 <p><a href="#readme">
   <img alt="" src="https://raw.githubusercontent.com/brewaa/stellar-checkout/master/docs/i/stellar/not-for-profit@2x.png" />

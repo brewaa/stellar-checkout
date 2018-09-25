@@ -89,6 +89,7 @@ export default {
     }
   },
   created () {
+    this.run()
     setInterval(() => {
       // this.complete = false
       this.loaded = false

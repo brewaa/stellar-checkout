@@ -4,7 +4,7 @@
       <div class="sco_component_header sco_component_header--has-form">
         <div class="title">Amount</div>
         <div class="feature">
-          <input v-model="localAmount" class="sco_input--amount" type="number" step="0.1" v-if="!value" />
+          <input v-model="localAmount" class="sco_input--amount" type="number" step="0.1" placeholder="0.00" v-if="!value" />
           <input class="sco_input--amount" :value="value" v-if="value" disabled />
           <CurrencyToggler v-if="!amount && !currency" />
           <select v-if="amount || currency" disabled>
