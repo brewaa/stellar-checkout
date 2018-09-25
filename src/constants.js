@@ -61,7 +61,7 @@ export default {
   },
   TICKERS: {
     stellar: {
-      url: 'https://www.stellarcheckout.com/api/tickers/stellar',
+      url: 'https://stellarcheckout.azurewebsites.net/api/tickers/stellar',
       counter: 0,
       data: {
         '24h_volume_usd': null,
