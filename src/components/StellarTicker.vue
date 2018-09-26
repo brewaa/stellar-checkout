@@ -10,7 +10,7 @@
           <span class="currency_name sco_hidden">Stellar</span>
           <span class="currency">XLM</span>/<span class="currency">{{ currency }}</span>
           <span class="separator">|</span>
-          <span class="price">${{ price | decimal7 }}</span>
+          <span class="price">{{ decimal7Format(price) }}</span>
         </div>
         <div class="complete_icon" v-show="loaded">
           <input type="checkbox" v-model="complete" />
@@ -21,16 +21,16 @@
           <div>{{ stellarTicker.data.id }}</div>
           <div class="sco_component_row_aside">
             <span class="currency_name sco_hidden">Stellar</span>
-            <span class="currency">XLM</span>
+            <span class="currency">XLM</span>/<span class="currency">BTC</span>
             <span class="separator">|</span>
-            <span class="price">{{ stellarTicker.data.price_btc | decimal8 }}</span>
+            <span class="price">{{ decimal8Format(stellarTicker.data.price_btc) }}</span>
             <span class="currency">BTC</span>
           </div>
         </div>
         <div class="sco_component_row sco_component_row--meta">
           <div>Updated</div>
           <div class="sco_component_row_aside">
-            {{stellarTicker.updated | date }}
+            {{ dateFormat(stellarTicker.updated) }}
           </div>
         </div>
       </div>
@@ -42,9 +42,8 @@
   </div>
 </template>
 <script>
-import { mapActions, mapGetters, mapState } from 'vuex'
-import { formatDate, formatDecimal7, formatDecimal8, formatNiceNumber } from 'utils/formatter'
-import TWEEN from '@tweenjs/tween.js'
+import { mapActions, mapGetters } from 'vuex'
+import { formatDate, formatDecimal7, formatDecimal8 } from 'utils/formatter'
 import BaseComponent from 'components/.base.component.mixin'
 export default {
   computed: {
@@ -63,35 +62,18 @@ export default {
     ...mapGetters([
       'amount',
       'culture',
+      'currency',
       'stellarTicker'
-    ]),
-    ...mapState({
-      'currency': state => state.currency ? state.currency : 'USD'
-    })
+    ])
   },
   data () {
     return {
       complete: true
     }
   },
-  filters: {
-    date: function (date) {
-      return formatDate(date)
-    },
-    decimal7: function (price) {
-      return formatDecimal7(price)
-    },
-    decimal8: function (price) {
-      return formatDecimal8(price)
-    },
-    niceNumber: function (price) {
-      return formatNiceNumber(price, 'currency')
-    }
-  },
   created () {
     this.run()
     setInterval(() => {
-      // this.complete = false
       this.loaded = false
       this.run()
     }, 30000)
@@ -100,34 +82,22 @@ export default {
     BaseComponent
   ],
   methods: {
+    dateFormat: function (date) {
+      return formatDate(date)
+    },
+    decimal7Format: function (price) {
+      return formatDecimal7(price, this.culture)
+    },
+    decimal8Format: function (price) {
+      return formatDecimal8(price, this.culture)
+    },
     run: function () {
       this.stellarTickerUpdate().then(() => {
         this.complete = !this.complete ? this.complete : true
         this.loaded = true
       })
     },
-    tweenPrice: function (startValue, endValue) {
-      return this.tween(startValue, endValue, this.price)
-    },
-    tweenPriceBtc: function (startValue, endValue) {
-      return this.tween(startValue, endValue, this.priceBtc)
-    },
-    tween: function (startValue, endValue, targetProp) {
-      function animate () {
-        if (TWEEN.update()) {
-          requestAnimationFrame(animate)
-        }
-      }
-      new TWEEN.Tween({ tweeningValue: startValue })
-        .to({ tweeningValue: endValue }, 500)
-        .onUpdate(function (object) {
-          targetProp = object.tweeningValue
-        })
-        .start()
-      animate()
-    },
-    ...mapActions([
-      'stellarTickerUpdate'])
+    ...mapActions(['stellarTickerUpdate'])
   },
   watch: {
     amount: function (newVal, oldVal) {
@@ -139,12 +109,6 @@ export default {
       if (newVal !== oldVal) {
         this.run()
       }
-    },
-    price: function (newVal, oldVal) {
-      this.tweenPrice(oldVal, newVal)
-    },
-    priceBtc: function (newVal, oldVal) {
-      this.tweenPriceBtc(oldVal, newVal)
     }
   }
 }

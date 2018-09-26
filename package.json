@@ -22,7 +22,6 @@
     "@ledgerhq/hw-app-str": "^4.21.0",
     "@ledgerhq/hw-transport-node-hid": "^4.22.0",
     "@ledgerhq/hw-transport-u2f": "^4.21.0",
-    "@tweenjs/tween.js": "^17.2.0",
     "@xkeshi/vue-qrcode": "^1.0.0",
     "autoprefixer": "^7.1.2",
     "babel-core": "^6.22.1",

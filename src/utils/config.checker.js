@@ -2,7 +2,8 @@ import constants from 'app/constants'
 import {cultures} from 'l10n'
 import loader from './loader'
 
-function checkAmount (amount) {
+function checkAmount (options) {
+  var amount = options.amount
   return new Promise(function (resolve, reject) {
     // if (!amount) {
     //   reject(new Error(constants.APP.name + ': [amount] is required;'))
@@ -10,9 +11,9 @@ function checkAmount (amount) {
     if (amount && isNaN(amount)) {
       reject(new Error(constants.APP.name + ': [amount] must be numeric;'))
     }
-    if (amount && amount <= 0) {
-      reject(new Error(constants.APP.name + ': [amount] must be greater than zero;'))
-    }
+    // if (amount && amount <= 0) {
+    //   reject(new Error(constants.APP.name + ': [amount] must be greater than zero;'))
+    // }
     resolve(true)
   })
 };
@@ -37,15 +38,18 @@ function checkCurrency (options) {
   return new Promise(function (resolve, reject) {
     if (typeof currency !== 'string' || currency === '') {
       console.log(constants.APP.name + ' [currency] not supplied. Default currency is USD.')
+      options.currency = 'USD'
     }
     if (typeof currency === 'string' && currency.length > 0 && constants.CURRENCIES.indexOf(currency) === -1) {
       console.log(constants.APP.name + ' [currency] not supported. allowed currencies: ' + constants.CURRENCIES.join(', ') + '')
+      options.currency = 'USD'
     }
-    resolve(options)
+    resolve(true)
   })
 };
 
-function checkFrom (from) {
+function checkFrom (options) {
+  var from = options.from
   return new Promise(function (resolve, reject) {
     if (from && typeof from !== 'string' && !window.StellarSdk.StrKey.isValidEd25519PublicKey(from)) {
       console.log(constants.APP.name + ': [from] is not a valid public key;')
@@ -54,18 +58,21 @@ function checkFrom (from) {
   })
 };
 
-function checkNetwork (network, networkUri, networkPassphrase) {
+function checkNetwork (options) {
   return new Promise(function (resolve, reject) {
+    var network = options.network || 'test'
+    var networkUri = options.networkUri
+    var networkPassphrase = options.networkPassphrase
     var networks = [
       'custom',
       'public',
       'test'
     ]
     var fallbackTxt = 'falling back to [test] network'
-    if (network && (typeof network !== 'string' || networks.indexOf(network) === -1)) {
+    if (typeof network !== 'string' || networks.indexOf(network) === -1) {
       console.log(`${constants.APP.name}: [network] unsupported; allowed networks: ${networks.join(', ')}; ${fallbackTxt}`)
     }
-    if (network && typeof network === 'string' && network === 'custom') {
+    if (typeof network === 'string' && network === 'custom') {
       if (!networkUri || typeof networkUri !== 'string') {
         console.log(`${constants.APP.name}: [networkUri] is required for custom networks; ${fallbackTxt}`)
       }
@@ -77,19 +84,10 @@ function checkNetwork (network, networkUri, networkPassphrase) {
   })
 };
 
-function checkTo (to) {
+function checkOnSubmit (options) {
+  var f = options.onSubmit
   return new Promise(function (resolve, reject) {
-    if (to && typeof to !== 'string' && !window.StellarSdk.StrKey.isValidEd25519PublicKey(to)) {
-      // reject(new Error(constants.APP.name + ': [to] is not a valid destination public key;'))
-      console.log(constants.APP.name + ': [to] is not a valid public key;')
-    }
-    resolve(true)
-  })
-};
-
-function checkOnSubmit (onSubmit) {
-  return new Promise(function (resolve, reject) {
-    if (onSubmit && typeof onSubmit !== 'function') {
+    if (f && typeof f !== 'function') {
       reject(new Error(constants.APP.name + ': [onSubmit] must be a function;'))
     }
     resolve(true)
@@ -104,7 +102,7 @@ function checkSelector (options) {
       reject(new Error(constants.APP.name + ': [selector] not found;'))
       return
     }
-    resolve(options)
+    resolve(true)
   })
 };
 
@@ -120,19 +118,30 @@ function checkStyleSheet (stylesheet) {
   })
 };
 
+function checkTo (options) {
+  var to = options.to
+  return new Promise(function (resolve, reject) {
+    if (to && typeof to !== 'string' && !window.StellarSdk.StrKey.isValidEd25519PublicKey(to)) {
+      // reject(new Error(constants.APP.name + ': [to] is not a valid destination public key;'))
+      console.log(constants.APP.name + ': [to] is not a valid public key;')
+    }
+    resolve(true)
+  })
+};
+
 export function validateConfig (options) {
   return loader.Js(constants.STELLAR_SDK_URL)
     .then(checkStyleSheet(options.stylesheet))
     .then(function () {
       return Promise.all([
-        checkAmount(options.amount),
+        checkAmount(options),
         checkSelector(options),
         checkCurrency(options),
-        checkFrom(options.from),
-        checkNetwork(options.network, options.networkUri, options.networkPassphrase),
-        checkTo(options.to),
+        checkFrom(options),
+        checkNetwork(options),
+        checkTo(options),
         checkCulture(options),
-        checkOnSubmit(options.onSubmit)
+        checkOnSubmit(options)
       ])
     })
 }

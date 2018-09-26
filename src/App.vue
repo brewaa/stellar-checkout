@@ -3,7 +3,7 @@
     <NetworkSelector v-if="options.showNetworkSelector" />
     <StellarTicker v-show="options.showTicker" />
     <TransactionDetails />
-    <Amount :value="options.amount" :currency="options.currency" />
+    <Amount />
     <Federation :ledger-connected="ledgerConnected" />
     <AccountConfirmation :ledger-connected="ledgerConnected" />
     <PaymentOptions :ledger-connected="ledgerConnected" />

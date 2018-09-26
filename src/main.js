@@ -57,13 +57,18 @@ var StellarCheckout = {
         .then(e => {
           // Axios settings
           var axios = window.StellarSdk.axios
-          // Vue settings
-          Vue.config.productionTip = false
+          // Vue components
           Vue.component('icon', Icons)
           Vue.component(VueQrcode.name, VueQrcode)
+          // Vue settings
+          Vue.config.productionTip = false
           Vue.prototype.$http = axios
-          // Set stellar network (options.[public|test])
+          // Set defaults
           merge(constants.NETWORK, setNetwork(options.network, options.networkUri, options.networkPassphrase))
+          var state = store.state
+          state.amount = options.amount <= 0 ? null : options.amount
+          state.culture = options.culture || 'en'
+          state.currency = options.currency || 'USD'
           // Vue
           var app = new Vue({
             store,

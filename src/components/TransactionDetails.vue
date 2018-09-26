@@ -13,8 +13,8 @@
       <div class="sco_component_header">
         <div class="title">Transaction</div>
         <div class="feature">
-          <span class="price">{{amount | currency }}</span>
-          <span class="currency">{{ currency }}</span>
+          <span class="price">{{ fAmount }}</span>
+          <!-- <span class="currency">{{ currency }}</span> -->
         </div>
         <div class="complete_icon">
           <input type="checkbox" v-model="complete" />
@@ -54,15 +54,15 @@
         <div class="sco_component_row">
           <div>Amount</div>
           <div class="sco_component_row_aside">
-            {{amount | currency}}
-            <span class="currency">{{ currency }}</span>
+            {{ fAmount }}
+            <!-- <span class="currency">{{ currency }}</span> -->
           </div>
         </div>
         <div class="sco_component_row">
           <div>Total</div>
           <div class="sco_component_row_aside">
-            {{transaction.amount}}
             <span class="currency">{{transaction.asset().code}}</span>
+            {{transaction.amount}}
           </div>
         </div>
       </div>
@@ -106,6 +106,9 @@ export default {
     CountdownTimer
   },
   computed: {
+    fAmount: function () {
+      return formatCurrency(this.amount, this.culture, this.currency)
+    },
     tick: () => constants.ENTITY.tick,
     transaction: {
       get () {
@@ -117,7 +120,8 @@ export default {
     },
     ...mapState({
       amount: 'amount',
-      currency: state => state.currency ? state.currency : 'USD',
+      currency: 'currency',
+      culture: 'culture',
       errorMsg: this.error = state => state.transaction.error,
       federation: 'federation',
       network: 'network',
@@ -136,11 +140,6 @@ export default {
   },
   created () {
     this.loaded = true
-  },
-  filters: {
-    currency: function (input) {
-      return formatCurrency(input)
-    }
   },
   mixins: [
     BaseComponent

@@ -116,9 +116,10 @@ const state = {
     complete: false,
     error: null
   },
-  amount: options.amount || 0,
+  amount: options.amount,
+  culture: null,
   cultures: cultures,
-  currency: options.currency,
+  currency: null,
   currencies: constants.CURRENCIES,
   federation: {
     accountFrom: clone(federationResponse),
