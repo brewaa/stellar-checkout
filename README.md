@@ -104,9 +104,6 @@ https://brewaa.github.io/stellar-checkout/reference/index.html
 ## Demo
 https://brewaa.github.io/stellar-checkout/demo/index.html
 
-## Demo (web site integrated)
-https://www.stellarcheckout.com/demo
-
 ## Basic Example
 See [Basic Configuration Example](https://github.com/brewaa/stellar-checkout/wiki/Basic-Configuration-Example) in the wiki.
 
