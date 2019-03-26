@@ -1,4 +1,11 @@
-<!DOCTYPE html><html><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><title>Stellar Checkout</title><style>body {
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Stellar Checkout</title>
+    <style>
+      body {
         text-align: center;
       }
       .container {
@@ -8,7 +15,19 @@
         .container {
           width: 640px;
         }
-      }</style></head><body><div class=container><form id=theForm action=/some-post-page method=post class=the_form><input id=trxid name=trxid type=hidden><div id=elem></div></form><script src=stellar-checkout.min.js></script><script>StellarCheckout.render('#elem', {
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <form id="theForm" action="/some-post-page" method="post" class="the_form">
+        <input id="trxid" name="trxid" type="hidden" />
+        <div id="elem"></div>
+      </form>
+      <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/stellar-sdk/0.8.2/stellar-sdk.js"></script>-->
+      <script src="stellar-checkout.min.js"></script>
+      <script>
+      StellarCheckout.render('#elem', {
         amount: '19.97',
         // culture: 'de-DE',
         // currency: 'EUR',
@@ -35,4 +54,8 @@
         //    trxid.value = result.transaction_hash;
         //    theForm.submit();
         //  }
-      });</script></div></body></html>
+      });
+      </script>
+    </div>
+  </body>
+</html>
