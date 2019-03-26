@@ -123,13 +123,6 @@ StellarCheckout.render('#elem', {
 
 More examples can be found in the wiki. [View Examples](https://github.com/brewaa/stellar-checkout/wiki/Examples)
 
-## 3rd Party Services
-
-This plug-in uses the StellarCheckout.com API.
-
-- Browse the API explorer for a list of end points - https://www.stellarcheckout.com/swagger/
-- View the stellarcheckout.com source - https://github.com/brewaa/stellarcheckout.com
-
 ## Payment Verification ##
 Additional verification should be implemented on the server.
 The only way this can be achieved is by using the submit handler.
