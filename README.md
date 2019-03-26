@@ -4,7 +4,8 @@ An open source javascript plug-in for the stellar.org blockchain.
 ```
 E.g. https://www.stellarcheckout.com/demo?network=test&amount=99.97&currency=AUD&to=GBBADTX7GN4ENDZ55HIFEBSZH4NSKWABTM7LRX7AFZW3SZXULHTKB7XI&from=GDT34VGS4JJE7STTVN3FLYCXRDEMIPJCPDLRZS26LVC2GVRTE5UYCRCO&culture=en-AU&showNetworkSelector=0&showTicker=0
 ```
-https://www.stellarcheckout.com/demo
+NOTE: Demo site had been taken down permanently
+
 
 ## Installation
 
