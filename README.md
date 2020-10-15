@@ -101,9 +101,6 @@ You must serve the script over HTTPS to use Ledger Wallet. Ledger wallet uses U2
 
 https://brewaa.github.io/stellar-checkout/reference/index.html
 
-## Demo
-https://brewaa.github.io/stellar-checkout/demo/index.html
-
 ## Basic Example
 See [Basic Configuration Example](https://github.com/brewaa/stellar-checkout/wiki/Basic-Configuration-Example) in the wiki.
 
